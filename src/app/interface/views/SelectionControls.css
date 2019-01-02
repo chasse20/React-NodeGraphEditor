@@ -1,0 +1,10 @@
+.selection-controls button
+{
+	pointer-events: auto;
+}
+
+.selection-controls button.selected
+{
+	pointer-events: none;
+	cursor: initial;
+}

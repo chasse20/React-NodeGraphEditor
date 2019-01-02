@@ -1,0 +1,47 @@
+.zoom-controls button, .zoom-meter
+{
+	border-radius: var( --button-radius );
+}
+
+.zoom-track
+{
+	display: flex;
+	justify-content: center;
+	position: relative;
+	height: 80px;
+}
+
+.zoom-track
+{
+	width: 100%;
+}
+
+.zoom-track > *
+{
+	width: inherit;
+}
+
+.zoom-controls .zoom-meter
+{
+	padding: 0;
+	position: absolute !important;
+	height: 10px;
+	cursor: pointer;
+	box-sizing: border-box;
+}
+
+.zoom-lines
+{
+	height: inherit;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	align-items: center;
+}
+
+.zoom-line
+{
+	width: 50%;
+	height: 1px;
+	background-color: var( --button-color-light-gray );
+}

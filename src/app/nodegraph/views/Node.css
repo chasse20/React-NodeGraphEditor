@@ -1,0 +1,35 @@
+.node
+{
+	position: absolute;
+	cursor: pointer;
+}
+
+.node foreignObject
+{
+	pointer-events: none;
+}
+
+.node .graphic
+{ 
+	stroke-width: 2;
+}
+
+.node .text
+{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 0;
+	width: 100%;
+	height:100%;
+}
+
+.node p
+{
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	margin: 0;
+	user-select: none;
+	pointer-events: none;
+}

@@ -1,0 +1,81 @@
+{
+	"graph":
+	{
+		"nodeTypes":
+		[
+			{
+				"name": "Tech",
+				"modelClass": "Node",
+				"viewClass": "Node",
+				"data":
+				{
+					"fill": "#9a1919",
+					"stroke": "#ff4444",
+					"radius": 70
+				}
+			}
+		],
+		"edgeTypes":
+		[
+			{
+				"name": "Tech",
+				"modelClass": "Edge",
+				"viewClass": "Edge",
+				"data":
+				{
+					"stroke": "#ff4444",
+					"text": "Ok"
+				}
+			}
+		],
+		"nodes":
+		[
+			{
+				"id": 1,
+				"type": "Tech",
+				"transform":
+				{
+					"position":
+					{
+						"x": 200,
+						"y": 500
+					}
+				},
+				"pins":
+				{
+					"out":
+					{
+						"links":
+						[
+							{
+								"node": 2,
+								"pin": "in",
+								"type": "Tech"
+							}
+						]
+					}
+				},
+				"data":
+				{
+					"text": "OKAY OKAY OKAY KOAY OKAY OKAYOK AOKSD ASDA DASD ADKASODKASDOKSD D ASDSDS"
+				}
+			},
+			{
+				"id": 2,
+				"type": "Tech",
+				"transform":
+				{
+					"position":
+					{
+						"x": 450,
+						"y": 500
+					}
+				},
+				"data":
+				{
+					"text": "YEP"
+				}
+			}
+		]
+	}
+}

@@ -1,0 +1,19 @@
+.graph
+{
+	height: 100%;
+	width: 100%;
+	overflow: hidden;
+	background: #0f1315;
+	font-family: Arial, Helvetica, sans-serif;
+	color: #fff;
+}
+
+.graph, .graph svg, .graph svg > *
+{
+	position: absolute;
+}
+
+.grid.hidden
+{
+	display: none;
+}
