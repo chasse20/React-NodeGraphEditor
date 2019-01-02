@@ -20,18 +20,14 @@
 	background-color: #1e2021;
 }
 
-.interface nav
+nav
 {
 	box-sizing: border-box;
 	width: var( --controls-width );
-}
-
-.interface nav
-{
 	padding: var( --button-spacing );
 }
 
-.interface nav button
+nav button
 {
 	padding: 8px;
 	width: 100%;
@@ -39,45 +35,40 @@
 	height: calc( var( --controls-width ) - 2 * var( --button-spacing ) );
 }
 
-.interface nav svg
+nav svg
 {
 	fill: var( --button-color-light-gray );
 	width: inherit;
 }
 
-.interface nav .buttons
+nav .buttons > *
 {
 	margin-top: var( --button-spacing );
 }
 
-.interface nav .buttons > *
-{
-	margin-top: var( --button-spacing );
-}
-
-.interface nav .buttons button
+nav .buttons button
 {
 	background-color: var( --button-color-gray );
 	position: relative;
 }
 
-.interface nav .buttons button.selected
+nav button.selected
 {
 	background-color: var( --button-color-selected );
 }
 
-.interface nav .buttons button.selected svg
+nav button.selected svg
 {
 	fill: var( --icon-color-selected );
 }
 
-.interface nav .buttons button:first-child
+nav .buttons button:first-child
 {
 	border-top-left-radius: var( --button-radius );
 	border-top-right-radius: var( --button-radius );
 }
 
-.interface nav .buttons button:last-child
+nav .buttons button:last-child
 {
 	border-bottom-left-radius: var( --button-radius );
 	border-bottom-right-radius: var( --button-radius );

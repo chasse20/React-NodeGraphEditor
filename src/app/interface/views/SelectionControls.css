@@ -1,10 +1,20 @@
-.selection-controls button
+.selection-controls > *
 {
-	pointer-events: auto;
+	margin-top: var( --button-spacing );
 }
 
-.selection-controls button.selected
+.select-toggle button.selected, .delete:not(.selected)
 {
 	pointer-events: none;
 	cursor: initial;
+}
+
+.delete
+{
+	border-radius: var( --button-radius );
+}
+
+.delete.selected
+{
+	background-color: #af3737;
 }
