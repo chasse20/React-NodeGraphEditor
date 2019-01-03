@@ -5,7 +5,8 @@ import { observer } from "mobx-react";
 //import Physics from "../core/Physics";
 import GraphModel from "../Graph";
 import GridModel from "../../interface/Grid";
-import Arrows from "./Arrows";
+import SelectionModel from "../../interface/Selection";
+import Defs from "./Defs";
 import Nodes from "./Nodes";
 import Edges from "./Edges";
 import "./Graph.css";
@@ -21,20 +22,15 @@ class Graph extends React.Component
 		this._element = null;
 		this._svgElement = null;
 		this._viewElement = null;
-		this._bgElement = null;
-		this._bgGridElement = null;
-		this._bgSmallGridElement = null;
 		this._edges = null;
 		
 		// Events
-		this._onTransformDispose = observe( tProps.model._transform, ( tChange ) => { this.onTransform( tChange ); } );
-		this._onGridDispose = observe( tProps.grid, ( tChange ) => { this.onGrid( tChange ); } );
+		this._onTransformDispose = observe( tProps.model._transform, ( tChange ) => { this.transform = tChange.object; } );
 		this._onElement = ( tElement ) => { this._element = tElement; };
 		this._onSVGElement = ( tElement ) => { this._svgElement = tElement; };
 		this._onViewElement = ( tElement ) => { this._viewElement = tElement; };
-		this._onBGElement = ( tElement ) => { this._bgElement = tElement; };
-		this._onBGGridElement = ( tElement ) => { this._bgGridElement = tElement; };
-		this._onBGSmallGridElement = ( tElement ) => { this._bgSmallGridElement = tElement; };
+		this._onEdges = ( tComponent ) => { this._edges = tComponent; };
+		this._onLink = ( tModel, tIsSet ) => { this._edges.onLink( tModel, tIsSet ); };
 		this._onMouseDown = ( tEvent ) => { this.onMouseDown( tEvent ); };
 		this._onMouseMove = ( tEvent ) => { this.onMouseMove( tEvent ); };
 		this._onMouseUp = ( tEvent ) => { this.onMouseUp( tEvent ); };
@@ -43,9 +39,7 @@ class Graph extends React.Component
 	componentDidMount()
 	{
 		// Initialize
-		this.backgroundPosition = this.props.model._transform._position;
-		this.backgroundScale = this.props.model._transform._scale.x;
-		this.updateTransform();
+		this.setTransform = this.props.model._transform;
 		
 		// Inputs
 		this._element.addEventListener( "mousedown", this._onMouseDown );
@@ -55,8 +49,6 @@ class Graph extends React.Component
 	{
 		this._onTransformDispose();
 		this._onTransformDispose = null;
-		this._onGridDispose();
-		this._onGridDispose = null;
 	}
 
 	onMouseDown( tEvent )
@@ -83,54 +75,11 @@ class Graph extends React.Component
 	{
 		this.props.model._selection.tryMove( tEvent );
 	}
-	
-	onGrid( tChange )
+
+	set transform( tTransform )
 	{
-		if ( tChange.name === "size" )
-		{
-			this.backgroundScale = this.props.model._transform._scale.x;
-		}
-	}
-	
-	onTransform( tChange )
-	{
-		const tempIsPositionChange = tChange.name === "_position";
-		if ( tempIsPositionChange || tChange.name === "_scale" )
-		{
-			if ( tempIsPositionChange )
-			{
-				this.backgroundPosition = tChange.newValue;
-			}
-			else
-			{		
-				this.backgroundScale = tChange.newValue.x;
-			}
-			
-			this.updateTransform();
-		}
-	}
-	
-	set backgroundPosition( tVector )
-	{
-		this._bgGridElement.setAttribute( "x", tVector.x );
-		this._bgGridElement.setAttribute( "y", tVector.y );
-	}
-	
-	set backgroundScale( tScale )
-	{
-		let tempScale = tScale * this.props.grid.size;
-		this._bgGridElement.setAttribute( "height", tempScale );
-		this._bgGridElement.setAttribute( "width", tempScale );
-		
-		tempScale = tScale * 20;
-		this._bgSmallGridElement.setAttribute( "height", tempScale );
-		this._bgSmallGridElement.setAttribute( "width", tempScale );
-	}
-	
-	updateTransform() 
-	{
-		const tempTransform = this.props.model._transform;
-		this._viewElement.setAttribute( "transform", "translate(" + tempTransform._position.x + "," + tempTransform._position.y + ") scale(" + tempTransform._scale.x + ")" );
+		console.log( "??" );
+		this._viewElement.setAttribute( "transform", "translate(" + tTransform._position.x + "," + tTransform._position.y + ") scale(" + tTransform._scale.x + ")" );
 	}
 
 	render() // TODO: Graph needs to be in World AND View transform
@@ -139,40 +88,11 @@ class Graph extends React.Component
 		return (
 			<div className="graph" ref={ this._onElement }>
 				<svg ref={ this._onSVGElement } height="100%" width="100%">
-					<defs>
-						<filter xmlns="http://www.w3.org/2000/svg" id="node-glow">
-							<feGaussianBlur stdDeviation="6"/>
-							<feComponentTransfer>
-								<feFuncA type="linear" slope="0.35"/>
-							</feComponentTransfer>
-							<feMerge> 
-								<feMergeNode/>
-								<feMergeNode in="SourceGraphic"/> 
-							</feMerge>
-						</filter>
-						<filter xmlns="http://www.w3.org/2000/svg" id="edge-glow">
-							<feGaussianBlur stdDeviation="6"/>
-							<feComponentTransfer>
-								<feFuncA type="linear" slope="0.4"/>
-							</feComponentTransfer>
-							<feMerge> 
-								<feMergeNode/>
-								<feMergeNode in="SourceGraphic"/> 
-							</feMerge>
-						</filter>
-						<pattern id="smallGrid" width="20" height="20" patternUnits="userSpaceOnUse" ref={ this._onBGSmallGridElement }>
-							<path d="M 20 0 L 0 0 0 20" fill="none" stroke="#4285b0" strokeWidth="0.5" strokeOpacity="0.25"/>
-						</pattern>
-						<pattern id="grid" width="100" height="100" patternUnits="userSpaceOnUse" ref={ this._onBGGridElement }>
-							<rect width="100" height="100" fill="url(#smallGrid)"/>
-							<path d="M 100 0 L 0 0 0 100" fill="none" stroke="#4285b0" strokeWidth="2" strokeOpacity="0.1"/>
-						</pattern>
-						<Arrows types={ this.props.model._edgeTypes }/>
-					</defs>
+					<Defs viewTransform={ this.props.model._transform } grid={ this.props.grid } edgeTypes={ this.props.model._edgeTypes }/>
 					<rect className={ this.props.grid.isVisible ? "grid" : "grid hidden" } fill="url(#grid)" height="100%" width="100%"/>
 					<g ref={ this._onViewElement }>
-						<Edges ref={ ( tComponent ) => { this._edges = tComponent; } }/>
-						<Nodes onLink={ ( tModel, tIsSet ) => { this._edges.onLink( tModel, tIsSet ); } } onSelectSingle={ ( tNode ) => { this.props.model._selection.selectSingleNode( tNode ); } } nodes={ this.props.model._nodes }/>
+						<Edges ref={ this._onEdges }/>
+						<Nodes onLink={ this._onLink } selecion={ this.props.selection } nodes={ this.props.model._nodes }/>
 					</g>
 				</svg>
 			</div>
@@ -183,7 +103,8 @@ class Graph extends React.Component
 Graph.propTypes =
 {
 	model: PropTypes.instanceOf( GraphModel ).isRequired,
-	grid: PropTypes.instanceOf( GridModel ).isRequired
+	grid: PropTypes.instanceOf( GridModel ).isRequired,
+	selection: PropTypes.instanceOf( SelectionModel ).isRequired
 };
 
 export default observer( Graph );
