@@ -91,9 +91,9 @@ class ZoomControls extends React.Component
 				<div className="zoom-track">
 					<button className="zoom-meter selected" ref={ this._onMeterElement }/>
 					<div className="zoom-lines">
-						<div className="zoom-line"/>
-						<div className="zoom-line"/>
-						<div className="zoom-line"/>
+						<div/>
+						<div/>
+						<div/>
 					</div>
 				</div>
 				<button className={ tempScale <= this.props.model.min ? null : "selected" } onClick={ this._onZoomOut }>
