@@ -20,7 +20,6 @@ class Defs extends React.Component
 		
 		// Events
 		this._onTransformDispose = observe( tProps.viewTransform, ( tChange ) => { this.onTransform( tChange ); } );
-		this._onGridDispose = observe( tProps.grid, ( tChange ) => { this.onGrid( tChange ); } );
 		this._onBGGridElement = ( tElement ) => { this._bgGridElement = tElement; };
 		this._onBGSmallGridElement = ( tElement ) => { this._bgSmallGridElement = tElement; };
 	}
@@ -35,16 +34,6 @@ class Defs extends React.Component
 	{
 		this._onTransformDispose();
 		this._onTransformDispose = null;
-		this._onGridDispose();
-		this._onGridDispose = null;
-	}
-	
-	onGrid( tChange )
-	{
-		if ( tChange.name === "size" )
-		{
-			this.backgroundScale = this.props.viewTransform._scale.x;
-		}
 	}
 	
 	onTransform( tChange )
@@ -67,7 +56,7 @@ class Defs extends React.Component
 	
 	set backgroundScale( tScale )
 	{
-		let tempScale = tScale * this.props.grid.size;
+		let tempScale = tScale * 80; // 80 is the desired height of the big grid
 		this._bgGridElement.setAttribute( "height", tempScale );
 		this._bgGridElement.setAttribute( "width", tempScale );
 		
@@ -78,7 +67,6 @@ class Defs extends React.Component
 
 	render() // TODO: Graph needs to be in World AND View transform
 	{
-		// TODO: Optimize so not re-rendering each time something changes
 		return (
 			<defs>
 				<filter xmlns="http://www.w3.org/2000/svg" id="node-glow">
@@ -117,7 +105,6 @@ class Defs extends React.Component
 Defs.propTypes =
 {
 	viewTransform: PropTypes.instanceOf( Transform2DModel ).isRequired,
-	grid: PropTypes.instanceOf( GridModel ).isRequired,
 	edgeTypes: PropTypes.objectOf( PropTypes.instanceOf( TypeModel ) ).isRequired
 };
 

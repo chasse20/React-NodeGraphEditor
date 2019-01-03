@@ -13,7 +13,7 @@ class GridControls extends React.Component
 		
 		// Events
 		this._onVisibleToggle = () => { this.props.model.isVisible = !this.props.model.isVisible; };
-		this._onSnapToggle = () => { this.props.selection.isGridSnap = !this.props.selection.isGridSnap; };
+		this._onSnapToggle = () => { this.props.selection.isSnapping = !this.props.selection.isSnapping; };
 	}
 	
 	render()
@@ -24,9 +24,8 @@ class GridControls extends React.Component
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="-467 269 24 24">
 						<path d="M-445.4,269h-19.2c-1.3,0-2.4,1.1-2.4,2.4v19.2c0,1.3,1.1,2.4,2.4,2.4h19.2c1.3,0,2.4-1.1,2.4-2.4v-19.2 C-443,270.1-444.1,269-445.4,269z M-459,291h-6v-6h6V291z M-459,284h-6v-6h6V284z M-459,277h-6v-6h6V277z M-452,291h-6v-6h6V291z M-452,284h-6v-6h6V284z M-452,277h-6v-6h6V277z M-445,291h-6v-6h6V291z M-445,284h-6v-6h6V284z M-445,277h-6v-6h6V277z"/>
 					</svg>
-					<div className="divider"/>
 				</button>
-				<button className={ this.props.selection.isGridSnap ? "selected" : null } onMouseDown={ this._onSnapToggle }>
+				<button className={ this.props.selection.isSnapping ? "selected" : null } onMouseDown={ this._onSnapToggle }>
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="-467 269 24 24">
 						<path d="M-445.3,278.9l-6.4-6.4l-3.4,3.4l6.4,6.4c1.4,1.4,1.4,3.6,0,5s-3.6,1.4-5,0l-6.4-6.4l-3.4,3.4l6.4,6.4 c3.2,3.2,8.5,3.2,11.7,0S-442.1,282.1-445.3,278.9z M-450.9,278.3l-2.3-2.3l1.7-1.7l2.3,2.3L-450.9,278.3z M-459.3,286.5l-2.3-2.3 l1.7-1.7l2.3,2.3L-459.3,286.5z"/>
 						<polygon points="-452.3,278.6 -452.3,277.3 -452,277.3 -453.3,276 -453.3,276.3 -454.6,276.3 -453.7,277.3 -453.3,277.3 -453.3,277.7 "/>

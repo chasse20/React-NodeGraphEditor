@@ -1,0 +1,6 @@
+.panel
+{
+	width: 350px;
+	height: inherit;
+	background-color: var( --button-color-gray );
+}

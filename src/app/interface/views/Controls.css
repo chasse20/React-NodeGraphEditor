@@ -1,0 +1,53 @@
+nav
+{
+	box-sizing: border-box;
+	width: var( --controls-width );
+	padding: var( --button-spacing );
+}
+
+nav button
+{
+	padding: 8px;
+	width: 100%;
+	display: flex;
+	height: calc( var( --controls-width ) - 2 * var( --button-spacing ) );
+}
+
+nav svg
+{
+	fill: var( --button-color-light-gray );
+	width: inherit;
+}
+
+nav .buttons > *
+{
+	margin-top: var( --button-spacing );
+}
+
+nav .buttons button
+{
+	background-color: var( --button-color-gray );
+	position: relative;
+}
+
+nav button.selected
+{
+	background-color: var( --button-color-selected );
+}
+
+nav button.selected svg
+{
+	fill: var( --icon-color-selected );
+}
+
+nav .buttons button:first-child
+{
+	border-top-left-radius: var( --button-radius );
+	border-top-right-radius: var( --button-radius );
+}
+
+nav .buttons button:last-child
+{
+	border-bottom-left-radius: var( --button-radius );
+	border-bottom-right-radius: var( --button-radius );
+}

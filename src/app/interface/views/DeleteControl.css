@@ -1,4 +1,4 @@
-.select-toggle button.selected, .delete:not(.selected)
+.delete:not(.selected)
 {
 	pointer-events: none;
 	cursor: initial;

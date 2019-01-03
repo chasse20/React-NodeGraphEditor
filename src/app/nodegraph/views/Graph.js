@@ -18,6 +18,12 @@ class Graph extends React.Component
 		// Inheritance
 		super( tProps );
 		
+		// State
+		this.state =
+		{
+			isGridVisible: true
+		};
+		
 		// Variables;
 		this._element = null;
 		this._svgElement = null;
@@ -49,6 +55,11 @@ class Graph extends React.Component
 	{
 		this._onTransformDispose();
 		this._onTransformDispose = null;
+	}
+	
+	set isGridVisible( tIsVisible )
+	{
+		this.setState( { isGridVisible: tIsVisible } );
 	}
 
 	onMouseDown( tEvent )
@@ -89,7 +100,7 @@ class Graph extends React.Component
 			<div className="graph" ref={ this._onElement }>
 				<svg ref={ this._onSVGElement } height="100%" width="100%">
 					<Defs viewTransform={ this.props.model._transform } grid={ this.props.grid } edgeTypes={ this.props.model._edgeTypes }/>
-					<rect className={ this.props.grid.isVisible ? "grid" : "grid hidden" } fill="url(#grid)" height="100%" width="100%"/>
+					<rect className={ this.state.isGridVisible ? "grid" : "grid hidden" } fill="url(#grid)" height="100%" width="100%"/>
 					<g ref={ this._onViewElement }>
 						<Edges ref={ this._onEdges }/>
 						<Nodes onLink={ this._onLink } selecion={ this.props.selection } nodes={ this.props.model._nodes }/>

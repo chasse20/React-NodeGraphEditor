@@ -2,23 +2,29 @@ import React, { Component } from "react";
 import { Switch, Route } from "react-router";
 import FileSaver from "file-saver";
 import Interface from "./interface/views/Interface";
-import InterfaceModel from "./interface/Interface";
 import Graph from "./nodegraph/views/Graph";
 import GraphModel from "./nodegraph/Graph";
+import InterfaceModel from "./interface/Interface";
 import Data from "../data.json";
 import "./App.css";
 
 export default class App extends Component
 {
-	static Instance = null;
-
 	constructor( tProps )
 	{
+		// Inheritance
 		super( tProps );
 
-		App.Instance = this;
-		this._graph = new GraphModel(); // TODO: dynamic???
-		this._interface = new InterfaceModel();
+		// Variables
+		this._interface = null;
+		this._graphModel = new GraphModel();
+		this._interfaceModel = new InterfaceModel();
+		
+		// Events
+		this._onInterface = ( tComponent ) => { this._interface = tComponent; };
+		this._onSelectGraph = ( tEvent, tGraph ) => { this._interface.onSelectGraph( tEvent, tGraph ); };
+		this._onSelectNode = ( tEvent, tNode ) => { this._interface.onSelectNode( tEvent, tNode ); };
+		this._onSelectEdge = ( tEvent, tEdge ) => { this._interface.onSelectEdge( tEvent, tEdge ); };
 		
 		this.load( Data ); // TODO: make this work only from user input
 	}
@@ -28,17 +34,10 @@ export default class App extends Component
 		const tempJSON = {};
 
 		// Graph
-		var tempObject = this._graph.toJSON();
+		var tempObject = this._graphModel.toJSON();
 		if ( tempObject != null )
 		{
 			tempJSON.graph = tempObject;
-		}
-		
-		// Interface
-		tempObject = this._interface.toJSON();
-		if ( tempObject != null )
-		{
-			tempJSON.interface = tempObject;
 		}
 
 		return tempJSON;
@@ -53,30 +52,32 @@ export default class App extends Component
 	{
 		if ( tJSON != null )
 		{
-			this._graph.fromJSON( tJSON.graph );
-			this._interface.fromJSON( tJSON.interface );
+			this._graphModel.fromJSON( tJSON.graph );
 		}
 	}
 
 	render()
 	{
-		return (
-			<React.Fragment>
-				<Switch>
+		/*
+		<Switch>
 					<Route path="/date" render={
 						( tProps ) =>
 						(
-							<Graph model={ this._graph } grid={ this._interface._grid } selection={ this._interface._selection }/>
+							<Graph model={ this._graphModel } interface={ this._interfaceModel } onSelectGraph={ this._onSelectGraph } onSelectNode={ this._onSelectNode } onSelectEdge={ this._onSelectEdge }/>
 						)
 					}/>
 					<Route render={
 						( tProps ) =>
 						(
-							<Graph model={ this._graph } grid={ this._interface._grid } selection={ this._interface._selection }/>
+							<Graph model={ this._graphModel } interface={ this._interfaceModel } onSelectGraph={ this._onSelectGraph } onSelectNode={ this._onSelectNode } onSelectEdge={ this._onSelectEdge }/>
 						)
 					}/>
 				</Switch>
-				<Interface model={ this._interface } viewTransform={ this._graph._transform }/>
+		*/
+		
+		return (
+			<React.Fragment>
+				<Interface ref={ this._onInterface } model={ this._interfaceModel } viewTransform={ this._graphModel._transform }/>
 			</React.Fragment>
 		);
 	}
