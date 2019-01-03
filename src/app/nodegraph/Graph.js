@@ -22,7 +22,6 @@ export default class Graph
 			"default": new Type( "default", Edge, EdgeView )
 		};
 		this._transform = new Transform2D();
-		this._selection = new Selection( this._transform );
 	}
 	
 	toJSON()

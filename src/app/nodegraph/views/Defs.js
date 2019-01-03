@@ -4,7 +4,6 @@ import { observe } from "mobx";
 import { observer } from "mobx-react";
 import Transform2DModel from "../../core/Transform2D";
 import TypeModel from "../Type";
-import GridModel from "../../interface/Grid";
 import Arrows from "./Arrows";
 
 class Defs extends React.Component

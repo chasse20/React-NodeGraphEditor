@@ -1,4 +1,4 @@
-.interface
+.sidebar
 {
 	display: flex;
 	position: fixed;
@@ -8,7 +8,7 @@
 	transition: transform 0.35s ease;
 }
 
-.interface.open
+.sidebar.open
 {
 	transform: translateX( 0 );
 }

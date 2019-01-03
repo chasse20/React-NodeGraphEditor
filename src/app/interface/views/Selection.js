@@ -11,8 +11,7 @@ class Selection extends React.Component
 		super( tProps );
 		
 		// Events
-		this._onPanOn = () => { this.props.model.isPanning = true; };
-		this._onPanOff = () => { this.props.model.isPanning = false; };
+		
 	}
 	
 	render() // TODO: Delete

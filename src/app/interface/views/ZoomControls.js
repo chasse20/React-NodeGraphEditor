@@ -6,7 +6,7 @@ import Vector2D from "../../core/Vector2D";
 import Transform2DModel from "../../core/Transform2D";
 import "./ZoomControls.css";
 
-class ZoomControls extends React.Component // TODO: Drag
+class ZoomControls extends React.Component // TODO: Drag the meter
 {
 	constructor( tProps )
 	{
