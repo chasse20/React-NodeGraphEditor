@@ -28,6 +28,8 @@ class Edge extends React.Component
 		this._onOffsetMove = observe( tProps.model._source._offset, tempOnSourceMove );
 		this._onSourceMove = observe( tProps.model._source._node._transform, tempOnSourceMove );
 		this._onTargetMove = observe( tProps.model._target._node._transform, ( tChange ) => { this.onTargetMove(); } );
+		this._onElement = ( tElement ) => { this._element = tElement; };
+		this._onTextElement = ( tElement ) => { this._textElement = tElement; };
 	}
 
 	componentDidMount()
@@ -116,10 +118,10 @@ class Edge extends React.Component
 		// Render
 		return (
 			<g className={ "edge " + this.constructor.name }>
-				<line ref={ ( tElement ) => { this._element = tElement; } } stroke={ tempStroke } strokeOpacity="0.6" markerEnd={ "url(#arrow-" + tempType._name + ")" }/>
+				<line ref={ this._onElement } stroke={ tempStroke } strokeOpacity="0.6" markerEnd={ "url(#arrow-" + tempType._name + ")" }/>
 				{
 					tempTypeData.text != null &&
-						<text ref={ ( tElement ) => { this._textElement = tElement; } } alignmentBaseline="middle" textAnchor="middle" fill={ tempStroke }>
+						<text ref={ this._onTextElement } alignmentBaseline="middle" textAnchor="middle" fill={ tempStroke }>
 							{ tempTypeData.text }
 						</text>
 				}

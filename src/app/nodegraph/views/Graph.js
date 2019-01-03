@@ -29,6 +29,12 @@ class Graph extends React.Component
 		// Events
 		this._onTransformDispose = observe( tProps.model._transform, ( tChange ) => { this.onTransform( tChange ); } );
 		this._onGridDispose = observe( tProps.grid, ( tChange ) => { this.onGrid( tChange ); } );
+		this._onElement = ( tElement ) => { this._element = tElement; };
+		this._onSVGElement = ( tElement ) => { this._svgElement = tElement; };
+		this._onViewElement = ( tElement ) => { this._viewElement = tElement; };
+		this._onBGElement = ( tElement ) => { this._bgElement = tElement; };
+		this._onBGGridElement = ( tElement ) => { this._bgGridElement = tElement; };
+		this._onBGSmallGridElement = ( tElement ) => { this._bgSmallGridElement = tElement; };
 		this._onMouseDown = ( tEvent ) => { this.onMouseDown( tEvent ); };
 		this._onMouseMove = ( tEvent ) => { this.onMouseMove( tEvent ); };
 		this._onMouseUp = ( tEvent ) => { this.onMouseUp( tEvent ); };
@@ -131,8 +137,8 @@ class Graph extends React.Component
 	{
 		// TODO: Optimize so not re-rendering each time something changes
 		return (
-			<div className="graph" ref={ ( tElement ) => { this._element = tElement; } }>
-				<svg ref={ ( tElement ) => { this._svgElement = tElement; } } height="100%" width="100%">
+			<div className="graph" ref={ this._onElement }>
+				<svg ref={ this._onSVGElement } height="100%" width="100%">
 					<defs>
 						<filter xmlns="http://www.w3.org/2000/svg" id="node-glow">
 							<feGaussianBlur stdDeviation="6"/>
@@ -154,17 +160,17 @@ class Graph extends React.Component
 								<feMergeNode in="SourceGraphic"/> 
 							</feMerge>
 						</filter>
-						<pattern id="smallGrid" width="20" height="20" patternUnits="userSpaceOnUse" ref={ ( tElement ) => { this._bgSmallGridElement = tElement; } }>
+						<pattern id="smallGrid" width="20" height="20" patternUnits="userSpaceOnUse" ref={ this._onBGSmallGridElement }>
 							<path d="M 20 0 L 0 0 0 20" fill="none" stroke="#4285b0" strokeWidth="0.5" strokeOpacity="0.25"/>
 						</pattern>
-						<pattern id="grid" width="100" height="100" patternUnits="userSpaceOnUse" ref={ ( tElement ) => { this._bgGridElement = tElement; } }>
+						<pattern id="grid" width="100" height="100" patternUnits="userSpaceOnUse" ref={ this._onBGGridElement }>
 							<rect width="100" height="100" fill="url(#smallGrid)"/>
 							<path d="M 100 0 L 0 0 0 100" fill="none" stroke="#4285b0" strokeWidth="2" strokeOpacity="0.1"/>
 						</pattern>
 						<Arrows types={ this.props.model._edgeTypes }/>
 					</defs>
 					<rect className={ this.props.grid.isVisible ? "grid" : "grid hidden" } fill="url(#grid)" height="100%" width="100%"/>
-					<g ref={ ( tElement ) => { this._viewElement = tElement; } }>
+					<g ref={ this._onViewElement }>
 						<Edges ref={ ( tComponent ) => { this._edges = tComponent; } }/>
 						<Nodes onLink={ ( tModel, tIsSet ) => { this._edges.onLink( tModel, tIsSet ); } } onSelectSingle={ ( tNode ) => { this.props.model._selection.selectSingleNode( tNode ); } } nodes={ this.props.model._nodes }/>
 					</g>

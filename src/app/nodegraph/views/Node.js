@@ -29,6 +29,7 @@ class Node extends React.Component
 		// Events
 		this._onTransformDispose = observe( tProps.model._transform, ( tChange ) => { this.updateTransform(); } );
 		this._onMouseDown = ( tEvent ) => { this.onMouseDown( tEvent ); };
+		this._onElement = ( tElement ) => { this._element = tElement; };
 	}
 	
 	componentDidMount()
@@ -65,7 +66,7 @@ class Node extends React.Component
 		const tempRadius = Utility.DefaultData( "radius", tempData, tempTypeData, Node.DefaultRadius );
 		
 		return (
-			<g className={ "node " + this.constructor.name } guid={ this.props.model._id } ref={ ( tElement ) => { this._element = tElement; } }>
+			<g className={ "node " + this.constructor.name } guid={ this.props.model._id } ref={ this._onElement }>
 				<circle className="graphic" cx="0" cy="0" r={ tempRadius } fill={ Utility.DefaultData( "fill", tempData, tempTypeData, "#019abd" ) } stroke={ Utility.DefaultData( "stroke", tempData, tempTypeData, "#42d3ff" ) }/>
 				{
 					tempData.text != null &&
