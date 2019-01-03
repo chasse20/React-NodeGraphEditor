@@ -4,8 +4,8 @@
 	--button-spacing: 10px;
 	--button-radius: 6px;
 	--button-color-light-gray: #bbbbbb;
-	--button-color-gray: #3131316b;
-	--button-color-selected: #30bcd2ba;
+	--button-color-gray: #484a4b;
+	--button-color-selected: #2b93a4;
 	--icon-color-selected: #fff;
 }
 
@@ -19,7 +19,7 @@ html, body
 
 body
 {
-	background-color: #000;
+	background: #1c2429;
 	overflow: hidden;
 }
 
