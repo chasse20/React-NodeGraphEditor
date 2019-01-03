@@ -1,5 +1,3 @@
-import Vector2D from "../core/Vector2D";
-
 export default class Zoom
 {
 	constructor( tSpeed = 0.0005, tMin = 0.1, tMax = 1 )
@@ -68,31 +66,5 @@ export default class Zoom
 				this.max = tJSON.max;
 			}
 		}
-	}
-	
-	tryZoom( tTransform, tVelocity ) // TODO: offset zooming from mouse position
-	{
-		// Calculate
-		var tempAmount = tTransform._scale.x + ( tVelocity * this.speed );
-		if ( tVelocity < 0 )
-		{
-			if ( tempAmount < this.min )
-			{
-				tempAmount = this.min;
-			}
-		}
-		else if ( tempAmount > this.max )
-		{
-			tempAmount = this.max;
-		}
-
-		// Apply
-		if ( tempAmount !== tTransform._scale.x )
-		{
-			tTransform._scale = new Vector2D( tempAmount, tempAmount );
-			return true;
-		}
-		
-		return false;
 	}
 }

@@ -18,6 +18,7 @@ export default class Node
 		};
 		this._transform = new Transform2D();
 		this.data = tData;
+		this._isSelected = false;
 	}
 	
 	static CreateFromType( tType, tData )
@@ -141,6 +142,7 @@ decorate( Node,
 	{
 		_pins: observable,
 		data: observable,
+		_isSelected: observable,
 		fromJSON: action
 	}
 );

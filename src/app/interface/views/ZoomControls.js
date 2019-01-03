@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { observer } from "mobx-react";
 import { observe } from "mobx";
+import Vector2D from "../../core/Vector2D";
 import Transform2DModel from "../../core/Transform2D";
 import ZoomModel from "../Zoom";
 import "./ZoomControls.css";
@@ -19,9 +20,9 @@ class ZoomControls extends React.Component
 		// Events
 		this._onTransformDispose = observe( tProps.viewTransform, ( tChange ) => { this.onTransform( tChange ); } );
 		this._onMeterElement = ( tElement ) => { this._meterElement = tElement; };
-		this._onMouseWheel = ( tEvent ) => { this.props.model.tryZoom( this.props.viewTransform, tEvent.deltaY > 0 ? -100 : 100 ); }; // only Mozilla respects mouse wheel delta
-		this._onZoomIn = ( tEvent ) => { this.props.model.tryZoom( this.props.viewTransform, 200 ); };
-		this._onZoomOut = ( tEvent ) => { this.props.model.tryZoom( this.props.viewTransform, -200 ); };
+		this._onMouseWheel = ( tEvent ) => { this.tryZoom( tEvent, tEvent.deltaY > 0 ? -100 : 100 ); }; // only Mozilla respects mouse wheel delta
+		this._onZoomIn = ( tEvent ) => { this.tryZoom( tEvent, 200 ); };
+		this._onZoomOut = ( tEvent ) => { this.tryZoom( tEvent, -200 ); };
 	}
 	
 	componentDidMount()
@@ -47,6 +48,32 @@ class ZoomControls extends React.Component
 	{
 		const tempSlope = -70 / ( this.props.model.max - this.props.model.min );
 		this._meterElement.style.transform = "translateY(" + ( ( tempSlope * tAmount ) - ( tempSlope * this.props.model.max ) ) + "px)";
+	}
+	
+	tryZoom( tMouse, tVelocity ) // TODO: offset zooming from mouse position
+	{
+		// Calculate
+		var tempAmount = this.props.viewTransform._scale.x + ( tVelocity * this.props.model.speed );
+		if ( tVelocity < 0 )
+		{
+			if ( tempAmount < this.props.model.min )
+			{
+				tempAmount = this.props.model.min;
+			}
+		}
+		else if ( tempAmount > this.props.model.max )
+		{
+			tempAmount = this.props.model.max;
+		}
+
+		// Apply
+		if ( tempAmount !== this.props.viewTransform._scale.x )
+		{
+			this.props.viewTransform._scale = new Vector2D( tempAmount, tempAmount );
+			return true;
+		}
+		
+		return false;
 	}
 	
 	render() // TODO: smooth zoom buttons

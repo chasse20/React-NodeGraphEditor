@@ -6,6 +6,7 @@ export default class Selection
 	{
 		this.isPanning = tIsPanning;
 		this.isGridSnap = tIsGridSnap;
+		this._selected = [];
 	}
 
 	toJSON()
