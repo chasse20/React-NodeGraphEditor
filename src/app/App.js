@@ -57,26 +57,23 @@ export default class App extends Component
 	}
 
 	render()
-	{
-		/*
-		<Switch>
+	{		
+		return (
+			<React.Fragment>
+				<Switch>
 					<Route path="/date" render={
 						( tProps ) =>
 						(
-							<Graph model={ this._graphModel } interface={ this._interfaceModel } onSelectGraph={ this._onSelectGraph } onSelectNode={ this._onSelectNode } onSelectEdge={ this._onSelectEdge }/>
+							<Graph model={ this._graphModel } selection={ this._interfaceModel._controls._selection } grid={ this._interfaceModel._controls._grid } onSelectGraph={ this._onSelectGraph } onSelectNode={ this._onSelectNode } onSelectEdge={ this._onSelectEdge }/>
 						)
 					}/>
 					<Route render={
 						( tProps ) =>
 						(
-							<Graph model={ this._graphModel } interface={ this._interfaceModel } onSelectGraph={ this._onSelectGraph } onSelectNode={ this._onSelectNode } onSelectEdge={ this._onSelectEdge }/>
+							<Graph model={ this._graphModel } selection={ this._interfaceModel._controls._selection } grid={ this._interfaceModel._controls._grid } onSelectGraph={ this._onSelectGraph } onSelectNode={ this._onSelectNode } onSelectEdge={ this._onSelectEdge }/>
 						)
 					}/>
 				</Switch>
-		*/
-		
-		return (
-			<React.Fragment>
 				<Interface ref={ this._onInterface } model={ this._interfaceModel } viewTransform={ this._graphModel._transform }/>
 			</React.Fragment>
 		);

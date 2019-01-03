@@ -18,12 +18,6 @@ class Graph extends React.Component
 		// Inheritance
 		super( tProps );
 		
-		// State
-		this.state =
-		{
-			isGridVisible: true
-		};
-		
 		// Variables;
 		this._element = null;
 		this._svgElement = null;
@@ -89,21 +83,19 @@ class Graph extends React.Component
 
 	set transform( tTransform )
 	{
-		console.log( "??" );
 		this._viewElement.setAttribute( "transform", "translate(" + tTransform._position.x + "," + tTransform._position.y + ") scale(" + tTransform._scale.x + ")" );
 	}
 
-	render() // TODO: Graph needs to be in World AND View transform
+	render()
 	{
-		// TODO: Optimize so not re-rendering each time something changes
 		return (
-			<div className="graph" ref={ this._onElement }>
+			<div className={ this.props.selection.isPanning ? "graph panning" : "graph" } ref={ this._onElement }>
 				<svg ref={ this._onSVGElement } height="100%" width="100%">
-					<Defs viewTransform={ this.props.model._transform } grid={ this.props.grid } edgeTypes={ this.props.model._edgeTypes }/>
-					<rect className={ this.state.isGridVisible ? "grid" : "grid hidden" } fill="url(#grid)" height="100%" width="100%"/>
+					<Defs viewTransform={ this.props.model._transform } edgeTypes={ this.props.model._edgeTypes }/>
+					<rect className={ this.props.grid.isVisible ? "grid" : "grid hidden" } fill="url(#grid)" height="100%" width="100%"/>
 					<g ref={ this._onViewElement }>
 						<Edges ref={ this._onEdges }/>
-						<Nodes onLink={ this._onLink } selecion={ this.props.selection } nodes={ this.props.model._nodes }/>
+						<Nodes onLink={ this._onLink } nodes={ this.props.model._nodes }/>
 					</g>
 				</svg>
 			</div>
