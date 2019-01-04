@@ -20,7 +20,6 @@ class Defs extends React.Component
 		// Events
 		this._onTransformDispose = observe( tProps.viewTransform, ( tChange ) => { this.onTransform( tChange ); } );
 		this._onBGGridElement = ( tElement ) => { this._bgGridElement = tElement; };
-		this._onBGSmallGridElement = ( tElement ) => { this._bgSmallGridElement = tElement; };
 	}
 
 	componentDidMount()
@@ -55,13 +54,9 @@ class Defs extends React.Component
 	
 	set backgroundScale( tScale )
 	{
-		let tempScale = tScale * 80; // 80 is the desired height of the big grid
+		let tempScale = tScale * this.props.gridSize;
 		this._bgGridElement.setAttribute( "height", tempScale );
 		this._bgGridElement.setAttribute( "width", tempScale );
-		
-		tempScale = tScale * 20; // 20 is the width of the small grid
-		this._bgSmallGridElement.setAttribute( "height", tempScale );
-		this._bgSmallGridElement.setAttribute( "width", tempScale );
 	}
 
 	render() // TODO: Graph needs to be in World AND View transform
@@ -88,10 +83,10 @@ class Defs extends React.Component
 						<feMergeNode in="SourceGraphic"/> 
 					</feMerge>
 				</filter>
-				<pattern id="smallGrid" width="20" height="20" patternUnits="userSpaceOnUse" ref={ this._onBGSmallGridElement }>
+				<pattern id="smallGrid" viewBox="0 0 20 20" width="20" height="20" patternUnits="userSpaceOnUse">
 					<path d="M 20 0 L 0 0 0 20" fill="none" stroke="#4285b0" strokeWidth="0.5" strokeOpacity="0.25"/>
 				</pattern>
-				<pattern id="grid" width="100" height="100" patternUnits="userSpaceOnUse" ref={ this._onBGGridElement }>
+				<pattern id="grid" width="100" viewBox="0 0 100 100" height="100" patternUnits="userSpaceOnUse" ref={ this._onBGGridElement }>
 					<rect width="100" height="100" fill="url(#smallGrid)"/>
 					<path d="M 100 0 L 0 0 0 100" fill="none" stroke="#4285b0" strokeWidth="2" strokeOpacity="0.1"/>
 				</pattern>
@@ -104,7 +99,13 @@ class Defs extends React.Component
 Defs.propTypes =
 {
 	viewTransform: PropTypes.instanceOf( Transform2DModel ).isRequired,
-	edgeTypes: PropTypes.objectOf( PropTypes.instanceOf( TypeModel ) ).isRequired
+	edgeTypes: PropTypes.objectOf( PropTypes.instanceOf( TypeModel ) ).isRequired,
+	gridSize: PropTypes.number
+};
+
+Defs.defaultProps =
+{
+	gridSize: 100
 };
 
 export default observer( Defs );

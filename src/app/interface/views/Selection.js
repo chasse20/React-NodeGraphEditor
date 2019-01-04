@@ -7,26 +7,18 @@ import Matrix2D from "../../core/Matrix2D";
 import SelectionModel from "../Selection";
 import "./Selection.css";
 
-class Selection extends React.Component
+class Selection extends React.Component // TODO: Primitive Component
 {
 	constructor( tProps )
 	{
 		// Inheritance
 		super( tProps );
 		
-		// State
-		this.state =
-		{
-			isDragging: false
-		};
-		
 		// Variables
-		this._element = null;
-		this._graph = null;
 		this._viewOffset = new Vector2D();
+		this._graph = null;
 		
 		// Events
-		this._onElement = ( tElement ) => { this._element = tElement; };
 		this._onGraphMove = ( tEvent ) => { this.onGraphMove( tEvent ); };
 		this._onGraphStop = ( tEvent ) => { this.onGraphStop( tEvent ); };
 	}
@@ -40,32 +32,23 @@ class Selection extends React.Component
 	{
 		if ( tEvent == null )
 		{
-			this._graph = null;
+			this.onGraphStop( tEvent );
+		}
+		else if ( this.props.model.isPanning )
+		{
+			this._viewOffset = Matrix2D.MultiplyPoint( this.props.viewTransform.localToWorldMatrix, new Vector2D( tEvent.clientX, tEvent.clientY ) ).subtract( this.props.viewTransform.worldPosition );
+			this._graph = tGraph;
+			this._graph.setState( { isSelected: true } );
 			
-			// Remove events
+			document.addEventListener( "mousemove", this._onGraphMove );
+			document.addEventListener( "mouseup", this._onGraphStop );
+			
+			// Stop node dragging event
 		}
 		else
 		{
-			if ( this.props.model.isPanning )
-			{
-				this._viewOffset = Matrix2D.MultiplyPoint( this.props.viewTransform.localToWorldMatrix, new Vector2D( tEvent.clientX, tEvent.clientY ) ).subtract( this.props.viewTransform.worldPosition );
-				this._graph = tGraph;
-				this._graph.setState( { isSelected: true } );
-				
-				this._element.addEventListener( "mousemove", this._onGraphMove );
-				this._element.addEventListener( "mouseup", this._onGraphStop );
-				this._element.addEventListener( "mouseout", this._onGraphStop );
-				this.setState( { isDragging: true } );
-				
-				
-				// Stop node dragging event
-				// Drag view
-			}
-			else
-			{
-				// Clear selected nodes
-				// Start marquee
-			}
+			// Clear selected nodes
+			// Start marquee
 		}
 	}
 	
@@ -79,10 +62,8 @@ class Selection extends React.Component
 		this._graph.setState( { isSelected: false } );
 		this._graph = null;
 		
-		this._element.removeEventListener( "mousemove", this._onGraphMove );
-		this._element.removeEventListener( "mouseup", this._onGraphStop );
-		this._element.removeEventListener( "mouseout", this._onGraphStop );
-		this.setState( { isDragging: false } );
+		document.removeEventListener( "mousemove", this._onGraphMove );
+		document.removeEventListener( "mouseup", this._onGraphStop );
 	}
 	
 	onSelectNode( tEvent, tNode )
@@ -101,11 +82,9 @@ class Selection extends React.Component
 	{
 	}
 	
-	render()
+	render() // MARQUEE GOES HERE
 	{
-		return (
-			<div className={ this.state.isDragging ? "selection dragging" : "selection" } ref={ this._onElement }/>
-		);
+		return null;
 	}
 }
 

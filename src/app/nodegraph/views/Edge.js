@@ -31,7 +31,7 @@ class Edge extends React.Component
 		
 		// Events
 		const tempOnSourceMove = ( tChange ) => { this.onSourceMove(); };
-		//this._onOffsetMove = observe( tProps.model._source._offset, tempOnSourceMove );
+		this._onOffsetMove = observe( tProps.model._source, this.onSourceChange );
 		this._onSourceMove = observe( tProps.model._source._node._transform, tempOnSourceMove );
 		this._onTargetMove = observe( tProps.model._target._node._transform, ( tChange ) => { this.onTargetMove(); } );
 		this._onElement = ( tElement ) => { this._element = tElement; };
@@ -51,12 +51,20 @@ class Edge extends React.Component
 			this.props.onSelect( null, this );
 		}
 		
-		//this._onOffsetMove();
-		//this._onOffsetMove = null;
+		this._onOffsetMove();
+		this._onOffsetMove = null;
 		this._onSourceMove();
 		this._onSourceMove = null;
 		this._onTargetMove();
 		this._onTargetMove = null;
+	}
+	
+	onSourceChange( tChange )
+	{
+		if ( tChange.name === "_offset" )
+		{
+			this.onSourceMove();
+		}
 	}
 	
 	onSourceMove()
@@ -98,7 +106,7 @@ class Edge extends React.Component
 		
 		// End positioned from radius (if exists)
 		const tempTargetNode = this.props.model._target._node;
-		const tempRadius = Utility.DefaultData( "radius", tempTargetNode.data, tempTargetNode._type.data, Node.DefaultRadius );
+		const tempRadius = Utility.DefaultData( "radius", tempTargetNode.data, tempTargetNode._type.data, Node.defaultProps.radius );
 		if ( tempRadius > 0 )
 		{
 			var tempScale = tempSegment.length;
@@ -118,22 +126,20 @@ class Edge extends React.Component
 
 	render()
 	{
-		const tempType = this.props.model._type;
+		const tempModel = this.props.model;
+		const tempType = tempModel._type;
 		const tempTypeData = tempType.data;
-		var tempStroke = tempTypeData.stroke;
-		if ( tempStroke == null )
-		{
-			tempStroke = "#42d3ff";
-		}
+		const tempText = Utility.DefaultData( "text", tempModel, tempTypeData, this.props.text );
+		const tempStroke = Utility.DefaultData( "stroke", tempModel, tempTypeData, this.props.stroke );
 
 		// Render
 		return (
 			<g className={ "edge " + this.constructor.name }>
 				<line ref={ this._onElement } stroke={ tempStroke } strokeOpacity="0.6" markerEnd={ "url(#arrow-" + tempType._name + ")" }/>
 				{
-					tempTypeData.text != null &&
+					tempText != null &&
 						<text ref={ this._onTextElement } alignmentBaseline="middle" textAnchor="middle" fill={ tempStroke }>
-							{ tempTypeData.text }
+							{ tempText }
 						</text>
 				}
 			</g>
@@ -144,7 +150,15 @@ class Edge extends React.Component
 Edge.propTypes =
 {
 	model: PropTypes.instanceOf( EdgeModel ).isRequired,
-	onSelect: PropTypes.func.isRequired
+	onSelect: PropTypes.func.isRequired,
+	text: PropTypes.string,
+	stroke: PropTypes.string
+};
+
+Edge.defaultProps =
+{
+	text: null,
+	stroke: "#42d3ff"
 };
 
 export default observer( Edge );
