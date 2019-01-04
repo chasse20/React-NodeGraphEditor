@@ -1,8 +1,10 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { observer } from "mobx-react";
+import TypeModel from "../Type";
 import "./Arrows.css";
 
-class Arrows extends React.Component
+class Arrows extends React.Component // TODO: Primitive Component
 {
 	render() // TODO: dynamic marker size
 	{
@@ -22,5 +24,10 @@ class Arrows extends React.Component
 		);
 	}
 }
+
+Arrows.propTypes =
+{
+	types: PropTypes.objectOf( PropTypes.instanceOf( TypeModel ) ).isRequired
+};
 
 export default observer( Arrows );

@@ -14,6 +14,18 @@ class Selection extends React.Component
 		
 	}
 	
+	onSelectGraph( tEvent, tGraph )
+	{
+	}
+	
+	onSelectNode( tEvent, tGraph )
+	{
+	}
+	
+	onSelectEdge( tEvent, tGraph )
+	{
+	}
+	
 	render() // TODO: Delete
 	{
 		return (

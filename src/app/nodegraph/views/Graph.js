@@ -31,9 +31,7 @@ class Graph extends React.Component
 		this._onViewElement = ( tElement ) => { this._viewElement = tElement; };
 		this._onEdges = ( tComponent ) => { this._edges = tComponent; };
 		this._onLink = ( tModel, tIsSet ) => { this._edges.onLink( tModel, tIsSet ); };
-		this._onMouseDown = ( tEvent ) => { this.onMouseDown( tEvent ); };
-		this._onMouseMove = ( tEvent ) => { this.onMouseMove( tEvent ); };
-		this._onMouseUp = ( tEvent ) => { this.onMouseUp( tEvent ); };
+		this._onMouseDown = ( tEvent ) => { this.props.onSelectGraph( tEvent, this ); };
 	}
 
 	componentDidMount()
@@ -56,31 +54,6 @@ class Graph extends React.Component
 		this.setState( { isGridVisible: tIsVisible } );
 	}
 
-	onMouseDown( tEvent )
-	{
-		if ( tEvent.target === this._svgElement )
-		{
-			this.props.model._selection.clearSelectedNodes();
-		}
-		this.props.model._selection.startMove( tEvent );
-		
-		this._element.addEventListener( "mousemove", this._onMouseMove );
-		this._element.addEventListener( "mouseup", this._onMouseUp );
-		this._element.removeEventListener( "mousedown", this._onMouseDown );
-	}
-	
-	onMouseUp( tEvent )
-	{
-		this._element.addEventListener( "mousedown", this._onMouseDown );
-		this._element.removeEventListener( "mousemove", this._onMouseMove );
-		this._element.removeEventListener( "mouseup", this._onMouseUp );
-	}
-	
-	onMouseMove( tEvent )
-	{
-		this.props.model._selection.tryMove( tEvent );
-	}
-
 	set transform( tTransform )
 	{
 		this._viewElement.setAttribute( "transform", "translate(" + tTransform._position.x + "," + tTransform._position.y + ") scale(" + tTransform._scale.x + ")" );
@@ -94,8 +67,8 @@ class Graph extends React.Component
 					<Defs viewTransform={ this.props.model._transform } edgeTypes={ this.props.model._edgeTypes }/>
 					<rect className={ this.props.grid.isVisible ? "grid" : "grid hidden" } fill="url(#grid)" height="100%" width="100%"/>
 					<g ref={ this._onViewElement }>
-						<Edges ref={ this._onEdges }/>
-						<Nodes onLink={ this._onLink } nodes={ this.props.model._nodes }/>
+						<Edges ref={ this._onEdges } onSelectEdge={ this.props.onSelectEdge }/>
+						<Nodes nodes={ this.props.model._nodes } onLink={ this._onLink } onSelectNode={ this.props.onSelectNode }/>
 					</g>
 				</svg>
 			</div>
@@ -107,7 +80,10 @@ Graph.propTypes =
 {
 	model: PropTypes.instanceOf( GraphModel ).isRequired,
 	grid: PropTypes.instanceOf( GridModel ).isRequired,
-	selection: PropTypes.instanceOf( SelectionModel ).isRequired
+	selection: PropTypes.instanceOf( SelectionModel ).isRequired,
+	onSelectGraph: PropTypes.func.isRequired,
+	onSelectNode: PropTypes.func.isRequired,
+	onSelectEdge: PropTypes.func.isRequired
 };
 
 export default observer( Graph );

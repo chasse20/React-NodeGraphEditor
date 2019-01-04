@@ -10,7 +10,6 @@ import "./Node.css";
 class Node extends React.Component
 {
 	static SerializableClasses = { "Node": Node };
-	static DefaultRadius = 50;
 	
 	constructor( tProps )
 	{
@@ -28,28 +27,19 @@ class Node extends React.Component
 		
 		// Events
 		this._onTransformDispose = observe( tProps.model._transform, ( tChange ) => { this.updateTransform(); } );
-		this._onMouseDown = ( tEvent ) => { this.onMouseDown( tEvent ); };
+		this._onMouseDown = ( tEvent ) => { tProps.onSelect( tEvent, this ); };
 		this._onElement = ( tElement ) => { this._element = tElement; };
 	}
 	
 	componentDidMount()
 	{
-		// Initialize
 		this.updateTransform();
-		
-		// Events
-		this._element.addEventListener( "mousedown", this._onMouseDown );
 	}
 	
 	componentWillUnmount()
 	{
 		this._onTransformDispose();
 		this._onTransformDispose = null;
-	}
-	
-	onMouseDown( tEvent )
-	{
-		this.props.onSelectSingle( this.props.model );
 	}
 	
 	updateTransform()
@@ -63,10 +53,10 @@ class Node extends React.Component
 		const tempModel = this.props.model;
 		const tempData = tempModel.data;
 		const tempTypeData = tempModel._type.data;
-		const tempRadius = Utility.DefaultData( "radius", tempData, tempTypeData, Node.DefaultRadius );
+		const tempRadius = Utility.DefaultData( "radius", tempData, tempTypeData, this.props.radius );
 		
 		return (
-			<g className={ "node " + this.constructor.name } guid={ this.props.model._id } ref={ this._onElement }>
+			<g className={ "node " + this.constructor.name } guid={ this.props.model._id } ref={ this._onElement } onMouseDown={ this._onMouseDown }>
 				<circle className="graphic" cx="0" cy="0" r={ tempRadius } fill={ Utility.DefaultData( "fill", tempData, tempTypeData, "#019abd" ) } stroke={ Utility.DefaultData( "stroke", tempData, tempTypeData, "#42d3ff" ) }/>
 				{
 					tempData.text != null &&
@@ -95,7 +85,15 @@ class Node extends React.Component
 
 Node.propTypes =
 {
-	model: PropTypes.instanceOf( NodeModel ).isRequired
+	model: PropTypes.instanceOf( NodeModel ).isRequired,
+	onLink: PropTypes.func.isRequired,
+	onSelect: PropTypes.func.isRequired,
+	radius: PropTypes.number
+};
+
+Node.defaultProps =
+{
+	radius: 50
 };
 
 export default observer( Node );

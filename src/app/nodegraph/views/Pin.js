@@ -65,7 +65,8 @@ class Pin extends React.Component
 
 Pin.propTypes =
 {
-	model: PropTypes.instanceOf( PinModel ).isRequired
+	model: PropTypes.instanceOf( PinModel ).isRequired,
+	onLink: PropTypes.func.isRequired
 };
 
 export default observer( Pin );

@@ -1,6 +1,8 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { observer } from "mobx-react";
 import { observe } from "mobx";
+import NodeModel from "../Node";
 import "./Nodes.css";
 
 class Nodes extends React.Component
@@ -64,7 +66,7 @@ class Nodes extends React.Component
 	
 	createElement( tModel )
 	{
-		return React.createElement( tModel._type._viewClass, { model: tModel, key: tModel._id, onLink: this.props.onLink, onSelectSingle: this.props.onSelectSingle } );
+		return React.createElement( tModel._type._viewClass, { model: tModel, key: tModel._id, onLink: this.props.onLink, onSelect: this.props.onSelectNode } );
 	}
 	
 	render()
@@ -76,5 +78,12 @@ class Nodes extends React.Component
 		);
 	}
 }
+
+Nodes.propTypes =
+{
+	nodes: PropTypes.objectOf( PropTypes.instanceOf( NodeModel ) ).isRequired,
+	onLink: PropTypes.func.isRequired,
+	onSelectNode: PropTypes.func.isRequired
+};
 
 export default observer( Nodes );

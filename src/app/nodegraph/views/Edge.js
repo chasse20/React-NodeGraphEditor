@@ -132,7 +132,8 @@ class Edge extends React.Component
 
 Edge.propTypes =
 {
-	model: PropTypes.instanceOf( EdgeModel ).isRequired
+	model: PropTypes.instanceOf( EdgeModel ).isRequired,
+	onSelect: PropTypes.func.isRequired
 };
 
 export default observer( Edge );
