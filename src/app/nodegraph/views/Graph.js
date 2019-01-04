@@ -18,7 +18,13 @@ class Graph extends React.Component
 		// Inheritance
 		super( tProps );
 		
-		// Variables;
+		// State
+		this.state =
+		{
+			isSelected: false
+		};
+		
+		// Variables
 		this._svgElement = null;
 		this._viewElement = null;
 		this._edges = null;
@@ -39,6 +45,11 @@ class Graph extends React.Component
 	
 	componentWillUnmount()
 	{
+		if ( this.state.isSelected )
+		{
+			this.props.onSelectGraph( null, this );
+		}
+		
 		this._onTransformDispose();
 		this._onTransformDispose = null;
 	}
@@ -51,7 +62,7 @@ class Graph extends React.Component
 	render()
 	{
 		return (
-			<div className={ this.props.selection.isPanning ? "graph panning" : "graph" } onMouseDown={ this._onMouseDown }>
+			<div className={ this.state.isSelected ? "graph selected" : "graph" } onMouseDown={ this._onMouseDown }>
 				<svg ref={ this._onSVGElement } height="100%" width="100%">
 					<Defs viewTransform={ this.props.model._transform } edgeTypes={ this.props.model._edgeTypes }/>
 					<rect className={ this.props.grid.isVisible ? "grid" : "grid hidden" } fill="url(#grid)" height="100%" width="100%"/>

@@ -1,9 +1,15 @@
-.sidebar
+.interface
 {
-	display: flex;
 	position: fixed;
 	height: 100%;
-	transform: translateX( calc( -100% + var( --controls-width ) ) );
+	pointer-events: none;
+}
+
+.sidebar
+{
+	position: absolute;
+	display: flex;
+	transform: translateX( calc( -100% * var( --menu-width ) ) );
 	transition-property: transform;
 	transition: transform 0.35s ease;
 }

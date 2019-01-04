@@ -17,6 +17,12 @@ class Edge extends React.Component
 		// Inheritance
 		super( tProps );
 
+		// State
+		this.state =
+		{
+			isSelected: false
+		};
+		
 		// Variables
 		this._element = null;
 		this._textElement = null;
@@ -25,7 +31,7 @@ class Edge extends React.Component
 		
 		// Events
 		const tempOnSourceMove = ( tChange ) => { this.onSourceMove(); };
-		this._onOffsetMove = observe( tProps.model._source._offset, tempOnSourceMove );
+		//this._onOffsetMove = observe( tProps.model._source._offset, tempOnSourceMove );
 		this._onSourceMove = observe( tProps.model._source._node._transform, tempOnSourceMove );
 		this._onTargetMove = observe( tProps.model._target._node._transform, ( tChange ) => { this.onTargetMove(); } );
 		this._onElement = ( tElement ) => { this._element = tElement; };
@@ -40,8 +46,13 @@ class Edge extends React.Component
 	
 	componentWillUnmount()
 	{
-		this._onOffsetMove();
-		this._onOffsetMove = null;
+		if ( this.state.isSelected )
+		{
+			this.props.onSelect( null, this );
+		}
+		
+		//this._onOffsetMove();
+		//this._onOffsetMove = null;
 		this._onSourceMove();
 		this._onSourceMove = null;
 		this._onTargetMove();

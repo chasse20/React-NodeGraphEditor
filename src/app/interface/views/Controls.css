@@ -1,5 +1,6 @@
 nav
 {
+	pointer-events: auto;
 	box-sizing: border-box;
 	width: var( --controls-width );
 	padding: var( --button-spacing );

@@ -20,8 +20,8 @@ class ZoomControls extends React.Component // TODO: Drag the meter
 		this._onTransformDispose = observe( tProps.viewTransform, ( tChange ) => { this.onTransform( tChange ); } );
 		this._onMeterElement = ( tElement ) => { this._meterElement = tElement; };
 		this._onMouseWheel = ( tEvent ) => { this.tryZoom( tEvent, tEvent.deltaY > 0 ? -1 : 1 ); }; // only Mozilla respects mouse wheel delta
-		this._onZoomIn = ( tEvent ) => { this.tryZoom( tEvent, 2 ); };
-		this._onZoomOut = ( tEvent ) => { this.tryZoom( tEvent, -2 ); };
+		this._onZoomIn = ( tEvent ) => { this.tryZoom( tEvent, 2 ); }; // make event center of screen
+		this._onZoomOut = ( tEvent ) => { this.tryZoom( tEvent, -2 ); }; // make event center of screen
 	}
 	
 	componentDidMount()

@@ -1,5 +1,3 @@
-import { observable, decorate, action } from "mobx";
-
 export default class Vector2D
 {
 	constructor( tX, tY )
@@ -139,15 +137,3 @@ export default class Vector2D
 		return ( tA.x * tB.y ) - ( tA.y * tB.x );
 	}
 }
-
-decorate( Vector2D,
-	{
-		x: observable,
-		y: observable,
-		fromJSON: action,
-		normalize: action,
-		add: action,
-		subtract: action,
-		scale: action
-	}
-);

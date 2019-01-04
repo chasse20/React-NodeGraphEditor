@@ -19,7 +19,7 @@ class Node extends React.Component
 		// State
 		this.state =
 		{
-			pins: {},
+			isSelected: false
 		};
 		
 		// Variables
@@ -38,6 +38,11 @@ class Node extends React.Component
 	
 	componentWillUnmount()
 	{
+		if ( this.state.isSelected )
+		{
+			this.props.onSelect( null, this );
+		}
+		
 		this._onTransformDispose();
 		this._onTransformDispose = null;
 	}

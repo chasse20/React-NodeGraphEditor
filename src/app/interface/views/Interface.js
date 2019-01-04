@@ -3,8 +3,10 @@ import PropTypes from "prop-types";
 import { observer } from "mobx-react";
 import InterfaceModel from "../Interface";
 import Transform2DModel from "../../core/Transform2D";
+import Menu from "./Menu";
+import Controls from "./Controls";
 import Selection from "./Selection";
-import SideBar from "./SideBar";
+import "./Interface.css";
 
 class Interface extends React.Component
 {
@@ -38,10 +40,13 @@ class Interface extends React.Component
 	render()
 	{
 		return (
-			<React.Fragment>
-				<Selection ref={ this._onSelection } model={ this.props.model._controls._selection }/>
-				<SideBar menu={ this.props.model._menu } controls={ this.props.model._controls } viewTransform={ this.props.viewTransform }/>
-			</React.Fragment>
+			<div className="interface">
+				<div className={ this.props.model._menu.isOpen ? "sidebar open" : "sidebar" }>
+					<Menu/>
+					<Controls model={ this.props.model._controls } menu={ this.props.model._menu } viewTransform={ this.props.viewTransform }/>
+				</div>
+				<Selection ref={ this._onSelection } model={ this.props.model._controls._selection } viewTransform={ this.props.viewTransform }/>
+			</div>
 		);
 	}
 }
