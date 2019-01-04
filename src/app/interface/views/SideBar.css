@@ -1,0 +1,14 @@
+.sidebar
+{
+	position: absolute;
+	height: inherit;
+	display: flex;
+	transform: translateX( calc( -1 * var( --menu-width ) ) );
+	transition-property: transform;
+	transition: transform 0.35s ease;
+}
+
+.sidebar.open
+{
+	transform: translateX( 0 );
+}

@@ -3,8 +3,7 @@ import PropTypes from "prop-types";
 import { observer } from "mobx-react";
 import InterfaceModel from "../Interface";
 import Transform2DModel from "../../core/Transform2D";
-import Menu from "./Menu";
-import Controls from "./Controls";
+import SideBar from "./SideBar";
 import Selection from "./Selection";
 import "./Interface.css";
 
@@ -15,7 +14,7 @@ class Interface extends React.Component
 		// Inheritance
 		super( tProps );
 		
-		// Variables;
+		// Variables
 		this._selection = null;
 		
 		// Events
@@ -41,10 +40,7 @@ class Interface extends React.Component
 	{
 		return (
 			<div className="interface">
-				<div className={ this.props.model._menu.isOpen ? "sidebar open" : "sidebar" }>
-					<Menu/>
-					<Controls model={ this.props.model._controls } menu={ this.props.model._menu } viewTransform={ this.props.viewTransform }/>
-				</div>
+				<SideBar controls={ this.props.model._controls } menu={ this.props.model._menu } viewTransform={ this.props.viewTransform }/>
 				<Selection ref={ this._onSelection } model={ this.props.model._controls._selection } viewTransform={ this.props.viewTransform }/>
 			</div>
 		);

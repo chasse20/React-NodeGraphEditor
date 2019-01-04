@@ -34,7 +34,7 @@ class Selection extends React.Component // TODO: Primitive Component
 		{
 			this.onGraphStop( tEvent );
 		}
-		else if ( this.props.model.isPanning )
+		else if ( this.props.model.isPanning || tEvent.button === 1 ) // Middle-mouse works too, even if on pan mode
 		{
 			this._viewOffset = Matrix2D.MultiplyPoint( this.props.viewTransform.localToWorldMatrix, new Vector2D( tEvent.clientX, tEvent.clientY ) ).subtract( this.props.viewTransform.worldPosition );
 			this._graph = tGraph;
@@ -84,7 +84,7 @@ class Selection extends React.Component // TODO: Primitive Component
 	
 	render() // MARQUEE GOES HERE
 	{
-		return null;
+		return <div className="selection"/>;
 	}
 }
 

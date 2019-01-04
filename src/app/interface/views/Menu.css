@@ -1,5 +1,7 @@
 .menu
 {
+	position: absolute;
+	height: inherit;
 	pointer-events: auto;
 	width: var( --menu-width );
 	background-color: var( --button-color-gray );

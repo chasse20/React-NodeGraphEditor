@@ -1,5 +1,7 @@
 nav
 {
+	position: absolute;
+	left: var( --menu-width );
 	pointer-events: auto;
 	box-sizing: border-box;
 	width: var( --controls-width );

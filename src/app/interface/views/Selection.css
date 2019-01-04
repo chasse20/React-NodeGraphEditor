@@ -1,9 +1,5 @@
 .selection
 {
-	flex-grow: 1;
-}
-
-.selection.dragging
-{
-	pointer-events: auto;
+	width: inherit;
+	height: inherit;
 }
