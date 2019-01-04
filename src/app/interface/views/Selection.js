@@ -16,6 +16,7 @@ class Selection extends React.Component // TODO: Primitive Component
 		
 		// Variables
 		this._graphOffset = new Vector2D();
+		this._nodes = null;
 		this._nodeOffsets = null;
 		this._nodesTimeout = null; // clicking on a node toggles selection, so this is a delay before confirming a user intends to drag
 		
@@ -33,25 +34,37 @@ class Selection extends React.Component // TODO: Primitive Component
 	
 	onSelectGraph( tEvent )
 	{
+		tEvent.stopPropagation();
+
 		if ( tEvent == null )
 		{
 			this.onGraphStop();
 		}
-		else if ( this.props.model.isPanning || tEvent.button === 1 ) // middle-mouse works too, even if on pan mode
-		{
-			const tempGraph = this.props.graph;
-			tempGraph.isSelected = true;
-			
-			const tempTransform = tempGraph._transform;
-			this._graphOffset = Matrix2D.MultiplyPoint( tempTransform.localToWorldMatrix, new Vector2D( tEvent.clientX, tEvent.clientY ) ).subtract( tempTransform.worldPosition );
-			
-			document.addEventListener( "mousemove", this._onGraphMove );
-			document.addEventListener( "mouseup", this._onGraphStop );
-		}
 		else
 		{
-			// Clear selected nodes
-			// Start marquee
+			// Middle mouse
+			if ( tEvent.button === 1 )
+			{
+				this.props.model.isPanningHeld = !this.props.model.isPanningHeld;
+			}
+			
+			// Panning
+			if ( this.props.model.isPanning || this.props.model.isPanningHeld )
+			{
+				const tempGraph = this.props.graph;
+				tempGraph.isSelected = true;
+				
+				const tempTransform = tempGraph._transform;
+				this._graphOffset = Matrix2D.MultiplyPoint( tempTransform.localToWorldMatrix, new Vector2D( tEvent.clientX, tEvent.clientY ) ).subtract( tempTransform.worldPosition );
+				
+				document.addEventListener( "mousemove", this._onGraphMove );
+				document.addEventListener( "mouseup", this._onGraphStop );
+			}
+			else
+			{
+				// Clear selected nodes
+				// Start marquee
+			}
 		}
 	}
 	
@@ -64,6 +77,7 @@ class Selection extends React.Component // TODO: Primitive Component
 	onGraphStop( tEvent )
 	{
 		this.props.graph.isSelected = false;
+		this.props.model.isPanningHeld = false;
 		
 		document.removeEventListener( "mousemove", this._onGraphMove );
 		document.removeEventListener( "mouseup", this._onGraphStop );
@@ -71,14 +85,28 @@ class Selection extends React.Component // TODO: Primitive Component
 	
 	onSelectNode( tEvent, tNode )
 	{
-		if ( tEvent == null )
+		tEvent.stopPropagation();
+		
+		console.log( tEvent.type );
+		/*if ( tEvent == null )
 		{
 		}
 		else if ( tEvent.button === 0 )
 		{
 			tEvent.stopPropagation();
-		}
-		
+			
+			// Click delay... if node not selected, start timer before enabling dragging to give a user the chance to cancel, otherwise remove
+			
+			if ( tNode.isSelected )
+			{
+				this.removeNode( tNode );
+			}
+			else
+			{
+				this.addNode( tNode );
+			}
+		}*/
+			
 		/*if ( tEvent == null )
 		{
 			this.removeNode( tNode );
@@ -98,14 +126,16 @@ class Selection extends React.Component // TODO: Primitive Component
 		}*/
 	}
 	
-	onNodesStart( tEvent )
+	onDragNode( tEvent, tNode )
 	{
-		// Calculate offsets
-		
-		
-		// Event
-		//document.addEventListener( "mousemove", this._onNodesMove );
-		//document.addEventListener( "mouseup", this._onNodesStop );
+		/*
+			onMouseDown
+				wait 1 second
+					if mouseup during that 1 second
+						deselect from Selection
+					else
+						trigger onNodeDrag
+		*/
 	}
 	
 	onNodesMove( tEvent )

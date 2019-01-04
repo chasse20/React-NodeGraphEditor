@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { observer } from "mobx-react";
-import GraphModel from "../../nodegraph/Graph";
+import Transform2DModel from "../../core/Transform2D";
 import ControlsModel from "../Controls";
 import MenuModel from "../Menu";
 import Menu from "./Menu";
@@ -15,7 +15,7 @@ class SideBar extends React.Component // Primitive Component
 		return (
 			<div className={ this.props.menu.isOpen ? "sidebar open" : "sidebar" }>
 				<Menu/>
-				<Controls model={ this.props.controls } menu={ this.props.menu } graph={ this.props.graph }/>
+				<Controls model={ this.props.controls } menu={ this.props.menu } viewTransform={ this.props.viewTransform } onDelete={ this.props.onDelete }/>
 			</div>
 		);
 	}
@@ -27,5 +27,6 @@ SideBar.propTypes =
 {
 	controls: PropTypes.instanceOf( ControlsModel ).isRequired,
 	menu: PropTypes.instanceOf( MenuModel ).isRequired,
-	graph: PropTypes.instanceOf( GraphModel ).isRequired
+	viewTransform: PropTypes.instanceOf( Transform2DModel ).isRequired,
+	onDelete: PropTypes.func.isRequired
 };

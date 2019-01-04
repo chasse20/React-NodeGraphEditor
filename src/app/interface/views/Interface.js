@@ -19,7 +19,7 @@ class Interface extends React.Component
 		
 		// Events
 		this._onSelection = ( tComponent ) => { this._selection = tComponent; };
-		this._onDeleteNodes = ( tEvent ) => { this._selection.deleteNodes(); };
+		this._onSelectionDelete = () => { this._selection.onDelete(); };
 	}
 	
 	onSelectGraph( tEvent, tGraph )
@@ -41,7 +41,7 @@ class Interface extends React.Component
 	{
 		return (
 			<div className="interface">
-				<SideBar controls={ this.props.model._controls } menu={ this.props.model._menu } graph={ this.props.graph }/>
+				<SideBar controls={ this.props.model._controls } menu={ this.props.model._menu } viewTransform={ this.props.graph._transform } onDelete={ this._onSelectionDelete }/>
 				<Selection ref={ this._onSelection } model={ this.props.model._controls._selection } graph={ this.props.graph }/>
 			</div>
 		);
