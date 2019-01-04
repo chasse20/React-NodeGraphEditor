@@ -16,18 +16,12 @@ class Node extends React.Component
 		// Inheritance
 		super( tProps );
 		
-		// State
-		this.state =
-		{
-			isSelected: false
-		};
-		
 		// Variables
 		this._element = null;
 		
 		// Events
 		this._onTransformDispose = observe( tProps.model._transform, ( tChange ) => { this.updateTransform(); } );
-		this._onMouseDown = ( tEvent ) => { tProps.onSelect( tEvent, this ); };
+		this._onMouseDown = ( tEvent ) => { tProps.onSelect( tEvent, this.props.model ); };
 		this._onElement = ( tElement ) => { this._element = tElement; };
 	}
 	
@@ -38,9 +32,9 @@ class Node extends React.Component
 	
 	componentWillUnmount()
 	{
-		if ( this.state.isSelected )
+		if ( this.props.model.isSelected )
 		{
-			this.props.onSelect( null, this );
+			this.props.onSelect( null, this.props.model );
 		}
 		
 		this._onTransformDispose();
@@ -61,7 +55,8 @@ class Node extends React.Component
 		const tempRadius = Utility.DefaultData( "radius", tempData, tempTypeData, this.props.radius );
 		
 		return (
-			<g className={ "node " + this.constructor.name } guid={ this.props.model._id } ref={ this._onElement } onMouseDown={ this._onMouseDown }>
+			<g className={ "node " + this.constructor.name + ( this.props.model.isSelected ? " selected" : "" ) } guid={ this.props.model._id } ref={ this._onElement } onMouseDown={ this._onMouseDown } filter={ this.props.model.isSelected ? "url(#node-glow)" : null }>
+				<circle className="outline" cx="0" cy="0" r={ tempRadius + 20 }/>
 				<circle className="graphic" cx="0" cy="0" r={ tempRadius } fill={ Utility.DefaultData( "fill", tempData, tempTypeData, "#019abd" ) } stroke={ Utility.DefaultData( "stroke", tempData, tempTypeData, "#42d3ff" ) }/>
 				{
 					tempData.text != null &&

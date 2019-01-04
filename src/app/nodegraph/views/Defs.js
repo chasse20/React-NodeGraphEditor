@@ -64,9 +64,9 @@ class Defs extends React.Component
 		return (
 			<defs>
 				<filter xmlns="http://www.w3.org/2000/svg" id="node-glow">
-					<feGaussianBlur stdDeviation="6"/>
+					<feGaussianBlur stdDeviation="10"/>
 					<feComponentTransfer>
-						<feFuncA type="linear" slope="0.35"/>
+						<feFuncA type="linear" slope="0.75"/>
 					</feComponentTransfer>
 					<feMerge> 
 						<feMergeNode/>

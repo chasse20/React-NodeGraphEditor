@@ -10,6 +10,7 @@ export default class Edge
 		this._source = tSource;
 		this._target = tTarget;
 		this.data = tData;
+		this.isSelected = false;
 	}
 	
 	static CreateFromType( tType, tSource, tTarget, tData )
@@ -81,7 +82,7 @@ export default class Edge
 decorate( Edge,
 	{
 		data: observable,
-		_isSelected: observable,
+		isSelected: observable,
 		fromJSON: action
 	}
 );

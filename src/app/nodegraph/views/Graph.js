@@ -5,7 +5,6 @@ import { observer } from "mobx-react";
 //import Physics from "../core/Physics";
 import GraphModel from "../Graph";
 import GridModel from "../../interface/Grid";
-import SelectionModel from "../../interface/Selection";
 import Defs from "./Defs";
 import Nodes from "./Nodes";
 import Edges from "./Edges";
@@ -17,13 +16,7 @@ class Graph extends React.Component
 	{
 		// Inheritance
 		super( tProps );
-		
-		// State
-		this.state =
-		{
-			isSelected: false
-		};
-		
+
 		// Variables
 		this._svgElement = null;
 		this._viewElement = null;
@@ -35,7 +28,7 @@ class Graph extends React.Component
 		this._onViewElement = ( tElement ) => { this._viewElement = tElement; };
 		this._onEdges = ( tComponent ) => { this._edges = tComponent; };
 		this._onLink = ( tModel, tIsSet ) => { this._edges.onLink( tModel, tIsSet ); };
-		this._onMouseDown = ( tEvent ) => { this.props.onSelectGraph( tEvent, this ); };
+		this._onMouseDown = ( tEvent ) => { this.props.onSelectGraph( tEvent ); };
 	}
 
 	componentDidMount()
@@ -45,9 +38,9 @@ class Graph extends React.Component
 	
 	componentWillUnmount()
 	{
-		if ( this.state.isSelected )
+		if ( this.props.model.isSelected )
 		{
-			this.props.onSelectGraph( null, this );
+			this.props.onSelectGraph( null );
 		}
 		
 		this._onTransformDispose();
@@ -62,7 +55,7 @@ class Graph extends React.Component
 	render()
 	{
 		return (
-			<div className={ this.state.isSelected ? "graph selected" : "graph" } onMouseDown={ this._onMouseDown }>
+			<div className={ this.props.model.isSelected ? "graph selected" : "graph" } onMouseDown={ this._onMouseDown }>
 				<svg ref={ this._onSVGElement } height="100%" width="100%">
 					<Defs viewTransform={ this.props.model._transform } edgeTypes={ this.props.model._edgeTypes }/>
 					<rect className={ this.props.grid.isVisible ? "grid" : "grid hidden" } fill="url(#grid)" height="100%" width="100%"/>
@@ -80,7 +73,6 @@ Graph.propTypes =
 {
 	model: PropTypes.instanceOf( GraphModel ).isRequired,
 	grid: PropTypes.instanceOf( GridModel ).isRequired,
-	selection: PropTypes.instanceOf( SelectionModel ).isRequired,
 	onSelectGraph: PropTypes.func.isRequired,
 	onSelectNode: PropTypes.func.isRequired,
 	onSelectEdge: PropTypes.func.isRequired

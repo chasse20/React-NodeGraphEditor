@@ -14,6 +14,33 @@
 	stroke-width: 2;
 }
 
+.node .outline
+{
+	display: none;
+}
+
+.node.selected .outline
+{
+	display: block;
+	fill: none;
+	stroke: #fff;
+	stroke-width: 2;
+	stroke-dasharray: 10;
+	animation: selectedOutline linear 10s infinite;
+}
+
+@keyframes selectedOutline
+{
+	0%
+	{
+		transform: rotateZ( 0deg );
+	}
+	100%
+	{
+		transform: rotateZ( 360deg );
+	}
+}
+
 .node .text
 {
 	display: flex;

@@ -8,7 +8,7 @@ import Vector2D from "../../core/Vector2D";
 import Utility from "../Utility";
 import "./Edge.css";
 
-class Edge extends React.Component
+class Edge extends React.Component // TODO: Selectable
 {
 	static SerializableClasses = { "Edge": Edge };
 	
@@ -17,12 +17,6 @@ class Edge extends React.Component
 		// Inheritance
 		super( tProps );
 
-		// State
-		this.state =
-		{
-			isSelected: false
-		};
-		
 		// Variables
 		this._element = null;
 		this._textElement = null;
@@ -46,9 +40,9 @@ class Edge extends React.Component
 	
 	componentWillUnmount()
 	{
-		if ( this.state.isSelected )
+		if ( this.props.model.isSelected )
 		{
-			this.props.onSelect( null, this );
+			this.props.onSelect( null, this.props.model );
 		}
 		
 		this._onOffsetMove();
@@ -134,7 +128,7 @@ class Edge extends React.Component
 
 		// Render
 		return (
-			<g className={ "edge " + this.constructor.name }>
+			<g className={ "edge " + this.constructor.name + ( this.props.model.isSelected ? " selected" : "" ) }>
 				<line ref={ this._onElement } stroke={ tempStroke } strokeOpacity="0.6" markerEnd={ "url(#arrow-" + tempType._name + ")" }/>
 				{
 					tempText != null &&

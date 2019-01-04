@@ -1,15 +1,5 @@
-.select-toggle button.selected, .delete:not(.selected)
+.select-toggle button.selected
 {
 	pointer-events: none;
 	cursor: initial;
-}
-
-.delete
-{
-	border-radius: var( --button-radius );
-}
-
-.delete.selected
-{
-	background-color: #af3737;
 }

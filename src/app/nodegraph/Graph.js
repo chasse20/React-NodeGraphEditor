@@ -1,6 +1,5 @@
 import { action, decorate, observable, set, remove, has, values } from "mobx";
 import Transform2D from "../core/Transform2D";
-import Selection from "./Selection";
 import Type from "./Type";
 import Edge from "./Edge";
 import EdgeView from "./views/Edge";
@@ -22,6 +21,7 @@ export default class Graph
 			"default": new Type( "default", Edge, EdgeView )
 		};
 		this._transform = new Transform2D();
+		this.isSelected = false;
 	}
 	
 	toJSON()
@@ -249,6 +249,7 @@ decorate( Graph,
 		_nodes: observable.shallow,
 		_nodeTypes: observable.shallow,
 		_edgeTypes: observable.shallow,
+		isSelected: observable,
 		fromJSON: action,
 		setNode: action,
 		removeNode: action,

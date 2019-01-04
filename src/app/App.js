@@ -22,7 +22,7 @@ export default class App extends Component
 		
 		// Events
 		this._onInterface = ( tComponent ) => { this._interface = tComponent; };
-		this._onSelectGraph = ( tEvent, tGraph ) => { this._interface.onSelectGraph( tEvent, tGraph ); };
+		this._onSelectGraph = ( tEvent ) => { this._interface.onSelectGraph( tEvent ); };
 		this._onSelectNode = ( tEvent, tNode ) => { this._interface.onSelectNode( tEvent, tNode ); };
 		this._onSelectEdge = ( tEvent, tEdge ) => { this._interface.onSelectEdge( tEvent, tEdge ); };
 		
@@ -64,17 +64,17 @@ export default class App extends Component
 					<Route path="/date" render={
 						( tProps ) =>
 						(
-							<Graph model={ this._graphModel } selection={ this._interfaceModel._controls._selection } grid={ this._interfaceModel._controls._grid } onSelectGraph={ this._onSelectGraph } onSelectNode={ this._onSelectNode } onSelectEdge={ this._onSelectEdge }/>
+							<Graph model={ this._graphModel } grid={ this._interfaceModel._controls._grid } onSelectGraph={ this._onSelectGraph } onSelectNode={ this._onSelectNode } onSelectEdge={ this._onSelectEdge }/>
 						)
 					}/>
 					<Route render={
 						( tProps ) =>
 						(
-							<Graph model={ this._graphModel } selection={ this._interfaceModel._controls._selection } grid={ this._interfaceModel._controls._grid } onSelectGraph={ this._onSelectGraph } onSelectNode={ this._onSelectNode } onSelectEdge={ this._onSelectEdge }/>
+							<Graph model={ this._graphModel } grid={ this._interfaceModel._controls._grid } onSelectGraph={ this._onSelectGraph } onSelectNode={ this._onSelectNode } onSelectEdge={ this._onSelectEdge }/>
 						)
 					}/>
 				</Switch>
-				<Interface ref={ this._onInterface } model={ this._interfaceModel } viewTransform={ this._graphModel._transform }/>
+				<Interface ref={ this._onInterface } model={ this._interfaceModel } graph={ this._graphModel }/>
 			</React.Fragment>
 		);
 	}
