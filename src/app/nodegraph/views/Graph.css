@@ -7,6 +7,11 @@
 	color: #fff;
 }
 
+.graph.panning
+{
+	cursor: move;
+}
+
 .graph, .graph svg, .graph svg > *
 {
 	position: absolute;

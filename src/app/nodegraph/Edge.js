@@ -10,7 +10,6 @@ export default class Edge
 		this._source = tSource;
 		this._target = tTarget;
 		this.data = tData;
-		this._isSelected = false;
 	}
 	
 	static CreateFromType( tType, tSource, tTarget, tData )

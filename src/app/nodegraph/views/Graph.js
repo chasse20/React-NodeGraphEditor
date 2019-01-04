@@ -19,14 +19,12 @@ class Graph extends React.Component
 		super( tProps );
 		
 		// Variables;
-		this._element = null;
 		this._svgElement = null;
 		this._viewElement = null;
 		this._edges = null;
 		
 		// Events
 		this._onTransformDispose = observe( tProps.model._transform, ( tChange ) => { this.transform = tChange.object; } );
-		this._onElement = ( tElement ) => { this._element = tElement; };
 		this._onSVGElement = ( tElement ) => { this._svgElement = tElement; };
 		this._onViewElement = ( tElement ) => { this._viewElement = tElement; };
 		this._onEdges = ( tComponent ) => { this._edges = tComponent; };
@@ -36,22 +34,13 @@ class Graph extends React.Component
 
 	componentDidMount()
 	{
-		// Initialize
 		this.setTransform = this.props.model._transform;
-		
-		// Inputs
-		this._element.addEventListener( "mousedown", this._onMouseDown );
 	}
 	
 	componentWillUnmount()
 	{
 		this._onTransformDispose();
 		this._onTransformDispose = null;
-	}
-	
-	set isGridVisible( tIsVisible )
-	{
-		this.setState( { isGridVisible: tIsVisible } );
 	}
 
 	set transform( tTransform )
@@ -62,7 +51,7 @@ class Graph extends React.Component
 	render()
 	{
 		return (
-			<div className={ this.props.selection.isPanning ? "graph panning" : "graph" } ref={ this._onElement }>
+			<div className={ this.props.selection.isPanning ? "graph panning" : "graph" } onMouseDown={ this._onMouseDown }>
 				<svg ref={ this._onSVGElement } height="100%" width="100%">
 					<Defs viewTransform={ this.props.model._transform } edgeTypes={ this.props.model._edgeTypes }/>
 					<rect className={ this.props.grid.isVisible ? "grid" : "grid hidden" } fill="url(#grid)" height="100%" width="100%"/>

@@ -18,7 +18,6 @@ export default class Node
 		};
 		this._transform = new Transform2D();
 		this.data = tData;
-		this._isSelected = false;
 	}
 	
 	static CreateFromType( tType, tData )
