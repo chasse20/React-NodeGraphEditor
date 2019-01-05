@@ -19,7 +19,6 @@ class Selection extends React.Component // TODO: Primitive Component
 		this._nodes = null;
 		this._nodeOffset = new Vector2D();
 		this._nodeOffsets = null;
-		this._isRecentlyToggled = true;
 		this._nodeDragTimeout = null;
 		
 		// Events
@@ -32,25 +31,29 @@ class Selection extends React.Component // TODO: Primitive Component
 	componentWillUnmount()
 	{
 		// Reset selection states
-		this.props.graph.isSelected = false;
+		this.onGraphStop();
+		this.clearNodes();
+		
+		// Events
+		if ( this._nodeDragTimeout !== null )
+		{
+			clearTimeout( this._nodeDragTimeout );
+		}
+	}
+	
+	clearNodes()
+	{
+		this.onNodesStop();
 		if ( this._nodes !== null )
 		{
 			for ( let i = ( this._nodes.length - 1 ); i >= 0; --i )
 			{
 				this._nodes[i].isSelected = false;
 			}
+			this._nodes = null;
 		}
 		
-		// Events
-		document.removeEventListener( "mousemove", this._onGraphMove );
-		document.removeEventListener( "mouseup", this._onGraphStop );
-		document.removeEventListener( "mousemove", this._onNodesMove );
-		document.removeEventListener( "mouseup", this._onNodesStop );
-		
-		if ( this._nodeDragTimeout !== null )
-		{
-			clearTimeout( this._nodeDragTimeout );
-		}
+		this.props.model.isStuffSelected = false;
 	}
 	
 	onSelectGraph( tEvent )
@@ -83,18 +86,7 @@ class Selection extends React.Component // TODO: Primitive Component
 			// Marquee
 			else
 			{
-				// Clear selected nodes
-				this.onNodesStop( tEvent );
-				if ( this._nodes !== null )
-				{
-					for ( let i = ( this._nodes.length - 1 ); i >= 0; --i )
-					{
-						this._nodes[i].isSelected = false;
-					}
-					this._nodes = null;
-				}
-				
-				// Marquee
+				this.clearNodes();
 			}
 		}
 	}
@@ -126,7 +118,7 @@ class Selection extends React.Component // TODO: Primitive Component
 			
 			if ( tEvent.type === "mousedown" )
 			{
-				if ( tNode.isSelected || !this._isRecentlyToggled )
+				if ( tNode.isSelected )
 				{
 					clearTimeout( this._nodeDragTimeout );
 					this._nodeDragTimeout = setTimeout(
@@ -164,7 +156,6 @@ class Selection extends React.Component // TODO: Primitive Component
 				
 				clearTimeout( this._nodeDragTimeout );
 				this._nodeDragTimeout = null;
-				this._isRecentlyToggled = true;
 			}
 		}
 	}
@@ -186,7 +177,7 @@ class Selection extends React.Component // TODO: Primitive Component
 		document.removeEventListener( "mouseup", this._onNodesStop );
 	}
 	
-	addNode( tNode )
+	addNode( tNode ) // TODO: Reorder newest selection models in Graph!
 	{
 		if ( tNode != null )
 		{
@@ -194,6 +185,7 @@ class Selection extends React.Component // TODO: Primitive Component
 			{
 				this._nodes = [];
 				this._nodes.push( tNode );
+				
 				tNode.isSelected = true;
 				this.props.model.isStuffSelected = true;
 				
@@ -222,6 +214,7 @@ class Selection extends React.Component // TODO: Primitive Component
 				if ( this._nodes.length === 0 )
 				{
 					this._nodes = null;
+					
 					this.props.model.isStuffSelected = false;
 				}
 				
