@@ -256,7 +256,7 @@ class Selection extends React.Component // TODO: Primitive Component
 	
 	render() // MARQUEE GOES HERE
 	{
-		return <div className="selection"/>;
+		return null;
 	}
 }
 
