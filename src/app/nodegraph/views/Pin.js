@@ -36,12 +36,12 @@ class Pin extends React.Component
 		{
 			this._onLinksDispose();
 			this._onLinksDispose = null;
-			
-			const tempPins = this.props.model._links;
-			for ( let tempKey in tempPins )
-			{
-				this.props.onLink( tempPins[ tempKey ] );
-			}
+		}
+		
+		const tempPins = this.props.model._links;
+		for ( let tempKey in tempPins )
+		{
+			this.props.onLink( tempPins[ tempKey ] );
 		}
 	}
 	

@@ -19,7 +19,7 @@ class Selection extends React.Component // TODO: Primitive Component
 		this._nodes = null;
 		this._nodeOffset = new Vector2D();
 		this._nodeOffsets = null;
-		this._isRecentlyToggled = false;
+		this._isRecentlyToggled = true;
 		this._nodeDragTimeout = null;
 		
 		// Events
@@ -63,13 +63,12 @@ class Selection extends React.Component // TODO: Primitive Component
 		{
 			tEvent.stopPropagation();
 			
-			// Middle mouse
-			if ( tEvent.button === 1 )
+			// Pan
+			if ( tEvent.button === 1 ) // middle mouse
 			{
 				this.props.model.isPanningHeld = !this.props.model.isPanningHeld;
 			}
 			
-			// Panning
 			if ( this.props.model.isPanning || this.props.model.isPanningHeld )
 			{
 				const tempGraph = this.props.graph;
@@ -81,8 +80,10 @@ class Selection extends React.Component // TODO: Primitive Component
 				document.addEventListener( "mousemove", this._onGraphMove );
 				document.addEventListener( "mouseup", this._onGraphStop );
 			}
+			// Marquee
 			else
 			{
+				// Clear selected nodes
 				this.onNodesStop( tEvent );
 				if ( this._nodes !== null )
 				{
@@ -92,8 +93,8 @@ class Selection extends React.Component // TODO: Primitive Component
 					}
 					this._nodes = null;
 				}
-				// Clear selected nodes
-				// Start marquee
+				
+				// Marquee
 			}
 		}
 	}
@@ -117,9 +118,9 @@ class Selection extends React.Component // TODO: Primitive Component
 	{
 		if ( tEvent == null )
 		{
-			this.onNodeStop();
+			this.onNodesStop();
 		}
-		else if ( tEvent.button === 0 )
+		else if ( tEvent.button === 0 ) // must be first mouse button
 		{
 			tEvent.stopPropagation();
 			
@@ -194,6 +195,7 @@ class Selection extends React.Component // TODO: Primitive Component
 				this._nodes = [];
 				this._nodes.push( tNode );
 				tNode.isSelected = true;
+				this.props.model.isStuffSelected = true;
 				
 				return true;
 			}
@@ -220,6 +222,7 @@ class Selection extends React.Component // TODO: Primitive Component
 				if ( this._nodes.length === 0 )
 				{
 					this._nodes = null;
+					this.props.model.isStuffSelected = false;
 				}
 				
 				tNode.isSelected = false;
@@ -229,6 +232,22 @@ class Selection extends React.Component // TODO: Primitive Component
 		}
 		
 		return false;
+	}
+	
+	onDelete()
+	{
+		if ( this._nodes !== null )
+		{
+			for ( let i = ( this._nodes.length - 1 ); i >= 0; --i )
+			{
+				this.props.graph.removeNode( this._nodes[i] );
+			}
+			
+			this._nodes = null;
+		}
+		
+		this._nodesOffsets = null;
+		this.props.model.isStuffSelected = false;
 	}
 	
 	onSelectEdge( tEvent, tEdge ) // TODO: do
