@@ -42,7 +42,7 @@ class Interface extends React.Component
 		return (
 			<div className="interface">
 				<SideBar controls={ this.props.model._controls } menu={ this.props.model._menu } viewTransform={ this.props.graph._transform } onDelete={ this._onSelectionDelete }/>
-				<Selection ref={ this._onSelection } model={ this.props.model._controls._selection } graph={ this.props.graph }/>
+				<Selection ref={ this._onSelection } model={ this.props.model._controls._selection } grid={ this.props.model._controls._grid } graph={ this.props.graph }/>
 			</div>
 		);
 	}

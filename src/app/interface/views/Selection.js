@@ -5,6 +5,7 @@ import GraphModel from "../../nodegraph/Graph";
 import Vector2D from "../../core/Vector2D";
 import Matrix2D from "../../core/Matrix2D";
 import SelectionModel from "../Selection";
+import GridModel from "../Grid";
 import "./Selection.css";
 
 class Selection extends React.Component // TODO: Primitive Component
@@ -163,9 +164,20 @@ class Selection extends React.Component // TODO: Primitive Component
 	onNodesMove( tEvent )
 	{
 		const tempMouseOffset = Matrix2D.MultiplyPoint( Matrix2D.Inverse( this.props.graph._transform.localMatrix ), new Vector2D( tEvent.clientX, tEvent.clientY ) ).subtract( this._nodeOffset );
-		for ( let i = ( this._nodes.length - 1 ); i >= 0; --i )
+		if ( this.props.model.isSnapping )
 		{
-			this._nodes[i]._transform.worldPosition = Vector2D.Add( tempMouseOffset, this._nodeOffsets[i] ); // TODO: Round
+			const tempGridSnap = this.props.grid.size / this.props.model.snapIncrement;
+			for ( let i = ( this._nodes.length - 1 ); i >= 0; --i )
+			{
+				this._nodes[i]._transform.worldPosition = new Vector2D( Math.round( ( tempMouseOffset.x + this._nodeOffsets[i].x ) / tempGridSnap ) * tempGridSnap, Math.round( ( tempMouseOffset.y + this._nodeOffsets[i].y ) / tempGridSnap ) * tempGridSnap );
+			}
+		}
+		else
+		{
+			for ( let i = ( this._nodes.length - 1 ); i >= 0; --i )
+			{
+				this._nodes[i]._transform.worldPosition = Vector2D.Add( tempMouseOffset, this._nodeOffsets[i] );
+			}
 		}
 	}
 	
@@ -256,6 +268,7 @@ class Selection extends React.Component // TODO: Primitive Component
 Selection.propTypes =
 {
 	model: PropTypes.instanceOf( SelectionModel ).isRequired,
+	grid: PropTypes.instanceOf( GridModel ).isRequired,
 	graph: PropTypes.instanceOf( GraphModel ).isRequired
 };
 
