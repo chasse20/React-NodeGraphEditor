@@ -19,6 +19,8 @@ nav button
 nav svg
 {
 	fill: var( --button-color-light-gray );
+	transition: 0.5s fill ease;
+	transition-property: fill;
 	width: inherit;
 }
 
@@ -30,6 +32,8 @@ nav .buttons > *
 nav .buttons button
 {
 	background-color: var( --button-color-gray );
+	transition: 0.5s background-color ease;
+	transition-property: background-color;
 	position: relative;
 }
 

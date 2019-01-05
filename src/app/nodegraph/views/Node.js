@@ -53,18 +53,17 @@ class Node extends React.Component
 		const tempData = tempModel.data;
 		const tempTypeData = tempModel._type.data;
 		const tempRadius = Utility.DefaultData( "radius", tempData, tempTypeData, this.props.radius );
+		const tempOutlineDiameter = ( tempRadius + 10 ) * 2;
 		
 		return (
-			<g className={ "node " + this.constructor.name + ( this.props.model.isSelected ? " selected" : "" ) } guid={ this.props.model._id } ref={ this._onElement } onMouseDown={ this._onMouse } onMouseUp={ this._onMouse } filter={ this.props.model.isSelected ? "url(#node-glow)" : null }>
-				<circle className="outline" cx="0" cy="0" r={ tempRadius + 20 }/>
+			<g className={ "node " + this.constructor.name + ( this.props.model.isSelected ? " selected" : "" ) } guid={ this.props.model._id } ref={ this._onElement } onMouseDown={ this._onMouse } onMouseUp={ this._onMouse }>
+				<rect className="outline" height={ tempOutlineDiameter } width={ tempOutlineDiameter } x={ -tempOutlineDiameter * 0.5 } y={ -tempOutlineDiameter * 0.5 } strokeDasharray={ tempOutlineDiameter * 0.125 + " " + tempOutlineDiameter * 0.75 + " " + tempOutlineDiameter * 0.125 + " 0" }/>
 				<circle className="graphic" cx="0" cy="0" r={ tempRadius } fill={ Utility.DefaultData( "fill", tempData, tempTypeData, "#019abd" ) } stroke={ Utility.DefaultData( "stroke", tempData, tempTypeData, "#42d3ff" ) }/>
 				{
 					tempData.text != null &&
-						<foreignObject width={ tempRadius * 3 } height={ tempRadius * 4 } x={ -tempRadius * 3 / 2 } y={ -tempRadius * 2 }>
-							<div className="text">
-								<p>
-									{ tempData.text }
-								</p>
+						<foreignObject width={ tempRadius * 2 } height={ tempRadius * 2 } x={ -tempRadius } y={ -tempRadius }>
+							<div className="text" style={ { height: tempRadius * 2 } }>
+								<p>{ tempData.text }</p>
 							</div>
 						</foreignObject>
 				}

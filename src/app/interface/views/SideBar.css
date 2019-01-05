@@ -5,7 +5,7 @@
 	display: flex;
 	transform: translateX( calc( -1 * var( --menu-width ) ) );
 	transition-property: transform;
-	transition: transform 0.35s ease;
+	transition: transform 0.3s;
 }
 
 .sidebar.open

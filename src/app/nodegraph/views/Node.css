@@ -4,11 +4,6 @@
 	cursor: pointer;
 }
 
-.node foreignObject
-{
-	pointer-events: none;
-}
-
 .node .graphic
 { 
 	stroke-width: 2;
@@ -16,47 +11,36 @@
 
 .node .outline
 {
-	display: none;
+	stroke: #fff;
+	stroke-linecap:square;
+	stroke-width: 2;
+	fill: none;
+	opacity: 0;
+	transition: 0.2s opacity ease;
+	transition-property: opacity;
 }
 
 .node.selected .outline
 {
-	display: block;
-	fill: none;
-	stroke: #fff;
-	stroke-width: 2;
-	stroke-dasharray: 10;
-	animation: selectedOutline linear 10s infinite;
-}
-
-@keyframes selectedOutline
-{
-	0%
-	{
-		transform: rotateZ( 0deg );
-	}
-	100%
-	{
-		transform: rotateZ( 360deg );
-	}
+	opacity: 1;
 }
 
 .node .text
 {
 	display: flex;
-	justify-content: center;
 	align-items: center;
-	margin: 0;
-	width: 100%;
-	height:100%;
-}
-
-.node p
-{
-	white-space: nowrap;
-	text-overflow: ellipsis;
-	overflow: hidden;
-	margin: 0;
+	justify-content: center;
+	padding: 20px;
+	box-sizing: border-box;
 	user-select: none;
 	pointer-events: none;
+}
+
+.node .text p
+{
+	max-height: 100%;
+	overflow: hidden;
+	text-align: center;
+	margin: 0;
+	word-break: break-all;
 }
