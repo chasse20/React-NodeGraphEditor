@@ -56,7 +56,7 @@ class Graph extends React.Component
 		return (
 			<div className={ this.props.model.isSelected ? "graph selected" : "graph" } onMouseDown={ this.props.onSelectGraph }>
 				<svg ref={ this._onSVGElement } height="100%" width="100%">
-					<Defs viewTransform={ this.props.model._transform } edgeTypes={ this.props.model._edgeTypes }/>
+					<Defs grid={ this.props.grid } viewTransform={ this.props.model._transform } edgeTypes={ this.props.model._edgeTypes }/>
 					<rect className={ this.props.grid.isVisible ? "grid" : "grid hidden" } fill="url(#grid)" height="100%" width="100%"/>
 					<g ref={ this._onViewElement }>
 						<Edges ref={ this._onEdges } onSelectEdge={ this.props.onSelectEdge }/>

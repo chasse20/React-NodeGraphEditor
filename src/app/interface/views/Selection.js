@@ -165,7 +165,7 @@ class Selection extends React.Component // TODO: Primitive Component
 		const tempMouseOffset = Matrix2D.MultiplyPoint( Matrix2D.Inverse( this.props.graph._transform.localMatrix ), new Vector2D( tEvent.clientX, tEvent.clientY ) ).subtract( this._nodeOffset );
 		for ( let i = ( this._nodes.length - 1 ); i >= 0; --i )
 		{
-			this._nodes[i]._transform.worldPosition = Vector2D.Add( tempMouseOffset, this._nodeOffsets[i] );
+			this._nodes[i]._transform.worldPosition = Vector2D.Add( tempMouseOffset, this._nodeOffsets[i] ); // TODO: Round
 		}
 	}
 	

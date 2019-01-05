@@ -2,14 +2,16 @@ import { decorate, observable } from "mobx";
 
 export default class Grid
 {
-	constructor( tIsVisible = true )
+	constructor( tIsVisible = true, tSize = 100 )
 	{
 		this.isVisible = tIsVisible;
+		this.size = tSize;
 	}
 }
 
 decorate( Grid,
 	{
-		isVisible: observable
+		isVisible: observable,
+		size: observable
 	}
 );

@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { observe } from "mobx";
 import { observer } from "mobx-react";
+import GridModel from "../../interface/Grid";
 import Transform2DModel from "../../core/Transform2D";
 import TypeModel from "../Type";
 import Arrows from "./Arrows";
@@ -54,7 +55,7 @@ class Defs extends React.Component
 	
 	set backgroundScale( tScale )
 	{
-		let tempScale = tScale * this.props.gridSize;
+		let tempScale = tScale * this.props.grid.size;
 		this._bgGridElement.setAttribute( "height", tempScale );
 		this._bgGridElement.setAttribute( "width", tempScale );
 	}
@@ -98,14 +99,9 @@ class Defs extends React.Component
 
 Defs.propTypes =
 {
+	grid: PropTypes.instanceOf( GridModel ).isRequired,
 	viewTransform: PropTypes.instanceOf( Transform2DModel ).isRequired,
-	edgeTypes: PropTypes.objectOf( PropTypes.instanceOf( TypeModel ) ).isRequired,
-	gridSize: PropTypes.number
-};
-
-Defs.defaultProps =
-{
-	gridSize: 100
+	edgeTypes: PropTypes.objectOf( PropTypes.instanceOf( TypeModel ) ).isRequired
 };
 
 export default observer( Defs );
