@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { observer } from "mobx-react";
-import Transform2DModel from "../../core/Transform2D";
+import GraphModel from "../../nodegraph/Graph";
 import Vector2D from "../../core/Vector2D";
 import Matrix2D from "../../core/Matrix2D";
 import SelectionModel from "../Selection";
@@ -17,8 +17,10 @@ class Selection extends React.Component // TODO: Primitive Component
 		// Variables
 		this._graphOffset = new Vector2D();
 		this._nodes = null;
+		this._nodeOffset = new Vector2D();
 		this._nodeOffsets = null;
-		this._nodesTimeout = null; // clicking on a node toggles selection, so this is a delay before confirming a user intends to drag
+		this._isRecentlyToggled = false;
+		this._nodeDragTimeout = null;
 		
 		// Events
 		this._onGraphMove = ( tEvent ) => { this.onGraphMove( tEvent ); };
@@ -29,19 +31,38 @@ class Selection extends React.Component // TODO: Primitive Component
 	
 	componentWillUnmount()
 	{
+		// Reset selection states
+		this.props.graph.isSelected = false;
+		if ( this._nodes !== null )
+		{
+			for ( let i = ( this._nodes.length - 1 ); i >= 0; --i )
+			{
+				this._nodes[i].isSelected = false;
+			}
+		}
 		
+		// Events
+		document.removeEventListener( "mousemove", this._onGraphMove );
+		document.removeEventListener( "mouseup", this._onGraphStop );
+		document.removeEventListener( "mousemove", this._onNodesMove );
+		document.removeEventListener( "mouseup", this._onNodesStop );
+		
+		if ( this._nodeDragTimeout !== null )
+		{
+			clearTimeout( this._nodeDragTimeout );
+		}
 	}
 	
 	onSelectGraph( tEvent )
 	{
-		tEvent.stopPropagation();
-
 		if ( tEvent == null )
 		{
 			this.onGraphStop();
 		}
 		else
 		{
+			tEvent.stopPropagation();
+			
 			// Middle mouse
 			if ( tEvent.button === 1 )
 			{
@@ -62,6 +83,15 @@ class Selection extends React.Component // TODO: Primitive Component
 			}
 			else
 			{
+				this.onNodesStop( tEvent );
+				if ( this._nodes !== null )
+				{
+					for ( let i = ( this._nodes.length - 1 ); i >= 0; --i )
+					{
+						this._nodes[i].isSelected = false;
+					}
+					this._nodes = null;
+				}
 				// Clear selected nodes
 				// Start marquee
 			}
@@ -71,7 +101,7 @@ class Selection extends React.Component // TODO: Primitive Component
 	onGraphMove( tEvent )
 	{
 		const tempTransform = this.props.graph._transform;
-		tempTransform.worldPosition = Matrix2D.MultiplyPoint( tempTransform.localToWorldMatrix, tEvent ).subtract( this._graphOffset );
+		tempTransform.worldPosition = Matrix2D.MultiplyPoint( tempTransform.localToWorldMatrix, new Vector2D( tEvent.clientX, tEvent.clientY ) ).subtract( this._graphOffset );
 	}
 	
 	onGraphStop( tEvent )
@@ -85,67 +115,120 @@ class Selection extends React.Component // TODO: Primitive Component
 	
 	onSelectNode( tEvent, tNode )
 	{
-		tEvent.stopPropagation();
-		
-		console.log( tEvent.type );
-		/*if ( tEvent == null )
+		if ( tEvent == null )
 		{
+			this.onNodeStop();
 		}
 		else if ( tEvent.button === 0 )
 		{
 			tEvent.stopPropagation();
 			
-			// Click delay... if node not selected, start timer before enabling dragging to give a user the chance to cancel, otherwise remove
-			
-			if ( tNode.isSelected )
+			if ( tEvent.type === "mousedown" )
 			{
-				this.removeNode( tNode );
-			}
-			else
-			{
+				if ( tNode.isSelected || !this._isRecentlyToggled )
+				{
+					clearTimeout( this._nodeDragTimeout );
+					this._nodeDragTimeout = setTimeout(
+						() =>
+						{
+							this._nodeDragTimeout = null;
+						},
+						200
+					);
+				}
+				
 				this.addNode( tNode );
-			}
-		}*/
+				this._nodeOffset = Matrix2D.MultiplyPoint( Matrix2D.Inverse( this.props.graph._transform.localMatrix ), new Vector2D( tEvent.clientX, tEvent.clientY ) );
+				this._nodeOffsets = [];
+				
+				const tempListLength = this._nodes.length;
+				for ( let i = 0; i < tempListLength; ++i )
+				{
+					this._nodeOffsets.push( this._nodes[i]._transform.worldPosition );
+				}
 			
-		/*if ( tEvent == null )
-		{
-			this.removeNode( tNode );
+				document.addEventListener( "mousemove", this._onNodesMove );
+				document.addEventListener( "mouseup", this._onNodesStop );
+			}
+			else if ( this._nodeDragTimeout !== null && tEvent.type === "mouseup" )
+			{
+				if ( tNode.isSelected )
+				{
+					this.removeNode( tNode );
+				}
+				else
+				{
+					this.addNode( tNode );
+				}
+				
+				clearTimeout( this._nodeDragTimeout );
+				this._nodeDragTimeout = null;
+				this._isRecentlyToggled = true;
+			}
 		}
-		else if ( tEvent.button === 0 )
-		{
-			tEvent.stopPropagation();			
-			
-			if ( tNode.state.isSelected )
-			{
-				this.removeNode( tNode );
-			}
-			else
-			{
-				this.addNode( tNode, new Vector2D( tEvent.clientX, tEvent.clientY ) );
-			}
-		}*/
-	}
-	
-	onDragNode( tEvent, tNode )
-	{
-		/*
-			onMouseDown
-				wait 1 second
-					if mouseup during that 1 second
-						deselect from Selection
-					else
-						trigger onNodeDrag
-		*/
 	}
 	
 	onNodesMove( tEvent )
 	{
-		
+		const tempMouseOffset = Matrix2D.MultiplyPoint( Matrix2D.Inverse( this.props.graph._transform.localMatrix ), new Vector2D( tEvent.clientX, tEvent.clientY ) ).subtract( this._nodeOffset );
+		for ( let i = ( this._nodes.length - 1 ); i >= 0; --i )
+		{
+			this._nodes[i]._transform.worldPosition = Vector2D.Add( tempMouseOffset, this._nodeOffsets[i] );
+		}
 	}
 	
 	onNodesStop( tEvent )
 	{
+		this._nodeOffsets = null;
 		
+		document.removeEventListener( "mousemove", this._onNodesMove );
+		document.removeEventListener( "mouseup", this._onNodesStop );
+	}
+	
+	addNode( tNode )
+	{
+		if ( tNode != null )
+		{
+			if ( this._nodes === null )
+			{
+				this._nodes = [];
+				this._nodes.push( tNode );
+				tNode.isSelected = true;
+				
+				return true;
+			}
+			else if ( this._nodes.indexOf( tNode ) < 0 )
+			{
+				this._nodes.push( tNode );
+				tNode.isSelected = true;
+				
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	removeNode( tNode )
+	{
+		if ( tNode != null && this._nodes !== null )
+		{
+			const tempIndex = this._nodes.indexOf( tNode );
+			if ( tempIndex >= 0 )
+			{
+				this._nodes.splice( tempIndex, 1 );
+				if ( this._nodes.length === 0 )
+				{
+					this._nodes = null;
+				}
+				
+				tNode.isSelected = false;
+				
+				return true;
+			}
+		}
+		
+		return false;
 	}
 	
 	onSelectEdge( tEvent, tEdge ) // TODO: do
@@ -160,7 +243,8 @@ class Selection extends React.Component // TODO: Primitive Component
 
 Selection.propTypes =
 {
-	model: PropTypes.instanceOf( SelectionModel ).isRequired
+	model: PropTypes.instanceOf( SelectionModel ).isRequired,
+	graph: PropTypes.instanceOf( GraphModel ).isRequired
 };
 
 export default observer( Selection );
