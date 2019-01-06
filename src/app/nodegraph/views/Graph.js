@@ -24,8 +24,8 @@ class Graph extends React.Component
 		this._edges = null;
 		
 		// Events
-		this._onViewTransformDispose = observe( tProps.viewTransform, ( tChange ) => { this.viewTransform = tChange.object; } );
-		this._onTransformDispose = observe( tProps.model._transform, ( tChange ) => { this.transform = tChange.object; } );
+		this._onViewTransformDispose = observe( tProps.viewTransform, "_scale", ( tChange ) => { this.scale = tChange.newValue; } );
+		this._onTransformDispose = observe( tProps.model._transform, "_position", ( tChange ) => { this.position = tChange.newValue; } );
 		this._onViewElement = ( tElement ) => { this._viewElement = tElement; };
 		this._onContainerElement = ( tElement ) => { this._containerElement = tElement; };
 		this._onEdges = ( tComponent ) => { this._edges = tComponent; };
@@ -34,8 +34,8 @@ class Graph extends React.Component
 
 	componentDidMount()
 	{
-		this.viewTransform = this.props.viewTransform;
-		this.transform = this.props.model._transform;
+		this.scale = this.props.viewTransform._scale;
+		this.position = this.props.model._transform._position;
 	}
 	
 	componentWillUnmount()
@@ -51,14 +51,14 @@ class Graph extends React.Component
 		this._onTransformDispose = null;
 	}
 	
-	set viewTransform( tTransform )
+	set scale( tScale )
 	{
-		this._viewElement.setAttribute( "transform", "scale(" + tTransform._scale.x + ")" );
+		this._viewElement.setAttribute( "transform", "scale(" + tScale.x + ")" );
 	}
 
-	set transform( tTransform )
+	set position( tPosition )
 	{
-		this._containerElement.setAttribute( "transform", "translate(" + tTransform._position.x + "," + tTransform._position.y + ")" );
+		this._containerElement.setAttribute( "transform", "translate(" + tPosition.x + "," + tPosition.y + ")" );
 	}
 
 	render()

@@ -33,8 +33,8 @@ class ZoomControls extends React.Component // TODO: Drag the meter
 	
 	componentWillUnmount()
 	{
-		_onTransformDispose();
-		_onTransformDispose = null;
+		this._onTransformDispose();
+		this._onTransformDispose = null;
 		
 		document.removeEventListener( "wheel", this._onMouseWheel );
 	}

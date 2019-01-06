@@ -24,9 +24,9 @@ class Edge extends React.Component // TODO: Selectable
 		this._targetPosition = new Vector2D();
 		
 		// Events
-		this._onOffsetMove = observe( tProps.model._source, "_offset", ( tChange ) => { this.onSourceChange( tChange ); } );
-		this._onSourceMove = observe( tProps.model._source._node._transform, "_position", ( tChange ) => { this.onSourceMove( tChange ); } );
-		this._onTargetMove = observe( tProps.model._target._node._transform, "_position", ( tChange ) => { this.onTargetMove( tChange ); } );
+		this._onOffsetMove = observe( tProps.model._source, "_offset", ( tChange ) => { this.sourcePosition = this.props.model._source.localPosition; } );
+		this._onSourceMove = observe( tProps.model._source._node._transform, "_position", ( tChange ) => { this.sourcePosition = this.props.model._source.localPosition; } );
+		this._onTargetMove = observe( tProps.model._target._node._transform, "_position", ( tChange ) => { this.targetPosition = this.props.model._target.localPosition; } );
 		this._onElement = ( tElement ) => { this._element = tElement; };
 		this._onTextElement = ( tElement ) => { this._textElement = tElement; };
 	}
@@ -50,21 +50,6 @@ class Edge extends React.Component // TODO: Selectable
 		this._onSourceMove = null;
 		this._onTargetMove();
 		this._onTargetMove = null;
-	}
-	
-	onSourceChange( tChange )
-	{
-		this.sourcePosition = this.props.model._source.localPosition;
-	}
-	
-	onSourceMove( tChange )
-	{
-		this.sourcePosition = this.props.model._source.localPosition;
-	}
-	
-	onTargetMove( tChange )
-	{
-		this.targetPosition = this.props.model._target.localPosition;
 	}
 	
 	set sourcePosition( tVector )

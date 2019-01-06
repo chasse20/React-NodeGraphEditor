@@ -20,14 +20,14 @@ class Node extends React.Component
 		this._element = null;
 		
 		// Events
-		this._onTransformDispose = observe( tProps.model._transform, "_position", ( tChange ) => { this.updateTransform(); } );
+		this._onTransformDispose = observe( tProps.model._transform, "_position", ( tChange ) => { this.position = tChange.newValue; } );
 		this._onMouse = ( tEvent ) => { tProps.onSelect( tEvent, this.props.model ); };
 		this._onElement = ( tElement ) => { this._element = tElement; };
 	}
 	
 	componentDidMount()
 	{
-		this.updateTransform();
+		this.position = this.props.model._transform._position;
 	}
 	
 	componentWillUnmount()
@@ -41,10 +41,9 @@ class Node extends React.Component
 		this._onTransformDispose = null;
 	}
 	
-	updateTransform()
+	set position( tPosition )
 	{
-		const tempPosition = this.props.model._transform._position;
-		this._element.setAttribute( "transform", "translate(" + tempPosition.x + "," + tempPosition.y + ")" );
+		this._element.setAttribute( "transform", "translate(" + tPosition.x + "," + tPosition.y + ")" );
 	}
 	
 	render() // TODO: Optimize via breakup of text and graphics????
