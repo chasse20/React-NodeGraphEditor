@@ -1,9 +1,9 @@
 export default class Vector2D
 {
-	constructor( tX, tY )
+	constructor( tX = 0, tY = 0 )
 	{
-		this.x = tX == null ? 0 : tX;
-		this.y = tY == null ? 0 : tY;
+		this.x = tX;
+		this.y = tY;
 	}
 
 	toJSON()

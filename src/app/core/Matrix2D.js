@@ -2,14 +2,14 @@ import Vector2D from "./Vector2D";
 
 export default class Matrix2D
 {	
-	constructor( tM11, tM12, tM13, tM21, tM22, tM23 )
+	constructor( tM11 = 0, tM12 = 0, tM13 = 0, tM21 = 0, tM22 = 0, tM23 = 0 )
 	{
-		this.m11 = tM11 == null ? 0 : tM11;
-		this.m12 = tM12 == null ? 0 : tM12;
-		this.m13 = tM13 == null ? 0 : tM13;
-		this.m21 = tM21 == null ? 0 : tM21;
-		this.m22 = tM22 == null ? 0 : tM22;
-		this.m23 = tM23 == null ? 0 : tM23;
+		this.m11 = tM11;
+		this.m12 = tM12;
+		this.m13 = tM13;
+		this.m21 = tM21;
+		this.m22 = tM22;
+		this.m23 = tM23;
 	}
 	
 	toString()

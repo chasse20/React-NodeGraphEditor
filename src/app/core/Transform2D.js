@@ -203,9 +203,10 @@ export default class Transform2D
 	{
 		if ( this._isLocalToWorldDirty )
 		{
+			this._localToWorldMatrix = this.localMatrix;
 			if ( this._parent != null )
 			{
-				this._localToWorldMatrix = Matrix2D.Multiply( this._parent.localToWorldMatrix, this.localMatrix );
+				this._localToWorldMatrix = Matrix2D.Multiply( this._parent.localToWorldMatrix, this._localToWorldMatrix );
 			}
 
 			this._isLocalToWorldDirty = false;
@@ -218,7 +219,9 @@ export default class Transform2D
 	{
 		if ( this._isWorldToLocalDirty )
 		{
+			console.log( this.localToWorldMatrix );
 			this._worldToLocalMatrix = Matrix2D.Inverse( this.localToWorldMatrix );
+			console.log( this._worldToLocalMatrix );
 			this._isWorldToLocalDirty = false;
 		}
 
@@ -227,12 +230,12 @@ export default class Transform2D
 
 	get worldPosition()
 	{
-		return this._parent == null ? this._position : Matrix2D.MultiplyPoint( this._parent.localToWorldMatrix, this._position );
+		return Matrix2D.DecomposeTranslation( this.localToWorldMatrix );
 	}
 
 	set worldPosition( tVector )
 	{
-		this.position = this._parent == null ? tVector : Matrix2D.MultiplyPoint( this._parent.worldToLocalMatrix, tVector );
+		this.position = Matrix2D.MultiplyPoint( this.worldToLocalMatrix, tVector );
 	}
 	
 	get worldRotation() // gets euler angles
