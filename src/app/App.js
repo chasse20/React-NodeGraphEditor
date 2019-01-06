@@ -3,6 +3,7 @@ import { Switch, Route } from "react-router";
 import FileSaver from "file-saver";
 import Interface from "./interface/views/Interface";
 import Graph from "./nodegraph/views/Graph";
+import Transform2DModel from "./core/Transform2D";
 import GraphModel from "./nodegraph/Graph";
 import InterfaceModel from "./interface/Interface";
 import Data from "../data.json";
@@ -17,7 +18,9 @@ export default class App extends Component
 
 		// Variables
 		this._interface = null;
+		this._viewTransform = new Transform2DModel();
 		this._graphModel = new GraphModel();
+		this._graphModel._transform.parent = this._viewTransform;
 		this._interfaceModel = new InterfaceModel();
 		
 		// Events
@@ -64,17 +67,17 @@ export default class App extends Component
 					<Route path="/date" render={
 						( tProps ) =>
 						(
-							<Graph model={ this._graphModel } grid={ this._interfaceModel._controls._grid } onSelectGraph={ this._onSelectGraph } onSelectNode={ this._onSelectNode } onSelectEdge={ this._onSelectEdge }/>
+							<Graph model={ this._graphModel } viewTransform={ this._viewTransform } grid={ this._interfaceModel._controls._grid } onSelectGraph={ this._onSelectGraph } onSelectNode={ this._onSelectNode } onSelectEdge={ this._onSelectEdge }/>
 						)
 					}/>
 					<Route render={
 						( tProps ) =>
 						(
-							<Graph model={ this._graphModel } grid={ this._interfaceModel._controls._grid } onSelectGraph={ this._onSelectGraph } onSelectNode={ this._onSelectNode } onSelectEdge={ this._onSelectEdge }/>
+							<Graph model={ this._graphModel } viewTransform={ this._viewTransform } grid={ this._interfaceModel._controls._grid } onSelectGraph={ this._onSelectGraph } onSelectNode={ this._onSelectNode } onSelectEdge={ this._onSelectEdge }/>
 						)
 					}/>
 				</Switch>
-				<Interface ref={ this._onInterface } model={ this._interfaceModel } graph={ this._graphModel }/>
+				<Interface ref={ this._onInterface } model={ this._interfaceModel } viewTransform={ this._viewTransform } graph={ this._graphModel }/>
 			</React.Fragment>
 		);
 	}

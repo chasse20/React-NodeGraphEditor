@@ -2,21 +2,23 @@ import { decorate, observable } from "mobx";
 
 export default class Selection
 {
-	constructor( tIsPanning = false, tIsSnapping = false, tSnapIncrement = 5 )
+	constructor( tIsPanMode = false, tIsSnapMode = false, tSnapIncrement = 5 )
 	{
-		this.isPanning = tIsPanning;
+		this.isPanMode = tIsPanMode;
 		this.isPanningHeld = false;
-		this.isSnapping = tIsSnapping;
+		this.isSnapMode = tIsSnapMode;
 		this.snapIncrement = tSnapIncrement;
 		this.isStuffSelected = false;
+		this.isMarqueeHeld = false;
 	}
 }
 
 decorate( Selection,
 	{
-		isPanning: observable,
+		isPanMode: observable,
 		isPanningHeld: observable,
-		isSnapping: observable,
-		isStuffSelected: observable
+		isSnapMode: observable,
+		isStuffSelected: observable,
+		isMarqueeHeld: observable
 	}
 );

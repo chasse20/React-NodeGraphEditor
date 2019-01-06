@@ -19,48 +19,38 @@ class Defs extends React.Component
 		this._bgSmallGridElement = null;
 		
 		// Events
-		this._onTransformDispose = observe( tProps.viewTransform, ( tChange ) => { this.onTransform( tChange ); } );
+		this._onViewTransformDispose = observe( tProps.viewTransform, ( tChange ) => { this.viewTransform = tChange.object; } );
+		this._onTransformDispose = observe( tProps.transform, ( tChange ) => { this.transform = tChange.object; } );
 		this._onBGGridElement = ( tElement ) => { this._bgGridElement = tElement; };
 	}
 
 	componentDidMount()
 	{
-		this.backgroundPosition = this.props.viewTransform._position;
-		this.backgroundScale = this.props.viewTransform._scale.x;
+		this.viewTransform = this.props.viewTransform;
+		this.transform = this.props.transform;
 	}
 	
 	componentWillUnmount()
 	{
+		this._onViewTransformDispose();
+		this._onViewTransformDispose = null;
 		this._onTransformDispose();
 		this._onTransformDispose = null;
 	}
 	
-	onTransform( tChange )
+	set viewTransform( tTransform )
 	{
-		if ( tChange.name === "_position" )
-		{
-			this.backgroundPosition = tChange.newValue;
-		}
-		else if ( tChange.name === "_scale" )
-		{		
-			this.backgroundScale = tChange.newValue.x;
-		}
-	}
-	
-	set backgroundPosition( tVector )
-	{
-		this._bgGridElement.setAttribute( "x", tVector.x );
-		this._bgGridElement.setAttribute( "y", tVector.y );
-	}
-	
-	set backgroundScale( tScale )
-	{
-		let tempScale = tScale * this.props.grid.size;
-		this._bgGridElement.setAttribute( "height", tempScale );
-		this._bgGridElement.setAttribute( "width", tempScale );
+		this._bgGridElement.setAttribute( "height", tTransform._scale.x * this.props.grid.size );
+		this._bgGridElement.setAttribute( "width", tTransform._scale.y * this.props.grid.size );
 	}
 
-	render() // TODO: Graph needs to be in World AND View transform
+	set transform( tTransform )
+	{
+		this._bgGridElement.setAttribute( "x", tTransform._position.x );
+		this._bgGridElement.setAttribute( "y", tTransform._position.y );
+	}
+
+	render()
 	{
 		return (
 			<defs>
@@ -100,6 +90,7 @@ class Defs extends React.Component
 Defs.propTypes =
 {
 	grid: PropTypes.instanceOf( GridModel ).isRequired,
+	transform: PropTypes.instanceOf( Transform2DModel ).isRequired,
 	viewTransform: PropTypes.instanceOf( Transform2DModel ).isRequired,
 	edgeTypes: PropTypes.objectOf( PropTypes.instanceOf( TypeModel ) ).isRequired
 };

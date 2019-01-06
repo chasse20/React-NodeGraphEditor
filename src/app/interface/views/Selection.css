@@ -1,5 +1,16 @@
 .selection
 {
+	display: none;
 	width: inherit;
 	height: inherit;
+}
+
+.selection.marquee
+{
+	display: block;
+}
+
+.selection rect
+{
+	fill: #ffffff66;
 }
