@@ -46,8 +46,8 @@ class Defs extends React.Component
 
 	set transform( tTransform )
 	{
-		this._bgGridElement.setAttribute( "x", tTransform._position.x );
-		this._bgGridElement.setAttribute( "y", tTransform._position.y );
+		this._bgGridElement.setAttribute( "x", tTransform._position.x * this.props.viewTransform._scale.x );
+		this._bgGridElement.setAttribute( "y", tTransform._position.y * this.props.viewTransform._scale.y );
 	}
 
 	render()

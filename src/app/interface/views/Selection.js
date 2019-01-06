@@ -17,12 +17,13 @@ class Selection extends React.Component // TODO: Primitive Component
 		
 		// Variables
 		this._marqueeElement = null;
-		this._panOffset = new Vector2D();
+		this._panMouseStart = null;
+		this._panStart = null;
 		this._isMarquee = false;
 		this._marqueeOffset = new Vector2D();
 		this._marqueeScreen = new Vector2D(); // for dealing with zoom changes
 		this._nodes = null;
-		this._nodeOffset = new Vector2D();
+		this._nodeMouseStart = null;
 		this._nodeStarts = null;
 		this._nodeDragTimeout = null;
 		
@@ -87,8 +88,8 @@ class Selection extends React.Component // TODO: Primitive Component
 				const tempGraph = this.props.graph;
 				tempGraph.isSelected = true;
 				
-				const tempTransform = tempGraph._transform;
-				this._panOffset = Matrix2D.MultiplyPoint( this.props.viewTransform.worldToLocalMatrix, new Vector2D( tEvent.clientX, tEvent.clientY ) );
+				this._panStart = tempGraph._transform._position;
+				this._panMouseStart = Matrix2D.MultiplyPoint( Matrix2D.Inverse( this.props.viewTransform.localMatrix ), new Vector2D( tEvent.clientX, tEvent.clientY ) );
 				
 				document.addEventListener( "mousemove", this._onPanMove );
 				document.addEventListener( "mouseup", this._onPanStop );
@@ -111,12 +112,15 @@ class Selection extends React.Component // TODO: Primitive Component
 	
 	onPanMove( tEvent )
 	{
-		const tempTransform = this.props.graph._transform;
-		tempTransform.worldPosition = Matrix2D.MultiplyPoint( this.props.viewTransform.worldToLocalMatrix, new Vector2D( tEvent.clientX, tEvent.clientY ) ).subtract( this._panOffset );
+		const tempScreenToWorld = Matrix2D.MultiplyPoint( Matrix2D.Inverse( this.props.viewTransform.localMatrix ), new Vector2D( tEvent.clientX, tEvent.clientY ) );
+		this.props.graph._transform.position = tempScreenToWorld.subtract( this._panMouseStart ).add( this._panStart );
 	}
 	
 	onPanStop( tEvent )
 	{
+		this._panStart = null;
+		this._panMouseStart = null;
+		
 		this.props.graph.isSelected = false;
 		this.props.model.isPanningHeld = false;
 		
@@ -199,13 +203,13 @@ class Selection extends React.Component // TODO: Primitive Component
 				}
 				
 				this.addNode( tNode );
-				this._nodeOffset = Matrix2D.MultiplyPoint( this.props.viewTransform.worldToLocalMatrix, new Vector2D( tEvent.clientX, tEvent.clientY ) );
+				this._nodeMouseStart = Matrix2D.MultiplyPoint( Matrix2D.Inverse( this.props.viewTransform.localMatrix ), new Vector2D( tEvent.clientX, tEvent.clientY ) );
 				this._nodeStarts = [];
-				
+
 				const tempListLength = this._nodes.length;
 				for ( let i = 0; i < tempListLength; ++i )
 				{
-					this._nodeStarts.push( this._nodes[i]._transform.worldPosition );
+					this._nodeStarts.push( this._nodes[i]._transform._position );
 				}
 			
 				document.addEventListener( "mousemove", this._onNodesMove );
@@ -230,27 +234,31 @@ class Selection extends React.Component // TODO: Primitive Component
 	
 	onNodesMove( tEvent )
 	{
-		const tempMouseOffset = Matrix2D.MultiplyPoint( this.props.viewTransform.worldToLocalMatrix, new Vector2D( tEvent.clientX, tEvent.clientY ) ).subtract( this._nodeOffset );
-		console.log( tempMouseOffset );
-		if ( this.props.model.isSnapping )
+		const tempScreenToWorld = Matrix2D.MultiplyPoint( Matrix2D.Inverse( this.props.viewTransform.localMatrix ), new Vector2D( tEvent.clientX, tEvent.clientY ) );
+		
+		tempScreenToWorld.subtract( this._nodeMouseStart );
+		console.log( tempScreenToWorld );
+		
+		if ( this.props.model.isSnapMode )
 		{
 			const tempGridSnap = this.props.grid.size / this.props.model.snapIncrement;
 			for ( let i = ( this._nodes.length - 1 ); i >= 0; --i )
 			{
-				this._nodes[i]._transform.worldPosition = new Vector2D( Math.round( ( tempMouseOffset.x + this._nodeStarts[i].x ) / tempGridSnap ) * tempGridSnap, Math.round( ( tempMouseOffset.y + this._nodeStarts[i].y ) / tempGridSnap ) * tempGridSnap );
+				this._nodes[i]._transform.position = new Vector2D( Math.round( ( tempScreenToWorld.x + this._nodeStarts[i].x ) / tempGridSnap ) * tempGridSnap, Math.round( ( tempScreenToWorld.y + this._nodeStarts[i].y ) / tempGridSnap ) * tempGridSnap );
 			}
 		}
 		else
 		{
 			for ( let i = ( this._nodes.length - 1 ); i >= 0; --i )
 			{
-				this._nodes[i]._transform.worldPosition = Vector2D.Add( tempMouseOffset, this._nodeStarts[i] );
+				this._nodes[i]._transform.position = Vector2D.Add( tempScreenToWorld, this._nodeStarts[i] );
 			}
 		}
 	}
 	
 	onNodesStop( tEvent )
 	{
+		this._nodeMouseStart = null;
 		this._nodeStarts = null;
 		
 		document.removeEventListener( "mousemove", this._onNodesMove );

@@ -19,8 +19,9 @@ export default class App extends Component
 		// Variables
 		this._interface = null;
 		this._viewTransform = new Transform2DModel();
+		this._worldTransform = new Transform2DModel();
 		this._graphModel = new GraphModel();
-		this._graphModel._transform.parent = this._viewTransform;
+		this._graphModel._transform.parent = this._worldTransform;
 		this._interfaceModel = new InterfaceModel();
 		
 		// Events
