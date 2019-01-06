@@ -8,7 +8,7 @@ import SelectionModel from "../Selection";
 import GridModel from "../Grid";
 import "./Selection.css";
 
-class Selection extends React.Component // TODO: Primitive Component
+class Selection extends React.Component // TODO: Break up into sub components
 {
 	constructor( tProps )
 	{
@@ -20,8 +20,9 @@ class Selection extends React.Component // TODO: Primitive Component
 		this._panMouseStart = null;
 		this._panStart = null;
 		this._isMarquee = false;
-		this._marqueeOffset = new Vector2D();
-		this._marqueeScreen = new Vector2D(); // for dealing with zoom changes
+		this._marqueeMouseStart = null;
+		this._marqueeStart = null;
+		this._marqueeMouseEnd = null;
 		this._nodes = null;
 		this._nodeMouseStart = null;
 		this._nodeStarts = null;
@@ -99,9 +100,9 @@ class Selection extends React.Component // TODO: Primitive Component
 			{
 				this.clearNodes();
 				
-				const tempTransform = this.props.graph._transform;
-				this._marqueeScreen = new Vector2D( tEvent.clientX, tEvent.clientY );
-				this._marqueeOffset = Matrix2D.MultiplyPoint( tempTransform.localToWorldMatrix, this._marqueeScreen ).subtract( tempTransform.worldPosition );
+				this._marqueeMouseStart = Matrix2D.MultiplyPoint( Matrix2D.Inverse( this.props.viewTransform.localMatrix ), new Vector2D( tEvent.clientX, tEvent.clientY ) );
+				this._marqueeStart = this.props.graph._transform._position.copy();
+				this._marqueeMouseEnd = this._marqueeMouseStart.copy();
 				this.props.model.isMarqueeHeld = true;
 				
 				document.addEventListener( "mousemove", this._onMarqueeMove );
@@ -113,6 +114,11 @@ class Selection extends React.Component // TODO: Primitive Component
 	onPanMove( tEvent )
 	{
 		this.props.graph._transform.position = Matrix2D.MultiplyPoint( Matrix2D.Inverse( this.props.viewTransform.localMatrix ), new Vector2D( tEvent.clientX, tEvent.clientY ) ).subtract( this._panMouseStart ).add( this._panStart );
+		
+		if ( !this.props.isPanMode )
+		{
+			//this.onMarqueeMove( tEvent );
+		}
 	}
 	
 	onPanStop( tEvent )
@@ -129,19 +135,16 @@ class Selection extends React.Component // TODO: Primitive Component
 	
 	onMarqueeMove( tEvent )
 	{
-		const tempTransform = this.props.graph._transform;
-		
-		const tempWorldPosition = Matrix2D.MultiplyPoint( tempTransform.worldToLocalMatrix, new Vector2D( tEvent.clientX, tEvent.clientY ) );
-		console.log( tempWorldPosition );
-		
-		//this._marqueeScreen = new Vector2D( tEvent.clientX, tEvent.clientY );
-		//const tempStart = Matrix2D.MultiplyPoint( this.props.graph._transform.localMatrix, this._marqueeOffset );
-		//console.log( tempStart );
-		
-		//const tempEnd = Matrix2D.MultiplyPoint( this.props.graph._transform.localToWorldMatrix, Matrix2D.MultiplyPoint( this.props.graph._transform.worldToLocalMatrix, this._marqueeScreen ) );
-		//console.log( Matrix2D.MultiplyPoint( this.props.graph._transform.worldToLocalMatrix, this._marqueeScreen ) );
-		
-		/*if ( tempEnd.x < tempStart.x )
+		this._marqueeMouseEnd = Matrix2D.MultiplyPoint( Matrix2D.Inverse( this.props.viewTransform.localMatrix ), new Vector2D( tEvent.clientX, tEvent.clientY ) );
+		this.updateMarquee();
+	}
+	
+	updateMarquee()
+	{
+		const tempStart = Matrix2D.MultiplyPoint( this.props.viewTransform.localMatrix, Vector2D.Subtract( this._marqueeMouseStart, this._marqueeStart ).add( this.props.graph._transform._position ) );
+		const tempEnd = Matrix2D.MultiplyPoint( this.props.viewTransform.localMatrix, this._marqueeMouseEnd );
+
+		if ( tempEnd.x < tempStart.x )
 		{
 			this._marqueeElement.setAttribute( "x", tempEnd.x );
 			this._marqueeElement.setAttribute( "width", tempStart.x - tempEnd.x );
@@ -161,20 +164,23 @@ class Selection extends React.Component // TODO: Primitive Component
 		{
 			this._marqueeElement.setAttribute( "y", tempStart.y );
 			this._marqueeElement.setAttribute( "height", tempEnd.y - tempStart.y );
-		}*/
+		}
 	}
 	
 	onMarqueeStop( tEvent )
 	{
-		this.props.model.isMarqueeHeld = false;
-		
-		this._marqueeElement.setAttribute( "x", 0 );
-		this._marqueeElement.setAttribute( "y", 0 );
-		this._marqueeElement.setAttribute( "width", 0 );
-		this._marqueeElement.setAttribute( "height", 0 );
-		
-		document.removeEventListener( "mousemove", this._onMarqueeMove );
-		document.removeEventListener( "mouseup", this._onMarqueeStop );
+		if ( tEvent.button !== 1 ) // not panning with middle mouse
+		{
+			this.props.model.isMarqueeHeld = false;
+			
+			this._marqueeElement.setAttribute( "x", 0 );
+			this._marqueeElement.setAttribute( "y", 0 );
+			this._marqueeElement.setAttribute( "width", 0 );
+			this._marqueeElement.setAttribute( "height", 0 );
+			
+			document.removeEventListener( "mousemove", this._onMarqueeMove );
+			document.removeEventListener( "mouseup", this._onMarqueeStop );
+		}
 	}
 	
 	onSelectNode( tEvent, tNode )
