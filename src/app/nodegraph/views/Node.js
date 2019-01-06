@@ -20,7 +20,7 @@ class Node extends React.Component
 		this._element = null;
 		
 		// Events
-		this._onTransformDispose = observe( tProps.model._transform, ( tChange ) => { this.updateTransform(); } );
+		this._onTransformDispose = observe( tProps.model._transform, "_position", ( tChange ) => { this.updateTransform(); } );
 		this._onMouse = ( tEvent ) => { tProps.onSelect( tEvent, this.props.model ); };
 		this._onElement = ( tElement ) => { this._element = tElement; };
 	}

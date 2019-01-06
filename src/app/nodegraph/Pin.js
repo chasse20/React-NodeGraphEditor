@@ -153,15 +153,10 @@ export default class Pin
 	{
 		return this._node._id + this._name;
 	}
-
-	get localPosition() // relative to node's local space
+	
+	get localPosition()
 	{
 		return Vector2D.Add( this._node._transform._position, this._offset );
-	}
-
-	get worldPosition()
-	{
-		return Matrix2D.MultiplyPoint( this._node._transform.localToWorldMatrix, this.localPosition );
 	}
 	
 	removeEdgeType( tType )
@@ -189,7 +184,6 @@ decorate( Pin,
 		fromJSON: action,
 		setLink: action,
 		removeLink: action,
-		localPosition: computed,
-		worldPosition: computed
+		localPosition: computed
 	}
 );

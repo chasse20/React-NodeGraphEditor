@@ -164,20 +164,20 @@ export default class Transform2D
 	
 	set position( tVector )
 	{
-		this._position = tVector;
 		this.markDirty();
+		this._position = tVector;
 	}
 
 	set rotation( tAngle )
 	{
-		this._rotation = tAngle;
 		this.markDirty();
+		this._rotation = tAngle;
 	}
 
 	set scale( tVector )
 	{
-		this._scale = tVector;
 		this.markDirty();
+		this._scale = tVector;
 	}
 	
 	markDirty()
@@ -219,9 +219,7 @@ export default class Transform2D
 	{
 		if ( this._isWorldToLocalDirty )
 		{
-			console.log( this.localToWorldMatrix );
 			this._worldToLocalMatrix = Matrix2D.Inverse( this.localToWorldMatrix );
-			console.log( this._worldToLocalMatrix );
 			this._isWorldToLocalDirty = false;
 		}
 
@@ -235,7 +233,7 @@ export default class Transform2D
 
 	set worldPosition( tVector )
 	{
-		this.position = Matrix2D.MultiplyPoint( this.worldToLocalMatrix, tVector );
+		this.position = this._parent == null ? tVector : Matrix2D.MultiplyPoint( this._parent.worldToLocalMatrix, tVector );
 	}
 	
 	get worldRotation() // gets euler angles

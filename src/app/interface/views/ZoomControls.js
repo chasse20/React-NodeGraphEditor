@@ -17,7 +17,7 @@ class ZoomControls extends React.Component // TODO: Drag the meter
 		this._meterElement = null;
 		
 		// Events
-		this._onTransformDispose = observe( tProps.viewTransform, ( tChange ) => { this.onTransform( tChange ); } );
+		this._onTransformDispose = observe( tProps.viewTransform, "_scale", ( tChange ) => { this.zoom = tChange.newValue.x; } );
 		this._onMeterElement = ( tElement ) => { this._meterElement = tElement; };
 		this._onMouseWheel = ( tEvent ) => { this.tryZoom( tEvent, tEvent.deltaY > 0 ? -1 : 1 ); }; // only Mozilla respects mouse wheel delta
 		this._onZoomIn = ( tEvent ) => { this.tryZoom( tEvent, 2 ); }; // make event center of screen
@@ -25,22 +25,18 @@ class ZoomControls extends React.Component // TODO: Drag the meter
 	}
 	
 	componentDidMount()
-	{		
-		document.addEventListener( "wheel", this._onMouseWheel );
+	{
 		this.zoom = this.props.viewTransform._scale.x;
+		
+		document.addEventListener( "wheel", this._onMouseWheel );
 	}
 	
 	componentWillUnmount()
 	{
+		_onTransformDispose();
+		_onTransformDispose = null;
+		
 		document.removeEventListener( "wheel", this._onMouseWheel );
-	}
-	
-	onTransform( tChange )
-	{
-		if ( tChange.name === "_scale" )
-		{
-			this.zoom = tChange.newValue.x;
-		}
 	}
 	
 	set zoom( tAmount )

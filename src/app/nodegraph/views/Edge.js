@@ -24,18 +24,17 @@ class Edge extends React.Component // TODO: Selectable
 		this._targetPosition = new Vector2D();
 		
 		// Events
-		const tempOnSourceMove = ( tChange ) => { this.onSourceMove(); };
-		this._onOffsetMove = observe( tProps.model._source, this.onSourceChange );
-		this._onSourceMove = observe( tProps.model._source._node._transform, tempOnSourceMove );
-		this._onTargetMove = observe( tProps.model._target._node._transform, ( tChange ) => { this.onTargetMove(); } );
+		this._onOffsetMove = observe( tProps.model._source, "_offset", ( tChange ) => { this.onSourceChange( tChange ); } );
+		this._onSourceMove = observe( tProps.model._source._node._transform, "_position", ( tChange ) => { this.onSourceMove( tChange ); } );
+		this._onTargetMove = observe( tProps.model._target._node._transform, "_position", ( tChange ) => { this.onTargetMove( tChange ); } );
 		this._onElement = ( tElement ) => { this._element = tElement; };
 		this._onTextElement = ( tElement ) => { this._textElement = tElement; };
 	}
 
 	componentDidMount()
 	{
-		this.sourcePosition = this.props.model._source.worldPosition;
-		this.targetPosition = this.props.model._target.worldPosition;
+		this.sourcePosition = this.props.model._source.localPosition;
+		this.targetPosition = this.props.model._target.localPosition;
 	}
 	
 	componentWillUnmount()
@@ -55,20 +54,17 @@ class Edge extends React.Component // TODO: Selectable
 	
 	onSourceChange( tChange )
 	{
-		if ( tChange.name === "_offset" )
-		{
-			this.onSourceMove();
-		}
+		this.sourcePosition = this.props.model._source.localPosition;
 	}
 	
-	onSourceMove()
+	onSourceMove( tChange )
 	{
-		this.sourcePosition = this.props.model._source.worldPosition;
+		this.sourcePosition = this.props.model._source.localPosition;
 	}
 	
-	onTargetMove()
+	onTargetMove( tChange )
 	{
-		this.targetPosition = this.props.model._target.worldPosition;
+		this.targetPosition = this.props.model._target.localPosition;
 	}
 	
 	set sourcePosition( tVector )

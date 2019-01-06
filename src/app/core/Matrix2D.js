@@ -117,7 +117,7 @@ export default class Matrix2D
 		const tempM13 = tMatrix.m12 * tMatrix.m23 - tMatrix.m13 * tMatrix.m22; // adjugated M31 minor
 		const tempM21 = tMatrix.m21 * -1; // cofactor, adjugated M12 minor
 		const tempM22 = tMatrix.m11;
-		const tempM23 = tMatrix.m11 * tMatrix.m23 - tMatrix.m13 * tMatrix.m21 * -1; // adjugated M32 minor
+		const tempM23 = ( tMatrix.m11 * tMatrix.m23 - tMatrix.m13 * tMatrix.m21 ) * -1; // cofactor, adjugated M32 minor
 		const tempM33 = tMatrix.m11 * tMatrix.m22 - tMatrix.m12 * tMatrix.m21;
 
 		// Multiply by 1/determinant and return inverse

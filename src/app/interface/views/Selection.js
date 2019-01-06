@@ -112,8 +112,7 @@ class Selection extends React.Component // TODO: Primitive Component
 	
 	onPanMove( tEvent )
 	{
-		const tempScreenToWorld = Matrix2D.MultiplyPoint( Matrix2D.Inverse( this.props.viewTransform.localMatrix ), new Vector2D( tEvent.clientX, tEvent.clientY ) );
-		this.props.graph._transform.position = tempScreenToWorld.subtract( this._panMouseStart ).add( this._panStart );
+		this.props.graph._transform.position = Matrix2D.MultiplyPoint( Matrix2D.Inverse( this.props.viewTransform.localMatrix ), new Vector2D( tEvent.clientX, tEvent.clientY ) ).subtract( this._panMouseStart ).add( this._panStart );
 	}
 	
 	onPanStop( tEvent )
@@ -206,24 +205,14 @@ class Selection extends React.Component // TODO: Primitive Component
 				this._nodeMouseStart = Matrix2D.MultiplyPoint( Matrix2D.Inverse( this.props.viewTransform.localMatrix ), new Vector2D( tEvent.clientX, tEvent.clientY ) );
 				this._nodeStarts = [];
 				
-				const tempTransform = tNode._transform;
-				let tempPosition = tempTransform.worldPosition;
-				console.log( tempPosition );
-				tempTransform.worldPosition = Vector2D.Add( tempPosition, new Vector2D( 100, 0 ) );
-				tempPosition = tempTransform.worldPosition;
-				console.log( tempPosition );
-
 				const tempListLength = this._nodes.length;
 				for ( let i = 0; i < tempListLength; ++i )
 				{
-					//this._nodeStarts.push( this._nodes[i]._transform._position );
-					//console.log( this._nodes[i]._transform.worldPosition );
-					//this._nodes[i]._transform.worldPosition = this._nodes[i]._transform.worldPosition + 100;
-					//console.log( this._nodes[i]._transform.worldPosition );
+					this._nodeStarts.push( this._nodes[i]._transform._position );
 				}
 			
-				//document.addEventListener( "mousemove", this._onNodesMove );
-				//document.addEventListener( "mouseup", this._onNodesStop );
+				document.addEventListener( "mousemove", this._onNodesMove );
+				document.addEventListener( "mouseup", this._onNodesStop );
 			}
 			else if ( this._nodeDragTimeout !== null && tEvent.type === "mouseup" )
 			{
@@ -244,10 +233,7 @@ class Selection extends React.Component // TODO: Primitive Component
 	
 	onNodesMove( tEvent )
 	{
-		const tempScreenToWorld = Matrix2D.MultiplyPoint( Matrix2D.Inverse( this.props.viewTransform.localMatrix ), new Vector2D( tEvent.clientX, tEvent.clientY ) );
-		
-		tempScreenToWorld.subtract( this._nodeMouseStart );
-		console.log( tempScreenToWorld );
+		const tempScreenToWorld = Matrix2D.MultiplyPoint( Matrix2D.Inverse( this.props.viewTransform.localMatrix ), new Vector2D( tEvent.clientX, tEvent.clientY ) ).subtract( this._nodeMouseStart );
 		
 		if ( this.props.model.isSnapMode )
 		{
