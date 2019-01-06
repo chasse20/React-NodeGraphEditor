@@ -68,7 +68,7 @@ class ZoomControls extends React.Component // TODO: Drag the meter
 		// Apply
 		if ( tempAmount !== this.props.viewTransform._scale.x )
 		{
-			this.props.viewTransform._scale = new Vector2D( tempAmount, tempAmount );
+			this.props.viewTransform.scale = new Vector2D( tempAmount, tempAmount );
 			return true;
 		}
 		

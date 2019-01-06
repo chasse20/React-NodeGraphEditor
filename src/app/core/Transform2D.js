@@ -203,11 +203,8 @@ export default class Transform2D
 	{
 		if ( this._isLocalToWorldDirty )
 		{
-			if ( this._parent == null )
-			{
-				this._localToWorldMatrix = Matrix2D.Identity;
-			}
-			else
+			this._localToWorldMatrix = this.localMatrix;
+			if ( this._parent != null )
 			{
 				this._localToWorldMatrix = Matrix2D.Multiply( this._parent.localToWorldMatrix, this._localToWorldMatrix );
 			}
@@ -231,7 +228,7 @@ export default class Transform2D
 
 	get worldPosition()
 	{
-		return Matrix2D.MultiplyPoint( this.localToWorldMatrix, this._position );
+		return this.parent == null ? this._position : Matrix2D.MultiplyPoint( this.parent.localToWorldMatrix, this._position );
 	}
 
 	set worldPosition( tVector )

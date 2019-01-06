@@ -23,7 +23,7 @@ class Selection extends React.Component // TODO: Primitive Component
 		this._marqueeScreen = new Vector2D(); // for dealing with zoom changes
 		this._nodes = null;
 		this._nodeOffset = new Vector2D();
-		this._nodeOffsets = null;
+		this._nodeStarts = null;
 		this._nodeDragTimeout = null;
 		
 		// Events
@@ -88,8 +88,7 @@ class Selection extends React.Component // TODO: Primitive Component
 				tempGraph.isSelected = true;
 				
 				const tempTransform = tempGraph._transform;
-				this._panOffset = Matrix2D.MultiplyPoint( tempTransform.worldToLocalMatrix, new Vector2D( tEvent.clientX, tEvent.clientY ) ).subtract( tempTransform.worldPosition );
-				console.log( Matrix2D.MultiplyPoint( tempTransform.worldToLocalMatrix, new Vector2D( tEvent.clientX, tEvent.clientY ) ) );
+				this._panOffset = Matrix2D.MultiplyPoint( this.props.viewTransform.worldToLocalMatrix, new Vector2D( tEvent.clientX, tEvent.clientY ) );
 				
 				document.addEventListener( "mousemove", this._onPanMove );
 				document.addEventListener( "mouseup", this._onPanStop );
@@ -113,7 +112,7 @@ class Selection extends React.Component // TODO: Primitive Component
 	onPanMove( tEvent )
 	{
 		const tempTransform = this.props.graph._transform;
-		tempTransform.worldPosition = Matrix2D.MultiplyPoint( tempTransform.localToWorldMatrix, new Vector2D( tEvent.clientX, tEvent.clientY ) ).subtract( this._panOffset );
+		tempTransform.worldPosition = Matrix2D.MultiplyPoint( this.props.viewTransform.worldToLocalMatrix, new Vector2D( tEvent.clientX, tEvent.clientY ) ).subtract( this._panOffset );
 	}
 	
 	onPanStop( tEvent )
@@ -200,13 +199,13 @@ class Selection extends React.Component // TODO: Primitive Component
 				}
 				
 				this.addNode( tNode );
-				this._nodeOffset = Matrix2D.MultiplyPoint( Matrix2D.Inverse( this.props.graph._transform.localMatrix ), new Vector2D( tEvent.clientX, tEvent.clientY ) );
-				this._nodeOffsets = [];
+				this._nodeOffset = Matrix2D.MultiplyPoint( this.props.viewTransform.worldToLocalMatrix, new Vector2D( tEvent.clientX, tEvent.clientY ) );
+				this._nodeStarts = [];
 				
 				const tempListLength = this._nodes.length;
 				for ( let i = 0; i < tempListLength; ++i )
 				{
-					this._nodeOffsets.push( this._nodes[i]._transform.worldPosition );
+					this._nodeStarts.push( this._nodes[i]._transform.worldPosition );
 				}
 			
 				document.addEventListener( "mousemove", this._onNodesMove );
@@ -231,27 +230,28 @@ class Selection extends React.Component // TODO: Primitive Component
 	
 	onNodesMove( tEvent )
 	{
-		const tempMouseOffset = Matrix2D.MultiplyPoint( Matrix2D.Inverse( this.props.graph._transform.localMatrix ), new Vector2D( tEvent.clientX, tEvent.clientY ) ).subtract( this._nodeOffset );
+		const tempMouseOffset = Matrix2D.MultiplyPoint( this.props.viewTransform.worldToLocalMatrix, new Vector2D( tEvent.clientX, tEvent.clientY ) ).subtract( this._nodeOffset );
+		console.log( tempMouseOffset );
 		if ( this.props.model.isSnapping )
 		{
 			const tempGridSnap = this.props.grid.size / this.props.model.snapIncrement;
 			for ( let i = ( this._nodes.length - 1 ); i >= 0; --i )
 			{
-				this._nodes[i]._transform.worldPosition = new Vector2D( Math.round( ( tempMouseOffset.x + this._nodeOffsets[i].x ) / tempGridSnap ) * tempGridSnap, Math.round( ( tempMouseOffset.y + this._nodeOffsets[i].y ) / tempGridSnap ) * tempGridSnap );
+				this._nodes[i]._transform.worldPosition = new Vector2D( Math.round( ( tempMouseOffset.x + this._nodeStarts[i].x ) / tempGridSnap ) * tempGridSnap, Math.round( ( tempMouseOffset.y + this._nodeStarts[i].y ) / tempGridSnap ) * tempGridSnap );
 			}
 		}
 		else
 		{
 			for ( let i = ( this._nodes.length - 1 ); i >= 0; --i )
 			{
-				this._nodes[i]._transform.worldPosition = Vector2D.Add( tempMouseOffset, this._nodeOffsets[i] );
+				this._nodes[i]._transform.worldPosition = Vector2D.Add( tempMouseOffset, this._nodeStarts[i] );
 			}
 		}
 	}
 	
 	onNodesStop( tEvent )
 	{
-		this._nodeOffsets = null;
+		this._nodeStarts = null;
 		
 		document.removeEventListener( "mousemove", this._onNodesMove );
 		document.removeEventListener( "mouseup", this._onNodesStop );
