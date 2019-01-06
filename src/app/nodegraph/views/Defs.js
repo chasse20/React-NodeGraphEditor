@@ -19,15 +19,15 @@ class Defs extends React.Component
 		this._bgSmallGridElement = null;
 		
 		// Events
-		this._onViewTransformDispose = observe( tProps.viewTransform, ( tChange ) => { this.viewTransform = tChange.object; } );
-		this._onTransformDispose = observe( tProps.transform, ( tChange ) => { this.transform = tChange.object; } );
+		this._onViewTransformDispose = observe( tProps.viewTransform, "_scale", ( tChange ) => { this.scale = tChange.newValue; } );
+		this._onTransformDispose = observe( tProps.transform, "_position", ( tChange ) => { this.position = tChange.newValue; } );
 		this._onBGGridElement = ( tElement ) => { this._bgGridElement = tElement; };
 	}
 
 	componentDidMount()
 	{
-		this.viewTransform = this.props.viewTransform;
-		this.transform = this.props.transform;
+		this.scale = this.props.viewTransform._scale;
+		this.position = this.props.transform._position;
 	}
 	
 	componentWillUnmount()
@@ -38,16 +38,20 @@ class Defs extends React.Component
 		this._onTransformDispose = null;
 	}
 	
-	set viewTransform( tTransform )
+	set scale( tScale )
 	{
-		this._bgGridElement.setAttribute( "height", tTransform._scale.x * this.props.grid.size );
-		this._bgGridElement.setAttribute( "width", tTransform._scale.y * this.props.grid.size );
+		const tempPosition = this.props.transform._position;
+		this._bgGridElement.setAttribute( "x", tScale.x * tempPosition.x );
+		this._bgGridElement.setAttribute( "y", tScale.y * tempPosition.y );
+		this._bgGridElement.setAttribute( "height", tScale.x * this.props.grid.size );
+		this._bgGridElement.setAttribute( "width", tScale.y * this.props.grid.size );
 	}
 
-	set transform( tTransform )
+	set position( tPosition )
 	{
-		this._bgGridElement.setAttribute( "x", tTransform._position.x * this.props.viewTransform._scale.x );
-		this._bgGridElement.setAttribute( "y", tTransform._position.y * this.props.viewTransform._scale.y );
+		const tempScale = this.props.viewTransform._scale;
+		this._bgGridElement.setAttribute( "x", tPosition.x * tempScale.x );
+		this._bgGridElement.setAttribute( "y", tPosition.y * tempScale.y );
 	}
 
 	render()
