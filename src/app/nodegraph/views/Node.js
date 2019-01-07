@@ -59,11 +59,28 @@ class Node extends React.Component
 	
 	set isSelected( tIsSelected )
 	{
+		if ( tIsSelected )
+		{
+			this._physics.fx = this.props.model._transform._position.x;
+			this._physics.fy = this.props.model._transform._position.y;
+		}
+		else
+		{
+			delete this._physics.fx;
+			delete this._physics.fy;
+		}
+		
 		//this.props.onPhysics( this._physics, !tIsSelected );
 	}
 	
 	set position( tPosition )
 	{
+		if ( this.props.model.isSelected )
+		{
+			this._physics.fx = tPosition.x;
+			this._physics.fy = tPosition.y;
+		}
+		
 		this._physics.x = tPosition.x;
 		this._physics.y = tPosition.y;
 		this._element.setAttribute( "transform", "translate(" + tPosition.x + "," + tPosition.y + ")" );
