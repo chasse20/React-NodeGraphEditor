@@ -1,12 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { observer } from "mobx-react";
 import Transform2DModel from "../../core/Transform2D";
 import Vector2D from "../../core/Vector2D";
 import Matrix2D from "../../core/Matrix2D";
 import SelectionModel from "../Selection";
 
-class SelectionPan extends React.Component
+export default class SelectionPan extends React.Component
 {
 	constructor( tProps )
 	{
@@ -76,5 +75,3 @@ SelectionPan.propTypes =
 	model: PropTypes.instanceOf( SelectionModel ).isRequired,
 	viewTransform: PropTypes.instanceOf( Transform2DModel ).isRequired
 };
-
-export default observer( SelectionPan );

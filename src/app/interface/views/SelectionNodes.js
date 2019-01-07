@@ -1,13 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { observer } from "mobx-react";
 import Transform2DModel from "../../core/Transform2D";
 import Vector2D from "../../core/Vector2D";
 import Matrix2D from "../../core/Matrix2D";
 import SelectionModel from "../Selection";
 import GridModel from "../Grid";
 
-class SelectionNodes extends React.Component // TODO: Break up into sub components
+export default class SelectionNodes extends React.Component // TODO: Break up into sub components
 {
 	constructor( tProps )
 	{
@@ -26,10 +25,8 @@ class SelectionNodes extends React.Component // TODO: Break up into sub componen
 	
 	componentWillUnmount()
 	{
-		// Reset selection states
 		this.clearNodes();
 		
-		// Events
 		if ( this._nodeDragTimeout !== null )
 		{
 			clearTimeout( this._nodeDragTimeout );
@@ -154,5 +151,3 @@ SelectionNodes.propTypes =
 	viewTransform: PropTypes.instanceOf( Transform2DModel ).isRequired,
 	grid: PropTypes.instanceOf( GridModel ).isRequired
 };
-
-export default observer( SelectionNodes );

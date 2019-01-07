@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { observer } from "mobx-react";
+import { observe } from "mobx";
 import GraphModel from "../../nodegraph/Graph";
 import SelectionModel from "../Selection";
 import "./DeleteButton.css";
@@ -13,7 +14,15 @@ class DeleteButton extends React.Component
 		super( tProps );
 		
 		// Events
+		this._onNodesDispose = observe( tProps.model._nodes, ( tChange ) => { this.onNodes( tChange ); } );
 		this._onDelete = () => { this.onDelete(); };
+		this._onDeleteKey = ( tEvent ) => { this.onDeleteKey( tEvent ); };
+	}
+	
+	componentWillUnmount()
+	{
+		this._onNodesDispose();
+		this._onNodesDispose = null;
 	}
 	
 	onDelete()
@@ -29,7 +38,25 @@ class DeleteButton extends React.Component
 		this.props.model.clearNodes();
 	}
 	
+	onDeleteKey( tEvent )
+	{
+		if ( tEvent.keyCode === 46 )
+		{
+			this.onDelete();
+		}
+	}
 	
+	onNodes( tChange )
+	{
+		if ( tChange.object.length === 0 )
+		{
+			document.removeEventListener( "keydown", this._onDeleteKey );
+		}
+		else
+		{
+			document.addEventListener( "keydown", this._onDeleteKey );
+		}
+	}
 	
 	render()
 	{

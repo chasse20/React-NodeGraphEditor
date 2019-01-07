@@ -93,6 +93,11 @@ class SelectionMarquee extends React.Component // TODO: Break up into sub compon
 		{
 			this.props.model.isMarqueeHeld = false;
 			
+			this._element.setAttribute( "x", 0 );
+			this._element.setAttribute( "y", 0);
+			this._element.setAttribute( "width", 0 );
+			this._element.setAttribute( "height", 0 );
+			
 			document.removeEventListener( "mousemove", this._onMouseMove );
 			document.removeEventListener( "mouseup", this._onMouseUp );
 		}

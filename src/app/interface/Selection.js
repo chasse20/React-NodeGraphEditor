@@ -51,7 +51,7 @@ export default class Selection
 			this._nodes[i].isSelected = false;
 		}
 		
-		this._nodes = [];
+		this._nodes.clear();
 	}
 }
 
@@ -63,6 +63,7 @@ decorate( Selection,
 		isMarqueeHeld: observable,
 		_nodes: observable.shallow,
 		addNode: action,
-		removeNode: action
+		removeNode: action,
+		clearNodes: action
 	}
 );

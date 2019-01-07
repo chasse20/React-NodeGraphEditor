@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { observer } from "mobx-react";
 import Transform2DModel from "../../core/Transform2D";
 import InterfaceModel from "../Interface";
 import GraphModel from "../../nodegraph/Graph";
@@ -8,7 +7,7 @@ import SideBar from "./SideBar";
 import Selection from "./Selection";
 import "./Interface.css";
 
-class Interface extends React.Component
+export default class Interface extends React.Component
 {
 	constructor( tProps )
 	{
@@ -62,8 +61,6 @@ class Interface extends React.Component
 		);
 	}
 }
-
-export default observer( Interface );
 
 Interface.propTypes =
 {

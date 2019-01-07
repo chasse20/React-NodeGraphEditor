@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { observer } from "mobx-react";
 import Transform2DModel from "../../core/Transform2D";
 import SelectionModel from "../Selection";
 import GridModel from "../Grid";
@@ -8,7 +7,7 @@ import SelectionPan from "./SelectionPan";
 import SelectionMarquee from "./SelectionMarquee";
 import SelectionNodes from "./SelectionNodes";
 
-class Selection extends React.Component
+export default class Selection extends React.Component
 {
 	constructor( tProps )
 	{
@@ -62,5 +61,3 @@ Selection.propTypes =
 	viewTransform: PropTypes.instanceOf( Transform2DModel ).isRequired,
 	grid: PropTypes.instanceOf( GridModel ).isRequired
 };
-
-export default observer( Selection );
