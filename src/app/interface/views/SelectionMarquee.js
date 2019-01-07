@@ -68,7 +68,7 @@ class SelectionMarquee extends React.Component // TODO: Break up into sub compon
 		const tempNodes = values( this._graph._nodes );
 		for ( let i = ( tempNodes.length - 1 ); i >= 0; --i )
 		{
-			if ( tempBounds.contains( tempNodes[i]._transform.worldPosition ) )
+			if ( tempBounds.contains( tempNodes[i]._transform.worldPosition ) ) // TODO: Optimize with local position check????
 			{
 				this.props.model.addNode( tempNodes[i] );
 			}
