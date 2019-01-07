@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { observer } from "mobx-react";
 import { observe } from "mobx";
 import NodeModel from "../Node";
-import Vector2D from "../../core/Vector2D";
 import Utility from "../Utility";
 import Pin from "./Pin";
 import "./Node.css";

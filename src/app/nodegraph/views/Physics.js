@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { observe } from "mobx";
 import { observer } from "mobx-react";
-import { forceSimulation, forceLink, forceManyBody, forceCenter, forceCollide } from "d3";
+import { forceSimulation, forceLink, forceCollide } from "d3";
 import Vector2D from "../../core/Vector2D";
 import PhysicsModel from "../../interface/Physics";
 
@@ -42,7 +42,6 @@ class Physics extends React.Component
 	
 	set isEnabled( tIsEnabled )
 	{
-		console.log( tIsEnabled && this._nodes !== null && this.props.model.isEnabled );
 		if ( tIsEnabled && this._nodes !== null && this.props.model.isEnabled )
 		{
 			this._simulation.restart();
