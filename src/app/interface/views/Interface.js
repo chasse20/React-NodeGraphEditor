@@ -20,29 +20,43 @@ class Interface extends React.Component
 		
 		// Events
 		this._onSelection = ( tComponent ) => { this._selection = tComponent; };
-		this._onSelectionDelete = () => { this._selection.onDelete(); };
 	}
 	
-	onSelectGraph( tEvent, tGraph )
+	onSelectGraph( tEvent )
 	{
-		this._selection.onSelectGraph( tEvent, tGraph );
+		if ( tEvent != null )
+		{
+			tEvent.stopPropagation();
+		}
+		
+		this._selection.onSelectGraph( tEvent );
 	}
 	
-	onSelectNode( tEvent, tGraph )
+	onSelectNode( tEvent, tNode )
 	{
-		this._selection.onSelectNode( tEvent, tGraph );
+		if ( tEvent != null )
+		{
+			tEvent.stopPropagation();
+		}
+		
+		this._selection.onSelectNode( tEvent, tNode );
 	}
 	
-	onSelectEdge( tEvent, tGraph )
+	onSelectEdge( tEvent, tEdge )
 	{
-		this._selection.onSelectEdge( tEvent, tGraph );
+		if ( tEvent != null )
+		{
+			tEvent.stopPropagation();
+		}
+		
+		this._selection.onSelectEdge( tEvent, tEdge );
 	}
 	
 	render()
 	{
 		return (
 			<div className="interface">
-				<SideBar controls={ this.props.model._controls } menu={ this.props.model._menu } viewTransform={ this.props.viewTransform } onDelete={ this._onSelectionDelete }/>
+				<SideBar controls={ this.props.model._controls } menu={ this.props.model._menu } viewTransform={ this.props.viewTransform }/>
 				<Selection ref={ this._onSelection } model={ this.props.model._controls._selection } viewTransform={ this.props.viewTransform } grid={ this.props.model._controls._grid } graph={ this.props.graph }/>
 			</div>
 		);

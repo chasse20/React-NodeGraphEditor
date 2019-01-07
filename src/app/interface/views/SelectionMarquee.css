@@ -1,16 +1,16 @@
-.selection
+.marquee
 {
 	display: none;
 	width: inherit;
 	height: inherit;
 }
 
-.selection.marquee
+.marquee.active
 {
 	display: block;
 }
 
-.selection rect
+.marquee rect
 {
 	fill: #2e78a233;
 	stroke-width: 1px;

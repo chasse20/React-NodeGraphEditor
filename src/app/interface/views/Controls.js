@@ -20,7 +20,7 @@ export default class Controls extends React.Component // TODO: Primitive Compone
 				<MenuToggle model={ this.props.menu }/>
 				<div className="buttons">
 					<SelectionControls model={ this.props.model._selection }/>
-					<DeleteButton model={ this.props.model._selection } onDelete={ this.props.onDelete }/>
+					<DeleteButton model={ this.props.model._selection }/>
 					<div>
 						<GridToggle model={ this.props.model._grid }/>
 						<GridToggleSnap model={ this.props.model._selection }/>
@@ -36,6 +36,5 @@ Controls.propTypes =
 {
 	model: PropTypes.instanceOf( ControlsModel ).isRequired,
 	menu: PropTypes.instanceOf( MenuModel ).isRequired,
-	viewTransform: PropTypes.instanceOf( Transform2DModel ).isRequired,
-	onDelete: PropTypes.func.isRequired
+	viewTransform: PropTypes.instanceOf( Transform2DModel ).isRequired
 };

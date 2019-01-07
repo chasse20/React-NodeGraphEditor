@@ -1,4 +1,4 @@
-import { decorate, observable } from "mobx";
+import { decorate, observable, action } from "mobx";
 
 export default class Selection
 {
@@ -6,10 +6,52 @@ export default class Selection
 	{
 		this.isPanMode = tIsPanMode;
 		this.isPanningHeld = false;
+		this.isMarqueeHeld = false;
 		this.isSnapMode = tIsSnapMode;
 		this.snapIncrement = tSnapIncrement;
-		this.isStuffSelected = false;
-		this.isMarqueeHeld = false;
+		this._nodes = [];
+	}
+	
+	addNode( tNode ) // TODO: Reorder newest selection models in Graph!
+	{
+		if ( tNode != null && this._nodes.indexOf( tNode ) < 0 )
+		{
+			this._nodes.push( tNode );
+			
+			tNode.isSelected = true;
+			
+			return true;
+		}
+		
+		return false;
+	}
+	
+	removeNode( tNode )
+	{
+		if ( tNode != null && this._nodes !== null )
+		{
+			const tempIndex = this._nodes.indexOf( tNode );
+			if ( tempIndex >= 0 )
+			{
+				this._nodes.splice( tempIndex, 1 );
+				
+				tNode.isSelected = false;
+				
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	clearNodes()
+	{
+		for ( let i = ( this._nodes.length - 1 ); i >= 0; --i )
+		{
+			this._nodes[i].isSelected = false;
+		}
+		
+		this._nodes = [];
 	}
 }
 
@@ -18,7 +60,9 @@ decorate( Selection,
 		isPanMode: observable,
 		isPanningHeld: observable,
 		isSnapMode: observable,
-		isStuffSelected: observable,
-		isMarqueeHeld: observable
+		isMarqueeHeld: observable,
+		_nodes: observable.shallow,
+		addNode: action,
+		removeNode: action
 	}
 );

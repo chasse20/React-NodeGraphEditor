@@ -15,7 +15,7 @@ class SideBar extends React.Component // Primitive Component
 		return (
 			<div className={ this.props.menu.isOpen ? "sidebar open" : "sidebar" }>
 				<Menu/>
-				<Controls model={ this.props.controls } menu={ this.props.menu } viewTransform={ this.props.viewTransform } onDelete={ this.props.onDelete }/>
+				<Controls model={ this.props.controls } menu={ this.props.menu } viewTransform={ this.props.viewTransform }/>
 			</div>
 		);
 	}
@@ -27,6 +27,5 @@ SideBar.propTypes =
 {
 	controls: PropTypes.instanceOf( ControlsModel ).isRequired,
 	menu: PropTypes.instanceOf( MenuModel ).isRequired,
-	viewTransform: PropTypes.instanceOf( Transform2DModel ).isRequired,
-	onDelete: PropTypes.func.isRequired
+	viewTransform: PropTypes.instanceOf( Transform2DModel ).isRequired
 };
