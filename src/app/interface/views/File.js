@@ -59,7 +59,7 @@ class File extends React.Component
 							<option value="GraphViz">GraphViz</option>
 							<option value="GraphJSON">GraphJSON</option>
 						</select>
-						<button onMouseDown={ this._onExport }>Export</button>
+						<button onClick={ this._onExport }>Export</button>
 					</div>
 				</div>
 			</div>
