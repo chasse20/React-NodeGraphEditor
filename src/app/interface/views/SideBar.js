@@ -15,7 +15,7 @@ class SideBar extends React.Component // Primitive Component
 	{
 		return (
 			<div className={ this.props.menu.isOpen ? "sidebar open" : "sidebar" }>
-				<Menu/>
+				<Menu model={ this.props.menu } graph={ this.props.graph }/>
 				<Controls model={ this.props.controls } menu={ this.props.menu } viewTransform={ this.props.viewTransform } graph={ this.props.graph }/>
 			</div>
 		);

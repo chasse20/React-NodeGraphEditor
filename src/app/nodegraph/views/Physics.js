@@ -164,8 +164,11 @@ class Physics extends React.Component
 				{
 					this._edges = null;
 				}
-				
-				this._simulation.force( "link" ).links( this._edges );
+				else
+				{
+					this._simulation.force( "link" ).links( this._edges );
+				}
+
 				this.isEnabled = true;
 				
 				return true;

@@ -36,7 +36,7 @@ export default class Type
 		}
 	}
 	
-	static FromJSON( tJSON, tModelClasses, tViewClasses )
+	static FromJSON( tJSON, tModelClasses, tViewClasses ) // TODO: Defaults
 	{
 		if ( tJSON != null && tJSON.name !== undefined && tJSON.modelClass !== undefined && tJSON.viewClass !== undefined && tModelClasses != null && tViewClasses != null )
 		{
