@@ -13,6 +13,7 @@ class File extends React.Component
 		super( tProps );
 
 		// Variables
+		this._file = null;
 		/*this._interface = null;
 		this._viewTransform = new Transform2DModel();
 		this._worldTransform = new Transform2DModel();
@@ -21,15 +22,30 @@ class File extends React.Component
 		this._interfaceModel = new InterfaceModel();*/
 		
 		// Events
+		this._onFileInput = ( tEvent ) => { this.onFileInput( tEvent.target.files ); };
 		this._onImport = () => { this.onImport(); };
 		this._onExport = () => { this.onExport(); };
 		
 		//this.load( Data ); // TODO: make this work only from user input
 	}
 	
+	onFileInput( tFiles )
+	{
+		this._file = tFiles == null || tFiles.length === 0 ? null : tFiles[0];
+	}
+	
 	onImport()
 	{
-		
+		if ( this._file !== null )
+		{
+			const tempReader = new FileReader();
+			tempReader.onload = ( tEvent ) =>
+			{
+				const tempJSON = JSON.parse( tEvent.target.result );
+				this.props.graph.fromJSON( tempJSON.graph );
+			};
+			tempReader.readAsText( this._file );
+		}
 	}
 	
 	onExport()
@@ -44,7 +60,7 @@ class File extends React.Component
 				<div className="import">
 					<h1>IMPORT</h1>
 					<div className="inner">
-						<input type="file" name="file"/>
+						<input type="file" name="file" onChange={ this._onFileInput }/>
 						<select name="format">
 							<option value="GraphViz">GraphViz</option>
 							<option value="GraphJSON">GraphJSON</option>

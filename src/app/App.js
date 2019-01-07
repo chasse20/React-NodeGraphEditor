@@ -5,7 +5,6 @@ import Graph from "./nodegraph/views/Graph";
 import Transform2DModel from "./core/Transform2D";
 import GraphModel from "./nodegraph/Graph";
 import InterfaceModel from "./interface/Interface";
-import Data from "../data.json";
 import "./App.css";
 
 export default class App extends Component
@@ -28,8 +27,6 @@ export default class App extends Component
 		this._onSelectGraph = ( tEvent, tGraph ) => { this._interface.onSelectGraph( tEvent, tGraph ); };
 		this._onSelectNode = ( tEvent, tNode ) => { this._interface.onSelectNode( tEvent, tNode ); };
 		this._onSelectEdge = ( tEvent, tEdge ) => { this._interface.onSelectEdge( tEvent, tEdge ); };
-		
-		this.load( Data ); // TODO: make this work only from user input
 	}
 
 	toJSON()
@@ -46,14 +43,6 @@ export default class App extends Component
 		return tempJSON;
 	}
 	
-	load( tJSON )
-	{
-		if ( tJSON != null )
-		{
-			this._graphModel.fromJSON( tJSON.graph );
-		}
-	}
-
 	render()
 	{		
 		return (
