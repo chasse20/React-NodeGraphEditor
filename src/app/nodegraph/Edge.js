@@ -52,7 +52,8 @@ export default class Edge
 		const tempJSON =
 		{
 			node: this._target._node._id,
-			pin: this._target._name
+			pin: this._target._name,
+			type: this._type._name
 		};
 		
 		// Data

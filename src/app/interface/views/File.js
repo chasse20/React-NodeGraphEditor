@@ -40,16 +40,27 @@ class File extends React.Component
 	render()
 	{
 		return (
-			<div className="file">
+			<div className="submenu file">
 				<div className="import">
-					<h1>Import</h1>
-					dropdown for type of import
-					<button onMouseDown={ this._onImport }>Import</button>
+					<h1>IMPORT</h1>
+					<div className="inner">
+						<input type="file" name="file"/>
+						<select name="format">
+							<option value="GraphViz">GraphViz</option>
+							<option value="GraphJSON">GraphJSON</option>
+						</select>
+						<button onMouseDown={ this._onImport }>Import</button>
+					</div>
 				</div>
 				<div className="export">
-					<h1>Export</h1>
-					dropdown for type of export
-					<button onMouseDown={ this._onExport }>Export</button>
+					<h1>EXPORT</h1>
+					<div className="inner">
+						<select name="format">
+							<option value="GraphViz">GraphViz</option>
+							<option value="GraphJSON">GraphJSON</option>
+						</select>
+						<button onMouseDown={ this._onExport }>Export</button>
+					</div>
 				</div>
 			</div>
 		);

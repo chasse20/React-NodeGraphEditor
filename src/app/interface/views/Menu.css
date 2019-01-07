@@ -32,3 +32,21 @@
 {
 	border-right: 1px solid #5b5c5d;
 }
+
+.content
+{
+	box-sizing: border-box;
+	padding: 20px;
+	font-family: Tahoma, Verdana, Segoe, sans-serif;
+	color: #fff;
+}
+
+.submenu > *:not(:first-child)
+{
+	margin-top: 60px;
+}
+
+.submenu .inner > *
+{
+	margin-top: 10px;
+}
