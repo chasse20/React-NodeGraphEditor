@@ -30,6 +30,7 @@ class Graph extends React.Component
 		this._onContainerElement = ( tElement ) => { this._containerElement = tElement; };
 		this._onEdges = ( tComponent ) => { this._edges = tComponent; };
 		this._onLink = ( tModel, tIsSet ) => { this._edges.onLink( tModel, tIsSet ); };
+		this._onMouseDown = ( tEvent ) => { this.props.onSelectGraph( tEvent, this.props.model ); };
 	}
 
 	componentDidMount()
@@ -42,7 +43,7 @@ class Graph extends React.Component
 	{
 		if ( this.props.model.isSelected )
 		{
-			this.props.onSelectGraph( null );
+			this.props.onSelectGraph( null, this.props.model );
 		}
 		
 		this._onViewTransformDispose();
@@ -64,7 +65,7 @@ class Graph extends React.Component
 	render()
 	{
 		return (
-			<div className={ this.props.model.isSelected ? "graph selected" : "graph" } onMouseDown={ this.props.onSelectGraph }>
+			<div className={ this.props.model.isSelected ? "graph selected" : "graph" } onMouseDown={ this._onMouseDown }>
 				<svg height="100%" width="100%">
 					<Defs grid={ this.props.grid } viewTransform={ this.props.viewTransform } transform={ this.props.model._transform } edgeTypes={ this.props.model._edgeTypes }/>
 					<rect className={ this.props.grid.isVisible ? "grid" : "grid hidden" } fill="url(#grid)" height="100%" width="100%"/>

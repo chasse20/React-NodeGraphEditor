@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import { observer } from "mobx-react";
 import Transform2DModel from "../../core/Transform2D";
-import GraphModel from "../../nodegraph/Graph";
 import Vector2D from "../../core/Vector2D";
 import Matrix2D from "../../core/Matrix2D";
 import SelectionModel from "../Selection";
@@ -15,6 +14,7 @@ class SelectionPan extends React.Component
 		super( tProps );
 		
 		// Variables
+		this._graph = null;
 		this._mouseStart = null;
 		this._offset = null;
 		
@@ -28,7 +28,7 @@ class SelectionPan extends React.Component
 		this.onMouseUp();
 	}
 	
-	onSelect( tEvent )
+	onSelect( tEvent, tGraph )
 	{
 		if ( tEvent == null )
 		{
@@ -38,9 +38,9 @@ class SelectionPan extends React.Component
 		{
 			this._mouseStart = Matrix2D.MultiplyPoint( Matrix2D.Inverse( this.props.viewTransform.localMatrix ), new Vector2D( tEvent.clientX, tEvent.clientY ) );
 			
-			const tempGraph = this.props.graph;
-			tempGraph.isSelected = true;
-			this._offset = tempGraph._transform._position;
+			this._graph = tGraph;
+			this._graph.isSelected = true;
+			this._offset = this._graph._transform._position;
 			
 			document.addEventListener( "mousemove", this._onMouseMove );
 			document.addEventListener( "mouseup", this._onMouseUp );
@@ -49,7 +49,7 @@ class SelectionPan extends React.Component
 	
 	onMouseMove( tEvent )
 	{
-		this.props.graph._transform.position = Matrix2D.MultiplyPoint( Matrix2D.Inverse( this.props.viewTransform.localMatrix ), new Vector2D( tEvent.clientX, tEvent.clientY ) ).subtract( this._mouseStart ).add( this._offset );
+		this._graph._transform.position = Matrix2D.MultiplyPoint( Matrix2D.Inverse( this.props.viewTransform.localMatrix ), new Vector2D( tEvent.clientX, tEvent.clientY ) ).subtract( this._mouseStart ).add( this._offset );
 	}
 	
 	onMouseUp( tEvent )
@@ -57,7 +57,8 @@ class SelectionPan extends React.Component
 		this._offset = null;
 		this._mouseStart = null;
 		
-		this.props.graph.isSelected = false;
+		this._graph.isSelected = false;
+		this._graph = null;
 		this.props.model.isPanningHeld = false;
 		
 		document.removeEventListener( "mousemove", this._onMouseMove );
@@ -73,8 +74,7 @@ class SelectionPan extends React.Component
 SelectionPan.propTypes =
 {
 	model: PropTypes.instanceOf( SelectionModel ).isRequired,
-	viewTransform: PropTypes.instanceOf( Transform2DModel ).isRequired,
-	graph: PropTypes.instanceOf( GraphModel ).isRequired
+	viewTransform: PropTypes.instanceOf( Transform2DModel ).isRequired
 };
 
 export default observer( SelectionPan );

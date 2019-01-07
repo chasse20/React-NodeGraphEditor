@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Transform2DModel from "../../core/Transform2D";
+import GraphModel from "../../nodegraph/Graph";
 import ControlsModel from "../Controls";
 import MenuModel from "../Menu";
 import MenuToggle from "./MenuToggle";
@@ -20,7 +21,7 @@ export default class Controls extends React.Component // TODO: Primitive Compone
 				<MenuToggle model={ this.props.menu }/>
 				<div className="buttons">
 					<SelectionControls model={ this.props.model._selection }/>
-					<DeleteButton model={ this.props.model._selection }/>
+					<DeleteButton model={ this.props.model._selection } graph={ this.props.graph }/>
 					<div>
 						<GridToggle model={ this.props.model._grid }/>
 						<GridToggleSnap model={ this.props.model._selection }/>
@@ -36,5 +37,6 @@ Controls.propTypes =
 {
 	model: PropTypes.instanceOf( ControlsModel ).isRequired,
 	menu: PropTypes.instanceOf( MenuModel ).isRequired,
-	viewTransform: PropTypes.instanceOf( Transform2DModel ).isRequired
+	viewTransform: PropTypes.instanceOf( Transform2DModel ).isRequired,
+	graph: PropTypes.instanceOf( GraphModel ).isRequired
 };

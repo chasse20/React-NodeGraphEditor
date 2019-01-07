@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import { observer } from "mobx-react";
 import Transform2DModel from "../../core/Transform2D";
-import GraphModel from "../../nodegraph/Graph";
 import Vector2D from "../../core/Vector2D";
 import Matrix2D from "../../core/Matrix2D";
 import SelectionModel from "../Selection";
@@ -16,6 +15,7 @@ class SelectionMarquee extends React.Component // TODO: Break up into sub compon
 		super( tProps );
 		
 		// Variables
+		this._graph = null;
 		this._element = null;
 		this._mouseStart = null;
 		this._mouseEnd = null;
@@ -32,7 +32,7 @@ class SelectionMarquee extends React.Component // TODO: Break up into sub compon
 		this.onMouseUp();
 	}
 	
-	onSelect( tEvent )
+	onSelect( tEvent, tGraph )
 	{
 		if ( tEvent == null )
 		{
@@ -44,7 +44,8 @@ class SelectionMarquee extends React.Component // TODO: Break up into sub compon
 			
 			this._mouseStart = Matrix2D.MultiplyPoint( Matrix2D.Inverse( this.props.viewTransform.localMatrix ), new Vector2D( tEvent.clientX, tEvent.clientY ) );
 			this._mouseEnd = this._mouseStart.copy();
-			this._offset = this.props.graph._transform._position.copy();
+			this._graph = tGraph;
+			this._offset = this._graph._transform._position.copy();
 			
 			document.addEventListener( "mousemove", this._onMouseMove );
 			document.addEventListener( "mouseup", this._onMouseUp );
@@ -59,7 +60,7 @@ class SelectionMarquee extends React.Component // TODO: Break up into sub compon
 	
 	update()
 	{
-		const tempStart = Matrix2D.MultiplyPoint( this.props.viewTransform.localMatrix, Vector2D.Subtract( this._mouseStart, this._offset ).add( this.props.graph._transform._position ) );
+		const tempStart = Matrix2D.MultiplyPoint( this.props.viewTransform.localMatrix, Vector2D.Subtract( this._mouseStart, this._offset ).add( this._graph._transform._position ) );
 		const tempEnd = Matrix2D.MultiplyPoint( this.props.viewTransform.localMatrix, this._mouseEnd );
 
 		if ( tempEnd.x < tempStart.x )
@@ -87,6 +88,7 @@ class SelectionMarquee extends React.Component // TODO: Break up into sub compon
 	
 	onMouseUp( tEvent )
 	{
+		this._graph = null;
 		if ( tEvent.button !== 1 ) // not panning with middle mouse
 		{
 			this.props.model.isMarqueeHeld = false;
@@ -109,8 +111,7 @@ class SelectionMarquee extends React.Component // TODO: Break up into sub compon
 SelectionMarquee.propTypes =
 {
 	model: PropTypes.instanceOf( SelectionModel ).isRequired,
-	viewTransform: PropTypes.instanceOf( Transform2DModel ).isRequired,
-	graph: PropTypes.instanceOf( GraphModel ).isRequired
+	viewTransform: PropTypes.instanceOf( Transform2DModel ).isRequired
 };
 
 export default observer( SelectionMarquee );

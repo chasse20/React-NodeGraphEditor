@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { observer } from "mobx-react";
+import GraphModel from "../../nodegraph/Graph";
 import SelectionModel from "../Selection";
 import "./DeleteButton.css";
 
@@ -12,8 +13,23 @@ class DeleteButton extends React.Component
 		super( tProps );
 		
 		// Events
-		this._onDelete = () => { this.props.model.clearNodes(); };
+		this._onDelete = () => { this.onDelete(); };
 	}
+	
+	onDelete()
+	{
+		// Clear from graph
+		const tempNodes = this.props.model._nodes;
+		for ( let i = ( tempNodes.length - 1 ); i >= 0; --i )
+		{
+			this.props.graph.removeNode( tempNodes[i] );
+		}
+		
+		// Clear from selection
+		this.props.model.clearNodes();
+	}
+	
+	
 	
 	render()
 	{
@@ -30,6 +46,7 @@ class DeleteButton extends React.Component
 DeleteButton.propTypes =
 {
 	model: PropTypes.instanceOf( SelectionModel ).isRequired,
+	graph: PropTypes.instanceOf( GraphModel ).isRequired
 };
 
 export default observer( DeleteButton );

@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import { observer } from "mobx-react";
 import Transform2DModel from "../../core/Transform2D";
-import GraphModel from "../../nodegraph/Graph";
 import Vector2D from "../../core/Vector2D";
 import Matrix2D from "../../core/Matrix2D";
 import SelectionModel from "../Selection";
@@ -43,7 +42,7 @@ class SelectionNodes extends React.Component // TODO: Break up into sub componen
 		this.props.model.clearNodes();
 	}
 	
-	onSelectGraph( tEvent )
+	onSelectGraph( tEvent, tGraph )
 	{
 		if ( tEvent == null )
 		{
@@ -59,7 +58,7 @@ class SelectionNodes extends React.Component // TODO: Break up into sub componen
 	{
 		if ( tEvent == null )
 		{
-			this.onMouseUp();
+			this.props.model.removeNode( tNode );
 		}
 		else if ( tEvent.button !== 1 ) // not panning with middle mouse
 		{
@@ -153,8 +152,7 @@ SelectionNodes.propTypes =
 {
 	model: PropTypes.instanceOf( SelectionModel ).isRequired,
 	viewTransform: PropTypes.instanceOf( Transform2DModel ).isRequired,
-	grid: PropTypes.instanceOf( GridModel ).isRequired,
-	graph: PropTypes.instanceOf( GraphModel ).isRequired
+	grid: PropTypes.instanceOf( GridModel ).isRequired
 };
 
 export default observer( SelectionNodes );

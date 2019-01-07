@@ -26,7 +26,7 @@ export default class App extends Component
 		
 		// Events
 		this._onInterface = ( tComponent ) => { this._interface = tComponent; };
-		this._onSelectGraph = ( tEvent ) => { this._interface.onSelectGraph( tEvent ); };
+		this._onSelectGraph = ( tEvent, tGraph ) => { this._interface.onSelectGraph( tEvent, tGraph ); };
 		this._onSelectNode = ( tEvent, tNode ) => { this._interface.onSelectNode( tEvent, tNode ); };
 		this._onSelectEdge = ( tEvent, tEdge ) => { this._interface.onSelectEdge( tEvent, tEdge ); };
 		

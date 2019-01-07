@@ -22,14 +22,14 @@ class Interface extends React.Component
 		this._onSelection = ( tComponent ) => { this._selection = tComponent; };
 	}
 	
-	onSelectGraph( tEvent )
+	onSelectGraph( tEvent, tGraph )
 	{
 		if ( tEvent != null )
 		{
 			tEvent.stopPropagation();
 		}
 		
-		this._selection.onSelectGraph( tEvent );
+		this._selection.onSelectGraph( tEvent, tGraph );
 	}
 	
 	onSelectNode( tEvent, tNode )
@@ -56,8 +56,8 @@ class Interface extends React.Component
 	{
 		return (
 			<div className="interface">
-				<SideBar controls={ this.props.model._controls } menu={ this.props.model._menu } viewTransform={ this.props.viewTransform }/>
-				<Selection ref={ this._onSelection } model={ this.props.model._controls._selection } viewTransform={ this.props.viewTransform } grid={ this.props.model._controls._grid } graph={ this.props.graph }/>
+				<SideBar controls={ this.props.model._controls } menu={ this.props.model._menu } viewTransform={ this.props.viewTransform } graph={ this.props.graph }/>
+				<Selection ref={ this._onSelection } model={ this.props.model._controls._selection } viewTransform={ this.props.viewTransform } grid={ this.props.model._controls._grid }/>
 			</div>
 		);
 	}
