@@ -36,11 +36,16 @@
 	pointer-events: none;
 }
 
-.node .text p
+.node p
 {
 	max-height: 100%;
 	overflow: hidden;
 	text-align: center;
 	margin: 0;
 	word-break: break-all;
+}
+
+.node.selected p
+{
+	overflow: visible;
 }
