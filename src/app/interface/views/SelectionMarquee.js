@@ -1,7 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { observer } from "mobx-react";
+import { values } from "mobx";
 import Transform2DModel from "../../core/Transform2D";
+import Bounds from "../../core/Bounds";
 import Vector2D from "../../core/Vector2D";
 import Matrix2D from "../../core/Matrix2D";
 import SelectionModel from "../Selection";
@@ -60,7 +62,24 @@ class SelectionMarquee extends React.Component // TODO: Break up into sub compon
 	
 	update()
 	{
-		const tempStart = Matrix2D.MultiplyPoint( this.props.viewTransform.localMatrix, Vector2D.Subtract( this._mouseStart, this._offset ).add( this._graph._transform._position ) );
+		// Select nodes
+		const tempGlobalStart = Vector2D.Subtract( this._mouseStart, this._offset ).add( this._graph._transform._position );
+		const tempBounds = Bounds.FromPoints( tempGlobalStart, this._mouseEnd );
+		const tempNodes = values( this._graph._nodes );
+		for ( let i = ( tempNodes.length - 1 ); i >= 0; --i )
+		{
+			if ( tempBounds.contains( tempNodes[i]._transform.worldPosition ) )
+			{
+				this.props.model.addNode( tempNodes[i] );
+			}
+			else
+			{
+				this.props.model.removeNode( tempNodes[i] );
+			}
+		}
+		
+		// Render
+		const tempStart = Matrix2D.MultiplyPoint( this.props.viewTransform.localMatrix, tempGlobalStart );
 		const tempEnd = Matrix2D.MultiplyPoint( this.props.viewTransform.localMatrix, this._mouseEnd );
 
 		if ( tempEnd.x < tempStart.x )
@@ -90,7 +109,7 @@ class SelectionMarquee extends React.Component // TODO: Break up into sub compon
 	{
 		this._graph = null;
 		if ( tEvent.button !== 1 ) // not panning with middle mouse
-		{
+		{			
 			this.props.model.isMarqueeHeld = false;
 			
 			this._element.setAttribute( "x", 0 );

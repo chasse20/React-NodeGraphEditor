@@ -9,7 +9,7 @@ export default class Selection
 		this.isMarqueeHeld = false;
 		this.isSnapMode = tIsSnapMode;
 		this.snapIncrement = tSnapIncrement;
-		this._nodes = [];
+		this._nodes = []; // TODO: consider making this hash for performance!
 	}
 	
 	addNode( tNode ) // TODO: Reorder newest selection models in Graph!

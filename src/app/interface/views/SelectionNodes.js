@@ -84,6 +84,7 @@ export default class SelectionNodes extends React.Component // TODO: Break up in
 				for ( let i = 0; i < tempListLength; ++i )
 				{
 					this._offsets.push( tempNodes[i]._transform._position );
+					console.log( tempNodes[i]._transform.worldPosition );
 				}
 			
 				document.addEventListener( "mousemove", this._onMouseMove );
