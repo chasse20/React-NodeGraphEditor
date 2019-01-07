@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { observer } from "mobx-react";
 import GraphModel from "../../nodegraph/Graph";
 import MenuModel from "../Menu";
+import File from "./File";
 import "./Menu.css";
 
 class Menu extends React.Component
@@ -19,6 +20,10 @@ class Menu extends React.Component
 					<button className={ tempTab === 2 ? "selected" : null } onMouseDown={ () =>{ this.props.model.openTab = 2; } }>data</button>
 				</div>
 				<div className="content">
+					{
+						tempTab === 0 &&
+							<File graph={ this.props.graph }/>
+					}
 				</div>
 			</div>
 		);

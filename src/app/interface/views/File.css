@@ -1,0 +1,34 @@
+.menu
+{
+	position: absolute;
+	height: inherit;
+	pointer-events: auto;
+	width: var( --menu-width );
+	background-color: var( --button-color-gray );
+}
+
+.tabs button
+{
+	background-color: #343537;
+	color: #848484;
+	padding: 10px;
+	border-bottom: 1px solid #5b5c5d;
+	width: 33.333%;
+}
+
+.tabs button.selected
+{
+	color: #fff;
+	background-color: var( --button-color-gray );
+	border-bottom: none;
+}
+
+.tabs button.selected:not(:first-child)
+{
+	border-left: 1px solid #5b5c5d;
+}
+
+.tabs button.selected:not(:last-child)
+{
+	border-right: 1px solid #5b5c5d;
+}

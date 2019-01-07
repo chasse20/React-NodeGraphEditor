@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Switch, Route } from "react-router";
-import FileSaver from "file-saver";
 import Interface from "./interface/views/Interface";
 import Graph from "./nodegraph/views/Graph";
 import Transform2DModel from "./core/Transform2D";
@@ -47,11 +46,6 @@ export default class App extends Component
 		return tempJSON;
 	}
 	
-	save()
-	{
-		FileSaver.saveAs( new Blob( [ JSON.stringify( this ) ], { type: "application/json" } ), "data.json" );
-	}
-
 	load( tJSON )
 	{
 		if ( tJSON != null )
