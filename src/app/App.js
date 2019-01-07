@@ -68,13 +68,13 @@ export default class App extends Component
 					<Route path="/date" render={
 						( tProps ) =>
 						(
-							<Graph model={ this._graphModel } viewTransform={ this._viewTransform } grid={ this._interfaceModel._controls._grid } onSelectGraph={ this._onSelectGraph } onSelectNode={ this._onSelectNode } onSelectEdge={ this._onSelectEdge }/>
+							<Graph model={ this._graphModel } viewTransform={ this._viewTransform } grid={ this._interfaceModel._controls._grid } physics={ this._interfaceModel._controls._physics } onSelectGraph={ this._onSelectGraph } onSelectNode={ this._onSelectNode } onSelectEdge={ this._onSelectEdge }/>
 						)
 					}/>
 					<Route render={
 						( tProps ) =>
 						(
-							<Graph model={ this._graphModel } viewTransform={ this._viewTransform } grid={ this._interfaceModel._controls._grid } onSelectGraph={ this._onSelectGraph } onSelectNode={ this._onSelectNode } onSelectEdge={ this._onSelectEdge }/>
+							<Graph model={ this._graphModel } viewTransform={ this._viewTransform } grid={ this._interfaceModel._controls._grid } physics={ this._interfaceModel._controls._physics } onSelectGraph={ this._onSelectGraph } onSelectNode={ this._onSelectNode } onSelectEdge={ this._onSelectEdge }/>
 						)
 					}/>
 				</Switch>

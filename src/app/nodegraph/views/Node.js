@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { observer } from "mobx-react";
 import { observe } from "mobx";
 import NodeModel from "../Node";
+import Vector2D from "../../core/Vector2D";
 import Utility from "../Utility";
 import Pin from "./Pin";
 import "./Node.css";
@@ -18,9 +19,18 @@ class Node extends React.Component
 		
 		// Variables
 		this._element = null;
+		this._physics =
+		{
+			id: tProps.model._id,
+			x: tProps.model._transform._position.x,
+			y: tProps.model._transform._position.y,
+			transform: tProps.model._transform,
+			radius: 100
+		};
 		
 		// Events
 		this._onTransformDispose = observe( tProps.model._transform, "_position", ( tChange ) => { this.position = tChange.newValue; } );
+		this._onSelectedDispose = observe( tProps.model, "isSelected", ( tChange ) => { this.isSelected = tChange.newValue; } );
 		this._onMouse = ( tEvent ) => { tProps.onSelect( tEvent, this.props.model ); };
 		this._onElement = ( tElement ) => { this._element = tElement; };
 	}
@@ -28,6 +38,8 @@ class Node extends React.Component
 	componentDidMount()
 	{
 		this.position = this.props.model._transform._position;
+		this.isSelected = this.props.isSelected;
+		this.props.onPhysics( this._physics, true );
 	}
 	
 	componentWillUnmount()
@@ -39,10 +51,21 @@ class Node extends React.Component
 		
 		this._onTransformDispose();
 		this._onTransformDispose = null;
+		this._onSelectedDispose();
+		this._onSelectedDispose = null;
+		
+		this.props.onPhysics( this._physics, false );
+	}
+	
+	set isSelected( tIsSelected )
+	{
+		//this.props.onPhysics( this._physics, !tIsSelected );
 	}
 	
 	set position( tPosition )
 	{
+		this._physics.x = tPosition.x;
+		this._physics.y = tPosition.y;
 		this._element.setAttribute( "transform", "translate(" + tPosition.x + "," + tPosition.y + ")" );
 	}
 	

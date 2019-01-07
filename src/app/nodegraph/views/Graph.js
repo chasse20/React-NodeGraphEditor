@@ -5,10 +5,12 @@ import { observer } from "mobx-react";
 //import Physics from "../core/Physics";
 import Transform2DModel from "../../core/Transform2D";
 import GraphModel from "../Graph";
+import PhysicsModel from "../../interface/Physics";
 import GridModel from "../../interface/Grid";
 import Defs from "./Defs";
 import Nodes from "./Nodes";
 import Edges from "./Edges";
+import Physics from "./Physics"; // TODO: Hack
 import "./Graph.css";
 
 class Graph extends React.Component
@@ -19,6 +21,7 @@ class Graph extends React.Component
 		super( tProps );
 
 		// Variables
+		this._physics = null;
 		this._viewElement = null;
 		this._containerElement = null;
 		this._edges = null;
@@ -26,6 +29,9 @@ class Graph extends React.Component
 		// Events
 		this._onViewTransformDispose = observe( tProps.viewTransform, "_scale", ( tChange ) => { this.scale = tChange.newValue; } );
 		this._onTransformDispose = observe( tProps.model._transform, "_position", ( tChange ) => { this.position = tChange.newValue; } );
+		this._onPhysics = ( tComponent ) => { this._physics = tComponent; };
+		this._onNodePhysics = ( tNode, tIsAdded ) => { this._physics.onNodePhysics( tNode, tIsAdded ); };
+		this._onEdgePhysics = ( tEdge, tIsAdded ) => { this._physics.onEdgePhysics( tEdge, tIsAdded ); };
 		this._onViewElement = ( tElement ) => { this._viewElement = tElement; };
 		this._onContainerElement = ( tElement ) => { this._containerElement = tElement; };
 		this._onEdges = ( tComponent ) => { this._edges = tComponent; };
@@ -66,13 +72,14 @@ class Graph extends React.Component
 	{
 		return (
 			<div className={ this.props.model.isSelected ? "graph selected" : "graph" } onMouseDown={ this._onMouseDown }>
+				<Physics ref={ this._onPhysics } model={ this.props.physics }/>
 				<svg height="100%" width="100%">
 					<Defs grid={ this.props.grid } viewTransform={ this.props.viewTransform } transform={ this.props.model._transform } edgeTypes={ this.props.model._edgeTypes }/>
 					<rect className={ this.props.grid.isVisible ? "grid" : "grid hidden" } fill="url(#grid)" height="100%" width="100%"/>
 					<g ref={ this._onViewElement }>
 						<g ref={ this._onContainerElement }>
-							<Edges ref={ this._onEdges } onSelectEdge={ this.props.onSelectEdge }/>
-							<Nodes nodes={ this.props.model._nodes } onLink={ this._onLink } onSelectNode={ this.props.onSelectNode }/>
+							<Edges ref={ this._onEdges } onSelectEdge={ this.props.onSelectEdge } onPhysics={ this._onEdgePhysics }/>
+							<Nodes nodes={ this.props.model._nodes } onLink={ this._onLink } onSelectNode={ this.props.onSelectNode } onPhysics={ this._onNodePhysics }/>
 						</g>
 					</g>
 				</svg>
@@ -86,6 +93,7 @@ Graph.propTypes =
 	model: PropTypes.instanceOf( GraphModel ).isRequired,
 	viewTransform: PropTypes.instanceOf( Transform2DModel ).isRequired,
 	grid: PropTypes.instanceOf( GridModel ).isRequired,
+	physics: PropTypes.instanceOf( PhysicsModel ).isRequired,
 	onSelectGraph: PropTypes.func.isRequired,
 	onSelectNode: PropTypes.func.isRequired,
 	onSelectEdge: PropTypes.func.isRequired

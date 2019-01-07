@@ -10,6 +10,7 @@ import DeleteButton from "./DeleteButton";
 import GridToggle from "./GridToggle";
 import GridToggleSnap from "./GridToggleSnap";
 import ZoomControls from "./ZoomControls";
+import PhysicsToggle from "./PhysicsToggle";
 import "./Controls.css";
 
 export default class Controls extends React.Component // TODO: Primitive Component
@@ -26,6 +27,7 @@ export default class Controls extends React.Component // TODO: Primitive Compone
 						<GridToggle model={ this.props.model._grid }/>
 						<GridToggleSnap model={ this.props.model._selection }/>
 					</div>
+					<PhysicsToggle model={ this.props.model._physics }/>
 					<ZoomControls viewTransform={ this.props.viewTransform }/>
 				</div>
 			</nav>

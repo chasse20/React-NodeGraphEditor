@@ -102,13 +102,13 @@ export default class Graph
 			}
 			
 			// Nodes
-			const tempTestAmount = 100;
+			/*const tempTestAmount = 20;
 			for ( let i = tempTestAmount; i >= 0; --i )
 			{ 
 				let tempNode = Node.CreateFromType( this._nodeTypes[ "default" ], { text: Math.floor( Math.random() * tempTestAmount ) } );
 				tempNode._transform._position = new Vector2D( Math.random() * 5000, Math.random() * 5000 );
 				this.setNode( tempNode );
-			}
+			}*/
 			
 			if ( tJSON.nodes !== undefined )
 			{
@@ -134,11 +134,11 @@ export default class Graph
 				}
 			}
 			
-			for ( let i = tempTestAmount - 1; i >= 0; --i )
+			/*for ( let i = tempTestAmount - 1; i >= 0; --i )
 			{
 				let tempPinOut = this._nodes[i + 1]._pins.out;
 				tempPinOut.setLink( Edge.CreateFromType( this._edgeTypes[ "default" ], tempPinOut, this._nodes[ i + 2 ]._pins.in ) );
-			}
+			}*/
 			
 			/*setTimeout(
 				() =>

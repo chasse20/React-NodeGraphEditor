@@ -28,7 +28,7 @@ export default class Selection
 	
 	removeNode( tNode )
 	{
-		if ( tNode != null && this._nodes !== null )
+		if ( tNode != null )
 		{
 			const tempIndex = this._nodes.indexOf( tNode );
 			if ( tempIndex >= 0 )

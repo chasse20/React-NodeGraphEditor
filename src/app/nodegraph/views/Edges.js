@@ -37,7 +37,7 @@ export default class Edges extends React.Component
 
 	createElement( tModel )
 	{
-		return React.createElement( tModel._type._viewClass, { model: tModel, key: tModel.key, onSelect: this.props.onSelectEdge } );
+		return React.createElement( tModel._type._viewClass, { model: tModel, key: tModel.key, onSelect: this.props.onSelectEdge, onPhysics: this.props.onPhysics } );
 	}
 	
 	render()
