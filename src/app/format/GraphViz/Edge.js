@@ -1,22 +1,29 @@
-import EdgeModel from "../../nodegraph/Edge";
-
 export default class Edge
 {
 	static FromJSON( tJSON, tSourcePin, tNodeRefs, tTypes, tVersion )
 	{
-		if ( tJSON != null && tTypes != null )
+		if ( tJSON != null && tJSON.node != null && tJSON.pin != null && tSourcePin != null && tNodeRefs != null && tTypes != null )
 		{
-			// Model class
-			var tempType = tJSON.type == null ? null : tTypes[ tJSON.type ];
-			if ( tempType == null )
+			// Target node and pin
+			const tempTargetNode = tNodeRefs[ tJSON.node ];
+			if ( tempTargetNode != null )
 			{
-				tempType = tTypes[ "default" ];
+				const tempTargetPin = tempTargetNode._pins[ tJSON.pin ];
+				if ( tempTargetPin != null )
+				{
+					// Model class
+					var tempType = tJSON.type == null ? null : tTypes[ tJSON.type ];
+					if ( tempType == null )
+					{
+						tempType = tTypes[ "default" ];
+					}
+
+					const tempEdge = new tempType._modelClass( tempType, tSourcePin, tempTargetPin );
+					Edge.Read( tempEdge, tJSON, tVersion );
+					
+					return tempEdge;
+				}
 			}
-			
-			const tempEdge = new tempType._modelClass( tempType );
-			return Edge.Read( tempNode, tJSON, tVersion );
-			
-			return tempEdge;
 		}
 		
 		return null;
@@ -24,107 +31,28 @@ export default class Edge
 	
 	static Read( tEdgeModel, tJSON, tVersion )
 	{
-		if ( tEdgeModel != null && tJSON != null )
+		if ( tEdgeModel != null && tJSON != null && tJSON.data != null )
 		{
-			// Data
-			if ( tJSON.data != null )
-			{
-				tNodeModel.data = Object.assign( tNodeModel.data, tJSON.data ); // merge/overwrite!
-			}
-			
-			// Pins
-			Node.ReadPins( tNodeModel, tJSON.pins, tVersion );
+			tEdgeModel.data = Object.assign( tEdgeModel.data, tJSON.data ); // merge/overwrite!
 		}
 	}
 	
-	static ReadPins( tNodeModel, tJSON, tVersion )
+	static Write( tEdgeModel )
 	{
-		if ( tJSON != null )
-		{
-			for ( let tempName in tJSON )
-			{
-				let tempPin = tNodeModel._pins[ tempName ];
-				if ( tempPin !== undefined )
-				{
-					Pin.Read( tempPin, tJSON[ tempName ], tVersion );
-				}
-			}
-		}
-	}
-	
-	static ReadPost( tNodeModel, tJSON, tNodeRefs, tEdgeTypes, tVersion )
-	{
-		if ( tJSON != null && tJSON.pins !== undefined )
-		{
-			for ( let tempName in tJSON.pins )
-			{
-				let tempPin = tNodeModel._pins[ tempName ];
-				if ( tempPin !== undefined )
-				{
-					Pin.ReadPost( tempPin, tJSON.pins[ tempName ], tNodeRefs, tEdgeTypes, tVersion );
-				}
-			}
-		}
-	}
-	
-	static Write( tNodeModel )
-	{
-		if ( tNodeModel != null )
+		if ( tEdgeModel != null )
 		{
 			var tempJSON =
 			{
-				id: tNodeModel._id,
-				type: tNodeModel._type._name
+				node: tEdgeModel._target._node._id,
+				pin: tEdgeModel._target._name,
+				type: tEdgeModel._type._name
 			};
 			
-			// Transform
-			const tempTransform = Transform2D.Write( tGraphModel._transform );
-			if ( tempTransform != null )
-			{
-				tempJSON = { transform: tempTransform };
-			}
-			
 			// Data
-			for ( let tempKey in tNodeModel.data )
+			for ( let tempKey in tEdgeModel.data )
 			{
-				tempJSON.data = tNodeModel.data;
+				tempJSON.data = tEdgeModel.data;
 				break;
-			}
-			
-			// Pins
-			const tempPins = Node.WritePins( tNodeModel._pins );
-			if ( tempPins != null )
-			{
-				if ( tempJSON === null )
-				{
-					tempJSON = {};
-				}
-				tempJSON.pins = tempPins;
-			}
-			
-			return tempJSON;
-		}
-		
-		return null;
-	}
-	
-	static WritePins( tPins )
-	{
-		if ( tPins != null )
-		{
-			var tempJSON = null;
-			for ( let tempName in tPins )
-			{
-				let tempPin = Pin.Write( tPins[ tempName ] );
-				if ( tempPin != null )
-				{
-					if ( tempJSON === null )
-					{
-						tempJSON = {};
-					}
-					
-					tempJSON[ tempName ] = tempPin;
-				}
 			}
 			
 			return tempJSON;

@@ -1,6 +1,6 @@
-import Graph from "./Node";
+import Graph from "./Graph";
 
-export default class Graph
+export default class Format
 {
 	static Read( tGraphModel, tJSON )
 	{

@@ -1,4 +1,5 @@
-import NodeModel from "../../nodegraph/Node";
+import Transform2D from "./Transform2D";
+import Pin from "./Pin";
 
 export default class Node
 {
@@ -14,7 +15,7 @@ export default class Node
 			}
 			
 			const tempNode = new tempType._modelClass( tempType );
-			return Node.Read( tempNode, tJSON, tVersion );
+			Node.Read( tempNode, tJSON, tVersion );
 			
 			return tempNode;
 		}
@@ -81,10 +82,10 @@ export default class Node
 			};
 			
 			// Transform
-			const tempTransform = Transform2D.Write( tGraphModel._transform );
+			const tempTransform = Transform2D.Write( tNodeModel._transform );
 			if ( tempTransform != null )
 			{
-				tempJSON = { transform: tempTransform };
+				tempJSON.transform = tempTransform;
 			}
 			
 			// Data
@@ -98,10 +99,6 @@ export default class Node
 			const tempPins = Node.WritePins( tNodeModel._pins );
 			if ( tempPins != null )
 			{
-				if ( tempJSON === null )
-				{
-					tempJSON = {};
-				}
 				tempJSON.pins = tempPins;
 			}
 			

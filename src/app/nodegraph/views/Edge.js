@@ -10,7 +10,7 @@ import "./Edge.css";
 
 class Edge extends React.Component // TODO: Selectable
 {
-	static SerializableClasses = { "Edge": Edge };
+	static SerializableClasses = { "default": Edge, "Edge": Edge };
 	
 	constructor( tProps )
 	{

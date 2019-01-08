@@ -1,5 +1,6 @@
 import { values } from "mobx";
-import PinModel from "../../nodegraph/Pin";
+import Edge from "./Edge";
+import Vector2D from "./Vector2D";
 
 export default class Pin
 {
@@ -8,7 +9,7 @@ export default class Pin
 		if ( tJSON != null && tJSON.name != null && tNode != null )
 		{
 			const tempPin = new Pin( tNode, tJSON.name );
-			return Pin.Read( tempPin, tJSON, tVersion );
+			Pin.Read( tempPin, tJSON, tVersion );
 			
 			return tempPin;
 		}
@@ -18,29 +19,9 @@ export default class Pin
 	
 	static Read( tPinModel, tJSON, tVersion )
 	{
-		if ( tPinModel != null && tJSON != null )
+		if ( tPinModel != null && tJSON != null && tJSON.label != null )
 		{
-			// Label
-			Pin.ReadLabel( tPinModel, tJSON.label, tVersion );
-			
-			// Offset
-			Pin.ReadOffset( tPinModel, tJSON.offset, tVersion );
-		}
-	}
-	
-	static ReadOffset( tPinModel, tJSON, tVersion )
-	{			
-		if ( tJSON != null )
-		{
-			if ( tJSON.x != null )
-			{
-				tPinModel._offset.x = tJSON.x;
-			}
-			
-			if ( tJSON.y != null )
-			{
-				tPinModel._offset.y = tJSON.y;
-			}
+			tPinModel.label = tJSON.label;
 		}
 	}
 	
@@ -67,17 +48,10 @@ export default class Pin
 				tempJSON = { label: tPinModel.label };
 			}
 			
-			// Offset
-			const tempOffset = Vector2D.Write( tPinModel._offset );
-			if ( tempOffset != null )
-			{
-				tempJSON = { offset: tempOffset };
-			}
-			
 			// Links
 			if ( tPinModel._isOut )
 			{
-				const tempLinks = Pin.WriteLinks( values( tNodeModel._links ) );
+				const tempLinks = Pin.WriteLinks( values( tPinModel._links ) );
 				if ( tempLinks != null )
 				{
 					if ( tempJSON === null )

@@ -1,5 +1,9 @@
 import { values } from "mobx";
 import GraphModel from "../../nodegraph/Graph";
+import NodeModel from "../../nodegraph/Node";
+import NodeView from "../../nodegraph/views/Node";
+import EdgeModel from "../../nodegraph/Edge";
+import EdgeView from "../../nodegraph/views/Edge";
 import Transform2D from "./Transform2D";
 import Type from "./Type";
 import Node from "./Node";
@@ -11,7 +15,7 @@ export default class Graph
 		if ( tJSON != null )
 		{
 			const tempGraph = new GraphModel();
-			return Graph.Read( tempGraph, tJSON, tVersion );
+			Graph.Read( tempGraph, tJSON, tVersion );
 			
 			return tempGraph;
 		}
@@ -37,7 +41,7 @@ export default class Graph
 			const tempListLength = tJSON.length;
 			for ( let i = 0; i < tempListLength; ++i )
 			{
-				tGraphModel.setNodeType( Type.FromJSON( tJSON[i], Node.SerializableClasses, NodeView.SerializableClasses, tVersion ) );
+				tGraphModel.setNodeType( Type.FromJSON( tJSON[i], NodeModel.SerializableClasses, NodeView.SerializableClasses, tVersion ) );
 			}
 		}
 	}
@@ -49,7 +53,7 @@ export default class Graph
 			const tempListLength = tJSON.length;
 			for ( let i = 0; i < tempListLength; ++i )
 			{
-				tGraphModel.setEdgeType( Type.FromJSON( tJSON[i], Edge.SerializableClasses, EdgeView.SerializableClasses, tVersion ) );
+				tGraphModel.setEdgeType( Type.FromJSON( tJSON[i], EdgeModel.SerializableClasses, EdgeView.SerializableClasses, tVersion ) );
 			}
 		}
 	}
@@ -61,10 +65,10 @@ export default class Graph
 			// Pre
 			const tempNodeJSONs = {};
 			const tempNodeRefs = {};
-			const tempListLength = tJSON.nodes.length;
+			const tempListLength = tJSON.length;
 			for ( let i = 0; i < tempListLength; ++i )
 			{
-				let tempNodeJSON = tJSON.nodes[i];
+				let tempNodeJSON = tJSON[i];
 				let tempNode = Node.FromJSON( tempNodeJSON, tGraphModel._nodeTypes, tVersion );
 				if ( tGraphModel.setNode( tempNode ) )
 				{
@@ -76,7 +80,7 @@ export default class Graph
 			// Post with references
 			for ( let tempID in tempNodeRefs )
 			{
-				Node.ReadPost( tempNodeRefs[ tempID ], tempNodeJSONs[ tempNodes[i]._id ], tempNodeRefs, tGraphModel._edgeTypes, tVersion );
+				Node.ReadPost( tempNodeRefs[ tempID ], tempNodeJSONs[ tempNodeRefs[ tempID ]._id ], tempNodeRefs, tGraphModel._edgeTypes, tVersion );
 			}
 		}
 	}
@@ -95,7 +99,7 @@ export default class Graph
 			}
 			
 			// Node types
-			var tempArray = Graph.WriteTypes( values( tGraphModel._nodeTypes ), Node.SerializableClasses, NodeView.SerializableClasses );
+			var tempArray = Graph.WriteTypes( values( tGraphModel._nodeTypes ), NodeModel.SerializableClasses, NodeView.SerializableClasses );
 			if ( tempArray != null )
 			{
 				if ( tempJSON === null )
@@ -106,7 +110,7 @@ export default class Graph
 			}
 			
 			// Edge types
-			tempArray = Graph.WriteTypes( values( tGraphModel._edgeTypes ), Edge.SerializableClasses, EdgeView.SerializableClasses );
+			tempArray = Graph.WriteTypes( values( tGraphModel._edgeTypes ), EdgeModel.SerializableClasses, EdgeView.SerializableClasses );
 			if ( tempArray != null )
 			{
 				if ( tempJSON === null )
@@ -126,6 +130,8 @@ export default class Graph
 				}
 				tempJSON.nodes = tempArray;
 			}
+			
+			return tempJSON;
 		}
 		
 		return null;
@@ -138,10 +144,17 @@ export default class Graph
 			const tempListLength = tTypes.length;
 			if ( tempListLength > 0 )
 			{
-				const tempTypes = [];
+				var tempTypes = null;
 				for ( let i = ( tempListLength - 1 ); i >= 0; --i )
 				{
-					tempTypes.push( Type.Write( tTypes[i], tSerializableModels, tSerializableViews ) );
+					if ( tTypes[i]._name !== "default" )
+					{
+						if ( tempTypes === null )
+						{
+							tempTypes = [];
+						}
+						tempTypes.push( Type.Write( tTypes[i], tSerializableModels, tSerializableViews ) );
+					}
 				}
 				
 				return tempTypes;

@@ -49,7 +49,7 @@ export default class Type
 			// Types
 			if ( tTypeModel._modelClass !== tSerializableModels[ "default" ] )
 			{
-				tempJSON.modelClass = tTypeModel._modelClass.name,
+				tempJSON.modelClass = tTypeModel._modelClass.name;
 			}
 			
 			if ( tTypeModel._viewClass !== tSerializableViews[ "default" ] )

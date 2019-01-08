@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { observer } from "mobx-react";
 import FileSaver from "file-saver";
+import GraphVizFormat from "../../format/GraphViz/Format";
 import GraphModel from "../../nodegraph/Graph";
 import "./File.css";
 
@@ -14,19 +15,11 @@ class File extends React.Component
 
 		// Variables
 		this._file = null;
-		/*this._interface = null;
-		this._viewTransform = new Transform2DModel();
-		this._worldTransform = new Transform2DModel();
-		this._graphModel = new GraphModel();
-		this._graphModel._transform.parent = this._worldTransform;
-		this._interfaceModel = new InterfaceModel();*/
 		
 		// Events
 		this._onFileInput = ( tEvent ) => { this.onFileInput( tEvent.target.files ); };
 		this._onImport = () => { this.onImport(); };
 		this._onExport = () => { this.onExport(); };
-		
-		//this.load( Data ); // TODO: make this work only from user input
 	}
 	
 	onFileInput( tFiles )
@@ -41,8 +34,7 @@ class File extends React.Component
 			const tempReader = new FileReader();
 			tempReader.onload = ( tEvent ) =>
 			{
-				const tempJSON = JSON.parse( tEvent.target.result );
-				this.props.graph.fromJSON( tempJSON.graph );
+				GraphVizFormat.Read( this.props.graph, JSON.parse( tEvent.target.result ) );
 			};
 			tempReader.readAsText( this._file );
 		}
@@ -50,7 +42,7 @@ class File extends React.Component
 	
 	onExport()
 	{
-		FileSaver.saveAs( new Blob( [ JSON.stringify( { graph: this.props.graph } ) ], { type: "application/json" } ), "data.json" ); // format goes here
+		FileSaver.saveAs( new Blob( [ JSON.stringify( GraphVizFormat.Write( this.props.graph ) ) ], { type: "application/json" } ), "data.json" ); // format goes here
 	}
 	
 	render()

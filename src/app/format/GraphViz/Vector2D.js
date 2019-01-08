@@ -7,7 +7,7 @@ export default class Vector2D
 		if ( tJSON != null )
 		{
 			const tempVector = new Vector2DModel();
-			return Vector2D.Read( tempVector, tJSON, tVersion );
+			Vector2D.Read( tempVector, tJSON, tVersion );
 			
 			return tempVector;
 		}
@@ -38,13 +38,13 @@ export default class Vector2D
 			var tempJSON = null;
 			
 			// X
-			if ( tVectorModel.x != 0 )
+			if ( tVectorModel.x !== 0 )
 			{
 				tempJSON = { x: tVectorModel.x };
 			}
 			
 			// Y
-			if ( tVectorModel.y != 0 )
+			if ( tVectorModel.y !== 0 )
 			{
 				if ( tempJSON === null )
 				{

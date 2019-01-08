@@ -1,5 +1,5 @@
 import Transform2DModel from "../../core/Transform2D";
-import Vector2D2DModel from "../../core/Vector2D";
+import Vector2DModel from "../../core/Vector2D";
 import Vector2D from "./Vector2D";
 
 export default class Transform2D
@@ -9,7 +9,7 @@ export default class Transform2D
 		if ( tJSON != null )
 		{
 			const tempTransform = new Transform2DModel();
-			return Transform2D.Read( tempTransform, tJSON, tVersion );
+			Transform2D.Read( tempTransform, tJSON, tVersion );
 			
 			return tempTransform;
 		}
