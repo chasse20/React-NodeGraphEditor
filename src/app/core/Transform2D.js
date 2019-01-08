@@ -18,82 +18,6 @@ export default class Transform2D
 		this._worldToLocalMatrix = Matrix2D.Inverse( this._localToWorldMatrix );
 	}
 	
-	toJSON()
-	{
-		var tempJSON = null;
-
-		// Position
-		if ( !Vector2D.IsZero( this._position ) )
-		{
-			tempJSON =
-			{
-				position: this._position
-			};
-		}
-
-		// Rotation
-		if ( this._rotation !== 0 )
-		{
-			if ( tempJSON === null )
-			{
-				tempJSON = {};
-			}
-			tempJSON.rotation = this._rotation;
-		}
-
-		// Scale
-		if ( !Vector2D.IsOne( this._scale ) )
-		{
-			if ( tempJSON === null )
-			{
-				tempJSON = {};
-			}
-			tempJSON.scale = this._scale;
-		}
-
-		return tempJSON;
-	}
-	
-	fromJSON( tJSON )
-	{
-		if ( tJSON != null )
-		{
-			// Position
-			if ( tJSON.position !== undefined )
-			{
-				if ( tJSON.position.x !== undefined )
-				{
-					this._position.x = tJSON.position.x;
-				}
-				
-				if ( tJSON.position.y !== undefined )
-				{
-					this._position.y = tJSON.position.y;
-				}
-			}
-			
-			// Rotation
-			if ( tJSON.rotation !== undefined )
-			{
-				this._rotation = tJSON.rotation;
-			}
-			
-			// Scale
-			if ( tJSON.scale !== undefined )
-			{
-				if ( tJSON.scale.x !== undefined )
-				{
-					this._scale.x = tJSON.scale.x;
-				}
-				
-				if ( tJSON.scale.y !== undefined )
-				{
-					this._scale.y = tJSON.scale.y;
-				}
-			}
-		}
-	}
-	
 	set parent( tParent )
 	{
 		if ( tParent !== this._parent )
@@ -272,7 +196,6 @@ decorate( Transform2D,
 		_position: observable,
 		_rotation: observable,
 		_scale: observable,
-		fromJSON: action,
 		localMatrix: computed,
 		localToWorldMatrix: computed,
 		worldToLocalMatrix: computed,

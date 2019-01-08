@@ -6,30 +6,6 @@ export default class Vector2D
 		this.y = tY;
 	}
 
-	toJSON()
-	{
-		return {
-			x: this.x,
-			y: this.y
-		};
-	}
-	
-	fromJSON( tJSON )
-	{
-		if ( tJSON != null )
-		{
-			if ( tJSON.x !== undefined )
-			{
-				this.x = tJSON.x;
-			}
-			
-			if ( tJSON.y !== undefined )
-			{
-				this.y = tJSON.y;
-			}
-		}
-	}
-	
 	equals( tVector )
 	{
 		return this.x === tVector.x && this.y === tVector.y;
