@@ -4,11 +4,9 @@ import Edge from "./Edge";
 
 export default class Pin
 {
-	constructor( tNode, tName, tLabel = "", tIsOut = true, tEdgeTypes = null, tOffset = new Vector2D() ) // TODO: Fix edgetypes!
+	constructor( tNode, tIsOut = true, tEdgeTypes = null, tOffset = new Vector2D() )
 	{
 		this._node = tNode;
-		this._name = tName;
-		this._label = tLabel;
 		this._isOut = tIsOut;
 		this._edgeTypes = tEdgeTypes;
 		this._offset = tOffset;
@@ -19,8 +17,8 @@ export default class Pin
 	{
 		if ( tIsFromOther
 			|| ( tEdge != null
-			&& ( ( this._isOut && this === tEdge._source ) || ( !this._isOut && this === tEdge._target ) )
-			&& ( tEdge._target._edgeTypes == null || ( tEdge._source._edgeTypes != null && tEdge._target._edgeTypes[ tEdge._source._edgeTypes._name ] ) ) ) )
+			&& ( ( this._isOut && this === tEdge._source ) || ( !this._isOut && this === tEdge._target ) ) // must be proper source or proper target
+			&& ( tEdge._target._edgeTypes == null || ( tEdge._source._edgeTypes != null && tEdge._target._edgeTypes[ tEdge._source._edgeTypes._name ] ) ) ) ) // edgetype of source must be allowed edgetypes of target
 		{
 			const tempKey = tEdge.key;
 			if ( !has( this._links, tempKey ) )
@@ -70,16 +68,6 @@ export default class Pin
 		
 		return false;
 	}
-
-	get key()
-	{
-		return this._node._id + this._name;
-	}
-	
-	get localPosition()
-	{
-		return Vector2D.Add( this._node._transform._position, this._offset );
-	}
 	
 	removeEdgeType( tType )
 	{
@@ -96,16 +84,35 @@ export default class Pin
 			}
 		}
 	}
+
+	get key()
+	{
+		var tempName = null;
+		for ( let tempKey in this._node._pins )
+		{
+			if ( this._node._pins[ tempKey ] === this )
+			{
+				tempName = tempKey;
+				break;
+			}
+		}
+		
+		return this._node._id + tempName;
+	}
+	
+	get position()
+	{
+		return Vector2D.Add( this._node._position, this._offset );
+	}
 }
 
 decorate( Pin,
 	{
-		label: observable,
 		_offset: observable,
 		_links: observable.shallow,
-		fromJSON: action,
 		setLink: action,
 		removeLink: action,
-		localPosition: computed
+		removeEdgeType: action,
+		position: computed
 	}
 );

@@ -2,7 +2,7 @@ import { observable, decorate, action } from "mobx";
 
 export default class Edge
 {
-	static SerializableClasses = { "Edge": Edge };
+	static SerializableClasses = { "default": Edge, "Edge": Edge };
 	
 	constructor( tType, tSource, tTarget, tData = {} )
 	{

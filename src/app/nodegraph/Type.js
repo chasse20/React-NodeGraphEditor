@@ -2,9 +2,8 @@ import { observable, decorate } from "mobx";
 
 export default class Type
 {
-	constructor( tName, tModelClass, tViewClass, tData = {} )
+	constructor( tModelClass, tViewClass, tData = {} )
 	{
-		this._name = tName;
 		this._modelClass = tModelClass;
 		this._viewClass = tViewClass;
 		this.data = tData;
