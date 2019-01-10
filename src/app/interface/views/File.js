@@ -35,7 +35,7 @@ class File extends React.Component
 			const tempReader = new FileReader();
 			tempReader.onload = ( tEvent ) =>
 			{
-				GraphVizReader.Read( { graph: this.props.graph }, JSON.parse( tEvent.target.result ) );
+				GraphVizReader.Read( this.props.graph, JSON.parse( tEvent.target.result ) );
 				console.log( this.props.graph );
 			};
 			tempReader.readAsText( this._file );
@@ -44,8 +44,7 @@ class File extends React.Component
 	
 	onExport()
 	{
-		const tempJSON = GraphVizWriter.Write( { graph: this.props.graph } );
-		FileSaver.saveAs( new Blob( [ JSON.stringify( tempJSON ) ], { type: "application/json" } ), "data.json" ); // format goes here
+		FileSaver.saveAs( new Blob( [ JSON.stringify( GraphVizWriter.Write( this.props.graph ) ) ], { type: "application/json" } ), "data.json" ); // format goes here
 	}
 	
 	render()
@@ -82,5 +81,5 @@ export default observer( File );
 
 File.propTypes =
 {
-	data: PropTypes.object.isRequired
+	graph: PropTypes.instanceOf( GraphModel ).isRequired
 };
