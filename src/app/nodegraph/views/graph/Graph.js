@@ -70,6 +70,12 @@ class Graph extends React.Component
 	// PAN
 	// MARQUEE IN THE RENDER, CALLBACK GOES TO NODES
 
+	// DEFS GOES AWAY
+	// ARROW
+	// GRID CONTAINS DEF.
+	// EDGES CONTAINS DEFS OF GLOW
+	// NODES CONTAINS DEFS OF GLOW
+
 	render()
 	{
 		return (

@@ -56,28 +56,31 @@ class Defs extends React.Component
 
 	render()
 	{
+		/*
+			<filter xmlns="http://www.w3.org/2000/svg" id="node-glow">
+				<feGaussianBlur stdDeviation="10"/>
+				<feComponentTransfer>
+					<feFuncA type="linear" slope="0.75"/>
+				</feComponentTransfer>
+				<feMerge> 
+					<feMergeNode/>
+					<feMergeNode in="SourceGraphic"/> 
+				</feMerge>
+			</filter>
+			<filter xmlns="http://www.w3.org/2000/svg" id="edge-glow">
+				<feGaussianBlur stdDeviation="6"/>
+				<feComponentTransfer>
+					<feFuncA type="linear" slope="0.4"/>
+				</feComponentTransfer>
+				<feMerge> 
+					<feMergeNode/>
+					<feMergeNode in="SourceGraphic"/> 
+				</feMerge>
+			</filter>
+		*/
+		
 		return (
 			<defs>
-				<filter xmlns="http://www.w3.org/2000/svg" id="node-glow">
-					<feGaussianBlur stdDeviation="10"/>
-					<feComponentTransfer>
-						<feFuncA type="linear" slope="0.75"/>
-					</feComponentTransfer>
-					<feMerge> 
-						<feMergeNode/>
-						<feMergeNode in="SourceGraphic"/> 
-					</feMerge>
-				</filter>
-				<filter xmlns="http://www.w3.org/2000/svg" id="edge-glow">
-					<feGaussianBlur stdDeviation="6"/>
-					<feComponentTransfer>
-						<feFuncA type="linear" slope="0.4"/>
-					</feComponentTransfer>
-					<feMerge> 
-						<feMergeNode/>
-						<feMergeNode in="SourceGraphic"/> 
-					</feMerge>
-				</filter>
 				<pattern id="smallGrid" viewBox="0 0 20 20" width="20" height="20" patternUnits="userSpaceOnUse">
 					<path d="M 20 0 L 0 0 0 20" fill="none" stroke="#4285b0" strokeWidth="0.5" strokeOpacity="0.25"/>
 				</pattern>
