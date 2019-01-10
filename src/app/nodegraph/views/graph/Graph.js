@@ -73,15 +73,15 @@ class Graph extends React.Component
 	render()
 	{
 		return (
-			<div className={ this.props.model.isSelected ? "graph selected" : "graph" } onMouseDown={ this._onMouseDown }>
+			<div className={ this.props.model.isPanning ? "graph panning" : "graph" } onMouseDown={ this._onMouseDown }>
 				<svg height="100%" width="100%">
-					<Defs graph={ this.props.data }/>
-					<rect className={ this.props.grid.isVisible ? "grid" : "grid hidden" } fill="url(#grid)" height="100%" width="100%"/>
+					<Defs transform={ this.props.data._transform }/>
+					<rect className={ this.props.data.isGridVisible ? "grid visible" : "grid" } fill="url(#grid)"/>
 					<g ref={ this._onViewElement }>
 						<Edges ref={ this._onEdges } onSelectEdge={ this.props.onSelectEdge }/>
 						<Nodes ref={ this._onNodes } nodes={ this.props.model._nodes } onLink={ this._onLink }/>
 					</g>
-					<rect className={ this.props.grid.isMarquee ? "marquee" : "marquee hidden" } fill="url(#grid)" height="100%" width="100%"/>
+					<rect ref={ this._onMarqueeElement } className={ this.props.grid.isMarquee ? "marquee visible" : "marquee" }/>
 				</svg>
 			</div>
 		);
