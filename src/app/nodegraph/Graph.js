@@ -1,4 +1,4 @@
-import { action, decorate, observable, set, remove, has, values } from "mobx";
+import { action, decorate, observable, set, remove } from "mobx";
 import Transform2D from "../core/Transform2D";
 import Type from "./Type";
 import Edge from "./Edge";
@@ -37,7 +37,7 @@ export default class Graph
 	
 	removeNode( tNode )
 	{
-		if ( tNode != null && has( this._nodes, tNode._id ) )
+		if ( tNode != null && this._nodes[ tNode._id ] !== undefined )
 		{
 			remove( this._nodes, tNode._id );
 
@@ -47,11 +47,11 @@ export default class Graph
 		return false;
 	}
 	
-	setNodeType( tType )
+	setNodeType( tName, tType )
 	{
-		if ( tType != null  )
+		if ( tName != null && tType != null  )
 		{
-			set( this._nodeTypes, tType._name, tType );
+			set( this._nodeTypes, tName, tType );
 			
 			return true;
 		}
@@ -59,22 +59,37 @@ export default class Graph
 		return false;
 	}
 	
-	removeNodeType( tType )
+	removeNodeType( tName )
 	{
-		if ( tType != null && has( this._nodeTypes, tType._name ) )
+		if ( tName != null )
 		{
-			// Remove nodes that belong to the type
-			const tempNodes = values( this._nodes );
-			for ( let i = ( tempNodes.length - 1 ); i >= 0; --i )
+			const tempType = this._nodeTypes[ tName ];
+			if ( tempType !== undefined )
 			{
-				let tempNode = tempNodes[i];
-				if ( tempNode._type === tType )
+				// Remove nodes that belong to the type
+				for ( let tempID in this._nodes )
 				{
-					this.removeNode( tempNode );
+					let tempNode = this._nodes[ tempID ];
+					if ( tempNode._type === tempType )
+					{
+						this.removeNode( tempNode );
+					}
 				}
-			}
 
-			remove( this._nodeTypes, tType._name );
+				remove( this._nodeTypes, tName );
+				
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	setEdgeType( tName, tType )
+	{
+		if ( tName != null && tType != null  )
+		{
+			set( this._edgeTypes, tName, tType );
 			
 			return true;
 		}
@@ -82,32 +97,23 @@ export default class Graph
 		return false;
 	}
 	
-	setEdgeType( tType )
+	removeEdgeType( tName )
 	{
-		if ( tType != null  )
+		if ( tName != null )
 		{
-			set( this._edgeTypes, tType._name, tType );
-			
-			return true;
-		}
-		
-		return false;
-	}
-	
-	removeEdgeType( tType )
-	{
-		if ( tType != null && has( this._edgeTypes, tType._name ) )
-		{
-			// Remove edges that belong to the type
-			const tempNodes = values( this._nodes );
-			for ( let i = ( tempNodes.length - 1 ); i >= 0; --i )
+			const tempType = this._edgeTypes[ tName ];
+			if ( tempType !== undefined )
 			{
-				tempNodes[i].removeEdgeType( tType );
-			}
-			
-			remove( this._edgeTypes, tType._name );
+				// Remove edges that belong to the type
+				for ( let tempID in this._nodes )
+				{
+					this._nodes[ tempID ].removeEdgeType( tempType );
+				}
+				
+				remove( this._edgeTypes, tName );
 
-			return true;
+				return true;
+			}
 		}
 		
 		return false;

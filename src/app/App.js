@@ -14,7 +14,6 @@ export default class App extends Component
 		super( tProps );
 
 		// Variables
-		this._interface = null;
 		this._graph = new GraphModel();
 		
 		// Events

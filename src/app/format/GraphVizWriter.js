@@ -6,13 +6,13 @@ import Vector2DModel from "../core/Vector2D";
 
 export default class GraphVizWriter
 {
-	static Write( tModel )
+	static Write( tModel, tVersion = 1 )
 	{
 		if ( tModel != null )
 		{
 			const tempJSON =
 			{
-				version: 1
+				version: tVersion
 			};
 			
 			// Graph

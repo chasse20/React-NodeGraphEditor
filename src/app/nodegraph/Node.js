@@ -1,4 +1,4 @@
-import { observable, decorate, values } from "mobx";
+import { observable, decorate } from "mobx";
 import Vector2D from "../core/Vector2D";
 import GUID from "../core/GUID";
 import Pin from "./Pin";
@@ -30,10 +30,9 @@ export default class Node
 	{
 		if ( tType != null )
 		{
-			const tempPins = values( this._pins );
-			for ( let i = ( tempPins.length - 1 ); i >= 0; --i )
+			for ( let tempKey in this._pins )
 			{
-				tempPins[i].removeEdgeType( tType );
+				this._pins[ tempKey ].removeEdgeType( tType );
 			}
 		}
 	}

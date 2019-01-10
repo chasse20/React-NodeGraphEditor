@@ -1,4 +1,4 @@
-import { observable, computed, decorate, set, values, has, remove, action } from "mobx";
+import { observable, computed, decorate, set, remove, action } from "mobx";
 import Vector2D from "../core/Vector2D";
 
 export default class Pin
@@ -20,7 +20,7 @@ export default class Pin
 			&& ( tEdge._target._edgeTypes == null || ( tEdge._source._edgeTypes != null && tEdge._target._edgeTypes[ tEdge._source._edgeTypes._name ] ) ) ) ) // edgetype of source must be allowed edgetypes of target
 		{
 			const tempKey = tEdge.key;
-			if ( !has( this._links, tempKey ) )
+			if ( tEdge !== this._links[ tempKey ] )
 			{
 				set( this._links, tempKey, tEdge );
 
@@ -48,7 +48,7 @@ export default class Pin
 		if ( tEdge != null )
 		{
 			const tempKey = tEdge.key;
-			if ( has( this._links, tempKey ) )
+			if ( this._links[ tempKey ] !== undefined )
 			{
 				remove( this._links, tempKey );
 				
@@ -72,10 +72,9 @@ export default class Pin
 	{
 		if ( this._isOut && tType != null && ( this._edgeTypes == null || this._edgeTypes === tType ) )
 		{
-			const tempLinks = values( this._links );
-			for ( let i = ( tempLinks.length - 1 ); i >= 0; --i )
+			for ( let tempKey in this._links )
 			{
-				let tempLink = tempLinks[i];
+				let tempLink = this._links[ tempKey ];
 				if ( tempLink._type === tType )
 				{
 					this.removeLink( tempLink );

@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { observer } from "mobx-react";
 import FileSaver from "file-saver";
-import GraphModel from "../nodegraph/Graph";
+import GraphModel from "../../nodegraph/Graph";
 import GraphVizReader from "../../format/GraphVizReader";
 import GraphVizWriter from "../../format/GraphVizWriter";
 import "./File.css";
@@ -44,9 +44,8 @@ class File extends React.Component
 	
 	onExport()
 	{
-		const tempJSON = GraphVizWriter.Write( { graph: this.props.model } );
-		console.log( tempJSON );
-		//FileSaver.saveAs( new Blob( [ JSON.stringify( tempJSON ) ], { type: "application/json" } ), "data.json" ); // format goes here
+		const tempJSON = GraphVizWriter.Write( { graph: this.props.graph } );
+		FileSaver.saveAs( new Blob( [ JSON.stringify( tempJSON ) ], { type: "application/json" } ), "data.json" ); // format goes here
 	}
 	
 	render()
@@ -83,5 +82,5 @@ export default observer( File );
 
 File.propTypes =
 {
-	graph: PropTypes.instanceOf( GraphModel ).isRequired
+	data: PropTypes.object.isRequired
 };
