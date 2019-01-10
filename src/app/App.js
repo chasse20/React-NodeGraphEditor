@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import { Switch, Route } from "react-router";
-import File from "./interface/views/File";
-import Graph from "./nodegraph/views/Graph";
-import Transform2DModel from "./core/Transform2D";
+import Graph from "./nodegraph/views/graph/Graph";
 import GraphModel from "./nodegraph/Graph";
 import "./App.css";
 
@@ -22,40 +20,19 @@ export default class App extends Component
 		this._onSelectNode = ( tEvent, tNode ) => { this._interface.onSelectNode( tEvent, tNode ); };
 		this._onSelectEdge = ( tEvent, tEdge ) => { this._interface.onSelectEdge( tEvent, tEdge ); };*/
 	}
-
-	toJSON()
-	{
-		const tempJSON = {};
-
-		// Graph
-		var tempObject = this._graphModel.toJSON();
-		if ( tempObject != null )
-		{
-			tempJSON.graph = tempObject;
-		}
-
-		return tempJSON;
-	}
 	
 	render()
 	{
-		/*
-		<Switch>
-					<Route path="/date" render={
-						( tProps ) =>
-						(
-						)
-					}/>
+		return (
+			<React.Fragment>
+				<Switch>
 					<Route render={
 						( tProps ) =>
 						(
+							<Graph data={ this._graph }/>
 						)
 					}/>
 				</Switch>
-				*/
-		return (
-			<React.Fragment>
-				<File graph={ this._graph }/>
 			</React.Fragment>
 		);
 	}

@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import { observe } from "mobx";
 import { observer } from "mobx-react";
-//import Physics from "../core/Physics";
 import Transform2DModel from "../../core/Transform2D";
 import GraphModel from "../Graph";
 import PhysicsModel from "../../interface/Physics";
@@ -67,21 +66,22 @@ class Graph extends React.Component
 	{
 		this._containerElement.setAttribute( "transform", "translate(" + tPosition.x + "," + tPosition.y + ")" );
 	}
+	
+	// PAN
+	// MARQUEE IN THE RENDER, CALLBACK GOES TO NODES
 
 	render()
 	{
 		return (
 			<div className={ this.props.model.isSelected ? "graph selected" : "graph" } onMouseDown={ this._onMouseDown }>
-				<Physics ref={ this._onPhysics } model={ this.props.physics }/>
 				<svg height="100%" width="100%">
-					<Defs grid={ this.props.grid } viewTransform={ this.props.viewTransform } transform={ this.props.model._transform } edgeTypes={ this.props.model._edgeTypes }/>
+					<Defs graph={ this.props.data }/>
 					<rect className={ this.props.grid.isVisible ? "grid" : "grid hidden" } fill="url(#grid)" height="100%" width="100%"/>
 					<g ref={ this._onViewElement }>
-						<g ref={ this._onContainerElement }>
-							<Edges ref={ this._onEdges } onSelectEdge={ this.props.onSelectEdge } onPhysics={ this._onEdgePhysics }/>
-							<Nodes nodes={ this.props.model._nodes } onLink={ this._onLink } onSelectNode={ this.props.onSelectNode } onPhysics={ this._onNodePhysics }/>
-						</g>
+						<Edges ref={ this._onEdges } onSelectEdge={ this.props.onSelectEdge }/>
+						<Nodes ref={ this._onNodes } nodes={ this.props.model._nodes } onLink={ this._onLink }/>
 					</g>
+					<rect className={ this.props.grid.isMarquee ? "marquee" : "marquee hidden" } fill="url(#grid)" height="100%" width="100%"/>
 				</svg>
 			</div>
 		);
@@ -90,13 +90,7 @@ class Graph extends React.Component
 
 Graph.propTypes =
 {
-	model: PropTypes.instanceOf( GraphModel ).isRequired,
-	viewTransform: PropTypes.instanceOf( Transform2DModel ).isRequired,
-	grid: PropTypes.instanceOf( GridModel ).isRequired,
-	physics: PropTypes.instanceOf( PhysicsModel ).isRequired,
-	onSelectGraph: PropTypes.func.isRequired,
-	onSelectNode: PropTypes.func.isRequired,
-	onSelectEdge: PropTypes.func.isRequired
+	data: PropTypes.instanceOf( GraphModel ).isRequired
 };
 
 export default observer( Graph );

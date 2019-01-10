@@ -69,6 +69,8 @@ class Nodes extends React.Component
 		return React.createElement( tModel._type._viewClass, { model: tModel, key: tModel._id, onLink: this.props.onLink, onSelect: this.props.onSelectNode, onPhysics: this.props.onPhysics } );
 	}
 	
+	// DRAG
+	
 	render()
 	{	
 		return (

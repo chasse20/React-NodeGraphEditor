@@ -20,7 +20,10 @@ export default class Graph
 			"default": new Type( Edge, EdgeView )
 		};
 		this._transform = new Transform2D();
-		this.isSelected = false;
+		this.isMarquee = false;
+		this.isPanning = false;
+		this.isGridVisible = false;
+		this.isGridSnap = false;
 	}
 	
 	setNode( tNode )
