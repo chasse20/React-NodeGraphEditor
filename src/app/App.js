@@ -15,11 +15,7 @@ export default class App extends Component
 
 		// Variables
 		this._interface = null;
-		this._model =
-		{
-			graph: new GraphModel(),
-			version: 1 
-		};
+		this._graph = new GraphModel();
 		
 		// Events
 		/*this._onInterface = ( tComponent ) => { this._interface = tComponent; };
@@ -60,7 +56,7 @@ export default class App extends Component
 				*/
 		return (
 			<React.Fragment>
-				<File model={ this._model }/>
+				<File graph={ this._graph }/>
 			</React.Fragment>
 		);
 	}
