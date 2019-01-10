@@ -78,10 +78,10 @@ class Graph extends React.Component
 					<Defs transform={ this.props.data._transform }/>
 					<rect className={ this.props.data.isGridVisible ? "grid visible" : "grid" } fill="url(#grid)"/>
 					<g ref={ this._onViewElement }>
-						<Edges ref={ this._onEdges } onSelectEdge={ this.props.onSelectEdge }/>
+						<Edges ref={ this._onEdges }/>
 						<Nodes ref={ this._onNodes } nodes={ this.props.model._nodes } onLink={ this._onLink }/>
 					</g>
-					<rect ref={ this._onMarqueeElement } className={ this.props.grid.isMarquee ? "marquee visible" : "marquee" }/>
+					<Marquee ref={ this._onMarquee } transform={ this.props.data._transform }/>
 				</svg>
 			</div>
 		);
