@@ -1,6 +1,5 @@
 import { observable, computed, decorate, set, values, has, remove, action } from "mobx";
 import Vector2D from "../core/Vector2D";
-import Edge from "./Edge";
 
 export default class Pin
 {

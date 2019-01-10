@@ -1,3 +1,9 @@
+import NodeModel from "../nodegraph/Node";
+import NodeView from "../nodegraph/views/Node";
+import EdgeModel from "../nodegraph/Edge";
+import EdgeView from "../nodegraph/views/Edge";
+import TypeModel from "../nodegraph/Type";
+
 export default class GraphVizReader
 {
 	static Read( tModel, tJSON )
@@ -44,7 +50,7 @@ export default class GraphVizReader
 				const tempListLength = tJSON.nodes.length;
 				for ( let i = 0; i < tempListLength; ++i )
 				{
-					let tempNodeJSON = tJSONnodes.[i];
+					let tempNodeJSON = tJSON.nodes[i];
 					let tempNode = GraphVizReader.ReadNode( tempNodeJSON, tGraphModel._nodeTypes );
 					if ( tGraphModel.setNode( tempNode ) )
 					{
@@ -180,7 +186,7 @@ export default class GraphVizReader
 		{
 			for ( let i = ( tJSON.links.length - 1 ); i >= 0; --i )
 			{
-				tPinModel.setLink( Edge.ReadEdge( tJSON.links[i], tPinModel, tNodeRefs, tEdgeTypes ) );
+				tPinModel.setLink( GraphVizReader.ReadEdge( tJSON.links[i], tPinModel, tNodeRefs, tEdgeTypes ) );
 			}
 		}
 	}

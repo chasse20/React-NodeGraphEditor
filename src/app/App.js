@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import { Switch, Route } from "react-router";
-import Interface from "./interface/views/Interface";
+import File from "./interface/views/File";
 import Graph from "./nodegraph/views/Graph";
 import Transform2DModel from "./core/Transform2D";
 import GraphModel from "./nodegraph/Graph";
-import InterfaceModel from "./interface/Interface";
 import "./App.css";
 
 export default class App extends Component
@@ -16,17 +15,17 @@ export default class App extends Component
 
 		// Variables
 		this._interface = null;
-		this._viewTransform = new Transform2DModel();
-		this._worldTransform = new Transform2DModel();
-		this._graphModel = new GraphModel();
-		this._graphModel._transform.parent = this._worldTransform;
-		this._interfaceModel = new InterfaceModel();
+		this._model =
+		{
+			graph: new GraphModel(),
+			version: 1 
+		};
 		
 		// Events
-		this._onInterface = ( tComponent ) => { this._interface = tComponent; };
+		/*this._onInterface = ( tComponent ) => { this._interface = tComponent; };
 		this._onSelectGraph = ( tEvent, tGraph ) => { this._interface.onSelectGraph( tEvent, tGraph ); };
 		this._onSelectNode = ( tEvent, tNode ) => { this._interface.onSelectNode( tEvent, tNode ); };
-		this._onSelectEdge = ( tEvent, tEdge ) => { this._interface.onSelectEdge( tEvent, tEdge ); };
+		this._onSelectEdge = ( tEvent, tEdge ) => { this._interface.onSelectEdge( tEvent, tEdge ); };*/
 	}
 
 	toJSON()
@@ -44,24 +43,24 @@ export default class App extends Component
 	}
 	
 	render()
-	{		
-		return (
-			<React.Fragment>
-				<Switch>
+	{
+		/*
+		<Switch>
 					<Route path="/date" render={
 						( tProps ) =>
 						(
-							<Graph model={ this._graphModel } viewTransform={ this._viewTransform } grid={ this._interfaceModel._controls._grid } physics={ this._interfaceModel._controls._physics } onSelectGraph={ this._onSelectGraph } onSelectNode={ this._onSelectNode } onSelectEdge={ this._onSelectEdge }/>
 						)
 					}/>
 					<Route render={
 						( tProps ) =>
 						(
-							<Graph model={ this._graphModel } viewTransform={ this._viewTransform } grid={ this._interfaceModel._controls._grid } physics={ this._interfaceModel._controls._physics } onSelectGraph={ this._onSelectGraph } onSelectNode={ this._onSelectNode } onSelectEdge={ this._onSelectEdge }/>
 						)
 					}/>
 				</Switch>
-				<Interface ref={ this._onInterface } model={ this._interfaceModel } viewTransform={ this._viewTransform } graph={ this._graphModel }/>
+				*/
+		return (
+			<React.Fragment>
+				<File model={ this._model }/>
 			</React.Fragment>
 		);
 	}

@@ -1,3 +1,9 @@
+import NodeModel from "../nodegraph/Node";
+import NodeView from "../nodegraph/views/Node";
+import EdgeModel from "../nodegraph/Edge";
+import EdgeView from "../nodegraph/views/Edge";
+import Vector2DModel from "../core/Vector2D";
+
 export default class GraphVizWriter
 {
 	static Write( tModel )
@@ -105,7 +111,7 @@ export default class GraphVizWriter
 			// Scale
 			if ( !Vector2DModel.IsOne( tTransformModel._scale ) )
 			{
-				const tempScale = GraphVizWriter.WriteVector( tTransformModel_scale );
+				const tempScale = GraphVizWriter.WriteVector( tTransformModel._scale );
 				if ( tempScale != null )
 				{
 					if ( tempJSON === null )
@@ -191,7 +197,7 @@ export default class GraphVizWriter
 	{
 		if ( tTypeModel != null && tSerializableModels != null && tSerializableViews != null )
 		{
-			const tempJSON = {};
+			const tempJSON =
 			{
 				name: tTypeName
 			};
@@ -222,7 +228,7 @@ export default class GraphVizWriter
 				}
 			}
 			
-			// Data			
+			// Data	
 			for ( let tempKey in tTypeModel.data )
 			{
 				tempJSON.data = tTypeModel.data;
@@ -273,8 +279,6 @@ export default class GraphVizWriter
 						tempJSON.pins[ tempKey ] = tempPin;
 					}
 				}
-				
-				return tempJSON;
 			}
 			
 			// Position
@@ -306,7 +310,7 @@ export default class GraphVizWriter
 			// Links
 			if ( tPinModel._isOut )
 			{
-				for ( let tempKey in tPinModel.links )
+				for ( let tempKey in tPinModel._links )
 				{
 					let tempEdge = GraphVizWriter.WriteEdge( tPinModel._links[ tempKey ], tEdgeTypes );
 					if ( tempEdge != null )

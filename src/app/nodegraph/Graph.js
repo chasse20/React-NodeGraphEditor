@@ -5,7 +5,6 @@ import Edge from "./Edge";
 import EdgeView from "./views/Edge";
 import Node from "./Node";
 import NodeView from "./views/Node";
-import Vector2D from "../core/Vector2D";
 
 export default class Graph
 {
@@ -14,11 +13,11 @@ export default class Graph
 		this._nodes = {};
 		this._nodeTypes =
 		{
-			"default": new Type( "default", Node, NodeView )
+			"default": new Type( Node, NodeView )
 		};
 		this._edgeTypes =
 		{
-			"default": new Type( "default", Edge, EdgeView )
+			"default": new Type( Edge, EdgeView )
 		};
 		this._transform = new Transform2D();
 		this.isSelected = false;

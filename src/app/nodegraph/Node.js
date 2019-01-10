@@ -1,4 +1,4 @@
-import { observable, decorate, action, values } from "mobx";
+import { observable, decorate, values } from "mobx";
 import Vector2D from "../core/Vector2D";
 import GUID from "../core/GUID";
 import Pin from "./Pin";
