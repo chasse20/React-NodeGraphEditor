@@ -144,12 +144,12 @@ export default class GraphVizReader
 			const tempNode = new tempType._modelClass( tempType );
 			
 			// Position
-			GraphVizReader.ReadVector( tNodeModel._position, tJSON.position );
+			GraphVizReader.ReadVector( tempNode._position, tJSON.position );
 			
 			// Data
 			if ( tJSON.data != null )
 			{
-				tNodeModel.data = Object.assign( tNodeModel.data, tJSON.data ); // merge/overwrite!
+				tempNode.data = Object.assign( tempNode.data, tJSON.data ); // merge/overwrite!
 			}
 			
 			return tempNode;
@@ -160,16 +160,62 @@ export default class GraphVizReader
 	
 	static ReadNodePost( tNodeModel, tJSON, tNodeRefs, tEdgeTypes )
 	{
-		if ( tJSON != null && tJSON.pins !== undefined )
+		if ( tJSON != null && tJSON.pins != null )
 		{
+			// Pins
 			for ( let tempName in tJSON.pins )
 			{
 				let tempPin = tNodeModel._pins[ tempName ];
-				if ( tempPin !== undefined )
+				if ( tempPin != null )
 				{
 					GraphVizReader.ReadPinPost( tempPin, tJSON.pins[ tempName ], tNodeRefs, tEdgeTypes );
 				}
 			}
 		}
+	}
+	
+	static ReadPinPost( tPinModel, tJSON, tNodeRefs, tEdgeTypes )
+	{
+		if ( tPinModel != null && tPinModel._isOut && tJSON != null && tJSON.links != null && tNodeRefs != null )
+		{
+			for ( let i = ( tJSON.links.length - 1 ); i >= 0; --i )
+			{
+				tPinModel.setLink( Edge.ReadEdge( tJSON.links[i], tPinModel, tNodeRefs, tEdgeTypes ) );
+			}
+		}
+	}
+	
+	static ReadEdge( tJSON, tSourcePin, tNodeRefs, tTypes )
+	{
+		if ( tJSON != null && tJSON.node != null && tJSON.pin != null && tSourcePin != null && tNodeRefs != null && tTypes != null )
+		{
+			// Target node and pin
+			const tempTargetNode = tNodeRefs[ tJSON.node ];
+			if ( tempTargetNode != null )
+			{
+				const tempTargetPin = tempTargetNode._pins[ tJSON.pin ];
+				if ( tempTargetPin != null )
+				{
+					// Model class
+					var tempType = tJSON.type == null ? null : tTypes[ tJSON.type ];
+					if ( tempType == null )
+					{
+						tempType = tTypes[ "default" ];
+					}
+
+					const tempEdge = new tempType._modelClass( tempType, tSourcePin, tempTargetPin );
+					
+					// Data
+					if ( tJSON.data != null )
+					{
+						tempEdge.data = Object.assign( tempEdge.data, tJSON.data ); // merge/overwrite!
+					}
+					
+					return tempEdge;
+				}
+			}
+		}
+		
+		return null;
 	}
 }
