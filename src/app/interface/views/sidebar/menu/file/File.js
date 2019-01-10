@@ -54,8 +54,8 @@ class File extends React.Component
 				<div className="import">
 					<h1>IMPORT</h1>
 					<div className="inner">
-						<input type="file" name="file" onChange={ this._onFileInput }/>
-						<select name="format">
+						<input type="file" onChange={ this._onFileInput }/>
+						<select onChange={ this._onImportFormat }>
 							<option value="GraphViz">GraphViz</option>
 							<option value="GraphJSON">GraphJSON</option>
 						</select>
@@ -65,7 +65,7 @@ class File extends React.Component
 				<div className="export">
 					<h1>EXPORT</h1>
 					<div className="inner">
-						<select name="format">
+						<select onChange={ this._onExportFormat }>
 							<option value="GraphViz">GraphViz</option>
 							<option value="GraphJSON">GraphJSON</option>
 						</select>
