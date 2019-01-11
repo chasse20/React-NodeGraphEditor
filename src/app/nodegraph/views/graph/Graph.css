@@ -1,5 +1,8 @@
 .graph
 {
+	position: absolute;
+	top: 0;
+	left: 0;
 	height: 100%;
 	width: 100%;
 	overflow: hidden;
@@ -7,17 +10,7 @@
 	color: #fff;
 }
 
-.graph.selected
+.graph.panning
 {
 	cursor: move;
-}
-
-.graph, .graph svg, .graph svg > *
-{
-	position: absolute;
-}
-
-.grid.hidden
-{
-	display: none;
 }

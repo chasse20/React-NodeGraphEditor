@@ -20,6 +20,7 @@ export default class Graph
 			"default": new Type( Edge, EdgeView )
 		};
 		this._transform = new Transform2D();
+		this.isPanMode = true;
 		this.isPanning = false;
 		this.isMarquee = false;
 		this.isGridVisible = false;
@@ -128,6 +129,7 @@ decorate( Graph,
 		_nodes: observable.shallow,
 		_nodeTypes: observable.shallow,
 		_edgeTypes: observable.shallow,
+		isPanMode: observable,
 		isPanning: observable,
 		isMarquee: observable,
 		isGridVisible: observable,

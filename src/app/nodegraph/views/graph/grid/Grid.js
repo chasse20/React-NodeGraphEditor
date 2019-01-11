@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { observe } from "mobx";
 import { observer } from "mobx-react";
 import Transform2DModel from "../../../../core/Transform2D";
+import "./Grid.css";
 
 class Grid extends React.Component
 {
@@ -33,11 +34,11 @@ class Grid extends React.Component
 	
 	onTransform( tChange )
 	{
-		if ( tChange === "_position" )
+		if ( tChange.name === "_position" )
 		{
 			this.position = tChange.newValue;
 		}
-		else if ( tChange === "_scale" )
+		else if ( tChange.name === "_scale" )
 		{
 			this.scale = tChange.newValue;
 		}
