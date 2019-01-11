@@ -1,7 +1,7 @@
 import NodeModel from "../nodegraph/Node";
-import NodeView from "../nodegraph/views/Node";
+import NodeView from "../nodegraph/views/graph/nodes/node/Node";
 import EdgeModel from "../nodegraph/Edge";
-import EdgeView from "../nodegraph/views/Edge";
+import EdgeView from "../nodegraph/views/graph/edges/edge/Edge";
 import TypeModel from "../nodegraph/Type";
 
 export default class GraphJSONReader // TODO: Clustering

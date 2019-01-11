@@ -1,36 +1,51 @@
-/* eslint-disable no-unused-vars*/
 import NodeModel from "../nodegraph/Node";
-import NodeView from "../nodegraph/views/Node";
+import NodeView from "../nodegraph/views/graph/nodes/node/Node";
 import EdgeModel from "../nodegraph/Edge";
-import EdgeView from "../nodegraph/views/Edge";
+import EdgeView from "../nodegraph/views/graph/edges/edge/Edge";
 import Vector2DModel from "../core/Vector2D";
 
 export default class GraphVizWriter
 {
-	static Write( tGraphModel, tVersion = 1 )
+	static Write( tModel )
+	{
+		if ( tModel != null )
+		{
+			const tempJSON =
+			{
+				version: 1
+			};
+			
+			// Graph
+			const tempGraph = GraphVizWriter.WriteGraph( tModel.graph );
+			if ( tempGraph != null )
+			{
+				tempJSON.graph = tempGraph;
+			}
+			
+			return tempJSON;
+		}
+		
+		return null;
+	}
+	
+	static WriteGraph( tGraphModel )
 	{
 		if ( tGraphModel != null )
 		{
-			var tempJSON =
-			{
-				version: tVersion
-			};
+			var tempJSON = null;
 			
 			// Transform
 			const tempTransform = GraphVizWriter.WriteTransform( tGraphModel._transform );
 			if ( tempTransform != null )
 			{
-				tempJSON =
-				{
-					transform: tempTransform
-				};
+				tempJSON = { transform: tempTransform };
 			}
 			
 			// Node types
 			var tempArray = GraphVizWriter.WriteTypes( tGraphModel._nodeTypes, NodeModel.SerializableClasses, NodeView.SerializableClasses );
 			if ( tempArray != null )
 			{
-				if ( tempJSON === null )
+				if ( tempJSON == null )
 				{
 					tempJSON = {};
 				}
@@ -41,7 +56,7 @@ export default class GraphVizWriter
 			tempArray = GraphVizWriter.WriteTypes( tGraphModel._edgeTypes, EdgeModel.SerializableClasses, EdgeView.SerializableClasses );
 			if ( tempArray != null )
 			{
-				if ( tempJSON === null )
+				if ( tempJSON == null )
 				{
 					tempJSON = {};
 				}
@@ -51,7 +66,7 @@ export default class GraphVizWriter
 			// Nodes
 			for ( let tempKey in tGraphModel._nodes )
 			{
-				if ( tempJSON === null )
+				if ( tempJSON == null )
 				{
 					tempJSON = {};
 				}
@@ -80,10 +95,7 @@ export default class GraphVizWriter
 			const tempPosition = GraphVizWriter.WriteVector( tTransformModel._position );
 			if ( tempPosition != null )
 			{
-				tempJSON =
-				{
-					position: tempPosition
-				};
+				tempJSON = { position: tempPosition };
 			}
 			
 			// Rotation
@@ -135,10 +147,7 @@ export default class GraphVizWriter
 			// X
 			if ( tVectorModel.x !== 0 )
 			{
-				tempJSON =
-				{
-					x: tVectorModel.x
-				};
+				tempJSON = { x: tVectorModel.x };
 			}
 			
 			// Y
@@ -169,7 +178,7 @@ export default class GraphVizWriter
 					let tempType = GraphVizWriter.WriteType( tempKey, tTypes[ tempKey ], tSerializableModels, tSerializableViews );
 					if ( tempType != null )
 					{
-						if ( tempTypesJSON === null )
+						if ( tempTypesJSON == null )
 						{
 							tempTypesJSON = [];
 						}
@@ -306,12 +315,9 @@ export default class GraphVizWriter
 					let tempEdge = GraphVizWriter.WriteEdge( tPinModel._links[ tempKey ], tEdgeTypes );
 					if ( tempEdge != null )
 					{
-						if ( tempJSON === null )
+						if ( tempJSON == null )
 						{
-							tempJSON =
-							{
-								links: []
-							};
+							tempJSON = { links: [] };
 						}
 						tempJSON.links.push( tempEdge );
 					}
