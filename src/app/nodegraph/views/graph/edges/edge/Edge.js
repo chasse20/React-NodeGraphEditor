@@ -29,26 +29,26 @@ class Edge extends React.Component // TODO: Selectable
 		this._targetPosition = new Vector2D();
 		
 		// Events
-		this._onOffsetMove = observe( tProps.model._source, "_offset", ( tChange ) => { this.sourcePosition = this.props.model._source.localPosition; } );
-		this._onSourceMove = observe( tProps.model._source._node._transform, "_position", ( tChange ) => { this.sourcePosition = this.props.model._source.localPosition; } );
-		this._onTargetMove = observe( tProps.model._target._node._transform, "_position", ( tChange ) => { this.targetPosition = this.props.model._target.localPosition; } );
+		this._onOffsetMove = observe( tProps.model._source, "_offset", ( tChange ) => { this.sourcePosition = this.props.model._source.position; } );
+		this._onSourceMove = observe( tProps.model._source._node, "_position", ( tChange ) => { this.sourcePosition = this.props.model._source.position; } );
+		this._onTargetMove = observe( tProps.model._target._node, "_position", ( tChange ) => { this.targetPosition = this.props.model._target.position; } );
 		this._onElement = ( tElement ) => { this._element = tElement; };
 		this._onTextElement = ( tElement ) => { this._textElement = tElement; };
 	}
 
 	componentDidMount()
 	{
-		this.sourcePosition = this.props.model._source.localPosition;
-		this.targetPosition = this.props.model._target.localPosition;
-		this.props.onPhysics( this._physics, true );
+		this.sourcePosition = this.props.model._source.position;
+		this.targetPosition = this.props.model._target.position;
+		//this.props.onPhysics( this._physics, true );
 	}
 	
 	componentWillUnmount()
 	{
-		if ( this.props.model.isSelected )
+		/*if ( this.props.model.isSelected )
 		{
 			this.props.onSelect( null, this.props.model );
-		}
+		}*/
 		
 		this._onOffsetMove();
 		this._onOffsetMove = null;
@@ -57,7 +57,7 @@ class Edge extends React.Component // TODO: Selectable
 		this._onTargetMove();
 		this._onTargetMove = null;
 		
-		this.props.onPhysics( this._physics, false );
+		//this.props.onPhysics( this._physics, false );
 	}
 	
 	set sourcePosition( tVector )
@@ -117,7 +117,7 @@ class Edge extends React.Component // TODO: Selectable
 
 		// Render
 		return (
-			<g className={ "edge " + this.constructor.name + ( this.props.model.isSelected ? " selected" : "" ) }>
+			<g className={ "edge " + this.constructor.name + ( tempModel.isSelected ? " selected" : "" ) }>
 				<line ref={ this._onElement } stroke={ tempStroke } strokeOpacity="0.6" markerEnd={ "url(#arrow-" + tempType._name + ")" }/>
 				{
 					tempText != null &&
@@ -133,7 +133,6 @@ class Edge extends React.Component // TODO: Selectable
 Edge.propTypes =
 {
 	model: PropTypes.instanceOf( EdgeModel ).isRequired,
-	onSelect: PropTypes.func.isRequired,
 	text: PropTypes.string,
 	stroke: PropTypes.string
 };

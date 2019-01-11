@@ -20,9 +20,10 @@ class Pin extends React.Component
 	
 	componentDidMount()
 	{
-		if ( this.props.model._isOut )
+		const tempModel = this.props.model;
+		if ( tempModel._isOut )
 		{
-			const tempPins = this.props.model._links;
+			const tempPins = tempModel._links;
 			for ( let tempKey in tempPins )
 			{
 				this.props.onLink( tempPins[ tempKey ], true );
@@ -32,13 +33,14 @@ class Pin extends React.Component
 	
 	componentWillUnmount()
 	{
-		if ( this.props.model._isOut )
+		const tempModel = this.props.model;
+		if (tempModel._isOut )
 		{
 			this._onLinksDispose();
 			this._onLinksDispose = null;
 		}
 		
-		const tempPins = this.props.model._links;
+		const tempPins = tempModel._links;
 		for ( let tempKey in tempPins )
 		{
 			this.props.onLink( tempPins[ tempKey ] );

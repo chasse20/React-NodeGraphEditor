@@ -66,7 +66,6 @@ class Nodes extends React.Component
 	
 	createElement( tModel )
 	{
-		console.log( "???" );
 		return React.createElement( tModel._type._viewClass, { model: tModel, key: tModel._id, onLink: this.props.onLink } );
 	}
 	

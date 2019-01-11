@@ -23,7 +23,7 @@ class Graph extends React.Component
 		this._edges = null;
 		
 		// Events
-		this._onTransformDispose = observe( this.props.data._transform, ( tChange ) => { this.viewTransform =  tChange.object; } );
+		this._onTransformDispose = observe( this.props.model._transform, ( tChange ) => { this.viewTransform =  tChange.object; } );
 		this._onViewElement = ( tElement ) => { this._viewElement = tElement; };
 		this._onNodes = ( tComponent ) => { this._nodes = tComponent; };
 		this._onEdges = ( tComponent ) => { this._edges = tComponent; };
@@ -32,7 +32,7 @@ class Graph extends React.Component
 
 	componentDidMount()
 	{
-		this.viewTransform = this.props.data._transform;
+		this.viewTransform = this.props.model._transform;
 	}
 	
 	componentWillUnmount()
@@ -53,15 +53,15 @@ class Graph extends React.Component
 	{
 		console.log( "RENDERED" );
 		return (
-			<div className={ this.props.data.isPanning ? "graph panning" : "graph" }>
+			<div className={ this.props.model.isPanning ? "graph panning" : "graph" }>
 				<svg height="100%" width="100%">
-					<Arrows types={ this.props.data._edgeTypes }/>
-					<Grid transform={ this.props.data._transform } isVisible={ this.props.data.isVisible }/>
+					<Arrows types={ this.props.model._edgeTypes }/>
+					<Grid transform={ this.props.model._transform } isVisible={ this.props.model.isVisible }/>
 					<g ref={ this._onViewElement }>
 						<Edges ref={ this._onEdges }/>
-						<Nodes ref={ this._onNodes } nodes={ this.props.data._nodes } onLink={ this._onLink }/>
+						<Nodes ref={ this._onNodes } nodes={ this.props.model._nodes } onLink={ this._onLink }/>
 					</g>
-					<Marquee ref={ this._onMarquee } transform={ this.props.data._transform } isMarquee={ this.props.data.isMarquee }/>
+					<Marquee ref={ this._onMarquee } transform={ this.props.model._transform } isMarquee={ this.props.model.isMarquee }/>
 				</svg>
 			</div>
 		);
@@ -70,7 +70,7 @@ class Graph extends React.Component
 
 Graph.propTypes =
 {
-	data: PropTypes.instanceOf( GraphModel ).isRequired
+	model: PropTypes.instanceOf( GraphModel ).isRequired
 };
 
 export default observer( Graph );

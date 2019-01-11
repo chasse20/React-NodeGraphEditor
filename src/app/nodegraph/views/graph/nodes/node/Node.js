@@ -18,47 +18,45 @@ class Node extends React.Component
 		
 		// Variables
 		this._element = null;
-		this._physics =
+		/*this._physics =
 		{
 			id: tProps.model._id,
 			x: tProps.model._transform._position.x,
 			y: tProps.model._transform._position.y,
 			transform: tProps.model._transform,
 			radius: 100
-		};
+		};*/
 		
 		// Events
-		this._onTransformDispose = observe( tProps.model._transform, "_position", ( tChange ) => { this.position = tChange.newValue; } );
-		this._onSelectedDispose = observe( tProps.model, "isSelected", ( tChange ) => { this.isSelected = tChange.newValue; } );
+		this._onPositionDispose = observe( tProps.model, "_position", ( tChange ) => { this.position = tChange.newValue; } );
+		//this._onSelectedDispose = observe( tProps.model, "isSelected", ( tChange ) => { this.isSelected = tChange.newValue; } );
 		this._onMouse = ( tEvent ) => { tProps.onSelect( tEvent, this.props.model ); };
 		this._onElement = ( tElement ) => { this._element = tElement; };
 	}
 	
 	componentDidMount()
 	{
-		this.position = this.props.model._transform._position;
-		this.isSelected = this.props.isSelected;
-		this.props.onPhysics( this._physics, true );
+		this.position = this.props.model._position;
+		//this.isSelected = this.props.isSelected;
+		//this.props.onPhysics( this._physics, true );
 	}
 	
 	componentWillUnmount()
 	{
-		if ( this.props.model.isSelected )
+		/*if ( this.props.model.isSelected )
 		{
 			this.props.onSelect( null, this.props.model );
-		}
+		}*/
 		
-		this._onTransformDispose();
-		this._onTransformDispose = null;
-		this._onSelectedDispose();
-		this._onSelectedDispose = null;
+		this._onPositionDispose();
+		this._onPositionDispose = null;
 		
-		this.props.onPhysics( this._physics, false );
+		//this.props.onPhysics( this._physics, false );
 	}
 	
 	set isSelected( tIsSelected )
 	{
-		if ( tIsSelected )
+		/*if ( tIsSelected )
 		{
 			this._physics.fx = this.props.model._transform._position.x;
 			this._physics.fy = this.props.model._transform._position.y;
@@ -67,21 +65,21 @@ class Node extends React.Component
 		{
 			delete this._physics.fx;
 			delete this._physics.fy;
-		}
+		}*/
 		
 		//this.props.onPhysics( this._physics, !tIsSelected );
 	}
 	
 	set position( tPosition )
 	{
-		if ( this.props.model.isSelected )
+		/*if ( this.props.model.isSelected )
 		{
 			this._physics.fx = tPosition.x;
 			this._physics.fy = tPosition.y;
 		}
 		
 		this._physics.x = tPosition.x;
-		this._physics.y = tPosition.y;
+		this._physics.y = tPosition.y;*/
 		this._element.setAttribute( "transform", "translate(" + tPosition.x + "," + tPosition.y + ")" );
 	}
 	
@@ -94,7 +92,7 @@ class Node extends React.Component
 		const tempOutlineDiameter = ( tempRadius + 10 ) * 2;
 		
 		return (
-			<g className={ "node " + this.constructor.name + ( this.props.model.isSelected ? " selected" : "" ) } guid={ this.props.model._id } ref={ this._onElement } onMouseDown={ this._onMouse } onMouseUp={ this._onMouse }>
+			<g className={ "node " + this.constructor.name + ( tempModel.isSelected ? " selected" : "" ) } guid={ tempModel._id } ref={ this._onElement } onMouseDown={ this._onMouse } onMouseUp={ this._onMouse }>
 				<rect className="outline" height={ tempOutlineDiameter } width={ tempOutlineDiameter } x={ -tempOutlineDiameter * 0.5 } y={ -tempOutlineDiameter * 0.5 } strokeDasharray={ tempOutlineDiameter * 0.125 + " " + tempOutlineDiameter * 0.75 + " " + tempOutlineDiameter * 0.125 + " 0" }/>
 				<circle className="graphic" cx="0" cy="0" r={ tempRadius } fill={ Utility.DefaultData( "fill", tempData, tempTypeData, "#019abd" ) } stroke={ Utility.DefaultData( "stroke", tempData, tempTypeData, "#42d3ff" ) }/>
 				{
@@ -107,7 +105,7 @@ class Node extends React.Component
 				}
 				<g className="pins">
 					{
-						Object.values( this.props.model._pins ).map(
+						Object.values( tempModel._pins ).map(
 							( tPin ) =>
 							(
 								<Pin model={ tPin } key={ tPin.key } onLink={ this.props.onLink }/>
@@ -124,7 +122,6 @@ Node.propTypes =
 {
 	model: PropTypes.instanceOf( NodeModel ).isRequired,
 	onLink: PropTypes.func.isRequired,
-	onSelect: PropTypes.func.isRequired,
 	radius: PropTypes.number
 };
 

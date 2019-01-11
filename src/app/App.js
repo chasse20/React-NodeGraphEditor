@@ -26,13 +26,13 @@ export default class App extends Component
 					<Route path="/date" render={
 						( tProps ) =>
 						(
-							<Graph data={ this._graph }/>
+							<Graph model={ this._graph }/>
 						)
 					}/>
 					<Route render={
 						( tProps ) =>
 						(
-							<Graph data={ this._graph }/>
+							<Graph model={ this._graph }/>
 						)
 					}/>
 				</Switch>
