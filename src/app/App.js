@@ -23,12 +23,6 @@ export default class App extends Component
 		return (
 			<React.Fragment>
 				<Switch>
-					<Route path="/date" render={
-						( tProps ) =>
-						(
-							<Graph model={ this._graph }/>
-						)
-					}/>
 					<Route render={
 						( tProps ) =>
 						(

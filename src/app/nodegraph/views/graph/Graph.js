@@ -21,27 +21,34 @@ class Graph extends React.Component
 
 		// Variables
 		this._viewElement = null;
+		this._containerElement = null;
+		this._marqueeElement = null;
 		this._nodes = null;
 		this._edges = null;
 		this._isPanHeld = false;
-		this._mouseStart = null;
-		this._offset = null;
+		this._panOffset = null;
+		this._marqueeStart = null;
 		
 		// Events
-		this._onTransformDispose = observe( this.props.model._transform, ( tChange ) => { this.viewTransform =  tChange.object; } );
+		this._onTransformDispose = observe( this.props.model._transform, ( tChange ) => { this.onTransform( tChange ); } );
 		this._onViewElement = ( tElement ) => { this._viewElement = tElement; };
+		this._onContainerElement = ( tElement ) => { this._containerElement = tElement; };
+		this._onMarqueeElement = ( tElement ) => { this._marqueeElement = tElement; };
 		this._onNodes = ( tComponent ) => { this._nodes = tComponent; };
 		this._onEdges = ( tComponent ) => { this._edges = tComponent; };
 		this._onLink = ( tModel, tIsSet ) => { this._edges.onLink( tModel, tIsSet ); };
 		this._onMouseWheel = ( tEvent ) => { this.tryZoom( tEvent, tEvent.deltaY > 0 ? -1 : 1 ); }; // only Mozilla respects mouse wheel delta
 		this._onMouseDown = ( tEvent ) => { this.onMouseDown( tEvent ); };
-		this._onMouseUp = ( tEvent ) => { this.onMouseUp( tEvent ); };
-		this._onMouseMove = ( tEvent ) => { this.onMouseMove( tEvent ); };
+		this._onPanMove = ( tEvent ) => { this.onPanMove( tEvent ); };
+		this._onPanUp = ( tEvent ) => { this.onPanUp( tEvent ); };
+		this._onMarqueeMove = ( tEvent ) => { this.onMarqueeMove( tEvent ); };
+		this._onMarqueeUp = ( tEvent ) => { this.onMarqueeUp( tEvent ); };
 	}
 
 	componentDidMount()
 	{
-		this.viewTransform = this.props.model._transform;
+		this.position = this.props.model._transform._position;
+		this.scale = this.props.model._transform._scale;
 	}
 	
 	componentWillUnmount()
@@ -49,7 +56,11 @@ class Graph extends React.Component
 		// Remove events
 		this._onTransformDispose();
 		this._onTransformDispose = null;
-		document.removeEventListener( "mousemove", this._onMouseMove );
+		
+		document.removeEventListener( "mousemove", this._onPanMove );
+		document.removeEventListener( "mouseup", this._onPanUp );
+		document.removeEventListener( "mousemove", this._onMarqueeMove );
+		document.removeEventListener( "mouseup", this._onMarqueeUp );
 	}
 	
 	tryZoom( tMouse, tVelocity ) // TODO: offset zooming from mouse position
@@ -81,64 +92,93 @@ class Graph extends React.Component
 	
 	onMouseDown( tEvent )
 	{
-		console.log( "?sadsads" );
 		// Enable pan
-		this._isPanHeld = tEvent.button === 1; // middle mouse pans!
+		this._isPanHeld = tEvent.button === 1; // middle mouse pans!		
 		if ( this._isPanHeld || this.props.model.isPanMode )
 		{
 			this.props.model.isPanning = true;
-			this._mouseStart = Matrix2D.MultiplyPoint( this.props.model._transform._worldToLocalMatrix, new Vector2D( tEvent.clientX, tEvent.clientY ) );
-			console.log( this._mouseStart );
+			this._panOffset = Vector2D.Subtract( this.props.model._transform._position, Matrix2D.MultiplyPoint( Matrix2D.Inverse( Matrix2D.Scale( this.props.model._transform._scale ) ), new Vector2D( tEvent.clientX, tEvent.clientY ) ) );
 			
-			this._offset = this.props.model._transform._position;
-			
-			document.addEventListener( "mousemove", this._onMouseMove );
+			document.addEventListener( "mousemove", this._onPanMove );
+			document.addEventListener( "mouseup", this._onPanUp );
 		}
-	}
-	
-	onMouseUp( tEvent )
-	{
-		// Disable pan
-		if ( this._isPanHeld || this.props.model.isPanMode )
+		// Enable marquee
+		else
 		{
-			this.props.model.isPanning = false;
-			this._isPanHeld = false;
-			this._mouseStart = null;
-			this._offset = null;
+			this.props.model.isMarquee = true;
+			this._marqueeStart = Vector2D.Subtract( this.props.model._transform._position, Matrix2D.MultiplyPoint( Matrix2D.Inverse( Matrix2D.Scale( this.props.model._transform._scale ) ), new Vector2D( tEvent.clientX, tEvent.clientY ) ) );
 			
-			document.removeEventListener( "mousemove", this._onMouseMove );
+			document.addEventListener( "mousemove", this._onMarqueeMove );
+			document.addEventListener( "mouseup", this._onMarqueeUp );
 		}
 	}
 	
-	onMouseMove( tEvent )
+	onPanUp( tEvent )
 	{
-		const tempWorldStart = Matrix2D.MultiplyPoint( this.props.model._transform.localMatrix, this._mouseStart );
+		this.props.model.isPanning = false;
+		this._isPanHeld = false;
+		this._panOffset = null;
 		
-		//this.props.model._transform.position = Matrix2D.MultiplyPoint( Matrix2D.Inverse( Matrix2D.Multiply( Matrix2D.Translate( this.props.model._transform._position ), Matrix2D.Scale( this.props.model._transform._scale ) ) ), new Vector2D( tEvent.clientX, tEvent.clientY ) ).subtract( this._mouseStart ).add( this._offset );
-		//this.props.model._transform.position = Matrix2D.MultiplyPoint( Matrix2D.Inverse( Matrix2D.Scale( this.props.model._transform._scale ) ), new Vector2D( tEvent.clientX, tEvent.clientY ) ).subtract( this._mouseStart ).add( this._offset );
+		document.removeEventListener( "mousemove", this._onPanMove );
+		document.removeEventListener( "mouseup", this._onPanUp );
 	}
 	
-	set viewTransform( tTransform )
+	onPanMove( tEvent )
 	{
-		console.log( "?" );
-		this._viewElement.setAttribute( "transform", "translate(" + tTransform._position.x + "," + tTransform._position.y + ") scale(" + tTransform._scale.x + ")" );
+		this.props.model._transform.position = Matrix2D.MultiplyPoint( Matrix2D.Inverse( Matrix2D.Scale( this.props.model._transform._scale ) ), new Vector2D( tEvent.clientX, tEvent.clientY ) ).add( this._panOffset );
 	}
 	
-	// PAN
+	onMarqueeUp( tEvent )
+	{
+		this.props.model.isMarquee = false;
+		this._marqueStart = null;
+		
+		document.removeEventListener( "mousemove", this._onMarqueeMove );
+		document.removeEventListener( "mouseup", this._onMarqueeUp );
+	}
+	
+	onMarqueeMove( tEvent )
+	{
+		
+	}
+	
+	onTransform( tChange )
+	{
+		if ( tChange.name === "_position" )
+		{
+			this.position = tChange.newValue;
+		}
+		else if ( tChange.name === "_scale" )
+		{
+			this.scale = tChange.newValue;
+		}
+	}
+	
+	set position( tVector )
+	{
+		this._containerElement.setAttribute( "transform", "translate(" + tVector.x + "," + tVector.y + ")" );
+	}
+	
+	set scale( tVector )
+	{
+		this._viewElement.setAttribute( "transform", "scale(" + tVector.x + ")" );
+	}
+	
 	// MARQUEE IN THE RENDER, CALLBACK GOES TO NODES
 
 	render()
 	{
-		console.log( "REND" );
 		return (
-			<svg className={ this.props.model.isPanning ? "graph panning" : "graph" } onWheel={ this._onMouseWheel } onMouseDown={ this._onMouseDown } onMouseUp={ this._onMouseUp }>
+			<svg className={ this.props.model.isPanning ? "graph panning" : "graph" } onWheel={ this._onMouseWheel } onMouseDown={ this._onMouseDown }>
 				<Arrows types={ this.props.model._edgeTypes }/>
 				<Grid transform={ this.props.model._transform } isVisible={ this.props.model.isVisible }/>
 				<g ref={ this._onViewElement }>
-					<Edges ref={ this._onEdges }/>
-					<Nodes ref={ this._onNodes } nodes={ this.props.model._nodes } onLink={ this._onLink }/>
+					<g ref={ this._onContainerElement }>
+						<Edges ref={ this._onEdges }/>
+						<Nodes ref={ this._onNodes } nodes={ this.props.model._nodes } onLink={ this._onLink }/>
+					</g>
+					<rect ref={ this._onMarqueeElement } className={ this.props.model.isMarquee ? "marquee active" : "marquee" }/>
 				</g>
-				<Marquee ref={ this._onMarquee } transform={ this.props.model._transform } isMarquee={ this.props.model.isMarquee }/>
 			</svg>
 		);
 	}

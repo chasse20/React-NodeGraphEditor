@@ -1,11 +1,11 @@
-import { observable, decorate, computed } from "mobx";
+import { observable, decorate, computed, action } from "mobx";
 import Matrix2D from "./Matrix2D";
 import Vector2D from "./Vector2D";
 import { DEGREES_TO_RADIANS, RADIANS_TO_DEGREES } from "./Utility";
 
 export default class Transform2D
 {
-	constructor( tPosition = new Vector2D(), tRotation = 0, tScale = new Vector2D( 1, 1 ) )
+	constructor( tPosition = new Vector2D( 100, 0, 0 ), tRotation = 0, tScale = new Vector2D( 1, 1 ) )
 	{
 		this._position = tPosition;
 		this._rotation = tRotation;
@@ -88,20 +88,37 @@ export default class Transform2D
 	
 	set position( tVector )
 	{
-		this.markDirty();
 		this._position = tVector;
+		console.log( "SET" );
+		console.log( this._position );
+		this.markDirty();
+	}
+	
+	get position()
+	{
+		return this._position;
 	}
 
 	set rotation( tAngle )
 	{
-		this.markDirty();
 		this._rotation = tAngle;
+		this.markDirty();
+	}
+	
+	get rotation()
+	{
+		return this._rotation;
 	}
 
 	set scale( tVector )
 	{
-		this.markDirty();
 		this._scale = tVector;
+		this.markDirty();
+	}
+	
+	get scale()
+	{
+		return this._scale;
 	}
 	
 	markDirty()
@@ -196,7 +213,9 @@ decorate( Transform2D,
 		_position: observable,
 		_rotation: observable,
 		_scale: observable,
-		localMatrix: computed,
+		position: computed,
+		rotation: computed,
+		scale: computed,
 		localToWorldMatrix: computed,
 		worldToLocalMatrix: computed,
 		worldPosition: computed,
