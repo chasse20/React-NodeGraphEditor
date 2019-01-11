@@ -1,12 +1,20 @@
 import NodeModel from "../nodegraph/Node";
-import NodeView from "../nodegraph/views/Node";
+import NodeView from "../nodegraph/views/graph/nodes/node/Node";
 import EdgeModel from "../nodegraph/Edge";
-import EdgeView from "../nodegraph/views/Edge";
+import EdgeView from "../nodegraph/views/graph/edges/edge/Edge";
 import TypeModel from "../nodegraph/Type";
 
 export default class GraphVizReader
 {
-	static Read( tGraphModel, tJSON )
+	static Read( tModel, tJSON )
+	{
+		if ( tModel != null && tJSON != null )
+		{
+			GraphVizReader.ReadGraph( tModel.graph, tJSON.graph );
+		}
+	}
+	
+	static ReadGraph( tGraphModel, tJSON )
 	{
 		if ( tGraphModel != null && tJSON != null )
 		{
@@ -19,11 +27,7 @@ export default class GraphVizReader
 				const tempListLength = tJSON.nodeTypes.length;
 				for ( let i = 0; i < tempListLength; ++i )
 				{
-					let tempType = GraphVizReader.ReadType( tJSON.nodeTypes[i], NodeModel.SerializableClasses, NodeView.SerializableClasses );
-					if ( tempType != null )
-					{
-						tGraphModel.setNodeType( tJSON.nodeTypes[i].name, tempType );
-					}
+					tGraphModel.setNodeType( GraphVizReader.ReadType( tJSON[i], NodeModel.SerializableClasses, NodeView.SerializableClasses ) );
 				}
 			}
 			
@@ -33,11 +37,7 @@ export default class GraphVizReader
 				const tempListLength = tJSON.edgeTypes.length;
 				for ( let i = 0; i < tempListLength; ++i )
 				{
-					let tempType = GraphVizReader.ReadType( tJSON.edgeTypes[i], EdgeModel.SerializableClasses, EdgeView.SerializableClasses );
-					if ( tempType != null )
-					{
-						tGraphModel.setEdgeType( tJSON.edgeTypes[i].name, tempType );
-					}
+					tGraphModel.setEdgeType( GraphVizReader.ReadType( tJSON[i], EdgeModel.SerializableClasses, EdgeView.SerializableClasses ) );
 				}
 			}
 			
@@ -51,7 +51,7 @@ export default class GraphVizReader
 				for ( let i = 0; i < tempListLength; ++i )
 				{
 					let tempNodeJSON = tJSON.nodes[i];
-					let tempNode = GraphVizReader.ReadNode( tGraphModel, tempNodeJSON );
+					let tempNode = GraphVizReader.ReadNode( tempNodeJSON, tGraphModel._nodeTypes );
 					if ( tGraphModel.setNode( tempNode ) )
 					{
 						tempNodeJSONs[ tempNode._id ] = tempNodeJSON;
@@ -62,7 +62,7 @@ export default class GraphVizReader
 				// Post with references
 				for ( let tempID in tempNodeRefs )
 				{
-					GraphVizReader.ReadNodePost( tGraphModel, tempNodeRefs[ tempID ], tempNodeJSONs[ tempNodeRefs[ tempID ]._id ], tempNodeRefs );
+					GraphVizReader.ReadNodePost( tempNodeRefs[ tempID ], tempNodeJSONs[ tempNodeRefs[ tempID ]._id ], tempNodeRefs, tGraphModel._edgeTypes );
 				}
 			}
 		}
@@ -136,27 +136,15 @@ export default class GraphVizReader
 		return null;
 	}
 	
-	static ReadNode( tGraphModel, tJSON )
+	static ReadNode( tJSON, tTypes )
 	{
-		if ( tGraphModel != null && tJSON != null )
+		if ( tJSON != null && tTypes != null )
 		{
 			// Model class
-			var tempType = null;
-			if ( tJSON.type == null )
+			var tempType = tJSON.type == null ? null : tTypes[ tJSON.type ];
+			if ( tempType == null )
 			{
-				tempType = tGraphModel._nodeTypes[ "default" ];
-			}
-			else
-			{
-				tempType = tGraphModel._nodeTypes[ tJSON.type ];
-				if ( tempType == null )
-				{
-					const tempDefaultType = tGraphModel._nodeTypes[ "default" ];
-					tempType = new TypeModel( tempDefaultType._modelClass, tempDefaultType._viewClass );
-					tempType.data = Object.assign( tempType.data, tempDefaultType.data ); // TODO: Randomize colors????
-					
-					tGraphModel.setNodeType( tJSON.type, tempType );
-				}
+				tempType = tTypes[ "default" ];
 			}
 			
 			const tempNode = new tempType._modelClass( tempType );
@@ -176,9 +164,9 @@ export default class GraphVizReader
 		return null;
 	}
 	
-	static ReadNodePost( tGraphModel, tNodeModel, tJSON, tNodeRefs )
+	static ReadNodePost( tNodeModel, tJSON, tNodeRefs, tEdgeTypes )
 	{
-		if ( tGraphModel != null && tJSON != null && tJSON.pins != null )
+		if ( tJSON != null && tJSON.pins != null )
 		{
 			// Pins
 			for ( let tempName in tJSON.pins )
@@ -186,26 +174,26 @@ export default class GraphVizReader
 				let tempPin = tNodeModel._pins[ tempName ];
 				if ( tempPin != null )
 				{
-					GraphVizReader.ReadPinPost( tGraphModel, tempPin, tJSON.pins[ tempName ], tNodeRefs );
+					GraphVizReader.ReadPinPost( tempPin, tJSON.pins[ tempName ], tNodeRefs, tEdgeTypes );
 				}
 			}
 		}
 	}
 	
-	static ReadPinPost( tGraphModel, tPinModel, tJSON, tNodeRefs )
+	static ReadPinPost( tPinModel, tJSON, tNodeRefs, tEdgeTypes )
 	{
-		if ( tGraphModel != null && tPinModel != null && tPinModel._isOut && tJSON != null && tJSON.links != null && tNodeRefs != null )
+		if ( tPinModel != null && tPinModel._isOut && tJSON != null && tJSON.links != null && tNodeRefs != null )
 		{
 			for ( let i = ( tJSON.links.length - 1 ); i >= 0; --i )
 			{
-				tPinModel.setLink( GraphVizReader.ReadEdge( tGraphModel, tJSON.links[i], tPinModel, tNodeRefs ) );
+				tPinModel.setLink( GraphVizReader.ReadEdge( tJSON.links[i], tPinModel, tNodeRefs, tEdgeTypes ) );
 			}
 		}
 	}
 	
-	static ReadEdge( tGraphModel, tJSON, tSourcePin, tNodeRefs )
+	static ReadEdge( tJSON, tSourcePin, tNodeRefs, tTypes )
 	{
-		if ( tGraphModel != null && tJSON != null && tJSON.node != null && tJSON.pin != null && tSourcePin != null && tNodeRefs != null )
+		if ( tJSON != null && tJSON.node != null && tJSON.pin != null && tSourcePin != null && tNodeRefs != null && tTypes != null )
 		{
 			// Target node and pin
 			const tempTargetNode = tNodeRefs[ tJSON.node ];
@@ -215,22 +203,10 @@ export default class GraphVizReader
 				if ( tempTargetPin != null )
 				{
 					// Model class
-					var tempType = null;
-					if ( tJSON.type == null )
+					var tempType = tJSON.type == null ? null : tTypes[ tJSON.type ];
+					if ( tempType == null )
 					{
-						tempType = tGraphModel._edgeTypes[ "default" ];
-					}
-					else
-					{
-						tempType = tGraphModel._edgeTypes[ tJSON.type ];
-						if ( tempType == null )
-						{
-							const tempDefaultType = tGraphModel._edgeTypes[ "default" ];
-							tempType = new TypeModel( tempDefaultType._modelClass, tempDefaultType._viewClass );
-							tempType.data = Object.assign( tempType.data, tempDefaultType.data ); // TODO: Randomize colors????
-							
-							tGraphModel.setEdgeType( tJSON.type, tempType );
-						}
+						tempType = tTypes[ "default" ];
 					}
 
 					const tempEdge = new tempType._modelClass( tempType, tSourcePin, tempTargetPin );

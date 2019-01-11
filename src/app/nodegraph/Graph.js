@@ -2,9 +2,9 @@ import { action, decorate, observable, set, remove } from "mobx";
 import Transform2D from "../core/Transform2D";
 import Type from "./Type";
 import Edge from "./Edge";
-import EdgeView from "./views/Edge";
+import EdgeView from "./views/graph/edges/edge/Edge";
 import Node from "./Node";
-import NodeView from "./views/Node";
+import NodeView from "./views/graph/nodes/node/Node";
 
 export default class Graph
 {
@@ -20,8 +20,8 @@ export default class Graph
 			"default": new Type( Edge, EdgeView )
 		};
 		this._transform = new Transform2D();
-		this.isMarquee = false;
 		this.isPanning = false;
+		this.isMarquee = false;
 		this.isGridVisible = false;
 		this.isGridSnap = false;
 	}
@@ -128,7 +128,10 @@ decorate( Graph,
 		_nodes: observable.shallow,
 		_nodeTypes: observable.shallow,
 		_edgeTypes: observable.shallow,
-		isSelected: observable,
+		isPanning: observable,
+		isMarquee: observable,
+		isGridVisible: observable,
+		isGridSnap: observable,
 		setNode: action,
 		removeNode: action,
 		setNodeType: action,

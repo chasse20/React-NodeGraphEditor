@@ -41,7 +41,22 @@ export default class Edges extends React.Component
 	}
 	
 	render()
-	{	
+	{
+		/*
+		<defs>
+					<filter xmlns="http://www.w3.org/2000/svg" id="node-glow">
+						<feGaussianBlur stdDeviation="10"/>
+						<feComponentTransfer>
+							<feFuncA type="linear" slope="0.75"/>
+						</feComponentTransfer>
+						<feMerge> 
+							<feMergeNode/>
+							<feMergeNode in="SourceGraphic"/> 
+						</feMerge>
+					</filter>
+				</defs>
+		*/
+		
 		return (
 			<g className="edges">
 				{ Object.values( this.state.edges ) }
@@ -49,8 +64,3 @@ export default class Edges extends React.Component
 		);
 	}
 }
-
-Edges.propTypes =
-{
-	onSelectEdge: PropTypes.func.isRequired
-};

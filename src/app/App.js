@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import { Switch, Route } from "react-router";
 import Graph from "./nodegraph/views/graph/Graph";
+import GraphVizReader from "./format/GraphVizReader";
 import GraphModel from "./nodegraph/Graph";
+import Data from "../data.json";
 import "./App.css";
 
 export default class App extends Component
@@ -13,19 +15,20 @@ export default class App extends Component
 
 		// Variables
 		this._graph = new GraphModel();
-		
-		// Events
-		/*this._onInterface = ( tComponent ) => { this._interface = tComponent; };
-		this._onSelectGraph = ( tEvent, tGraph ) => { this._interface.onSelectGraph( tEvent, tGraph ); };
-		this._onSelectNode = ( tEvent, tNode ) => { this._interface.onSelectNode( tEvent, tNode ); };
-		this._onSelectEdge = ( tEvent, tEdge ) => { this._interface.onSelectEdge( tEvent, tEdge ); };*/
+		GraphVizReader.Read( this._graph, Data );
 	}
-	
+
 	render()
 	{
 		return (
 			<React.Fragment>
 				<Switch>
+					<Route path="/date" render={
+						( tProps ) =>
+						(
+							<Graph data={ this._graph }/>
+						)
+					}/>
 					<Route render={
 						( tProps ) =>
 						(

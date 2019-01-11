@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { observer } from "mobx-react";
 import { observe } from "mobx";
-import NodeModel from "../Node";
+import NodeModel from "../../../Node";
 import "./Nodes.css";
 
 class Nodes extends React.Component
@@ -72,7 +72,18 @@ class Nodes extends React.Component
 	// DRAG
 	
 	render()
-	{	
+	{
+		/*<filter xmlns="http://www.w3.org/2000/svg" id="edge-glow">
+				<feGaussianBlur stdDeviation="6"/>
+				<feComponentTransfer>
+					<feFuncA type="linear" slope="0.4"/>
+				</feComponentTransfer>
+				<feMerge> 
+					<feMergeNode/>
+					<feMergeNode in="SourceGraphic"/> 
+				</feMerge>
+			</filter>*/
+		
 		return (
 			<g className="nodes">
 				{ Object.values( this.state.nodes ) }

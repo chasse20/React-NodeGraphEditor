@@ -2,9 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import { observer } from "mobx-react";
 import { observe } from "mobx";
-import NodeModel from "../Node";
-import Utility from "../Utility";
-import Pin from "./Pin";
+import NodeModel from "../../../../Node";
+import Utility from "../../../../Utility";
+import Pin from "./pin/Pin";
 import "./Node.css";
 
 class Node extends React.Component
