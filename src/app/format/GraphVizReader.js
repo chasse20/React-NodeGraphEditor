@@ -10,7 +10,7 @@ export default class GraphVizReader
 	{
 		if ( tModel != null && tJSON != null )
 		{
-			GraphVizReader.ReadGraph( tModel.graph, tJSON.graph );
+			GraphVizReader.ReadGraph( tModel, tJSON );
 		}
 	}
 	

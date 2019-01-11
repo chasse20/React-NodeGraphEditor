@@ -19,7 +19,7 @@ class Nodes extends React.Component
 		};
 		
 		// Events
-		this._onUpdateDispose = observe( tProps.nodes, ( tChange ) => { this.onUpdate( tChange ); } );
+		this._onNodesDispose = observe( tProps.nodes, ( tChange ) => { this.onNodes( tChange ); } );
 	}
 	
 	componentDidMount()
@@ -41,11 +41,11 @@ class Nodes extends React.Component
 	
 	componentWillUnmount()
 	{
-		this._onUpdateDispose();
-		this._onUpdateDispose = null;
+		this._onNodesDispose();
+		this._onNodesDispose = null;
 	}
 	
-	onUpdate( tChange )
+	onNodes( tChange )
 	{
 		var tempNodes = this.state.nodes;
 		if ( tChange.type === "add" )
@@ -66,7 +66,8 @@ class Nodes extends React.Component
 	
 	createElement( tModel )
 	{
-		return React.createElement( tModel._type._viewClass, { model: tModel, key: tModel._id, onLink: this.props.onLink, onSelect: this.props.onSelectNode, onPhysics: this.props.onPhysics } );
+		console.log( "???" );
+		return React.createElement( tModel._type._viewClass, { model: tModel, key: tModel._id, onLink: this.props.onLink } );
 	}
 	
 	// DRAG
@@ -96,7 +97,6 @@ Nodes.propTypes =
 {
 	nodes: PropTypes.objectOf( PropTypes.instanceOf( NodeModel ) ).isRequired,
 	onLink: PropTypes.func.isRequired,
-	onSelectNode: PropTypes.func.isRequired
 };
 
 export default observer( Nodes );
