@@ -21,7 +21,7 @@ export default class Graph
 		};
 		this._position = new Vector2D();
 		this._zoom = 1;
-		this.isPanMode = true;
+		this.isPanMode = false;
 		this.isPanning = false;
 		this.isMarquee = false;
 		this.isGridVisible = true;

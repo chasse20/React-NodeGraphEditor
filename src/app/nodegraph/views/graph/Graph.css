@@ -14,3 +14,16 @@
 {
 	cursor: move;
 }
+
+.marquee
+{
+	opacity: 0;
+	fill: #2e78a233;
+	stroke-width: 1px;
+	stroke: var( --button-color-selected );
+}
+
+.marquee.active
+{
+	opacity: 1;
+}

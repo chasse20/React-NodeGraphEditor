@@ -100,8 +100,7 @@ class Graph extends React.Component
 		if ( this._isPanHeld || this.props.model.isPanMode )
 		{
 			this.props.model.isPanning = true;
-			this._panOffset = Vector2D.Subtract( this.props.model._position, new Vector2D( tEvent.clientX, tEvent.clientY ).scale( 1 / this.props.model._zoom ) );
-			console.log( this._panOffset );
+			this._panOffset = Vector2D.Subtract( this.props.model._position, new Vector2D( tEvent.clientX, tEvent.clientY ).scale( 1 / this.props.model._zoom ) ); // originally used a transform/matrix class, but this is more efficient
 
 			document.addEventListener( "mousemove", this._onPanMove );
 			document.addEventListener( "mouseup", this._onPanUp );
@@ -110,7 +109,8 @@ class Graph extends React.Component
 		else
 		{
 			this.props.model.isMarquee = true;
-			//this._marqueeOffset = Vector2D.Subtract( this.props.model._transform._position, Matrix2D.MultiplyPoint( Matrix2D.Inverse( Matrix2D.Scale( this.props.model._transform._scale ) ), new Vector2D( tEvent.clientX, tEvent.clientY ) ) );
+			this._marqueeOffset = new Vector2D( tEvent.clientX, tEvent.clientY ).scale( 1 / this.props.model._zoom ).subtract( this.props.model._position );
+			console.log( this._marqueeOffset );
 			
 			document.addEventListener( "mousemove", this._onMarqueeMove );
 			document.addEventListener( "mouseup", this._onMarqueeUp );
@@ -134,17 +134,48 @@ class Graph extends React.Component
 	
 	onMarqueeUp( tEvent )
 	{
-		this.props.model.isMarquee = false;
-		this._marqueeOffset = null;
-		
-		document.removeEventListener( "mousemove", this._onMarqueeMove );
-		document.removeEventListener( "mouseup", this._onMarqueeUp );
+		if ( !this._isPanHeld )
+		{
+			this.props.model.isMarquee = false;
+			this._marqueeOffset = null;
+			
+			this._marqueeElement.setAttribute( "x", 0 );
+			this._marqueeElement.setAttribute( "y", 0);
+			this._marqueeElement.setAttribute( "width", 0 );
+			this._marqueeElement.setAttribute( "height", 0 );
+			
+			document.removeEventListener( "mousemove", this._onMarqueeMove );
+			document.removeEventListener( "mouseup", this._onMarqueeUp );
+		}
 	}
 	
 	onMarqueeMove( tEvent )
 	{
-		//const tempGlobalStart = Matrix2D.MultiplyPoint( Matrix2D.Scale( this.props.model._transform._scale ), Vector2D.Add( this._marqueeOffset, this.props.model._transform._position ) );
-		//console.log( tempGlobalStart );
+		// Render
+		const tempScreenStart = Vector2D.Scale( Vector2D.Add( this._marqueeOffset, this.props.model._position ), this.props.model._zoom );
+		const tempScreenEnd = new Vector2D( tEvent.clientX, tEvent.clientY );
+		
+		if ( tempScreenEnd.x < tempScreenStart.x )
+		{
+			this._marqueeElement.setAttribute( "x", tempScreenEnd.x );
+			this._marqueeElement.setAttribute( "width", tempScreenStart.x - tempScreenEnd.x );
+		}
+		else
+		{
+			this._marqueeElement.setAttribute( "x", tempScreenStart.x );
+			this._marqueeElement.setAttribute( "width", tempScreenEnd.x - tempScreenStart.x );
+		}
+		
+		if ( tempScreenEnd.y < tempScreenStart.y )
+		{
+			this._marqueeElement.setAttribute( "y", tempScreenEnd.y );
+			this._marqueeElement.setAttribute( "height", tempScreenStart.y - tempScreenEnd.y );
+		}
+		else
+		{
+			this._marqueeElement.setAttribute( "y", tempScreenStart.y );
+			this._marqueeElement.setAttribute( "height", tempScreenEnd.y - tempScreenStart.y );
+		}
 	}
 	
 	set zoom( tAmount )
@@ -157,8 +188,6 @@ class Graph extends React.Component
 		this._containerElement.setAttribute( "transform", "translate(" + tPosition.x + "," + tPosition.y + ")" );
 	}
 	
-	// MARQUEE IN THE RENDER, CALLBACK GOES TO NODES
-
 	render()
 	{
 		return (
@@ -170,8 +199,8 @@ class Graph extends React.Component
 						<Edges ref={ this._onEdges }/>
 						<Nodes ref={ this._onNodes } nodes={ this.props.model._nodes } onLink={ this._onLink }/>
 					</g>
-					<rect ref={ this._onMarqueeElement } className={ this.props.model.isMarquee ? "marquee active" : "marquee" }/>
 				</g>
+				<rect ref={ this._onMarqueeElement } className={ this.props.model.isMarquee ? "marquee active" : "marquee" }/>
 			</svg>
 		);
 	}
