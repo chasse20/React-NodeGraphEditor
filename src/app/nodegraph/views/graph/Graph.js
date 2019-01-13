@@ -100,8 +100,9 @@ class Graph extends React.Component
 		if ( this._isPanHeld || this.props.model.isPanMode )
 		{
 			this.props.model.isPanning = true;
-			//this._panOffset = Vector2D.Subtract( this.props.model._transform._position, Matrix2D.MultiplyPoint( Matrix2D.Inverse( Matrix2D.Scale( this.props.model._transform._scale ) ), new Vector2D( tEvent.clientX, tEvent.clientY ) ) );
-			
+			this._panOffset = Vector2D.Subtract( this.props.model._position, new Vector2D( tEvent.clientX, tEvent.clientY ).scale( 1 / this.props.model._zoom ) );
+			console.log( this._panOffset );
+
 			document.addEventListener( "mousemove", this._onPanMove );
 			document.addEventListener( "mouseup", this._onPanUp );
 		}
@@ -128,7 +129,7 @@ class Graph extends React.Component
 	
 	onPanMove( tEvent )
 	{
-		//this.props.model._transform.position = Matrix2D.MultiplyPoint( Matrix2D.Inverse( Matrix2D.Scale( this.props.model._transform._scale ) ), new Vector2D( tEvent.clientX, tEvent.clientY ) ).add( this._panOffset );
+		this.props.model._position = new Vector2D( tEvent.clientX, tEvent.clientY ).scale( 1 / this.props.model._zoom ).add( this._panOffset );
 	}
 	
 	onMarqueeUp( tEvent )
