@@ -15,6 +15,11 @@
 	cursor: move;
 }
 
+.graph.marqueeing:not(.panning)
+{
+	cursor: crosshair;
+}
+
 .marquee
 {
 	opacity: 0;

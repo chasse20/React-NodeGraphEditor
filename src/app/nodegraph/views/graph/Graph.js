@@ -110,7 +110,6 @@ class Graph extends React.Component
 		{
 			this.props.model.isMarquee = true;
 			this._marqueeOffset = new Vector2D( tEvent.clientX, tEvent.clientY ).scale( 1 / this.props.model._zoom ).subtract( this.props.model._position );
-			console.log( this._marqueeOffset );
 			
 			document.addEventListener( "mousemove", this._onMarqueeMove );
 			document.addEventListener( "mouseup", this._onMarqueeUp );
@@ -191,7 +190,7 @@ class Graph extends React.Component
 	render()
 	{
 		return (
-			<svg className={ this.props.model.isPanning ? "graph panning" : "graph" } onWheel={ this._onMouseWheel } onMouseDown={ this._onMouseDown }>
+			<svg className={ ( this.props.model.isPanning ? "graph panning" : "graph" ) + ( this.props.model.isMarquee ? " marqueeing" : "" ) } onWheel={ this._onMouseWheel } onMouseDown={ this._onMouseDown }>
 				<Arrows types={ this.props.model._edgeTypes }/>
 				<Grid graph={ this.props.model }/>
 				<g ref={ this._onViewElement }>
