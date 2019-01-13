@@ -2,13 +2,11 @@ import React from "react";
 import PropTypes from "prop-types";
 import { observe } from "mobx";
 import { observer } from "mobx-react";
-import Matrix2D from "../../../core/Matrix2D";
 import Vector2D from "../../../core/Vector2D";
 import GraphModel from "../../Graph";
 import Nodes from "./nodes/Nodes";
 import Edges from "./edges/Edges";
 import Grid from "./grid/Grid";
-import Marquee from "./marquee/Marquee";
 import Arrows from "./arrows/Arrows";
 import "./Graph.css";
 
@@ -64,33 +62,6 @@ class Graph extends React.Component
 		document.removeEventListener( "mouseup", this._onPanUp );
 		document.removeEventListener( "mousemove", this._onMarqueeMove );
 		document.removeEventListener( "mouseup", this._onMarqueeUp );
-	}
-	
-	tryZoom( tMouse, tVelocity ) // TODO: offset zooming from mouse position
-	{
-		// Calculate
-		const tempModel = this.props.model;
-		var tempAmount = tempModel._zoom + ( tVelocity * this.props.zoomSpeed );
-		if ( tVelocity < 0 )
-		{
-			if ( tempAmount < this.props.minZoom )
-			{
-				tempAmount = this.props.minZoom;
-			}
-		}
-		else if ( tempAmount > this.props.maxZoom )
-		{
-			tempAmount = this.props.maxZoom;
-		}
-
-		// Apply
-		if ( tempAmount !== tempModel._zoom )
-		{
-			tempModel._zoom = tempAmount;
-			return true;
-		}
-		
-		return false;
 	}
 	
 	onMouseDown( tEvent )
@@ -150,6 +121,9 @@ class Graph extends React.Component
 	
 	onMarqueeMove( tEvent )
 	{
+		// Select
+		
+		
 		// Render
 		const tempScreenStart = Vector2D.Scale( Vector2D.Add( this._marqueeOffset, this.props.model._position ), this.props.model._zoom );
 		const tempScreenEnd = new Vector2D( tEvent.clientX, tEvent.clientY );
@@ -175,6 +149,33 @@ class Graph extends React.Component
 			this._marqueeElement.setAttribute( "y", tempScreenStart.y );
 			this._marqueeElement.setAttribute( "height", tempScreenEnd.y - tempScreenStart.y );
 		}
+	}
+	
+	tryZoom( tMouse, tVelocity ) // TODO: offset zooming from mouse position
+	{
+		// Calculate
+		const tempModel = this.props.model;
+		var tempAmount = tempModel._zoom + ( tVelocity * this.props.zoomSpeed );
+		if ( tVelocity < 0 )
+		{
+			if ( tempAmount < this.props.minZoom )
+			{
+				tempAmount = this.props.minZoom;
+			}
+		}
+		else if ( tempAmount > this.props.maxZoom )
+		{
+			tempAmount = this.props.maxZoom;
+		}
+
+		// Apply
+		if ( tempAmount !== tempModel._zoom )
+		{
+			tempModel._zoom = tempAmount;
+			return true;
+		}
+		
+		return false;
 	}
 	
 	set zoom( tAmount )
