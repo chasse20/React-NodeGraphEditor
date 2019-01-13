@@ -18,8 +18,14 @@ export default class GraphVizReader
 	{
 		if ( tGraphModel != null && tJSON != null )
 		{
-			// Transform
-			GraphVizReader.ReadTransform( tGraphModel._transform, tJSON.transform );
+			// Position
+			GraphVizReader.ReadVector( tGraphModel._position, tJSON.position );
+			
+			// Zoom
+			if ( tJSON.zoom != null )
+			{
+				tGraphModel._zoom = tJSON.zoom;
+			}
 			
 			// Node Types
 			if ( tJSON.nodeTypes != null )
@@ -65,24 +71,6 @@ export default class GraphVizReader
 					GraphVizReader.ReadNodePost( tempNodeRefs[ tempID ], tempNodeJSONs[ tempNodeRefs[ tempID ]._id ], tempNodeRefs, tGraphModel._edgeTypes );
 				}
 			}
-		}
-	}
-	
-	static ReadTransform( tTransformModel, tJSON )
-	{
-		if ( tTransformModel != null && tJSON != null )
-		{
-			// Position
-			GraphVizReader.ReadVector( tTransformModel._position, tJSON.position );
-			
-			// Rotation
-			if ( tJSON.rotation != null )
-			{
-				tTransformModel._rotation = tJSON.rotation;
-			}
-			
-			// Scale
-			GraphVizReader.ReadVector( tTransformModel._scale, tJSON.scale );
 		}
 	}
 	

@@ -27,10 +27,11 @@ class Graph extends React.Component
 		this._edges = null;
 		this._isPanHeld = false;
 		this._panOffset = null;
-		this._marqueeStart = null;
+		this._marqueeOffset = null;
 		
 		// Events
-		this._onTransformDispose = observe( this.props.model._transform, ( tChange ) => { this.onTransform( tChange ); } );
+		this._onZoomDispose = observe( this.props.model, "_zoom", ( tChange ) => { this.zoom = tChange.newValue; } );
+		this._onPositionDispose = observe( this.props.model, "_position", ( tChange ) => { this.position = tChange.newValue; } );
 		this._onViewElement = ( tElement ) => { this._viewElement = tElement; };
 		this._onContainerElement = ( tElement ) => { this._containerElement = tElement; };
 		this._onMarqueeElement = ( tElement ) => { this._marqueeElement = tElement; };
@@ -47,15 +48,17 @@ class Graph extends React.Component
 
 	componentDidMount()
 	{
-		this.position = this.props.model._transform._position;
-		this.scale = this.props.model._transform._scale;
+		this.position = this.props.model._position;
+		this.zoom = this.props.model._zoom;
 	}
 	
 	componentWillUnmount()
 	{
 		// Remove events
-		this._onTransformDispose();
-		this._onTransformDispose = null;
+		this._onZoomDispose();
+		this._onZoomDispose = null;
+		this._onPositionDispose();
+		this._onPositionDispose = null;
 		
 		document.removeEventListener( "mousemove", this._onPanMove );
 		document.removeEventListener( "mouseup", this._onPanUp );
@@ -66,8 +69,8 @@ class Graph extends React.Component
 	tryZoom( tMouse, tVelocity ) // TODO: offset zooming from mouse position
 	{
 		// Calculate
-		const tempTransform = this.props.model._transform;
-		var tempAmount = tempTransform._scale.x + ( tVelocity * this.props.zoomSpeed );
+		const tempModel = this.props.model;
+		var tempAmount = tempModel._zoom + ( tVelocity * this.props.zoomSpeed );
 		if ( tVelocity < 0 )
 		{
 			if ( tempAmount < this.props.minZoom )
@@ -81,9 +84,9 @@ class Graph extends React.Component
 		}
 
 		// Apply
-		if ( tempAmount !== tempTransform._scale.x )
+		if ( tempAmount !== tempModel._zoom )
 		{
-			tempTransform.scale = new Vector2D( tempAmount, tempAmount );
+			tempModel._zoom = tempAmount;
 			return true;
 		}
 		
@@ -97,7 +100,7 @@ class Graph extends React.Component
 		if ( this._isPanHeld || this.props.model.isPanMode )
 		{
 			this.props.model.isPanning = true;
-			this._panOffset = Vector2D.Subtract( this.props.model._transform._position, Matrix2D.MultiplyPoint( Matrix2D.Inverse( Matrix2D.Scale( this.props.model._transform._scale ) ), new Vector2D( tEvent.clientX, tEvent.clientY ) ) );
+			//this._panOffset = Vector2D.Subtract( this.props.model._transform._position, Matrix2D.MultiplyPoint( Matrix2D.Inverse( Matrix2D.Scale( this.props.model._transform._scale ) ), new Vector2D( tEvent.clientX, tEvent.clientY ) ) );
 			
 			document.addEventListener( "mousemove", this._onPanMove );
 			document.addEventListener( "mouseup", this._onPanUp );
@@ -106,7 +109,7 @@ class Graph extends React.Component
 		else
 		{
 			this.props.model.isMarquee = true;
-			this._marqueeStart = Vector2D.Subtract( this.props.model._transform._position, Matrix2D.MultiplyPoint( Matrix2D.Inverse( Matrix2D.Scale( this.props.model._transform._scale ) ), new Vector2D( tEvent.clientX, tEvent.clientY ) ) );
+			//this._marqueeOffset = Vector2D.Subtract( this.props.model._transform._position, Matrix2D.MultiplyPoint( Matrix2D.Inverse( Matrix2D.Scale( this.props.model._transform._scale ) ), new Vector2D( tEvent.clientX, tEvent.clientY ) ) );
 			
 			document.addEventListener( "mousemove", this._onMarqueeMove );
 			document.addEventListener( "mouseup", this._onMarqueeUp );
@@ -125,13 +128,13 @@ class Graph extends React.Component
 	
 	onPanMove( tEvent )
 	{
-		this.props.model._transform.position = Matrix2D.MultiplyPoint( Matrix2D.Inverse( Matrix2D.Scale( this.props.model._transform._scale ) ), new Vector2D( tEvent.clientX, tEvent.clientY ) ).add( this._panOffset );
+		//this.props.model._transform.position = Matrix2D.MultiplyPoint( Matrix2D.Inverse( Matrix2D.Scale( this.props.model._transform._scale ) ), new Vector2D( tEvent.clientX, tEvent.clientY ) ).add( this._panOffset );
 	}
 	
 	onMarqueeUp( tEvent )
 	{
 		this.props.model.isMarquee = false;
-		this._marqueStart = null;
+		this._marqueeOffset = null;
 		
 		document.removeEventListener( "mousemove", this._onMarqueeMove );
 		document.removeEventListener( "mouseup", this._onMarqueeUp );
@@ -139,29 +142,18 @@ class Graph extends React.Component
 	
 	onMarqueeMove( tEvent )
 	{
-		
+		//const tempGlobalStart = Matrix2D.MultiplyPoint( Matrix2D.Scale( this.props.model._transform._scale ), Vector2D.Add( this._marqueeOffset, this.props.model._transform._position ) );
+		//console.log( tempGlobalStart );
 	}
 	
-	onTransform( tChange )
+	set zoom( tAmount )
 	{
-		if ( tChange.name === "_position" )
-		{
-			this.position = tChange.newValue;
-		}
-		else if ( tChange.name === "_scale" )
-		{
-			this.scale = tChange.newValue;
-		}
+		this._viewElement.setAttribute( "transform", "scale(" + tAmount + ")" );
 	}
 	
-	set position( tVector )
+	set position( tPosition )
 	{
-		this._containerElement.setAttribute( "transform", "translate(" + tVector.x + "," + tVector.y + ")" );
-	}
-	
-	set scale( tVector )
-	{
-		this._viewElement.setAttribute( "transform", "scale(" + tVector.x + ")" );
+		this._containerElement.setAttribute( "transform", "translate(" + tPosition.x + "," + tPosition.y + ")" );
 	}
 	
 	// MARQUEE IN THE RENDER, CALLBACK GOES TO NODES
@@ -171,7 +163,7 @@ class Graph extends React.Component
 		return (
 			<svg className={ this.props.model.isPanning ? "graph panning" : "graph" } onWheel={ this._onMouseWheel } onMouseDown={ this._onMouseDown }>
 				<Arrows types={ this.props.model._edgeTypes }/>
-				<Grid transform={ this.props.model._transform } isVisible={ this.props.model.isVisible }/>
+				<Grid graph={ this.props.model }/>
 				<g ref={ this._onViewElement }>
 					<g ref={ this._onContainerElement }>
 						<Edges ref={ this._onEdges }/>

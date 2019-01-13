@@ -7,7 +7,7 @@ export default class Node
 {
 	static SerializableClasses = { "default": Node, "Node": Node };
 	
-	constructor( tType, tPosition = new Vector2D(), tData = {} )
+	constructor( tType, tData = {} )
 	{
 		this._id = GUID.ID;
 		this._type = tType;
@@ -16,7 +16,7 @@ export default class Node
 			in: new Pin( this, false ),
 			out: new Pin( this )
 		};
-		this._position = tPosition;
+		this._position = new Vector2D();
 		this.data = tData;
 		this.isSelected = false;
 	}

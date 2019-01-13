@@ -89,8 +89,6 @@ export default class Transform2D
 	set position( tVector )
 	{
 		this._position = tVector;
-		console.log( "SET" );
-		console.log( this._position );
 		this.markDirty();
 	}
 	

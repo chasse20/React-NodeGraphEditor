@@ -34,11 +34,21 @@ export default class GraphVizWriter
 		{
 			var tempJSON = null;
 			
-			// Transform
-			const tempTransform = GraphVizWriter.WriteTransform( tGraphModel._transform );
-			if ( tempTransform != null )
+			// Position
+			const tempPosition = GraphVizWriter.WriteVector( tGraphModel._position );
+			if ( tempPosition != null )
 			{
-				tempJSON = { transform: tempTransform };
+				tempJSON = { position: tempPosition };
+			}
+			
+			// Rotation
+			if ( tGraphModel._zoom !== 1 )
+			{
+				if ( tempJSON === null )
+				{
+					tempJSON = {};
+				}
+				tempJSON.zoom = tTransformModel._zoom;
 			}
 			
 			// Node types
@@ -77,59 +87,6 @@ export default class GraphVizWriter
 				}
 				
 				tempJSON.nodes.push( GraphVizWriter.WriteNode( tGraphModel._nodes[ tempKey ], tGraphModel._nodeTypes, tGraphModel._edgeTypes ) );
-			}
-			
-			return tempJSON;
-		}
-		
-		return null;
-	}
-	
-	static WriteTransform( tTransformModel )
-	{
-		if ( tTransformModel != null )
-		{
-			var tempJSON = null;
-			
-			// Position
-			const tempPosition = GraphVizWriter.WriteVector( tTransformModel._position );
-			if ( tempPosition != null )
-			{
-				tempJSON = { position: tempPosition };
-			}
-			
-			// Rotation
-			if ( tTransformModel._rotation !== 0 )
-			{
-				if ( tempJSON === null )
-				{
-					tempJSON = {};
-				}
-				tempJSON.rotation = tTransformModel._rotation;
-			}
-			
-			// Scale
-			if ( !Vector2DModel.IsOne( tTransformModel._scale ) )
-			{
-				const tempScale = GraphVizWriter.WriteVector( tTransformModel._scale );
-				if ( tempScale != null )
-				{
-					if ( tempJSON === null )
-					{
-						tempJSON = {};
-					}
-					tempJSON.scale = {};
-					
-					if ( tempScale.x !== 1 )
-					{
-						tempJSON.scale.x = tempScale.x;
-					}
-					
-					if ( tempScale.y !== 1 )
-					{
-						tempJSON.scale.y = tempScale.y;
-					}
-				}
 			}
 			
 			return tempJSON;

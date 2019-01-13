@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { observe } from "mobx";
 import { observer } from "mobx-react";
-import Transform2DModel from "../../../../core/Transform2D";
+import GraphModel from "../../../Graph";
 import "./Grid.css";
 
 class Grid extends React.Component
@@ -16,48 +16,41 @@ class Grid extends React.Component
 		this._bgGridElement = null;
 		
 		// Events
-		this._onTransformDispose = observe( tProps.transform, ( tChange ) => { this.onTransform( tChange ); } );
+		this._onZoomDispose = observe( this.props.graph, "_zoom", ( tChange ) => { this.zoom = tChange.newValue; } );
+		this._onPositionDispose = observe( this.props.graph, "_position", ( tChange ) => { this.position = tChange.newValue; } );;
 		this._onBGGridElement = ( tElement ) => { this._bgGridElement = tElement; };
 	}
 
 	componentDidMount()
 	{
-		this.scale = this.props.transform._scale;
-		this.position = this.props.transform._position;
+		this.zoom = this.props.graph._zoom;
+		this.position = this.props.graph._position;
 	}
 	
 	componentWillUnmount()
 	{
-		this._onTransformDispose();
-		this._onTransformDispose = null;
+		this._onZoomDispose();
+		this._onZoomDispose = null;
+		this._onPositionDispose();
+		this._onPositionDispose = null;
 	}
 	
-	onTransform( tChange )
+	set zoom( tAmount )
 	{
-		if ( tChange.name === "_position" )
-		{
-			this.position = tChange.newValue;
-		}
-		else if ( tChange.name === "_scale" )
-		{
-			this.scale = tChange.newValue;
-		}
-	}
-	
-	set scale( tScale )
-	{
-		const tempPosition = this.props.transform._position;
-		this._bgGridElement.setAttribute( "x", tScale.x * tempPosition.x );
-		this._bgGridElement.setAttribute( "y", tScale.y * tempPosition.y );
-		this._bgGridElement.setAttribute( "height", tScale.x * this.props.size );
-		this._bgGridElement.setAttribute( "width", tScale.y * this.props.size );
+		const tempPosition = this.props.graph._position;
+		this._bgGridElement.setAttribute( "x", tAmount * tempPosition.x );
+		this._bgGridElement.setAttribute( "y", tAmount * tempPosition.y );
+		
+		tAmount *= this.props.size;
+		this._bgGridElement.setAttribute( "height", tAmount );
+		this._bgGridElement.setAttribute( "width", tAmount );
 	}
 
 	set position( tPosition )
 	{
-		const tempScale = this.props.transform._scale;
-		this._bgGridElement.setAttribute( "x", tPosition.x * tempScale.x );
-		this._bgGridElement.setAttribute( "y", tPosition.y * tempScale.y );
+		const tempZoom = this.props.graph._zoom;
+		this._bgGridElement.setAttribute( "x", tPosition.x * tempZoom );
+		this._bgGridElement.setAttribute( "y", tPosition.y * tempZoom );
 	}
 
 	render()
@@ -73,7 +66,7 @@ class Grid extends React.Component
 						<path d="M 100 0 L 0 0 0 100" fill="none" stroke="#4285b0" strokeWidth="2" strokeOpacity="0.1"/>
 					</pattern>
 				</defs>
-				<rect className={ this.props.isVisible ? "grid visible" : "grid" } fill="url(#grid)"/>
+				<rect className={ this.props.graph.isGridVisible ? "grid visible" : "grid" } fill="url(#grid)"/>
 			</React.Fragment>
 		);
 	}
@@ -82,14 +75,12 @@ class Grid extends React.Component
 Grid.propTypes =
 {
 	size: PropTypes.number.isRequired,
-	isVisible: PropTypes.bool.isRequired,
-	transform: PropTypes.instanceOf( Transform2DModel ).isRequired
+	graph: PropTypes.instanceOf( GraphModel ).isRequired
 };
 
 Grid.defaultProps =
 {
-	size: 80,
-	isVisible: true
+	size: 80
 };
 
 export default observer( Grid );
