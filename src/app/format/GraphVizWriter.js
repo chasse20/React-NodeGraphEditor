@@ -86,7 +86,7 @@ export default class GraphVizWriter
 					tempJSON.nodes = [];
 				}
 				
-				tempJSON.nodes.push( GraphVizWriter.WriteNode( tGraphModel._nodes[ tempKey ], tGraphModel._nodeTypes, tGraphModel._edgeTypes ) );
+				tempJSON.nodes.push( GraphVizWriter.WriteNode( tGraphModel._nodes[ tempKey ] ) );
 			}
 			
 			return tempJSON;
@@ -198,34 +198,22 @@ export default class GraphVizWriter
 		return null;
 	}
 	
-	static WriteNode( tNodeModel, tNodeTypes, tEdgeTypes )
+	static WriteNode( tNodeModel )
 	{
 		if ( tNodeModel != null )
 		{
 			var tempJSON =
 			{
 				id: tNodeModel._id,
+				type: tNodeModel._type._name
 			};
-			
-			// Type
-			if ( tNodeTypes != null && tNodeModel._type !== tNodeTypes[ "default" ] )
-			{
-				for ( let tempKey in tNodeTypes )
-				{
-					if ( tNodeTypes[ tempKey ] === tNodeModel._type )
-					{
-						tempJSON.type = tempKey;
-						break;
-					}
-				}
-			}
-			
+
 			// Pins
 			if ( tNodeModel._pins != null )
 			{
 				for ( let tempKey in tNodeModel._pins )
 				{
-					let tempPin = GraphVizWriter.WritePin( tNodeModel._pins[ tempKey ], tEdgeTypes );
+					let tempPin = GraphVizWriter.WritePin( tNodeModel._pins[ tempKey ] );
 					if ( tempPin != null )
 					{
 						if ( tempJSON.pins == null )
@@ -258,7 +246,7 @@ export default class GraphVizWriter
 		return null;
 	}
 	
-	static WritePin( tPinModel, tEdgeTypes )
+	static WritePin( tPinModel )
 	{
 		if ( tPinModel != null )
 		{
@@ -269,7 +257,7 @@ export default class GraphVizWriter
 			{
 				for ( let tempKey in tPinModel._links )
 				{
-					let tempEdge = GraphVizWriter.WriteEdge( tPinModel._links[ tempKey ], tEdgeTypes );
+					let tempEdge = GraphVizWriter.WriteEdge( tPinModel._links[ tempKey ] );
 					if ( tempEdge != null )
 					{
 						if ( tempJSON == null )
@@ -287,14 +275,15 @@ export default class GraphVizWriter
 		return null;
 	}
 	
-	static WriteEdge( tEdgeModel, tEdgeTypes )
+	static WriteEdge( tEdgeModel )
 	{
 		if ( tEdgeModel != null )
 		{
 			const tempTargetNode = tEdgeModel._target._node;
 			var tempJSON =
 			{
-				node: tempTargetNode._id
+				node: tempTargetNode._id,
+				type: tEdgeModel._type._name
 			};
 			
 			// Pin
@@ -305,19 +294,6 @@ export default class GraphVizWriter
 				{
 					tempJSON.pin = tempKey;
 					break;
-				}
-			}
-			
-			// Type
-			if ( tEdgeTypes != null && tEdgeModel._type !== tEdgeTypes[ "default" ] )
-			{
-				for ( let tempKey in tEdgeTypes )
-				{
-					if ( tEdgeTypes[ tempKey ] === tEdgeModel._type )
-					{
-						tempJSON.type = tempKey;
-						break;
-					}
 				}
 			}
 			

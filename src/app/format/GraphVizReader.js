@@ -112,7 +112,7 @@ export default class GraphVizReader
 				tempViewClass = tSerializableViews[ "default" ];
 			}
 			
-			const tempType = new TypeModel( tempModelClass, tempViewClass );
+			const tempType = new TypeModel( tJSON.name, tempModelClass, tempViewClass );
 			
 			// Data
 			if ( tJSON.data != null )

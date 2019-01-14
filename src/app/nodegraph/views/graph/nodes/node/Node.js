@@ -122,6 +122,8 @@ Node.propTypes =
 {
 	model: PropTypes.instanceOf( NodeModel ).isRequired,
 	onLink: PropTypes.func.isRequired,
+	onMouseDown: PropTypes.func.isRequired,
+	onMouseUp: PropTypes.func.isRequired,
 	radius: PropTypes.number
 };
 

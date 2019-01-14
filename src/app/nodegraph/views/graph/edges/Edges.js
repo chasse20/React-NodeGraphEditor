@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import "./Edges.css";
 
 export default class Edges extends React.Component
