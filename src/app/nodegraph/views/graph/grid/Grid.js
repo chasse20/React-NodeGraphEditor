@@ -41,7 +41,7 @@ class Grid extends React.Component
 		this._bgGridElement.setAttribute( "x", tAmount * tempPosition.x );
 		this._bgGridElement.setAttribute( "y", tAmount * tempPosition.y );
 		
-		tAmount *= this.props.size;
+		tAmount *= this.props.graph.gridSize;
 		this._bgGridElement.setAttribute( "height", tAmount );
 		this._bgGridElement.setAttribute( "width", tAmount );
 	}
@@ -74,13 +74,7 @@ class Grid extends React.Component
 
 Grid.propTypes =
 {
-	size: PropTypes.number.isRequired,
 	graph: PropTypes.instanceOf( GraphModel ).isRequired
-};
-
-Grid.defaultProps =
-{
-	size: 80
 };
 
 export default observer( Grid );

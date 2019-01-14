@@ -8,7 +8,7 @@ export default class Bounds
 		this.height = tHeight;
 	}
 	
-	static FromPoints( tA, tB )
+	static FromCorners( tA, tB )
 	{
 		var tempX = tA.x;
 		var tempY = tA.y;

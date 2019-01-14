@@ -29,25 +29,27 @@ class Node extends React.Component
 		
 		// Events
 		this._onPositionDispose = observe( tProps.model, "_position", ( tChange ) => { this.position = tChange.newValue; } );
+		//this._onSelectedDispose = observe( tProps.model, "isSelected", ( tChange ) => { this.isSelected = tChange.newValue; } );
 		this._onElement = ( tElement ) => { this._element = tElement; };
+		this._onMouseDown = ( tEvent ) => { this.props.onMouseDown( tEvent, this.props.model ); };
+		this._onMouseUp = ( tEvent ) => { this.props.onMouseUp( tEvent, this.props.model ); };
 	}
 	
 	componentDidMount()
 	{
 		this.position = this.props.model._position;
-		//this.isSelected = this.props.isSelected;
+		this.isSelected = this.props.isSelected;
 		//this.props.onPhysics( this._physics, true );
 	}
 	
 	componentWillUnmount()
 	{
-		/*if ( this.props.model.isSelected )
-		{
-			this.props.onSelect( null, this.props.model );
-		}*/
+		this.isSelected = false;
 		
 		this._onPositionDispose();
 		this._onPositionDispose = null;
+		//this._onSelectedDispose();
+		//this._onSelectedDispose = null;
 		
 		//this.props.onPhysics( this._physics, false );
 	}
@@ -90,7 +92,7 @@ class Node extends React.Component
 		const tempOutlineDiameter = ( tempRadius + 10 ) * 2;
 		
 		return (
-			<g className={ "node " + this.constructor.name + ( tempModel.isSelected ? " selected" : "" ) } guid={ tempModel._id } ref={ this._onElement } onMouseDown={ this.props.onMouseDown } onMouseUp={ this.props.onMouseUp }>
+			<g className={ "node " + this.constructor.name + ( tempModel.isSelected ? " selected" : "" ) } guid={ tempModel._id } ref={ this._onElement } onMouseDown={ this._onMouseDown } onMouseUp={ this._onMouseUp }>
 				<rect className="outline" height={ tempOutlineDiameter } width={ tempOutlineDiameter } x={ -tempOutlineDiameter * 0.5 } y={ -tempOutlineDiameter * 0.5 } strokeDasharray={ tempOutlineDiameter * 0.125 + " " + tempOutlineDiameter * 0.75 + " " + tempOutlineDiameter * 0.125 + " 0" }/>
 				<circle className="graphic" cx="0" cy="0" r={ tempRadius } fill={ Utility.DefaultData( "fill", tempData, tempTypeData, "#019abd" ) } stroke={ Utility.DefaultData( "stroke", tempData, tempTypeData, "#42d3ff" ) }/>
 				{

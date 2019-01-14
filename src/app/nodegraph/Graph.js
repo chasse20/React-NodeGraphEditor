@@ -24,6 +24,7 @@ export default class Graph
 		this.isPanMode = false;
 		this.isPanning = false;
 		this.isMarquee = false;
+		this.gridSize = 80;
 		this.isGridVisible = true;
 		this.isGridSnap = false;
 	}
@@ -135,6 +136,7 @@ decorate( Graph,
 		isPanMode: observable,
 		isPanning: observable,
 		isMarquee: observable,
+		gridSize: observable,
 		isGridVisible: observable,
 		isGridSnap: observable,
 		setNode: action,

@@ -122,11 +122,13 @@ class Graph extends React.Component
 	onMarqueeMove( tEvent )
 	{
 		// Select
+		const tempScreenEnd = new Vector2D( tEvent.clientX, tEvent.clientY );
+		const tempLocalEnd = Vector2D.Scale( tempScreenEnd, 1 / this.props.model._zoom ).subtract( this.props.model._position );
 		
+		this._nodes.onMarqueeMove( this._marqueeOffset, tempLocalEnd );
 		
 		// Render
 		const tempScreenStart = Vector2D.Scale( Vector2D.Add( this._marqueeOffset, this.props.model._position ), this.props.model._zoom );
-		const tempScreenEnd = new Vector2D( tEvent.clientX, tEvent.clientY );
 		
 		if ( tempScreenEnd.x < tempScreenStart.x )
 		{
@@ -197,7 +199,7 @@ class Graph extends React.Component
 				<g ref={ this._onViewElement }>
 					<g ref={ this._onContainerElement }>
 						<Edges ref={ this._onEdges }/>
-						<Nodes ref={ this._onNodes } nodes={ this.props.model._nodes } onLink={ this._onLink }/>
+						<Nodes ref={ this._onNodes } graph={ this.props.model } onLink={ this._onLink }/>
 					</g>
 				</g>
 				<rect ref={ this._onMarqueeElement } className={ this.props.model.isMarquee ? "marquee active" : "marquee" }/>
