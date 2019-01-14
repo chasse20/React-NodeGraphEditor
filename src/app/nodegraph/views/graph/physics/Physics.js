@@ -1,12 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { observe } from "mobx";
-import { observer } from "mobx-react";
 import { forceSimulation, forceLink, forceCollide } from "d3";
-import Vector2D from "../../core/Vector2D";
-import PhysicsModel from "../../interface/Physics";
+import GraphModel from "../../../Graph";
+import Vector2D from "../../../../core/Vector2D";
 
-class Physics extends React.Component
+export default class Physics extends React.Component
 {
 	constructor( tProps )
 	{
@@ -24,25 +22,16 @@ class Physics extends React.Component
 		this._simulation.alpha( 0.1 );
 		this._simulation.on( "tick", () => { this.onTick(); } );
 		this._simulation.stop();
-		
-		// Events
-		this._onPhysics = observe( tProps.model, "isEnabled", ( tChange ) => { this.isEnabled = tChange.newValue; } );
 	}
 	
-	componentDidMount()
-	{
-		this.isEnabled = true;
-	}
-
 	componentWillUnmount()
 	{
 		this._simulation.stop();
-		// dump sim
 	}
 	
-	set isEnabled( tIsEnabled )
+	set isEnabled( tValue )
 	{
-		if ( tIsEnabled && this._nodes !== null && this.props.model.isEnabled )
+		if ( tValue )
 		{
 			this._simulation.restart();
 		}
@@ -56,7 +45,8 @@ class Physics extends React.Component
 	{
 		for ( let i = ( this._nodes.length - 1 ); i >= 0; --i )
 		{
-			this._nodes[i].transform.position = new Vector2D( this._nodes[i].x, this._nodes[i].y );
+			let tempNode = this._nodes[i];
+			tempNode.model._position = new Vector2D( tempNode.x, tempNode.y );
 		}
 	}
 	
@@ -89,10 +79,11 @@ class Physics extends React.Component
 		if ( tNode != null )
 		{
 			this._simulation.stop();
+			
 			if ( this._nodes === null )
 			{
 				this._nodes = [];
-			}	
+			}
 			this._nodes.push( tNode );
 			
 			this._simulation.nodes( this._nodes );
@@ -185,7 +176,11 @@ class Physics extends React.Component
 
 Physics.propTypes =
 {
-	model: PropTypes.instanceOf( PhysicsModel ).isRequired
+	graph: PropTypes.instanceOf( GraphModel ).isRequired,
+	isEnabled: PropTypes.bool.isRequired
 };
 
-export default observer( Physics );
+Physics.defaultProps =
+{
+	isEnabled: true
+};

@@ -16,20 +16,21 @@ class Node extends React.Component
 		// Inheritance
 		super( tProps );
 		
-		// Variables
-		this._element = null;
-		/*this._physics =
+		// Physics
+		this._physicsBody =
 		{
 			id: tProps.model._id,
-			x: tProps.model._transform._position.x,
-			y: tProps.model._transform._position.y,
-			transform: tProps.model._transform,
-			radius: 100
-		};*/
+			x: tProps.model._position.x,
+			y: tProps.model._position.y,
+			model: tProps.model
+		};
+		
+		// Variables
+		this._element = null;
 		
 		// Events
 		this._onPositionDispose = observe( tProps.model, "_position", ( tChange ) => { this.position = tChange.newValue; } );
-		//this._onSelectedDispose = observe( tProps.model, "isSelected", ( tChange ) => { this.isSelected = tChange.newValue; } );
+		this._onSelectedDispose = observe( tProps.model, "isSelected", ( tChange ) => { this.isSelected = tChange.newValue; } );
 		this._onElement = ( tElement ) => { this._element = tElement; };
 		this._onMouseDown = ( tEvent ) => { this.props.onMouseDown( tEvent, this.props.model ); };
 		this._onMouseUp = ( tEvent ) => { this.props.onMouseUp( tEvent, this.props.model ); };
@@ -39,7 +40,7 @@ class Node extends React.Component
 	{
 		this.position = this.props.model._position;
 		this.isSelected = this.props.isSelected;
-		//this.props.onPhysics( this._physics, true );
+		this.props.onPhysics( this._physicsBody, true );
 	}
 	
 	componentWillUnmount()
@@ -48,38 +49,38 @@ class Node extends React.Component
 		
 		this._onPositionDispose();
 		this._onPositionDispose = null;
-		//this._onSelectedDispose();
-		//this._onSelectedDispose = null;
+		this._onSelectedDispose();
+		this._onSelectedDispose = null;
 		
-		//this.props.onPhysics( this._physics, false );
+		this.props.onPhysics( this._physicsBody, false );
 	}
 	
 	set isSelected( tIsSelected )
 	{
-		/*if ( tIsSelected )
+		if ( tIsSelected )
 		{
-			this._physics.fx = this.props.model._transform._position.x;
-			this._physics.fy = this.props.model._transform._position.y;
+			this._physicsBody.fx = this.props.model._position.x;
+			this._physicsBody.fy = this.props.model._position.y;
 		}
 		else
 		{
-			delete this._physics.fx;
-			delete this._physics.fy;
-		}*/
+			delete this._physicsBody.fx;
+			delete this._physicsBody.fy;
+		}
 		
-		//this.props.onPhysics( this._physics, !tIsSelected );
+		this.props.onPhysics( this._physicsBody, !tIsSelected );
 	}
 	
 	set position( tPosition )
 	{
-		/*if ( this.props.model.isSelected )
+		if ( this.props.model.isSelected )
 		{
-			this._physics.fx = tPosition.x;
-			this._physics.fy = tPosition.y;
+			this._physicsBody.fx = tPosition.x;
+			this._physicsBody.fy = tPosition.y;
 		}
 		
-		this._physics.x = tPosition.x;
-		this._physics.y = tPosition.y;*/
+		this._physicsBody.x = tPosition.x;
+		this._physicsBody.y = tPosition.y;
 		this._element.setAttribute( "transform", "translate(" + tPosition.x + "," + tPosition.y + ")" );
 	}
 	
@@ -122,6 +123,7 @@ Node.propTypes =
 {
 	model: PropTypes.instanceOf( NodeModel ).isRequired,
 	onLink: PropTypes.func.isRequired,
+	onPhysics: PropTypes.func.isRequired,
 	onMouseDown: PropTypes.func.isRequired,
 	onMouseUp: PropTypes.func.isRequired,
 	radius: PropTypes.number

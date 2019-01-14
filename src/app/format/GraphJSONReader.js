@@ -1,7 +1,3 @@
-import NodeModel from "../nodegraph/Node";
-import NodeView from "../nodegraph/views/graph/nodes/node/Node";
-import EdgeModel from "../nodegraph/Edge";
-import EdgeView from "../nodegraph/views/graph/edges/edge/Edge";
 import TypeModel from "../nodegraph/Type";
 
 export default class GraphJSONReader // TODO: Clustering
@@ -16,7 +12,7 @@ export default class GraphJSONReader // TODO: Clustering
 			for ( let i = 0; i < tempListLength; ++i )
 			{
 				let tempNodeJSON = tJSON.nodes[i];
-				let tempNode = GraphVizReader.ReadNode( tGraphModel, tempNodeJSON, tNodeTextField );
+				let tempNode = GraphJSONReader.ReadNode( tGraphModel, tempNodeJSON, tNodeTextField );
 				if ( tGraphModel.setNode( tempNode ) )
 				{
 					tempNodeRefs[ tempNodeJSON.id ] = tempNode;
@@ -26,10 +22,10 @@ export default class GraphJSONReader // TODO: Clustering
 			// Edges
 			if ( tJSON.edges != null )
 			{
-				var tempListLength = tJSON.edges.length;
+				tempListLength = tJSON.edges.length;
 				for ( let i = 0; i < tempListLength; ++i )
 				{
-					GraphVizReader.ReadEdge( tGraphModel, tJSON.edges[i], tempNodeRefs, tEdgeTextField );
+					GraphJSONReader.ReadEdge( tGraphModel, tJSON.edges[i], tempNodeRefs, tEdgeTextField );
 				}
 			}
 		}
@@ -37,7 +33,7 @@ export default class GraphJSONReader // TODO: Clustering
 	
 	static ReadNode( tGraphModel, tJSON, tNodeTextField = "caption" )
 	{
-		if ( tGraphModel != null && tJSON != null && tTypes != null )
+		if ( tGraphModel != null && tJSON != null )
 		{
 			// Model class
 			var tempType = null;
@@ -51,7 +47,7 @@ export default class GraphJSONReader // TODO: Clustering
 				if ( tempType == null )
 				{
 					const tempDefaultType = tGraphModel._nodeTypes[ "default" ];
-					tempType = new TypeModel( tempDefaultType._modelClass, tempDefaultType._viewClass );
+					tempType = new TypeModel( tJSON.type, tempDefaultType._modelClass, tempDefaultType._viewClass );
 					tempType.data = Object.assign( tempType.data, tempDefaultType.data ); // TODO: Randomize colors????
 					
 					tGraphModel.setNodeType( tJSON.type, tempType );
@@ -113,17 +109,6 @@ export default class GraphJSONReader // TODO: Clustering
 				const tempTargetNode = tNodeRefs[ tJSON.target ];
 				if ( tempTargetNode != null )
 				{
-					
-				}
-			}
-			
-			// Target node and pin
-			const tempTargetNode = tNodeRefs[ tJSON.node ];
-			if ( tempTargetNode != null )
-			{
-				const tempTargetPin = tempTargetNode._pins[ tJSON.pin ];
-				if ( tempTargetPin != null )
-				{
 					// Model class
 					var tempType = null;
 					if ( tJSON.type == null )
@@ -136,14 +121,16 @@ export default class GraphJSONReader // TODO: Clustering
 						if ( tempType === undefined )
 						{
 							const tempDefaultType = tGraphModel._edgeTypes[ "default" ];
-							tempType = new TypeModel( tempDefaultType._modelClass, tempDefaultType._viewClass );
+							tempType = new TypeModel( tJSON.type, tempDefaultType._modelClass, tempDefaultType._viewClass );
 							tempType.data = Object.assign( tempType.data, tempDefaultType.data ); // TODO: Randomize colors????
 							
 							tGraphModel.setEdgeType( tJSON.type, tempType );
 						}
 					}
 
-					const tempEdge = new tempType._modelClass( tempType, tSourcePin, tempTargetPin );
+					const tempSourcePin = tempSourceNode._pins.out;
+					const tempEdge = new tempType._modelClass( tempType, tempSourcePin, tempTargetNode._pins.in );
+					tempSourcePin.setLink( tempEdge );
 					
 					// Data
 					delete tJSON.type;
@@ -176,7 +163,7 @@ export default class GraphJSONReader // TODO: Clustering
 					
 					if ( tempData !== null )
 					{
-						tempNode.data = Object.assign( tempNode.data, tempData ); // merge/overwrite!
+						tempEdge.data = Object.assign( tempEdge.data, tempData ); // merge/overwrite!
 					}
 					
 					return tempEdge;

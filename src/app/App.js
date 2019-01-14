@@ -2,8 +2,10 @@ import React, { Component } from "react";
 import { Switch, Route } from "react-router";
 import Graph from "./nodegraph/views/graph/Graph";
 import GraphVizReader from "./format/GraphVizReader";
+import GraphJSONReader from "./format/GraphJSONReader";
 import GraphModel from "./nodegraph/Graph";
 import Data from "../data.json";
+import DataGraphJSON from "../graphjson.json";
 import "./App.css";
 
 export default class App extends Component
@@ -16,21 +18,13 @@ export default class App extends Component
 		// Variables
 		this._graph = new GraphModel();
 		GraphVizReader.Read( this._graph, Data );
+		//GraphJSONReader.Read( this._graph, DataGraphJSON );
 	}
 
 	render()
 	{
 		return (
-			<React.Fragment>
-				<Switch>
-					<Route render={
-						( tProps ) =>
-						(
-							<Graph model={ this._graph }/>
-						)
-					}/>
-				</Switch>
-			</React.Fragment>
+			<Graph model={ this._graph }/>
 		);
 	}
 }

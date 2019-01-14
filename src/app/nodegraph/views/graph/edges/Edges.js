@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import "./Edges.css";
 
 export default class Edges extends React.Component
@@ -36,7 +37,7 @@ export default class Edges extends React.Component
 
 	createElement( tModel )
 	{
-		return React.createElement( tModel._type._viewClass, { model: tModel, key: tModel.key } );
+		return React.createElement( tModel._type._viewClass, { model: tModel, key: tModel.key, onPhysics: this.props.onPhysics } );
 	}
 	
 	render()
@@ -63,3 +64,8 @@ export default class Edges extends React.Component
 		);
 	}
 }
+
+Edges.propTypes =
+{
+	onPhysics: PropTypes.func.isRequired
+};

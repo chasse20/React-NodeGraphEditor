@@ -18,7 +18,7 @@ class Edge extends React.Component // TODO: Selectable
 		super( tProps );
 
 		// Variables
-		this._physics =
+		this._physicsBody =
 		{
 			source: tProps.model._source._node._id,
 			target: tProps.model._target._node._id
@@ -40,7 +40,8 @@ class Edge extends React.Component // TODO: Selectable
 	{
 		this.sourcePosition = this.props.model._source.position;
 		this.targetPosition = this.props.model._target.position;
-		//this.props.onPhysics( this._physics, true );
+		
+		this.props.onPhysics( this._physicsBody, true );
 	}
 	
 	componentWillUnmount()
@@ -57,7 +58,7 @@ class Edge extends React.Component // TODO: Selectable
 		this._onTargetMove();
 		this._onTargetMove = null;
 		
-		//this.props.onPhysics( this._physics, false );
+		this.props.onPhysics( this._physicsBody, false );
 	}
 	
 	set sourcePosition( tVector )
@@ -133,6 +134,7 @@ class Edge extends React.Component // TODO: Selectable
 Edge.propTypes =
 {
 	model: PropTypes.instanceOf( EdgeModel ).isRequired,
+	onPhysics: PropTypes.func.isRequired,
 	text: PropTypes.string,
 	stroke: PropTypes.string
 };

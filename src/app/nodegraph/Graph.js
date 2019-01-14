@@ -13,18 +13,18 @@ export default class Graph
 		this._nodes = {};
 		this._nodeTypes =
 		{
-			"default": new Type( Node, NodeView )
+			"default": new Type( "default", Node, NodeView )
 		};
 		this._edgeTypes =
 		{
-			"default": new Type( Edge, EdgeView )
+			"default": new Type( "default", Edge, EdgeView )
 		};
 		this._position = new Vector2D();
 		this._zoom = 1;
 		this.isPanMode = false;
 		this.isPanning = false;
 		this.isMarquee = false;
-		this.gridSize = 80;
+		this.gridSize = 80; // TODO: move out of model somehow
 		this.isGridVisible = true;
 		this.isGridSnap = false;
 	}

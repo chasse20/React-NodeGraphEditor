@@ -100,7 +100,7 @@ class Nodes extends React.Component
 	
 	createElement( tModel )
 	{
-		return React.createElement( tModel._type._viewClass, { model: tModel, key: tModel._id, onLink: this.props.onLink, onMouseDown: this._onNodeMouseDown, onMouseUp: this._onNodeMouseUp } );
+		return React.createElement( tModel._type._viewClass, { model: tModel, key: tModel._id, onLink: this.props.onLink, onPhysics: this.props.onPhysics, onMouseDown: this._onNodeMouseDown, onMouseUp: this._onNodeMouseUp } );
 	}
 	
 	setSelected( tNode )
@@ -314,7 +314,8 @@ Nodes.propTypes =
 {
 	graph: PropTypes.instanceOf( GraphModel ).isRequired,
 	snapIncrement: PropTypes.number,
-	onLink: PropTypes.func.isRequired
+	onLink: PropTypes.func.isRequired,
+	onPhysics: PropTypes.func.isRequired
 };
 
 Nodes.defaultProps =
