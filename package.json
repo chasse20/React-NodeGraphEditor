@@ -1,6 +1,6 @@
 {
 	"name": "graphviz",
-	"version": "0.9",
+	"version": "0.9.0",
 	"description": "React GraphViz Editor",
 	"main": "src/main.js",
 	"private": true,
