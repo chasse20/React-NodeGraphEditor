@@ -29,8 +29,6 @@ class Node extends React.Component
 		
 		// Events
 		this._onPositionDispose = observe( tProps.model, "_position", ( tChange ) => { this.position = tChange.newValue; } );
-		//this._onSelectedDispose = observe( tProps.model, "isSelected", ( tChange ) => { this.isSelected = tChange.newValue; } );
-		this._onMouse = ( tEvent ) => { tProps.onSelect( tEvent, this.props.model ); };
 		this._onElement = ( tElement ) => { this._element = tElement; };
 	}
 	
@@ -92,7 +90,7 @@ class Node extends React.Component
 		const tempOutlineDiameter = ( tempRadius + 10 ) * 2;
 		
 		return (
-			<g className={ "node " + this.constructor.name + ( tempModel.isSelected ? " selected" : "" ) } guid={ tempModel._id } ref={ this._onElement } onMouseDown={ this._onMouse } onMouseUp={ this._onMouse }>
+			<g className={ "node " + this.constructor.name + ( tempModel.isSelected ? " selected" : "" ) } guid={ tempModel._id } ref={ this._onElement } onMouseDown={ this.props.onMouseDown } onMouseUp={ this.props.onMouseUp }>
 				<rect className="outline" height={ tempOutlineDiameter } width={ tempOutlineDiameter } x={ -tempOutlineDiameter * 0.5 } y={ -tempOutlineDiameter * 0.5 } strokeDasharray={ tempOutlineDiameter * 0.125 + " " + tempOutlineDiameter * 0.75 + " " + tempOutlineDiameter * 0.125 + " 0" }/>
 				<circle className="graphic" cx="0" cy="0" r={ tempRadius } fill={ Utility.DefaultData( "fill", tempData, tempTypeData, "#019abd" ) } stroke={ Utility.DefaultData( "stroke", tempData, tempTypeData, "#42d3ff" ) }/>
 				{

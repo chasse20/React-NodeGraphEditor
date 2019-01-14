@@ -18,8 +18,13 @@ class Nodes extends React.Component
 			nodes: {}
 		};
 		
+		// Variables
+		this._selected = null;
+		
 		// Events
 		this._onNodesDispose = observe( tProps.nodes, ( tChange ) => { this.onNodes( tChange ); } );
+		this._onNodeMouseDown = ( tEvent ) => { this.onNodeMouseDown( tEvent ); };
+		this._onNodeMouseUp = ( tEvent ) => { this.onNodeMouseUp( tEvent ); };
 	}
 	
 	componentDidMount()
@@ -66,10 +71,63 @@ class Nodes extends React.Component
 	
 	createElement( tModel )
 	{
-		return React.createElement( tModel._type._viewClass, { model: tModel, key: tModel._id, onLink: this.props.onLink } );
+		return React.createElement( tModel._type._viewClass, { model: tModel, key: tModel._id, onLink: this.props.onLink, onMouseDown: this._onNodeMouseDown, onMouseUp: this._onNodeMouseUp } );
 	}
 	
-	// DRAG
+	onNodeMouseDown( tNode )
+	{
+		if ( tEvent.button !== 1  ) // middle-mouse is pan
+		{
+			// Check for selection toggle click if node is already selected
+			if ( tNode.isSelected )
+			{
+				clearTimeout( this._dragTimeout );
+				this._dragTimeout = setTimeout(
+					() =>
+					{
+						this._dragTimeout = null;
+					},
+					200
+				);
+			}
+			
+			// Add to selection
+			this.props.model.addNode( tNode );
+			this._mouseStart = Matrix2D.MultiplyPoint( Matrix2D.Inverse( this.props.viewTransform.localMatrix ), new Vector2D( tEvent.clientX, tEvent.clientY ) );
+			this._offsets = [];
+			
+			const tempNodes = this.props.model._nodes;
+			const tempListLength = tempNodes.length;
+			for ( let i = 0; i < tempListLength; ++i )
+			{
+				this._offsets.push( tempNodes[i]._transform._position );
+			}
+		
+			document.addEventListener( "mousemove", this._onMouseMove );
+			document.addEventListener( "mouseup", this._onMouseUp );
+		}
+	}
+	
+	onNodeMouseUp( tEvent, tNode )
+	{
+		// Toggle node selection if within simulated click time
+		if ( tEvent.button !== 1 && this._dragTimeout !== null ) // middle-mouse is pan
+		{
+			// Clear timer
+			clearTimeout( this._dragTimeout );
+			this._dragTimeout = null;
+			
+			// Add/remove node from selection
+			if ( tNode.isSelected )
+			{
+				this.removeSelected( tNode );
+			}
+			else
+			{
+				this.addSelected( tNode );
+			}
+		}
+	}
 	
 	render()
 	{
