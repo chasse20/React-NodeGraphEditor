@@ -1,30 +1,32 @@
 {
-  "name": "source",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "ajv": "^6.6.1",
-    "d3": "^5.7.0",
-    "d3-force-3d": "^2.0.1",
-    "file-saver": "^2.0.0",
-    "mobx": "^5.7.0",
-    "mobx-react": "^5.4.2",
-    "planck-js": "^0.3.0-rc.2",
-    "react": "^16.6.3",
-    "react-dom": "^16.6.3",
-    "react-router-dom": "^4.3.1",
-    "react-scripts": "^2.1.2"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
-  },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ]
+	"name": "graphviz",
+	"version": "0.9",
+	"description": "React GraphViz Editor",
+	"main": "src/main.js",
+	"private": true,
+	"dependencies": {
+		"ajv": "^6.6.1",
+		"d3": "^5.7.0",
+		"d3-force-3d": "^2.0.1",
+		"file-saver": "^2.0.0",
+		"mobx": "^5.7.0",
+		"mobx-react": "^5.4.2",
+		"planck-js": "^0.3.0-rc.2",
+		"react": "^16.6.3",
+		"react-dom": "^16.6.3",
+		"react-router-dom": "^4.3.1",
+		"react-scripts": "^2.1.2"
+	},
+	"scripts": {
+		"start": "react-scripts start",
+		"build": "react-scripts build",
+		"test": "react-scripts test --env=jsdom",
+		"eject": "react-scripts eject"
+	},
+	"browserslist": [
+		">0.2%",
+		"not dead",
+		"not ie <= 11",
+		"not op_mini all"
+	]
 }
