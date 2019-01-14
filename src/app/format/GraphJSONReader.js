@@ -50,7 +50,7 @@ export default class GraphJSONReader // TODO: Clustering
 					tempType = new TypeModel( tJSON.type, tempDefaultType._modelClass, tempDefaultType._viewClass );
 					tempType.data = Object.assign( tempType.data, tempDefaultType.data ); // TODO: Randomize colors????
 					
-					tGraphModel.setNodeType( tJSON.type, tempType );
+					tGraphModel.setNodeType( tempType );
 				}
 			}
 			
@@ -110,21 +110,23 @@ export default class GraphJSONReader // TODO: Clustering
 				if ( tempTargetNode != null )
 				{
 					// Model class
+					const tempTypeName = tJSON[ tEdgeTextField ];
 					var tempType = null;
-					if ( tJSON.type == null )
+					if ( tempTypeName == null )
 					{
 						tempType = tGraphModel._edgeTypes[ "default" ];
 					}
 					else
 					{
-						tempType = tGraphModel._edgeTypes[ tJSON.type ];
+						tempType = tGraphModel._edgeTypes[ tempTypeName ];
 						if ( tempType === undefined )
 						{
 							const tempDefaultType = tGraphModel._edgeTypes[ "default" ];
-							tempType = new TypeModel( tJSON.type, tempDefaultType._modelClass, tempDefaultType._viewClass );
+							tempType = new TypeModel( tempTypeName, tempDefaultType._modelClass, tempDefaultType._viewClass );
 							tempType.data = Object.assign( tempType.data, tempDefaultType.data ); // TODO: Randomize colors????
+							tempType.data.text = tempTypeName;
 							
-							tGraphModel.setEdgeType( tJSON.type, tempType );
+							tGraphModel.setEdgeType( tempType );
 						}
 					}
 
@@ -133,23 +135,13 @@ export default class GraphJSONReader // TODO: Clustering
 					tempSourcePin.setLink( tempEdge );
 					
 					// Data
-					delete tJSON.type;
 					delete tJSON.source;
 					delete tJSON.target;
 					var tempData = null;
 					
 					if ( tEdgeTextField != null )
 					{
-						const tempText = tJSON[ tEdgeTextField ];
-						if ( tempText != null )
-						{
-							tempData =
-							{
-								text: tempText
-							};
-							
-							delete tJSON[ tEdgeTextField ];
-						}
+						delete tJSON[ tEdgeTextField ];
 					}
 					
 					for ( let tempField in tJSON )

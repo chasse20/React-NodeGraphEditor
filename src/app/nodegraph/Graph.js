@@ -53,11 +53,11 @@ export default class Graph
 		return false;
 	}
 	
-	setNodeType( tName, tType )
+	setNodeType( tType )
 	{
-		if ( tName != null && tType != null  )
+		if ( tType != null  )
 		{
-			set( this._nodeTypes, tName, tType );
+			set( this._nodeTypes, tType._name, tType );
 			
 			return true;
 		}
@@ -65,11 +65,11 @@ export default class Graph
 		return false;
 	}
 	
-	removeNodeType( tName )
+	removeNodeType( tType )
 	{
-		if ( tName != null )
+		if ( tType != null )
 		{
-			const tempType = this._nodeTypes[ tName ];
+			const tempType = this._nodeTypes[ tType._name ];
 			if ( tempType !== undefined )
 			{
 				// Remove nodes that belong to the type
@@ -82,7 +82,7 @@ export default class Graph
 					}
 				}
 
-				remove( this._nodeTypes, tName );
+				remove( this._nodeTypes, tType._name );
 				
 				return true;
 			}
@@ -91,11 +91,11 @@ export default class Graph
 		return false;
 	}
 	
-	setEdgeType( tName, tType )
+	setEdgeType( tType )
 	{
-		if ( tName != null && tType != null  )
+		if ( tType != null  )
 		{
-			set( this._edgeTypes, tName, tType );
+			set( this._edgeTypes, tType._name, tType );
 			
 			return true;
 		}
@@ -103,11 +103,11 @@ export default class Graph
 		return false;
 	}
 	
-	removeEdgeType( tName )
+	removeEdgeType( tType )
 	{
-		if ( tName != null )
+		if ( tType != null )
 		{
-			const tempType = this._edgeTypes[ tName ];
+			const tempType = this._edgeTypes[ tType._name ];
 			if ( tempType !== undefined )
 			{
 				// Remove edges that belong to the type
@@ -116,7 +116,7 @@ export default class Graph
 					this._nodes[ tempID ].removeEdgeType( tempType );
 				}
 				
-				remove( this._edgeTypes, tName );
+				remove( this._edgeTypes, tType._name );
 
 				return true;
 			}

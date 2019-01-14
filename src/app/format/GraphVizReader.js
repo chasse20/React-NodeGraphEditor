@@ -33,8 +33,7 @@ export default class GraphVizReader
 				const tempListLength = tJSON.nodeTypes.length;
 				for ( let i = 0; i < tempListLength; ++i )
 				{
-					let tempJSON = tJSON.nodeTypes[i];
-					tGraphModel.setNodeType( tempJSON.name, GraphVizReader.ReadType( tempJSON, NodeModel.SerializableClasses, NodeView.SerializableClasses ) );
+					tGraphModel.setNodeType( GraphVizReader.ReadType( tJSON.nodeTypes[i], NodeModel.SerializableClasses, NodeView.SerializableClasses ) );
 				}
 			}
 			
@@ -44,8 +43,7 @@ export default class GraphVizReader
 				const tempListLength = tJSON.edgeTypes.length;
 				for ( let i = 0; i < tempListLength; ++i )
 				{
-					let tempJSON = tJSON.edgeTypes[i];
-					tGraphModel.setEdgeType( tempJSON.name, GraphVizReader.ReadType( tempJSON, EdgeModel.SerializableClasses, EdgeView.SerializableClasses ) );
+					tGraphModel.setEdgeType( GraphVizReader.ReadType( tJSON.edgeTypes[i], EdgeModel.SerializableClasses, EdgeView.SerializableClasses ) );
 				}
 			}
 			
