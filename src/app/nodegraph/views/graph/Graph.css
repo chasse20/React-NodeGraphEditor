@@ -1,5 +1,6 @@
 .graph
 {
+	background-color: #1e425a;
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -23,9 +24,9 @@
 .marquee
 {
 	opacity: 0;
-	fill: #2e78a233;
+	fill: #ffffff6e;
 	stroke-width: 1px;
-	stroke: var( --button-color-selected );
+	stroke: #fff;
 }
 
 .marquee.active
