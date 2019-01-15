@@ -35,20 +35,20 @@ export default class GraphVizWriter
 			var tempJSON = null;
 			
 			// Position
-			const tempPosition = GraphVizWriter.WriteVector( tGraphModel._position );
+			const tempPosition = GraphVizWriter.WriteVector( tGraphModel.position );
 			if ( tempPosition != null )
 			{
 				tempJSON = { position: tempPosition };
 			}
 			
 			// Rotation
-			if ( tGraphModel._zoom !== 1 )
+			if ( tGraphModel.zoom !== 1 )
 			{
 				if ( tempJSON === null )
 				{
 					tempJSON = {};
 				}
-				tempJSON.zoom = tTransformModel._zoom;
+				tempJSON.zoom = tTransformModel.zoom;
 			}
 			
 			// Node types
@@ -227,7 +227,7 @@ export default class GraphVizWriter
 			}
 			
 			// Position
-			const tempPosition = GraphVizWriter.WriteVector( tNodeModel._position );
+			const tempPosition = GraphVizWriter.WriteVector( tNodeModel.position );
 			if ( tempPosition != null )
 			{
 				tempJSON.position = tempPosition;

@@ -8,7 +8,7 @@ export default class Pin
 		this._node = tNode;
 		this._isOut = tIsOut;
 		this._edgeTypes = tEdgeTypes;
-		this._offset = tOffset;
+		this.offset = tOffset;
 		this._links = {};
 	}
 
@@ -100,13 +100,13 @@ export default class Pin
 	
 	get position()
 	{
-		return Vector2D.Add( this._node._position, this._offset );
+		return Vector2D.Add( this._node.position, this.offset );
 	}
 }
 
 decorate( Pin,
 	{
-		_offset: observable,
+		offset: observable,
 		_links: observable.shallow,
 		setLink: action,
 		removeLink: action,

@@ -17,8 +17,8 @@ export default class App extends Component
 
 		// Variables
 		this._graph = new GraphModel();
-		GraphVizReader.Read( this._graph, Data );
-		//GraphJSONReader.Read( this._graph, DataGraphJSON );
+		//GraphVizReader.Read( this._graph, Data );
+		GraphJSONReader.Read( this._graph, DataGraphJSON );
 	}
 
 	render()

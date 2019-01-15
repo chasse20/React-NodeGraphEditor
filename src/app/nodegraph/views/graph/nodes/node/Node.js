@@ -17,19 +17,13 @@ class Node extends React.Component
 		super( tProps );
 		
 		// Physics
-		this._physicsBody =
-		{
-			id: tProps.model._id,
-			x: tProps.model._position.x,
-			y: tProps.model._position.y,
-			model: tProps.model
-		};
+		this._physicsBody = this.createPhysics();
 		
 		// Variables
 		this._element = null;
 		
 		// Events
-		this._onPositionDispose = observe( tProps.model, "_position", ( tChange ) => { this.position = tChange.newValue; } );
+		this._onPositionDispose = observe( tProps.model, "position", ( tChange ) => { this.position = tChange.newValue; } );
 		this._onSelectedDispose = observe( tProps.model, "isSelected", ( tChange ) => { this.isSelected = tChange.newValue; } );
 		this._onElement = ( tElement ) => { this._element = tElement; };
 		this._onMouseDown = ( tEvent ) => { this.props.onMouseDown( tEvent, this.props.model ); };
@@ -38,7 +32,7 @@ class Node extends React.Component
 	
 	componentDidMount()
 	{
-		this.position = this.props.model._position;
+		this.position = this.props.model.position;
 		this.isSelected = this.props.isSelected;
 		this.props.onPhysics( this._physicsBody, true );
 	}
@@ -55,12 +49,24 @@ class Node extends React.Component
 		this.props.onPhysics( this._physicsBody, false );
 	}
 	
+	createPhysics()
+	{
+		const tempModel = this.props.model;
+		
+		return {
+			id: tempModel._id,
+			x: tempModel.position.x,
+			y: tempModel.position.y,
+			model: tempModel
+		};
+	}
+	
 	set isSelected( tIsSelected )
 	{
 		if ( tIsSelected )
 		{
-			this._physicsBody.fx = this.props.model._position.x;
-			this._physicsBody.fy = this.props.model._position.y;
+			this._physicsBody.fx = this.props.model.position.x;
+			this._physicsBody.fy = this.props.model.position.y;
 		}
 		else
 		{

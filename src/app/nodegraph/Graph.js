@@ -19,14 +19,15 @@ export default class Graph
 		{
 			"default": new Type( "default", Edge, EdgeView )
 		};
-		this._position = new Vector2D();
-		this._zoom = 1;
+		this.position = new Vector2D();
+		this.zoom = 1;
 		this.isPanMode = false;
 		this.isPanning = false;
 		this.isMarquee = false;
-		this.gridSize = 80; // TODO: move out of model somehow
+		this.gridSize = 80;
 		this.isGridVisible = true;
 		this.isGridSnap = false;
+		this.isPhysics = true;
 	}
 	
 	setNode( tNode )
@@ -131,14 +132,15 @@ decorate( Graph,
 		_nodes: observable.shallow,
 		_nodeTypes: observable.shallow,
 		_edgeTypes: observable.shallow,
-		_position: observable,
-		_zoom: observable,
+		position: observable,
+		zoom: observable,
 		isPanMode: observable,
 		isPanning: observable,
 		isMarquee: observable,
 		gridSize: observable,
 		isGridVisible: observable,
 		isGridSnap: observable,
+		isPhysics: observable,
 		setNode: action,
 		removeNode: action,
 		setNodeType: action,

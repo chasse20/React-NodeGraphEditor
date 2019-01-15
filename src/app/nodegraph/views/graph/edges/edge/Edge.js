@@ -18,20 +18,16 @@ class Edge extends React.Component // TODO: Selectable
 		super( tProps );
 
 		// Variables
-		this._physicsBody =
-		{
-			source: tProps.model._source._node._id,
-			target: tProps.model._target._node._id
-		};
+		this._physicsBody = this.createPhysics();
 		this._element = null;
 		this._textElement = null;
 		this._sourcePosition = new Vector2D();
 		this._targetPosition = new Vector2D();
 		
 		// Events
-		this._onOffsetMove = observe( tProps.model._source, "_offset", ( tChange ) => { this.sourcePosition = this.props.model._source.position; } );
-		this._onSourceMove = observe( tProps.model._source._node, "_position", ( tChange ) => { this.sourcePosition = this.props.model._source.position; } );
-		this._onTargetMove = observe( tProps.model._target._node, "_position", ( tChange ) => { this.targetPosition = this.props.model._target.position; } );
+		this._onOffsetMove = observe( tProps.model._source, "offset", ( tChange ) => { this.sourcePosition = this.props.model._source.position; } );
+		this._onSourceMove = observe( tProps.model._source._node, "position", ( tChange ) => { this.sourcePosition = this.props.model._source.position; } );
+		this._onTargetMove = observe( tProps.model._target._node, "position", ( tChange ) => { this.targetPosition = this.props.model._target.position; } );
 		this._onElement = ( tElement ) => { this._element = tElement; };
 		this._onTextElement = ( tElement ) => { this._textElement = tElement; };
 	}
@@ -59,6 +55,16 @@ class Edge extends React.Component // TODO: Selectable
 		this._onTargetMove = null;
 		
 		this.props.onPhysics( this._physicsBody, false );
+	}
+	
+	createPhysics()
+	{
+		const tempModel = this.props.model;
+		
+		return {
+			source: tempModel._source._node._id,
+			target: tempModel._target._node._id
+		};
 	}
 	
 	set sourcePosition( tVector )

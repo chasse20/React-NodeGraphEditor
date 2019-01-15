@@ -16,14 +16,14 @@ export default class Node
 			in: new Pin( this, false ),
 			out: new Pin( this )
 		};
-		this._position = new Vector2D();
+		this.position = new Vector2D();
 		this.data = tData;
 		this.isSelected = false;
 	}
 	
-	static CreateFromType( tType, tPosition = new Vector2D(), tData )
+	static CreateFromType( tType, tData )
 	{
-		return tType == null ? null : new tType._modelClass( tType, tPosition, tData );
+		return tType == null ? null : new tType._modelClass( tType, tData );
 	}
 	
 	removeEdgeType( tType )
@@ -41,7 +41,7 @@ export default class Node
 decorate( Node,
 	{
 		_pins: observable,
-		_position: observable,
+		position: observable,
 		data: observable,
 		isSelected: observable
 	}

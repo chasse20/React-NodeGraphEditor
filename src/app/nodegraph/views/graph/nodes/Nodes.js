@@ -188,13 +188,13 @@ class Nodes extends React.Component
 			
 			if ( this._selectedCount > 0 )
 			{
-				const tempLocalStart = new Vector2D( tEvent.clientX, tEvent.clientY ).scale( 1 / this.props.graph._zoom ).subtract( this.props.graph._position );
+				const tempLocalStart = new Vector2D( tEvent.clientX, tEvent.clientY ).scale( 1 / this.props.graph.zoom ).subtract( this.props.graph.position );
 				this.localStart = tempLocalStart;
 				
 				this._dragOffsets = {};
 				for ( let tempID in this._selected )
 				{
-					this._dragOffsets[ tempID ] = Vector2D.Subtract( tempLocalStart, this._selected[ tempID ]._position );
+					this._dragOffsets[ tempID ] = Vector2D.Subtract( tempLocalStart, this._selected[ tempID ].position );
 				}
 			
 				document.addEventListener( "mousemove", this._onDragMove );
@@ -222,7 +222,7 @@ class Nodes extends React.Component
 	
 	onDragMove( tEvent )
 	{
-		const tempLocalEnd = new Vector2D( tEvent.clientX, tEvent.clientY ).scale( 1 / this.props.graph._zoom ).subtract( this.props.graph._position );
+		const tempLocalEnd = new Vector2D( tEvent.clientX, tEvent.clientY ).scale( 1 / this.props.graph.zoom ).subtract( this.props.graph.position );
 		
 		// Grid snap
 		if ( this.props.graph.isGridSnap )
@@ -231,7 +231,7 @@ class Nodes extends React.Component
 			for ( let tempID in this._selected )
 			{
 				let tempOffset = this._dragOffsets[ tempID ];
-				this._selected[ tempID ]._position = new Vector2D( Math.round( ( tempLocalEnd.x - tempOffset.x ) / tempGridSnap ) * tempGridSnap, Math.round( ( tempLocalEnd.y - tempOffset.y ) / tempGridSnap ) * tempGridSnap );
+				this._selected[ tempID ].position = new Vector2D( Math.round( ( tempLocalEnd.x - tempOffset.x ) / tempGridSnap ) * tempGridSnap, Math.round( ( tempLocalEnd.y - tempOffset.y ) / tempGridSnap ) * tempGridSnap );
 			}
 		}
 		// No snap
@@ -239,7 +239,7 @@ class Nodes extends React.Component
 		{			
 			for ( let tempID in this._selected )
 			{
-				this._selected[ tempID ]._position = Vector2D.Subtract( tempLocalEnd, this._dragOffsets[ tempID ] );
+				this._selected[ tempID ].position = Vector2D.Subtract( tempLocalEnd, this._dragOffsets[ tempID ] );
 			}
 		}
 	}
@@ -266,7 +266,7 @@ class Nodes extends React.Component
 		for ( let tempID in this.state.nodes )
 		{
 			let tempModel = this.state.nodes[ tempID ].props.model;
-			let tempIsSelected = tempBounds.contains( tempModel._position );
+			let tempIsSelected = tempBounds.contains( tempModel.position );
 			if ( tempIsSelected )
 			{
 				this.setSelected( tempModel );

@@ -1,10 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { forceSimulation, forceLink, forceCollide } from "d3";
-import GraphModel from "../../../Graph";
+import { observe } from "mobx";
+import { observer } from "mobx-react";
+import { forceSimulation, forceLink, forceCollide, forceManyBody } from "d3";
 import Vector2D from "../../../../core/Vector2D";
+import GraphModel from "../../../Graph";
 
-export default class Physics extends React.Component
+class Physics extends React.Component
 {
 	constructor( tProps )
 	{
@@ -15,23 +17,34 @@ export default class Physics extends React.Component
 		this._nodes = null;
 		this._edges = null;
 		this._simulation = forceSimulation();
-		this._simulation.force( "link", forceLink().id( ( tLink ) => { return tLink.id; } ).distance( 500 ).strength( 0.125 ) );
-		this._simulation.force( "collision", forceCollide().radius( 50 ).strength( 0.3 ) );
-		this._simulation.alphaDecay( 0.0001 );
-		this._simulation.velocityDecay( 0.1 );
-		this._simulation.alpha( 0.1 );
+		this._simulation.force( "charge", forceManyBody().strength( -200 ).distanceMax( 500 ) );
+		this._simulation.force( "link", forceLink().id( ( tLink ) => { return tLink.id; } ).distance( 500 ).strength( 0.1 ) );
+		this._simulation.force( "collision", forceCollide().radius( 50 ).strength( 2 ) );
+		this._simulation.alphaDecay( 0 );
+		this._simulation.velocityDecay( 0.89 );
 		this._simulation.on( "tick", () => { this.onTick(); } );
 		this._simulation.stop();
+		
+		// Events
+		this._onPhysicsDispose = observe( this.props.graph, "isPhysics", ( tChange ) => { this.isEnabled = tChange.newValue; } );
+	}
+	
+	componentDidMount()
+	{
+		this.isEnabled = this.props.graph.isPhysics;
 	}
 	
 	componentWillUnmount()
 	{
 		this._simulation.stop();
+		
+		this._onPhysicsDispose();
+		this._onPhysicsDispose = null;
 	}
 	
-	set isEnabled( tValue )
+	set isEnabled( tIsEnabled )
 	{
-		if ( tValue )
+		if ( tIsEnabled && this._nodes !== null )
 		{
 			this._simulation.restart();
 		}
@@ -46,7 +59,7 @@ export default class Physics extends React.Component
 		for ( let i = ( this._nodes.length - 1 ); i >= 0; --i )
 		{
 			let tempNode = this._nodes[i];
-			tempNode.model._position = new Vector2D( tempNode.x, tempNode.y );
+			tempNode.model.position = new Vector2D( tempNode.x, tempNode.y );
 		}
 	}
 	
@@ -78,7 +91,7 @@ export default class Physics extends React.Component
 	{
 		if ( tNode != null )
 		{
-			this._simulation.stop();
+			this.isEnabled = false;
 			
 			if ( this._nodes === null )
 			{
@@ -87,7 +100,7 @@ export default class Physics extends React.Component
 			this._nodes.push( tNode );
 			
 			this._simulation.nodes( this._nodes );
-			this.isEnabled = true;
+			this.isEnabled = this.props.graph.isPhysics;
 			
 			return true;
 		}
@@ -102,16 +115,17 @@ export default class Physics extends React.Component
 			const tempIndex = this._nodes.indexOf( tNode );
 			if ( tempIndex >= 0 )
 			{
+				this.isEnabled = false;
+				
 				this._nodes.splice( tempIndex, 1 );
 				if ( this._nodes.length === 0 )
 				{
 					this._nodes = null;
-					this.isEnabled = false;
 				}
 				else
 				{
 					this._simulation.nodes( this._nodes );
-					this.isEnabled = true;
+					this.isEnabled = this.props.graph.isPhysics;
 				}
 				
 				return true;
@@ -125,7 +139,8 @@ export default class Physics extends React.Component
 	{
 		if ( tEdge != null )
 		{
-			this._simulation.stop();
+			this.isEnabled = false;
+			
 			if ( this._edges === null )
 			{
 				this._edges = [];
@@ -133,7 +148,7 @@ export default class Physics extends React.Component
 			this._edges.push( tEdge );
 			
 			this._simulation.force( "link" ).links( this._edges );
-			this.isEnabled = true;
+			this.isEnabled = this.props.graph.isPhysics;
 			
 			return true;
 		}
@@ -148,7 +163,8 @@ export default class Physics extends React.Component
 			const tempIndex = this._edges.indexOf( tEdge );
 			if ( tempIndex >= 0 )
 			{
-				this._simulation.stop();
+				this.isEnabled = false;
+				
 				this._edges.splice( tempIndex, 1 );
 				if ( this._edges.length === 0 )
 				{
@@ -159,7 +175,7 @@ export default class Physics extends React.Component
 					this._simulation.force( "link" ).links( this._edges );
 				}
 
-				this.isEnabled = true;
+				this.isEnabled = this.props.graph.isPhysics;
 				
 				return true;
 			}
@@ -176,11 +192,7 @@ export default class Physics extends React.Component
 
 Physics.propTypes =
 {
-	graph: PropTypes.instanceOf( GraphModel ).isRequired,
-	isEnabled: PropTypes.bool.isRequired
+	graph: PropTypes.instanceOf( GraphModel ).isRequired
 };
 
-Physics.defaultProps =
-{
-	isEnabled: true
-};
+export default observer( Physics );

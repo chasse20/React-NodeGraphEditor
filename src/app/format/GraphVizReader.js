@@ -19,12 +19,12 @@ export default class GraphVizReader
 		if ( tGraphModel != null && tJSON != null )
 		{
 			// Position
-			GraphVizReader.ReadVector( tGraphModel._position, tJSON.position );
+			GraphVizReader.ReadVector( tGraphModel.position, tJSON.position );
 			
 			// Zoom
 			if ( tJSON.zoom != null )
 			{
-				tGraphModel._zoom = tJSON.zoom;
+				tGraphModel.zoom = tJSON.zoom;
 			}
 			
 			// Node Types
@@ -138,7 +138,7 @@ export default class GraphVizReader
 			const tempNode = new tempType._modelClass( tempType );
 			
 			// Position
-			GraphVizReader.ReadVector( tempNode._position, tJSON.position );
+			GraphVizReader.ReadVector( tempNode.position, tJSON.position );
 			
 			// Data
 			if ( tJSON.data != null )

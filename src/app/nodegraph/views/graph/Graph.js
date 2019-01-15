@@ -30,8 +30,8 @@ class Graph extends React.Component
 		this._marqueeOffset = null;
 		
 		// Events
-		this._onZoomDispose = observe( this.props.model, "_zoom", ( tChange ) => { this.zoom = tChange.newValue; } );
-		this._onPositionDispose = observe( this.props.model, "_position", ( tChange ) => { this.position = tChange.newValue; } );
+		this._onZoomDispose = observe( this.props.model, "zoom", ( tChange ) => { this.zoom = tChange.newValue; } );
+		this._onPositionDispose = observe( this.props.model, "position", ( tChange ) => { this.position = tChange.newValue; } );
 		this._onPhysics = ( tComponent ) => { this._physics = tComponent; };
 		this._onNodes = ( tComponent ) => { this._nodes = tComponent; };
 		this._onEdges = ( tComponent ) => { this._edges = tComponent; };
@@ -51,8 +51,8 @@ class Graph extends React.Component
 
 	componentDidMount()
 	{
-		this.position = this.props.model._position;
-		this.zoom = this.props.model._zoom;
+		this.position = this.props.model.position;
+		this.zoom = this.props.model.zoom;
 	}
 	
 	componentWillUnmount()
@@ -76,7 +76,7 @@ class Graph extends React.Component
 		if ( this._isPanHeld || this.props.model.isPanMode )
 		{
 			this.props.model.isPanning = true;
-			this._panOffset = Vector2D.Subtract( this.props.model._position, new Vector2D( tEvent.clientX, tEvent.clientY ).scale( 1 / this.props.model._zoom ) ); // originally used a transform/matrix class, but this is more efficient
+			this._panOffset = Vector2D.Subtract( this.props.model.position, new Vector2D( tEvent.clientX, tEvent.clientY ).scale( 1 / this.props.model.zoom ) ); // originally used a transform/matrix class, but this is more efficient
 
 			document.addEventListener( "mousemove", this._onPanMove );
 			document.addEventListener( "mouseup", this._onPanUp );
@@ -85,7 +85,7 @@ class Graph extends React.Component
 		else
 		{
 			this.props.model.isMarquee = true;
-			this._marqueeOffset = new Vector2D( tEvent.clientX, tEvent.clientY ).scale( 1 / this.props.model._zoom ).subtract( this.props.model._position );
+			this._marqueeOffset = new Vector2D( tEvent.clientX, tEvent.clientY ).scale( 1 / this.props.model.zoom ).subtract( this.props.model.position );
 			
 			document.addEventListener( "mousemove", this._onMarqueeMove );
 			document.addEventListener( "mouseup", this._onMarqueeUp );
@@ -104,7 +104,7 @@ class Graph extends React.Component
 	
 	onPanMove( tEvent )
 	{
-		this.props.model._position = new Vector2D( tEvent.clientX, tEvent.clientY ).scale( 1 / this.props.model._zoom ).add( this._panOffset );
+		this.props.model.position = new Vector2D( tEvent.clientX, tEvent.clientY ).scale( 1 / this.props.model.zoom ).add( this._panOffset );
 	}
 	
 	onMarqueeUp( tEvent )
@@ -128,12 +128,12 @@ class Graph extends React.Component
 	{
 		// Select
 		const tempScreenEnd = new Vector2D( tEvent.clientX, tEvent.clientY );
-		const tempLocalEnd = Vector2D.Scale( tempScreenEnd, 1 / this.props.model._zoom ).subtract( this.props.model._position );
+		const tempLocalEnd = Vector2D.Scale( tempScreenEnd, 1 / this.props.model.zoom ).subtract( this.props.model.position );
 		
 		this._nodes.onMarqueeMove( this._marqueeOffset, tempLocalEnd );
 		
 		// Render
-		const tempScreenStart = Vector2D.Scale( Vector2D.Add( this._marqueeOffset, this.props.model._position ), this.props.model._zoom );
+		const tempScreenStart = Vector2D.Scale( Vector2D.Add( this._marqueeOffset, this.props.model.position ), this.props.model.zoom );
 		
 		if ( tempScreenEnd.x < tempScreenStart.x )
 		{
@@ -162,7 +162,7 @@ class Graph extends React.Component
 	{
 		// Calculate
 		const tempModel = this.props.model;
-		var tempAmount = tempModel._zoom + ( tVelocity * this.props.zoomSpeed );
+		var tempAmount = tempModel.zoom + ( tVelocity * this.props.zoomSpeed );
 		if ( tVelocity < 0 )
 		{
 			if ( tempAmount < this.props.minZoom )
@@ -176,9 +176,9 @@ class Graph extends React.Component
 		}
 
 		// Apply
-		if ( tempAmount !== tempModel._zoom )
+		if ( tempAmount !== tempModel.zoom )
 		{
-			tempModel._zoom = tempAmount;
+			tempModel.zoom = tempAmount;
 			return true;
 		}
 		
