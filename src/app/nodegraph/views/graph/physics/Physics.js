@@ -17,11 +17,10 @@ class Physics extends React.Component
 		this._nodes = null;
 		this._edges = null;
 		this._simulation = forceSimulation();
-		this._simulation.force( "charge", forceManyBody().strength( -200 ).distanceMax( 500 ) );
+		this._simulation.force( "charge", forceManyBody().strength( -750 ).distanceMax( 300 ) );
 		this._simulation.force( "link", forceLink().id( ( tLink ) => { return tLink.id; } ).distance( 500 ).strength( 0.1 ) );
-		this._simulation.force( "collision", forceCollide().radius( 50 ).strength( 2 ) );
 		this._simulation.alphaDecay( 0 );
-		this._simulation.velocityDecay( 0.89 );
+		this._simulation.velocityDecay( 0.9 );
 		this._simulation.on( "tick", () => { this.onTick(); } );
 		this._simulation.stop();
 		

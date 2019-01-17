@@ -25,7 +25,7 @@ class Menu extends React.Component
 		
 		return (
 			<g className="node-menu">
-				<circle fill="#ffffff" fill-opacity="0" x="0" y="0" r={ tempOuterRadius }/>
+				<circle fill="#ffffff" fillOpacity="0" x="0" y="0" r={ tempOuterRadius }/>
 				<path className="wheel" d={ tempPath }/>
 				<line x1="0" y1={ tempOuterRadius } x2="0" y2={ 60 }/>
 				<line x1="0" y1={ -tempOuterRadius } x2="0" y2={ -60 }/>

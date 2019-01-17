@@ -112,7 +112,6 @@ class Node extends React.Component
 							</div>
 						</foreignObject>
 				}
-				<Menu radius={ tempRadius }/>
 				<g className="pins">
 					{
 						Object.values( tempModel._pins ).map(
