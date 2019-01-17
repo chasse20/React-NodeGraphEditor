@@ -59,11 +59,11 @@ class Grid extends React.Component
 			<React.Fragment>
 				<defs>
 					<pattern id="smallGrid" viewBox="0 0 20 20" width="20" height="20" patternUnits="userSpaceOnUse">
-						<path d="M 20 0 L 0 0 0 20" fill="none" stroke="#4285b0" strokeWidth="0.5" strokeOpacity="0.35"/>
+						<path d="M 20 0 L 0 0 0 20" fill="none" stroke="#b6b9bf" strokeWidth="0.5" strokeOpacity="0.65"/>
 					</pattern>
 					<pattern id="grid" width="100" viewBox="0 0 100 100" height="100" patternUnits="userSpaceOnUse" ref={ this._onBGGridElement }>
 						<rect width="100" height="100" fill="url(#smallGrid)"/>
-						<path d="M 100 0 L 0 0 0 100" fill="none" stroke="#4285b0" strokeWidth="2" strokeOpacity="0.2"/>
+						<path d="M 100 0 L 0 0 0 100" fill="none" stroke="#b6b9bf" strokeWidth="2" strokeOpacity="0.45"/>
 					</pattern>
 				</defs>
 				<rect className={ this.props.graph.isGridVisible ? "grid visible" : "grid" } fill="url(#grid)"/>

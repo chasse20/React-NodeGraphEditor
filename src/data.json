@@ -7,8 +7,8 @@
 			"viewClass": "Node",
 			"data":
 			{
-				"fill": "#8c4d88",
-				"stroke": "#e876e1"
+				"fill": "#c567bf",
+				"stroke": "#9f4a9a"
 			}
 		},
 		{
@@ -18,7 +18,7 @@
 			"data":
 			{
 				"fill": "#2891ca",
-				"stroke": "#93d9ff"
+				"stroke": "#1f729f"
 			}
 		},
 		{
@@ -27,8 +27,8 @@
 			"viewClass": "Node",
 			"data":
 			{
-				"fill": "#82745c",
-				"stroke": "#ffc191"
+				"fill": "#d2a565",
+				"stroke": "#ac8247"
 			}
 		},
 		{
@@ -37,8 +37,8 @@
 			"viewClass": "Node",
 			"data":
 			{
-				"fill": "#19984f",
-				"stroke": "#4cff98",
+				"fill": "#38d47a",
+				"stroke": "#1cac59",
 				"radius": 75
 			}
 		}
@@ -51,7 +51,7 @@
 			"viewClass": "Edge",
 			"data":
 			{
-				"stroke": "#e876e1",
+				"stroke": "#9f4a9a",
 				"text": "Belongs to"
 			}
 		},
@@ -61,7 +61,7 @@
 			"viewClass": "Edge",
 			"data":
 			{
-				"stroke": "#e876e1",
+				"stroke": "#9f4a9a",
 				"text": "Writes"
 			}
 		},
@@ -71,7 +71,7 @@
 			"viewClass": "Edge",
 			"data":
 			{
-				"stroke": "#93d9ff",
+				"stroke": "#2891ca",
 				"text": "Writes"
 			}
 		},
@@ -81,7 +81,7 @@
 			"viewClass": "Edge",
 			"data":
 			{
-				"stroke": "#93d9ff",
+				"stroke": "#2891ca",
 				"text": "Writes"
 			}
 		},
@@ -91,7 +91,7 @@
 			"viewClass": "Edge",
 			"data":
 			{
-				"stroke": "#82745c",
+				"stroke": "#ac8247",
 				"text": "References"
 			}
 		},
@@ -101,7 +101,7 @@
 			"viewClass": "Edge",
 			"data":
 			{
-				"stroke": "#82745c",
+				"stroke": "#ac8247",
 				"text": "Inspires"
 			}
 		},
@@ -111,7 +111,7 @@
 			"viewClass": "Edge",
 			"data":
 			{
-				"stroke": "#4cff98",
+				"stroke": "#1cac59",
 				"text": "Required by"
 			}
 		}
