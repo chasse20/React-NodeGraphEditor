@@ -1,0 +1,26 @@
+.node-menu
+{
+	opacity: 0;
+	pointer-events: none;
+}
+
+.node.selected:hover .node-menu
+{
+	opacity: 1;
+}
+
+.node.selected:hover .wheel
+{
+	pointer-events: auto;
+}
+
+.node-menu line
+{
+	stroke-width: 2px;
+	stroke: #878787;
+}
+
+.node-menu path
+{
+	fill: #9e9d9d;
+}

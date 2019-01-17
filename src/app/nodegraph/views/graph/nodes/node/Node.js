@@ -5,6 +5,7 @@ import { observe } from "mobx";
 import NodeModel from "../../../../Node";
 import Utility from "../../../../Utility";
 import Pin from "./pin/Pin";
+import Menu from "./menu/Menu";
 import "./Node.css";
 
 class Node extends React.Component
@@ -99,9 +100,9 @@ class Node extends React.Component
 		const tempOutlineDiameter = ( tempRadius + 10 ) * 2;
 		
 		return (
-			<g className={ "node " + this.constructor.name + ( tempModel.isSelected ? " selected" : "" ) } guid={ tempModel._id } ref={ this._onElement } onMouseDown={ this._onMouseDown } onMouseUp={ this._onMouseUp }>
+			<g className={ "node " + this.constructor.name + ( tempModel.isSelected ? " selected" : "" ) } guid={ tempModel._id } ref={ this._onElement }>
 				<rect className="outline" height={ tempOutlineDiameter } width={ tempOutlineDiameter } x={ -tempOutlineDiameter * 0.5 } y={ -tempOutlineDiameter * 0.5 } strokeDasharray={ tempOutlineDiameter * 0.125 + " " + tempOutlineDiameter * 0.75 + " " + tempOutlineDiameter * 0.125 + " 0" }/>
-				<circle className="graphic" cx="0" cy="0" r={ tempRadius } fill={ Utility.DefaultData( "fill", tempData, tempTypeData, "#019abd" ) } stroke={ Utility.DefaultData( "stroke", tempData, tempTypeData, "#42d3ff" ) }/>
+				<circle className="graphic" cx="0" cy="0" r={ tempRadius } fill={ Utility.DefaultData( "fill", tempData, tempTypeData, "#019abd" ) } stroke={ Utility.DefaultData( "stroke", tempData, tempTypeData, "#42d3ff" ) } onMouseDown={ this._onMouseDown } onMouseUp={ this._onMouseUp }/>
 				{
 					tempData.text != null &&
 						<foreignObject width={ tempRadius * 2 } height={ tempRadius * 2 } x={ -tempRadius } y={ -tempRadius }>
@@ -110,6 +111,7 @@ class Node extends React.Component
 							</div>
 						</foreignObject>
 				}
+				<Menu radius={ tempRadius }/>
 				<g className="pins">
 					{
 						Object.values( tempModel._pins ).map(
