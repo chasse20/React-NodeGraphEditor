@@ -24,9 +24,9 @@
 .marquee
 {
 	opacity: 0;
-	fill: #ffffff6e;
+	fill: #2891ca29;
 	stroke-width: 1px;
-	stroke: #fff;
+	stroke: #2891caba;
 }
 
 .marquee.active
