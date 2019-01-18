@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { observer } from "mobx-react";
 import { observe } from "mobx";
 import EdgeModel from "../../../../Edge";
-import Node from "../../nodes/node/Node";
 import Vector2D from "../../../../../core/Vector2D";
 import Utility from "../../../../Utility";
 import "./Edge.css";

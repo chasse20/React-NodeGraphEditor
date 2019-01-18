@@ -5,7 +5,6 @@ import { observe } from "mobx";
 import NodeModel from "../../../../Node";
 import Utility from "../../../../Utility";
 import Pin from "./pin/Pin";
-import Menu from "./menu/Menu";
 import "./Node.css";
 
 class Node extends React.Component
@@ -22,32 +21,39 @@ class Node extends React.Component
 		
 		// Variables
 		this._element = null;
+		this._clickTimeout = null;
 		
 		// Events
 		this._onPositionDispose = observe( tProps.model, "position", ( tChange ) => { this.position = tChange.newValue; } );
 		this._onSelectedDispose = observe( tProps.model, "isSelected", ( tChange ) => { this.isSelected = tChange.newValue; } );
 		this._onElement = ( tElement ) => { this._element = tElement; };
-		this._onMouseDown = ( tEvent ) => { this.props.onMouseDown( tEvent, this.props.model ); };
-		this._onMouseUp = ( tEvent ) => { this.props.onMouseUp( tEvent, this.props.model ); };
+		this._onMouseDown = ( tEvent ) => { this.onMouseDown( tEvent ); };
+		this._onMouseUp = ( tEvent ) => { this.onMouseUp( tEvent ); };
 	}
 	
 	componentDidMount()
 	{
-		this.position = this.props.model.position;
-		this.isSelected = this.props.isSelected;
+		const tempModel = this.props.model;
+		
+		this.isSelected = tempModel.isSelected;
+		this.position = tempModel.position;
 		this.props.onPhysics( this._physicsBody, true );
 	}
 	
 	componentWillUnmount()
 	{
 		this.isSelected = false;
+		this.props.onPhysics( this._physicsBody, false );
 		
 		this._onPositionDispose();
 		this._onPositionDispose = null;
 		this._onSelectedDispose();
 		this._onSelectedDispose = null;
 		
-		this.props.onPhysics( this._physicsBody, false );
+		if ( this._clickTimeout !== null )
+		{
+			clearTimeout( this._clickTimeout );
+		}
 	}
 	
 	createPhysics()
@@ -60,6 +66,45 @@ class Node extends React.Component
 			y: tempModel.position.y,
 			model: tempModel
 		};
+	}
+	
+	onMouseDown( tEvent )
+	{
+		// Select
+		tEvent.stopPropagation();
+		if ( tEvent.button !== 1 ) // middle-mouse is reserved
+		{
+			// Check for selection toggle click if node is already selected
+			const tempModel = this.props.model;
+			if ( tempModel.isSelected )
+			{
+				clearTimeout( this._clickTimeout );
+				this._clickTimeout = setTimeout(
+					() =>
+					{
+						this._clickTimeout = null;
+					},
+					200
+				);
+			}
+			
+			// Set
+			tempModel.isSelected = true;
+			this.props.onDragStart( tEvent );
+		}
+	}
+	
+	onMouseUp( tEvent )
+	{
+		// Toggle node selection if within simulated click time
+		tEvent.stopPropagation();
+		if ( tEvent.button !== 1 && this._clickTimeout !== null ) // middle-mouse is reserved
+		{
+			clearTimeout( this._clickTimeout );
+			this._clickTimeout = null;
+			
+			this.props.model.isSelected = !this.props.model.isSelected;
+		}
 	}
 	
 	set isSelected( tIsSelected )
@@ -75,7 +120,7 @@ class Node extends React.Component
 			delete this._physicsBody.fy;
 		}
 		
-		this.props.onPhysics( this._physicsBody, !tIsSelected );
+		this.props.onSelected( this.props.model );
 	}
 	
 	set position( tPosition )
@@ -132,8 +177,8 @@ Node.propTypes =
 	model: PropTypes.instanceOf( NodeModel ).isRequired,
 	onLink: PropTypes.func.isRequired,
 	onPhysics: PropTypes.func.isRequired,
-	onMouseDown: PropTypes.func.isRequired,
-	onMouseUp: PropTypes.func.isRequired
+	onSelected: PropTypes.func.isRequired,
+	onDragStart: PropTypes.func.isRequired
 };
 
 export default observer( Node );
