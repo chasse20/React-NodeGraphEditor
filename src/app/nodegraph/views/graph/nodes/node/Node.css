@@ -17,7 +17,6 @@
 	opacity: 0;
 	transition: 0.2s opacity ease;
 	transition-property: opacity;
-	pointer-events: none;
 }
 
 .node.selected .outline
@@ -34,7 +33,7 @@
 	box-sizing: border-box;
 }
 
-.node foreignObject, .node .text
+.node .outline, .node foreignObject, .node .text
 {
 	user-select: none;
 	pointer-events: none;
@@ -51,5 +50,6 @@
 
 .node.selected p
 {
+	text-shadow: 2px 2px 6px #000;
 	overflow: visible;
 }
