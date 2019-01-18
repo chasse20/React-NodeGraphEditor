@@ -1,14 +1,14 @@
 export default class Utility
 {
-	static DefaultData( tKey, tPrimarySource, tSecondarySource, tDefaultValue )
+	static DefaultData( tPrimarySource, tSecondarySource, tDefaultValue )
 	{
-		if ( tPrimarySource[ tKey ] !== undefined )
+		if ( tPrimarySource !== undefined )
 		{
-			return tPrimarySource[ tKey ];
+			return tPrimarySource;
 		}
-		else if ( tSecondarySource[ tKey ] !== undefined )
+		else if ( tSecondarySource !== undefined )
 		{
-			return tSecondarySource[ tKey ];
+			return tSecondarySource;
 		}
 		
 		return tDefaultValue;

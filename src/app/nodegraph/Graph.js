@@ -13,11 +13,21 @@ export default class Graph
 		this._nodes = {};
 		this._nodeTypes =
 		{
-			"default": new Type( "default", Node, NodeView )
+			"default": new Type( "default", Node, NodeView,
+				{
+					radius: 50,
+					fill: "#2891ca",
+					stroke: "#1f729f"
+				}
+			)
 		};
 		this._edgeTypes =
 		{
-			"default": new Type( "default", Edge, EdgeView )
+			"default": new Type( "default", Edge, EdgeView,
+				{
+					stroke: "#1f729f"
+				}
+			)
 		};
 		this.position = new Vector2D();
 		this.zoom = 1;

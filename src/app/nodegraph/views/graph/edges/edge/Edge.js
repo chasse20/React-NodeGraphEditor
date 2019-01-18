@@ -96,7 +96,7 @@ class Edge extends React.Component // TODO: Selectable
 		
 		// End positioned from radius (if exists)
 		const tempTargetNode = this.props.model._target._node;
-		const tempRadius = Utility.DefaultData( "radius", tempTargetNode.data, tempTargetNode._type.data, Node.defaultProps.radius );
+		const tempRadius = Utility.DefaultData( tempTargetNode.data.radius, tempTargetNode._type.data.radius );
 		if ( tempRadius > 0 )
 		{
 			var tempScale = tempSegment.length;
@@ -119,8 +119,8 @@ class Edge extends React.Component // TODO: Selectable
 		const tempModel = this.props.model;
 		const tempType = tempModel._type;
 		const tempTypeData = tempType.data;
-		const tempText = Utility.DefaultData( "text", tempModel, tempTypeData, this.props.text );
-		const tempStroke = Utility.DefaultData( "stroke", tempModel, tempTypeData, this.props.stroke );
+		const tempText = Utility.DefaultData( tempModel.text, tempTypeData.text );
+		const tempStroke = Utility.DefaultData( tempModel.stroke, tempTypeData.stroke );
 
 		// Render
 		return (
@@ -140,15 +140,7 @@ class Edge extends React.Component // TODO: Selectable
 Edge.propTypes =
 {
 	model: PropTypes.instanceOf( EdgeModel ).isRequired,
-	onPhysics: PropTypes.func.isRequired,
-	text: PropTypes.string,
-	stroke: PropTypes.string
-};
-
-Edge.defaultProps =
-{
-	text: null,
-	stroke: "#42d3ff"
+	onPhysics: PropTypes.func.isRequired
 };
 
 export default observer( Edge );

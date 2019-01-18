@@ -96,14 +96,14 @@ class Node extends React.Component
 		const tempModel = this.props.model;
 		const tempData = tempModel.data;
 		const tempTypeData = tempModel._type.data;
-		const tempRadius = Utility.DefaultData( "radius", tempData, tempTypeData, this.props.radius );
+		const tempRadius = Utility.DefaultData( tempData.radius, tempTypeData.radius );
 		const tempOutlineDiameter = ( tempRadius + 10 ) * 2;
-		const tempFill = Utility.DefaultData( "fill", tempData, tempTypeData, "#2891ca" );
+		const tempFill = Utility.DefaultData( tempData.fill, tempTypeData.fill );
 		
 		return (
 			<g className={ "node " + this.constructor.name + ( tempModel.isSelected ? " selected" : "" ) } guid={ tempModel._id } ref={ this._onElement }>
 				<rect className="outline" stroke={ tempFill } height={ tempOutlineDiameter } width={ tempOutlineDiameter } x={ -tempOutlineDiameter * 0.5 } y={ -tempOutlineDiameter * 0.5 } strokeDasharray={ tempOutlineDiameter * 0.125 + " " + tempOutlineDiameter * 0.75 + " " + tempOutlineDiameter * 0.125 + " 0" }/>
-				<circle className="graphic" cx="0" cy="0" r={ tempRadius } fill={ tempFill } stroke={ Utility.DefaultData( "stroke", tempData, tempTypeData, "#1f729f" ) } onMouseDown={ this._onMouseDown } onMouseUp={ this._onMouseUp }/>
+				<circle className="graphic" cx="0" cy="0" r={ tempRadius } fill={ tempFill } stroke={ Utility.DefaultData( tempData.stroke, tempTypeData.stroke ) } onMouseDown={ this._onMouseDown } onMouseUp={ this._onMouseUp }/>
 				{
 					tempData.text != null &&
 						<foreignObject width={ tempRadius * 2 } height={ tempRadius * 2 } x={ -tempRadius } y={ -tempRadius }>
@@ -133,13 +133,7 @@ Node.propTypes =
 	onLink: PropTypes.func.isRequired,
 	onPhysics: PropTypes.func.isRequired,
 	onMouseDown: PropTypes.func.isRequired,
-	onMouseUp: PropTypes.func.isRequired,
-	radius: PropTypes.number
-};
-
-Node.defaultProps =
-{
-	radius: 50
+	onMouseUp: PropTypes.func.isRequired
 };
 
 export default observer( Node );
