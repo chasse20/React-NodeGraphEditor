@@ -1,0 +1,9 @@
+.edge
+{
+	position: absolute;
+}
+
+.edge line
+{ 
+	stroke-width: 1;
+}

@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import "./Edges.css";
 
 export default class Edges extends React.Component
@@ -23,12 +24,12 @@ export default class Edges extends React.Component
 			const tempEdge = this.createElement( tModel );
 			if ( tempEdge != null )
 			{
-				tempEdges[ tempEdge.id ] = tempEdge;
+				tempEdges[ tempEdge.key ] = tempEdge;
 			}
 		}
 		else
 		{
-			delete tempEdges[ tModel.id ];
+			delete tempEdges[ tModel.key ];
 		}
 		
 		this.setState( { edges: tempEdges } ); // TODO: figure out how to optimize this so render isn't called each time
@@ -36,11 +37,26 @@ export default class Edges extends React.Component
 
 	createElement( tModel )
 	{
-		return React.createElement( tModel._type._viewClass, { model: tModel, key: tModel.id } );
+		return React.createElement( tModel._type._viewClass, { model: tModel, key: tModel.key, onPhysics: this.props.onPhysics } );
 	}
 	
 	render()
 	{
+		/*
+		<defs>
+					<filter xmlns="http://www.w3.org/2000/svg" id="node-glow">
+						<feGaussianBlur stdDeviation="10"/>
+						<feComponentTransfer>
+							<feFuncA type="linear" slope="0.75"/>
+						</feComponentTransfer>
+						<feMerge> 
+							<feMergeNode/>
+							<feMergeNode in="SourceGraphic"/> 
+						</feMerge>
+					</filter>
+				</defs>
+		*/
+		
 		return (
 			<g className="edges">
 				{ Object.values( this.state.edges ) }
@@ -48,3 +64,8 @@ export default class Edges extends React.Component
 		);
 	}
 }
+
+Edges.propTypes =
+{
+	onPhysics: PropTypes.func.isRequired
+};

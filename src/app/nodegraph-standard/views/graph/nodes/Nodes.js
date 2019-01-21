@@ -1,12 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { observer } from "mobx-react";
 import { observe } from "mobx";
 import Bounds from "../../../../core/Bounds";
 import Vector2D from "../../../../core/Vector2D";
-import NodeModel from "../../../models/Node";
+import GraphModel from "../../../Graph";
 import "./Nodes.css";
 
-export default class Nodes extends React.Component
+class Nodes extends React.Component
 {
 	constructor( tProps )
 	{
@@ -25,18 +26,9 @@ export default class Nodes extends React.Component
 		this._dragOffsets = null;
 		
 		// Events
-		this._onNodesDispose = observe( tProps.nodes, ( tChange ) => { this.onNodes( tChange ); } );
-		this._onNodeSelected = ( tNode ) =>
-		{
-			if ( tNode.isSelected )
-			{
-				this.setSelected( tNode );
-			}
-			else
-			{
-				this.removeSelected( tNode );
-			}
-		};
+		this._onNodesDispose = observe( tProps.graph._nodes, ( tChange ) => { this.onNodes( tChange ); } );
+		this._onMarqueeDispose = observe( tProps.graph, "isMarquee", ( tChange ) => { this.isMarquee = tChange.newValue; } );
+		this._onNodeSelected = ( tNode ) => { this.onNodeSelected( tNode ); };
 		this._onDragStart = ( tEvent ) => { this.onDragStart( tEvent ); };
 		this._onDragMove = ( tEvent ) => { this.onDragMove( tEvent ); };
 		this._onDragUp = ( tEvent ) => { this.onDragUp( tEvent ); };
@@ -47,7 +39,7 @@ export default class Nodes extends React.Component
 	{
 		// Initialize nodes
 		const tempNodes = this.state.nodes;
-		const tempList = this.props.nodes;
+		const tempList = this.props.graph._nodes;
 		for ( let tempKey in tempList )
 		{
 			let tempElement = this.createElement( tempList[ tempKey ] );
@@ -58,6 +50,9 @@ export default class Nodes extends React.Component
 		}
 		
 		this.setState( { nodes: tempNodes } );
+		
+		// Marquee
+		this.isMarquee = this.props.graph.isMarquee;
 	}
 	
 	componentWillUnmount()
@@ -65,15 +60,12 @@ export default class Nodes extends React.Component
 		// Clear events
 		this._onNodesDispose();
 		this._onNodesDispose = null;
+		this._onMarqueeDispose();
+		this._onMarqueeDispose = null;
 		
 		document.removeEventListener( "mousemove", this._onDragMove );
 		document.removeEventListener( "mouseup", this._onDragUp );
 		document.removeEventListener( "keydown", this._onKeyDown );
-	}
-	
-	shouldComponentUpdate( tNextProps, tNextState )
-	{
-		return false;
 	}
 	
 	onNodes( tChange )
@@ -92,12 +84,12 @@ export default class Nodes extends React.Component
 			delete tempNodes[ tChange.name ];
 		}
 		
-		this.forceUpdate(); // TODO: figure out how to optimize this so render isn't called each time
+		this.setState( { nodes: tempNodes } ); // TODO: figure out how to optimize this so render isn't called each time
 	}
 	
 	createElement( tModel )
 	{
-		return React.createElement( tModel._type._viewClass, { model: tModel, key: tModel._id, onLink: this.props.onLink, onSelected: this._onNodeSelected, onDragStart: this._onDragStart } );
+		return React.createElement( tModel._type._viewClass, { model: tModel, key: tModel._id, onLink: this.props.onLink, onPhysics: this.props.onPhysics, onSelected: this._onNodeSelected, onDragStart: this._onDragStart } );
 	}
 	
 	setSelected( tNode )
@@ -115,7 +107,7 @@ export default class Nodes extends React.Component
 				tempSelected[ tNode._id ] = tNode;
 				++this._selectedCount;
 			
-				this.forceUpdate();
+				this.setState( { selected: tempSelected } );
 				
 				return true;
 			}
@@ -141,7 +133,7 @@ export default class Nodes extends React.Component
 					document.removeEventListener( "keydown", this._onKeyDown );
 				}
 				
-				this.forceUpdate();
+				this.setState( { selected: tempSelected } );
 				
 				return true;
 			}
@@ -159,11 +151,24 @@ export default class Nodes extends React.Component
 		}
 	}
 	
+	onNodeSelected( tNode )
+	{
+		if ( tNode.isSelected )
+		{
+			this.setSelected( tNode );
+		}
+		else
+		{
+			this.removeSelected( tNode );
+		}
+	}
+	
 	onDragStart( tEvent )
 	{
 		if ( this._selectedCount > 0 )
 		{
-			const tempLocalStart = new Vector2D( tEvent.clientX, tEvent.clientY ).scale( 1 / this.props.zoom ).subtract( this.props.position );
+			const tempLocalStart = new Vector2D( tEvent.clientX, tEvent.clientY ).scale( 1 / this.props.graph.zoom ).subtract( this.props.graph.position );
+			this.localStart = tempLocalStart;
 			
 			this._dragOffsets = {};
 			for ( let tempID in this.state.selected )
@@ -178,13 +183,13 @@ export default class Nodes extends React.Component
 	
 	onDragMove( tEvent )
 	{
-		const tempLocalEnd = new Vector2D( tEvent.clientX, tEvent.clientY ).scale( 1 / this.props.zoom ).subtract( this.props.position );
+		const tempLocalEnd = new Vector2D( tEvent.clientX, tEvent.clientY ).scale( 1 / this.props.graph.zoom ).subtract( this.props.graph.position );
 		
 		// Grid snap
 		const tempSelected = this.state.selected;
-		if ( this.props.isGridSnap )
+		if ( this.props.graph.isGridSnap )
 		{
-			const tempGridSnap = this.props.gridSize / this.props.snapIncrement;
+			const tempGridSnap = this.props.graph.gridSize / this.props.snapIncrement;
 			for ( let tempID in tempSelected )
 			{
 				let tempOffset = this._dragOffsets[ tempID ];
@@ -209,6 +214,14 @@ export default class Nodes extends React.Component
 		document.removeEventListener( "mouseup", this._onDragUp );
 	}
 	
+	set isMarquee( tValue )
+	{
+		if ( tValue )
+		{
+			this.clearSelected();
+		}
+	}
+	
 	onMarqueeMove( tLocalStart, tLocalEnd ) // TODO: clean up
 	{
 		const tempBounds = Bounds.FromCorners( tLocalStart, tLocalEnd );
@@ -225,13 +238,24 @@ export default class Nodes extends React.Component
 		{
 			for ( let tempID in this.state.selected )
 			{
-				this.props.onRemoveNode( this.state.selected[ tempID ] );
+				this.props.graph.removeNode( this.state.selected[ tempID ] );
 			}
 		}
 	}
 	
 	render()
 	{
+		/*<filter xmlns="http://www.w3.org/2000/svg" id="edge-glow">
+				<feGaussianBlur stdDeviation="6"/>
+				<feComponentTransfer>
+					<feFuncA type="linear" slope="0.4"/>
+				</feComponentTransfer>
+				<feMerge> 
+					<feMergeNode/>
+					<feMergeNode in="SourceGraphic"/> 
+				</feMerge>
+			</filter>*/
+			
 		var tempElements = null;
 		if ( this._selectedCount > 0 )
 		{
@@ -280,21 +304,15 @@ export default class Nodes extends React.Component
 
 Nodes.propTypes =
 {
-	nodes: PropTypes.objectOf( instanceOf( NodeModel ) ).isRequired,
-	onLink: PropTypes.func.isRequired,
-	onRemoveNode: PropTypes.func.isRequired,
+	graph: PropTypes.instanceOf( GraphModel ).isRequired,
 	snapIncrement: PropTypes.number,
-	position: PropTypes.instanceOf( Vector2D ),
-	zoom: PropTypes.number,
-	gridSize: PropTypes.number,
-	isGridSnap: PropTypes.bool
+	onLink: PropTypes.func.isRequired,
+	onPhysics: PropTypes.func.isRequired
 };
 
 Nodes.defaultProps =
 {
-	snapIncrement: 5,
-	position: new Vector2D(),
-	zoom: 1,
-	gridSize: 80,
-	isGridSnap: false
+	snapIncrement: 5
 };
+
+export default observer( Nodes );

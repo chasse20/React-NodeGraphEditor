@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import TypeModel from "../../../models/Type";
+import TypeModel from "../../../Type";
+import "./Arrows.css";
 
 export default class Arrows extends React.PureComponent
 {
@@ -13,7 +14,7 @@ export default class Arrows extends React.PureComponent
 						( tKey ) =>
 						(
 							<marker key={ tKey } id={ "arrow-" + tKey } markerWidth="12" markerHeight="12" viewBox="-10 -5 10 10" orient="auto">
-								<path d="M 0 0 L -10 5 L -10 -5 z"/>
+								<path d="M 0 0 L -10 5 L -10 -5 z" fill={ this.props.types[ tKey ].data.stroke }/>
 							</marker>
 						)
 					)

@@ -1,0 +1,15 @@
+.edge
+{
+	position: absolute;
+}
+
+.edge line
+{ 
+	stroke-width: 1;
+}
+
+.edge text
+{
+	user-select: none;
+	pointer-events: none;
+}
