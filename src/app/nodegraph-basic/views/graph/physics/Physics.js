@@ -1,7 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { observe } from "mobx";
-import { observer } from "mobx-react";
 import { forceSimulation, forceLink, forceManyBody } from "d3";
 import Vector2D from "../../../../core/Vector2D";
 
