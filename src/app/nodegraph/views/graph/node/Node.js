@@ -97,7 +97,7 @@ class Node extends React.Component
 	render()
 	{
 		const tempModel = this.props.model;
-		const tempRadius = 10;
+		const tempRadius = 5;
 		const tempOutlineDiameter = ( tempRadius + 10 ) * 2;
 		
 		return (
