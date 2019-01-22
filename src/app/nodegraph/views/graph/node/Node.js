@@ -4,6 +4,7 @@ import { observer } from "mobx-react";
 import { observe } from "mobx";
 import NodeModel from "../../../models/Node";
 import Pin from "../pin/Pin";
+import NodeMenu from "../nodemenu/NodeMenu";
 import "./Node.css";
 
 class Node extends React.Component
@@ -25,6 +26,11 @@ class Node extends React.Component
 		this._onElement = ( tElement ) => { this._element = tElement; };
 		this._onMouseDown = ( tEvent ) => { this.onMouseDown( tEvent ); };
 		this._onMouseUp = ( tEvent ) => { this.onMouseUp( tEvent ); };
+		this._onRemove = ( tEvent ) =>
+		{
+			tEvent.stopPropagation();
+			this.props.onRemove( this.props.model ); 
+		};
 	}
 	
 	componentDidMount()
@@ -114,6 +120,10 @@ class Node extends React.Component
 						)
 					}
 				</g>
+				{
+					tempModel.isSelected &&
+						<NodeMenu onRemove={ this._onRemove }/>
+				}
 			</g>
 		);
 	}
@@ -123,6 +133,8 @@ Node.propTypes =
 {
 	model: PropTypes.instanceOf( NodeModel ).isRequired,
 	onLink: PropTypes.func.isRequired,
+	onLinking: PropTypes.func.isRequired,
+	onRemove: PropTypes.func.isRequired,
 	onSelected: PropTypes.func.isRequired,
 	onDragStart: PropTypes.func.isRequired
 };

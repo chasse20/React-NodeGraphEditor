@@ -1,27 +1,18 @@
 .node-menu
 {
 	opacity: 0;
-	user-select: none;
-	pointer-events: none;
 	stroke: #fff;
 	transition-property: opacity;
 	transition: 0.2s opacity ease;
 }
 
-.node-menu.open
-{
-	user-select: auto;
-	pointer-events: auto;
-}
-
-.node-menu.open:hover
+.nodes:not(.dragging) .node-menu:hover
 {
 	opacity: 1;
 }
 
 .node-menu .link, .node-menu .delete
 {
-	stroke-width: 60px;
 	fill: none;
 }
 

@@ -17,6 +17,7 @@ export default class Nodes extends React.Component
 		this.state =
 		{
 			nodes: null,
+			isDragging: false,
 			linkingPin: null
 		};
 		
@@ -82,7 +83,17 @@ export default class Nodes extends React.Component
 	
 	createElement( tModel )
 	{
-		return React.createElement( tModel._type._viewClass, { model: tModel, key: tModel._id, onLink: this.props.onLink, onLinking: this._onPinLinking, onSelected: this._onNodeSelected, onDragStart: this._onDragStart } );
+		return React.createElement( tModel._type._viewClass,
+			{
+				model: tModel,
+				key: tModel._id,
+				onLink: this.props.onLink,
+				onLinking: this._onPinLinking,
+				onRemove: this.props.onRemoveNode,
+				onSelected: this._onNodeSelected,
+				onDragStart: this._onDragStart 
+			}
+		);
 	}
 	
 	setNode( tNodeView )
@@ -177,7 +188,10 @@ export default class Nodes extends React.Component
 				this._selected = null;
 				
 				document.removeEventListener( "keydown", this._onKeyDown );
-
+			}
+			
+			if ( this.state.linkingPin != null && this.state.linkingPin._node._id === tID )
+			{
 				this.setState( { linkingPin: null } );
 			}
 			
@@ -246,6 +260,8 @@ export default class Nodes extends React.Component
 		
 			document.addEventListener( "mousemove", this._onDragMove );
 			document.addEventListener( "mouseup", this._onDragUp );
+			
+			this.setState( { isDragging: true } );
 		}
 	}
 	
@@ -280,6 +296,8 @@ export default class Nodes extends React.Component
 		
 		document.removeEventListener( "mousemove", this._onDragMove );
 		document.removeEventListener( "mouseup", this._onDragUp );
+		
+		this.setState( { isDragging: false } );
 	}
 	
 	onMarqueeMove( tLocalStart, tLocalEnd ) // TODO: clean up
@@ -300,8 +318,6 @@ export default class Nodes extends React.Component
 			{
 				this.props.onRemoveNode( this._selected[ tempID ] );
 			}
-			
-			this.setState( { linkingPin: null } );
 		}
 	}
 	
@@ -313,7 +329,7 @@ export default class Nodes extends React.Component
 	render()
 	{		
 		return (
-			<g className={ this.state.isLinking ? "nodes linking" : "nodes" }>
+			<g className={ ( this.state.isLinking ? "nodes linking" : "nodes" ) + ( this.state.isDragging ? " dragging" : "" ) }>
 				{ this.state.nodes }
 			</g>
 		);
