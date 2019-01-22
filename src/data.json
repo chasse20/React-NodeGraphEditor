@@ -3,117 +3,73 @@
 	[
 		{
 			"name": "Person",
-			"modelClass": "Node",
 			"viewClass": "Node",
-			"data":
-			{
-				"fill": "#c567bf",
-				"stroke": "#9f4a9a"
-			}
+			"fill": "#c567bf",
+			"stroke": "#9f4a9a"
 		},
 		{
 			"name": "Organization",
-			"modelClass": "Node",
 			"viewClass": "Node",
-			"data":
-			{
-				"fill": "#2891ca",
-				"stroke": "#1f729f"
-			}
+			"fill": "#2891ca",
+			"stroke": "#1f729f"
 		},
 		{
 			"name": "Publication",
-			"modelClass": "Node",
 			"viewClass": "Node",
-			"data":
-			{
-				"fill": "#d2a565",
-				"stroke": "#ac8247"
-			}
+			"fill": "#d2a565",
+			"stroke": "#ac8247"
 		},
 		{
 			"name": "Tech",
-			"modelClass": "Node",
 			"viewClass": "Node",
-			"data":
-			{
-				"fill": "#38d47a",
-				"stroke": "#1cac59",
-				"radius": 75
-			}
+			"fill": "#38d47a",
+			"stroke": "#1cac59",
+			"radius": 75
 		}
 	],
 	"edgeTypes":
 	[
 		{
 			"name": "PersonOrg",
-			"modelClass": "Edge",
 			"viewClass": "Edge",
-			"data":
-			{
-				"stroke": "#9f4a9a",
-				"text": "Belongs to"
-			}
+			"stroke": "#9f4a9a",
+			"text": "Belongs to"
 		},
 		{
 			"name": "PersonPub",
-			"modelClass": "Edge",
 			"viewClass": "Edge",
-			"data":
-			{
-				"stroke": "#9f4a9a",
-				"text": "Writes"
-			}
+			"stroke": "#9f4a9a",
+			"text": "Writes"
 		},
 		{
 			"name": "OrgPub",
-			"modelClass": "Edge",
 			"viewClass": "Edge",
-			"data":
-			{
-				"stroke": "#2891ca",
-				"text": "Writes"
-			}
+			"stroke": "#2891ca",
+			"text": "Writes"
 		},
 		{
 			"name": "OrgTech",
-			"modelClass": "Edge",
 			"viewClass": "Edge",
-			"data":
-			{
-				"stroke": "#2891ca",
-				"text": "Writes"
-			}
+			"stroke": "#2891ca",
+			"text": "Writes"
 		},
 		{
 			"name": "PubPub",
-			"modelClass": "Edge",
 			"viewClass": "Edge",
-			"data":
-			{
-				"stroke": "#ac8247",
-				"text": "References"
-			}
+			"stroke": "#ac8247",
+			"text": "References"
 		},
 		{
 			"name": "PubTech",
-			"modelClass": "Edge",
 			"viewClass": "Edge",
-			"data":
-			{
-				"stroke": "#ac8247",
-				"text": "Inspires"
-			}
+			"stroke": "#ac8247",
+			"text": "Inspires"
 		},
 		{
 			"name": "TechTech",
-			"modelClass": "Edge",
 			"viewClass": "Edge",
-			"data":
-			{
-				"stroke": "#1cac59",
-				"text": "Required by"
-			}
+			"stroke": "#1cac59",
+			"text": "Required by"
 		}
 	],
 	"nodes":
@@ -145,10 +101,7 @@
 					]
 				}
 			},
-			"data":
-			{
-				"text": "R.A. Meger"
-			}
+			"text": "R.A. Meger"
 		},
 		{
 			"id": 2,
@@ -172,10 +125,7 @@
 					]
 				}
 			},
-			"data":
-			{
-				"text": "George E. Blomgren"
-			}
+			"text": "George E. Blomgren"
 		},
 		{
 			"id": 3,
@@ -204,10 +154,7 @@
 					]
 				}
 			},
-			"data":
-			{
-				"text": "Abhishek Sarkar"
-			}
+			"text": "Abhishek Sarkar"
 		},
 		{
 			"id": 4,
@@ -236,10 +183,7 @@
 					]
 				}
 			},
-			"data":
-			{
-				"text": "Pranav Shrotriya"
-			}
+			"text": "Pranav Shrotriya"
 		},
 		{
 			"id": 5,
@@ -268,10 +212,7 @@
 					]
 				}
 			},
-			"data":
-			{
-				"text": "Abhijit Chandra"
-			}
+			"text": "Abhijit Chandra"
 		},
 		{
 			"id": 6,
@@ -295,10 +236,7 @@
 					]
 				}
 			},
-			"data":
-			{
-				"text": "Iowa State University"
-			}
+			"text": "Iowa State University"
 		},
 		{
 			"id": 7,
@@ -322,10 +260,7 @@
 					]
 				}
 			},
-			"data":
-			{
-				"text": "U.S. Naval Research Laboratory"
-			}
+			"text": "U.S. Naval Research Laboratory"
 		},
 		{
 			"id": 8,
@@ -349,10 +284,7 @@
 					]
 				}
 			},
-			"data":
-			{
-				"text": "BAE Systems"
-			}
+			"text": "BAE Systems"
 		},
 		{
 			"id": 9,
@@ -381,11 +313,8 @@
 					]
 				}
 			},
-			"data":
-			{
-				"text": "Analysis of rail surfaces from a multishot railgun",
-				"date": 1337955680000
-			}
+			"text": "Analysis of rail surfaces from a multishot railgun",
+			"date": 1337955680000
 		},
 		{
 			"id": 10,
@@ -409,11 +338,8 @@
 					]
 				}
 			},
-			"data":
-			{
-				"text": "Parametric Analysis of Electrode Materials",
-				"date": 1394029280000
-			}
+			"text": "Parametric Analysis of Electrode Materials",
+			"date": 1394029280000
 		},
 		{
 			"id": 11,
@@ -437,11 +363,8 @@
 					]
 				}
 			},
-			"data":
-			{
-				"text": "The Development and Future of Lithium Ion Batteries",
-				"date": 1480568400000
-			}
+			"text": "The Development and Future of Lithium Ion Batteries",
+			"date": 1480568400000
 		},
 		{
 			"id": 12,
@@ -465,11 +388,8 @@
 					]
 				}
 			},
-			"data":
-			{
-				"text": "Projectile Loader",
-				"date": 1433514080000
-			}
+			"text": "Projectile Loader",
+			"date": 1433514080000
 		},
 		{
 			"id": 13,
@@ -493,11 +413,8 @@
 					]
 				}
 			},
-			"data":
-			{
-				"text": "High-Capacity Lithium-Iron Battery",
-				"date": 1496672480000
-			}
+			"text": "High-Capacity Lithium-Iron Battery",
+			"date": 1496672480000
 		},
 		{
 			"id": 14,
@@ -507,11 +424,8 @@
 				"x": 4485,
 				"y": 690
 			},
-			"data":
-			{
-				"text": "Electromagnetic Railgun",
-				"date": 1527220800000
-			}
+			"text": "Electromagnetic Railgun",
+			"date": 1527220800000
 		}
 	]
 }
