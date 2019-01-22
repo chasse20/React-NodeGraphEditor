@@ -3,7 +3,8 @@
 	opacity: 0;
 	stroke: #fff;
 	transition-property: opacity;
-	transition: 0.2s opacity ease;
+	transition: 0.2s opacity ease-in;
+	transition-delay: 0.2s;
 }
 
 .graph:not(.marqueeing) .nodes:not(.dragging) .node-menu:hover
@@ -11,9 +12,17 @@
 	opacity: 1;
 }
 
-.node-menu .link, .node-menu .delete
+.node-menu circle
 {
 	fill: none;
+	stroke: #c4c4c4;
+	transition: 0.4s stroke ease;
+	transition-property: stroke;
+}
+
+.node-menu circle:hover
+{
+	stroke: #b4b4b4;
 }
 
 .node-menu .link
@@ -24,5 +33,14 @@
 .node-menu .delete
 {
 	transform: rotate( 90deg );
-	stroke: #333333;
+}
+
+.node-menu .icon
+{
+	user-select: none;
+	pointer-events: none;
+	display: block;
+	fill: #fff;
+	height: 60px;
+	width: 60px;
 }
