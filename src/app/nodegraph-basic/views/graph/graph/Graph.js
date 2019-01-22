@@ -1,0 +1,46 @@
+import React from "react";
+import PropTypes from "prop-types";
+import { observe } from "mobx";
+import { observer } from "mobx-react";
+import Vector2D from "../../../../core/Vector2D";
+import GraphModel from "../../../models/Graph";
+import GraphBase from "../../../../nodegraph/views/graph/graph/Graph";
+import Nodes from "../nodes/Nodes";
+import Edges from "../../../../nodegraph/views/graph/edges/Edges";
+import Grid from "../../../../nodegraph/views/graph/grid/Grid";
+import Arrows from "../arrows/Arrows";
+
+class Graph extends GraphBase
+{	
+	render()
+	{
+		// Class
+		var tempClass = "graph";
+		if ( this.props.model.isPanning )
+		{
+			tempClass += " panning";
+		}
+		
+		if ( this.props.model.isMarqueeing )
+		{
+			tempClass += " marqueeing";
+		}
+		
+		// Render
+		return (
+			<svg className={ tempClass } onWheel={ this._onMouseWheel } onMouseDown={ this._onMouseDown }>
+				<Arrows types={ this.props.model._edgeTypes }/>
+				<Grid isVisible={ this.props.isGridVisible } offset={ this.props.model.position } zoom={ this.props.model.zoom }/>
+				<g ref={ this._onViewElement }>
+					<g ref={ this._onContainerElement }>
+						<Edges ref={ this._onEdges }/>
+						<Nodes ref={ this._onNodes } nodes={ this.props.model._nodes } onLink={ this._onLink } onRemoveNode={ this._onRemoveNode } position={ this.props.model.position } zoom={ this.props.model.zoom } isGridSnap={ this.props.isGridSnap }/>
+					</g>
+				</g>
+				<rect ref={ this._onMarqueeElement } className="marquee"/>
+			</svg>
+		);
+	}
+}
+
+export default observer( Graph );

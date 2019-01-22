@@ -1,0 +1,28 @@
+.node
+{
+	position: absolute;
+}
+
+.node .graphic
+{ 
+	stroke-width: 2;
+	cursor: pointer;
+}
+
+.node .outline
+{
+	user-select: none;
+	pointer-events: none;
+	stroke-linecap: square;
+	stroke: #000;
+	stroke-width: 2;
+	fill: none;
+	opacity: 0;
+	transition: 0.2s opacity ease;
+}
+
+.node.selected .outline
+{
+	opacity: 1;
+	transition: 0.2s opacity ease;
+}
