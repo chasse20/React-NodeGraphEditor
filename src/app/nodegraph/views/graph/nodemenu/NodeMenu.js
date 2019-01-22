@@ -65,14 +65,13 @@ export default class NodeMenu extends React.Component
 	
 	render()
 	{
-		const tempInnerRadius = 10;
-		const tempOuterRadius = 50;
+		const tempOuterRadius = 60;
+		const tempCircumference = 2 * Math.PI * tempOuterRadius;
 		
 		return (
 			<g className={ this.props.selected == null ? "node-menu" : "node-menu open" } ref={ this._onElement }>
-				<circle fill="#ffffff" fillOpacity="0" x="0" y="0" r={ tempOuterRadius }/>
-				<line x1="0" y1={ tempOuterRadius } x2="0" y2={ 60 }/>
-				<line x1="0" y1={ -tempOuterRadius } x2="0" y2={ -60 }/>
+				<circle className="delete" strokeDasharray={ tempCircumference * 0.5 } cx="0" cy="0" r={ tempOuterRadius } onMouseDown={ ( tEvent ) => { tEvent.stopPropagation(); console.log( "DD" ); } }/>
+				<circle className="link" strokeDasharray={ tempCircumference * 0.5 } cx="0" cy="0" r={ tempOuterRadius } onMouseDown={ ( tEvent ) => { tEvent.stopPropagation(); console.log( "DD" ); } }/>
 			</g>
 		);
 	}

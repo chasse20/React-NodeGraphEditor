@@ -91,7 +91,6 @@ export default class Edges extends React.PureComponent
 	
 	render()
 	{
-		console.log( "??" );
 		return (
 			<g className="edges">
 				{ this.state.edges }

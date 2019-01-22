@@ -1,16 +1,37 @@
 .node-menu
 {
 	opacity: 0;
+	user-select: none;
 	pointer-events: none;
+	stroke: #fff;
+	transition-property: opacity;
+	transition: 0.2s opacity ease;
 }
 
-.node-menu line
+.node-menu.open
 {
-	stroke-width: 2px;
-	stroke: #878787;
+	user-select: auto;
+	pointer-events: auto;
 }
 
-.node-menu path
+.node-menu.open:hover
 {
-	fill: #9e9d9d;
+	opacity: 1;
+}
+
+.node-menu .link, .node-menu .delete
+{
+	stroke-width: 60px;
+	fill: none;
+}
+
+.node-menu .link
+{
+	transform: rotate( -90deg );
+}
+
+.node-menu .delete
+{
+	transform: rotate( 90deg );
+	stroke: #333333;
 }

@@ -4,7 +4,6 @@ import { observe } from "mobx";
 import Bounds from "../../../../core/Bounds";
 import Vector2D from "../../../../core/Vector2D";
 import NodeModel from "../../../models/Node";
-import NodeMenu from "../nodemenu/NodeMenu";
 import "./Nodes.css";
 
 export default class Nodes extends React.Component
@@ -18,7 +17,7 @@ export default class Nodes extends React.Component
 		this.state =
 		{
 			nodes: null,
-			single: null
+			linkingPin: null
 		};
 		
 		// Variables
@@ -27,7 +26,6 @@ export default class Nodes extends React.Component
 		this._selected = null;
 		this._selectedCount = 0;
 		this._dragOffsets = null;
-		this._nodeMenu = null;
 		
 		// Events
 		this._onNodesDispose = observe( tProps.nodes,
@@ -54,6 +52,7 @@ export default class Nodes extends React.Component
 				this.removeSelected( tNode._id );
 			}
 		};
+		this._onPinLinking = ( tPin, tIsStart ) => { this.onPinLinking( tPin, tIsStart ); };
 		this._onDragStart = ( tEvent ) => { this.onDragStart( tEvent ); };
 		this._onDragMove = ( tEvent ) => { this.onDragMove( tEvent ); };
 		this._onDragUp = ( tEvent ) => { this.onDragUp( tEvent ); };
@@ -83,7 +82,7 @@ export default class Nodes extends React.Component
 	
 	createElement( tModel )
 	{
-		return React.createElement( tModel._type._viewClass, { model: tModel, key: tModel._id, onLink: this.props.onLink, onSelected: this._onNodeSelected, onDragStart: this._onDragStart } );
+		return React.createElement( tModel._type._viewClass, { model: tModel, key: tModel._id, onLink: this.props.onLink, onLinking: this._onPinLinking, onSelected: this._onNodeSelected, onDragStart: this._onDragStart } );
 	}
 	
 	setNode( tNodeView )
@@ -146,7 +145,6 @@ export default class Nodes extends React.Component
 				this._selected[ tNode._id ] = tNode;
 				
 				this.updateElements();
-				this.setState( { single: tNode } );
 				
 				document.addEventListener( "keydown", this._onKeyDown );
 				
@@ -158,7 +156,6 @@ export default class Nodes extends React.Component
 				++this._selectedCount;
 				
 				this.updateElements();
-				this.setState( { single: null } );
 				
 				return true;
 			}
@@ -174,25 +171,14 @@ export default class Nodes extends React.Component
 			delete this._selected[ tID ];
 			
 			--this._selectedCount;
-			if ( this._selectedCount === 1 )
+			if ( this._selectedCount <= 0 )
 			{
-				for ( let tempID in this._selected )
-				{
-					this.setState( { single: this._selected[ tempID ] } );
-					break;
-				}
-			}
-			else
-			{
-				if ( this._selectedCount <= 0 )
-				{
-					this._selectedCount = 0;
-					this._selected = null;
-					
-					document.removeEventListener( "keydown", this._onKeyDown );
-				}
+				this._selectedCount = 0;
+				this._selected = null;
 				
-				this.setState( { single: null } );
+				document.removeEventListener( "keydown", this._onKeyDown );
+
+				this.setState( { linkingPin: null } );
 			}
 			
 			this.updateElements();
@@ -314,18 +300,22 @@ export default class Nodes extends React.Component
 			{
 				this.props.onRemoveNode( this._selected[ tempID ] );
 			}
+			
+			this.setState( { linkingPin: null } );
 		}
+	}
+	
+	onPinLinking( tPin, tIsStart )
+	{
+		
 	}
 	
 	render()
 	{		
 		return (
-			<React.Fragment>
-				<g className="nodes">
-					{ this.state.nodes }
-				</g>
-				<NodeMenu selected={ this.state.single }/>
-			</React.Fragment>
+			<g className={ this.state.isLinking ? "nodes linking" : "nodes" }>
+				{ this.state.nodes }
+			</g>
 		);
 	}
 }

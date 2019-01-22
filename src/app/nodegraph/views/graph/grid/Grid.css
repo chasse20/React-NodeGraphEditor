@@ -1,8 +1,6 @@
 .grid
 {
 	opacity: 0;
-	height: inherit;
-	width: inherit;
 }
 
 .grid.visible

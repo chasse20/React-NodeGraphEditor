@@ -20,7 +20,7 @@ export default class Grid extends React.PureComponent
 						<path d="M 100 0 L 0 0 0 100" fill="none" stroke="#b6b9bf" strokeWidth="2" strokeOpacity="0.45"/>
 					</pattern>
 				</defs>
-				<rect className={ this.props.isVisible ? "grid visible" : "grid" } fill="url(#grid)"/>
+				<rect className={ this.props.isVisible ? "grid visible" : "grid" } fill="url(#grid)" width="100%" height="100%"/>
 			</React.Fragment>
 		);
 	}
