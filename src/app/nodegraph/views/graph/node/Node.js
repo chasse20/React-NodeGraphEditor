@@ -26,10 +26,10 @@ class Node extends React.Component
 		this._onElement = ( tElement ) => { this._element = tElement; };
 		this._onMouseDown = ( tEvent ) => { this.onMouseDown( tEvent ); };
 		this._onMouseUp = ( tEvent ) => { this.onMouseUp( tEvent ); };
-		this._onRemove = ( tEvent ) =>
+		this._onRemove = ( tEvent ) => { this.onRemove( tEvent ); };
+		this._onLinking = ( tIsStart ) =>
 		{
-			tEvent.stopPropagation();
-			this.props.onRemove( this.props.model ); 
+			this.props.onStart( tIsStart ? this.props.model._pins.out : this.props.model._pins.in );
 		};
 	}
 	
@@ -94,6 +94,15 @@ class Node extends React.Component
 			this.props.model.isSelected = !this.props.model.isSelected;
 		}
 	}
+	
+	onRemove( tEvent )
+	{
+		if ( tEvent.button !== 1 ) // middle-mouse is reserved
+		{
+			tEvent.stopPropagation();
+			this.props.onRemove( this.props.model );
+		}
+	}
 
 	set position( tPosition )
 	{
@@ -122,7 +131,7 @@ class Node extends React.Component
 				</g>
 				{
 					tempModel.isSelected &&
-						<NodeMenu onRemove={ this._onRemove }/>
+						<NodeMenu onRemove={ this._onRemove } onLinking={ this.props.onLinking }/>
 				}
 			</g>
 		);

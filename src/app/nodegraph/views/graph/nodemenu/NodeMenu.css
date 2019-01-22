@@ -6,7 +6,7 @@
 	transition: 0.2s opacity ease;
 }
 
-.nodes:not(.dragging) .node-menu:hover
+.graph:not(.marqueeing) .nodes:not(.dragging) .node-menu:hover
 {
 	opacity: 1;
 }

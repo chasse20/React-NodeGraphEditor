@@ -327,9 +327,22 @@ export default class Nodes extends React.Component
 	}
 	
 	render()
-	{		
+	{
+		// Class
+		var tempClass = "nodes";
+		if ( this.state.isDragging )
+		{
+			tempClass += " dragging";
+		}
+		
+		if ( this.state.isLinking )
+		{
+			tempClass += " linking";
+		}
+		
+		// Render
 		return (
-			<g className={ ( this.state.isLinking ? "nodes linking" : "nodes" ) + ( this.state.isDragging ? " dragging" : "" ) }>
+			<g className={ tempClass }>
 				{ this.state.nodes }
 			</g>
 		);
