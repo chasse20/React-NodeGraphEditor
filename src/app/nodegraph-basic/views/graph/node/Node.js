@@ -2,12 +2,12 @@ import React from "react";
 import PropTypes from "prop-types";
 import { observer } from "mobx-react";
 import { observe } from "mobx";
-import NodeModel from "../../../models/Node";
+import NodeBase from "../../../../nodegraph/views/graph/node/Node";
 import Pin from "../../../../nodegraph/views/graph/pin/Pin";
 import NodeMenu from "../nodemenu/NodeMenu";
 import "./Node.css";
 
-class Node extends React.Component
+class Node extends NodeBase
 {
 	constructor( tProps )
 	{
@@ -15,15 +15,11 @@ class Node extends React.Component
 		super( tProps );
 		
 		// Variables
-		this._element = null;
-		this._clickTimeout = null;
+		this._physicsBody = this.createPhysics();
 		
 		// Events
-		this._onPositionDispose = observe( tProps.model, "position", ( tChange ) => { this.position = tChange.newValue; } );
-		this._onSelectedDispose = observe( tProps.model, "isSelected", ( tChange ) => { this.props.onSelected( this.props.model ); } );
-		this._onElement = ( tElement ) => { this._element = tElement; };
-		this._onMouseDown = ( tEvent ) => { this.onMouseDown( tEvent ); };
-		this._onMouseUp = ( tEvent ) => { this.onMouseUp( tEvent ); };
+		this._onSelectedDispose();
+		this._onSelectedDispose = observe( tProps.model, "isSelected", ( tChange ) => { this.isSelected = tChange.newValue; } );
 		this._onRemove = ( tEvent ) => { this.onRemove( tEvent ); };
 		this._onLinking = ( tIsStart ) =>
 		{
@@ -33,78 +29,67 @@ class Node extends React.Component
 	
 	componentDidMount()
 	{
-		const tempModel = this.props.model;
+		super.componentDidMount();
 		
-		this.isSelected = tempModel.isSelected;
-		this.position = tempModel.position;
+		this.props.onPhysics( this._physicsBody, true );
 	}
 	
 	componentWillUnmount()
 	{
-		this.isSelected = false;
+		super.componentWillUnmount();
 		
-		this._onPositionDispose();
-		this._onPositionDispose = null;
-		this._onSelectedDispose();
-		this._onSelectedDispose = null;
+		this.props.onPhysics( this._physicsBody, false );
+	}
+	
+	createPhysics()
+	{
+		const tempModel = this.props.model;
 		
-		if ( this._clickTimeout !== null )
-		{
-			clearTimeout( this._clickTimeout );
-		}
+		return {
+			id: tempModel._id,
+			x: tempModel.position.x,
+			y: tempModel.position.y,
+			model: tempModel
+		};
 	}
 	
-	onMouseDown( tEvent )
+	set isSelected( tIsSelected )
 	{
-		// Select
-		tEvent.stopPropagation();
-		if ( tEvent.button !== 1 ) // middle-mouse is reserved
+		// Physics
+		if ( tIsSelected )
 		{
-			// Check for selection toggle click if node is already selected
-			const tempModel = this.props.model;
-			if ( tempModel.isSelected )
-			{
-				clearTimeout( this._clickTimeout );
-				this._clickTimeout = setTimeout(
-					() =>
-					{
-						this._clickTimeout = null;
-					},
-					200
-				);
-			}
-			
-			// Set
-			tempModel.isSelected = true;
-			this.props.onDragStart( tEvent );
+			this._physicsBody.fx = this.props.model.position.x;
+			this._physicsBody.fy = this.props.model.position.y;
 		}
-	}
-	
-	onMouseUp( tEvent )
-	{
-		// Toggle node selection if within simulated click time
-		tEvent.stopPropagation();
-		if ( tEvent.button !== 1 && this._clickTimeout !== null ) // middle-mouse is reserved
+		else
 		{
-			clearTimeout( this._clickTimeout );
-			this._clickTimeout = null;
-			
-			this.props.model.isSelected = !this.props.model.isSelected;
+			delete this._physicsBody.fx;
+			delete this._physicsBody.fy;
 		}
-	}
-	
-	onRemove( tEvent )
-	{
-		if ( tEvent.button !== 1 ) // middle-mouse is reserved
-		{
-			tEvent.stopPropagation();
-			this.props.onRemove( this.props.model );
-		}
+		
+		this.props.onSelected( this.props.model );
 	}
 
 	set position( tPosition )
 	{
-		this._element.setAttribute( "transform", "translate(" + tPosition.x + "," + tPosition.y + ")" );
+		// Physics
+		if ( this.props.model.isSelected )
+		{
+			this._physicsBody.fx = tPosition.x;
+			this._physicsBody.fy = tPosition.y;
+		}
+		
+		this._physicsBody.x = tPosition.x;
+		this._physicsBody.y = tPosition.y;
+		
+		// Inheritance
+		super.position = tPosition;
+	}
+	
+	onRemove( tEvent )
+	{
+		tEvent.stopPropagation();
+		this.props.onRemove( this.props.model );
 	}
 	
 	render()
@@ -149,12 +134,9 @@ class Node extends React.Component
 
 Node.propTypes =
 {
-	model: PropTypes.instanceOf( NodeModel ).isRequired,
-	onLink: PropTypes.func.isRequired,
 	onLinking: PropTypes.func.isRequired,
 	onRemove: PropTypes.func.isRequired,
-	onSelected: PropTypes.func.isRequired,
-	onDragStart: PropTypes.func.isRequired
+	onPhysics: PropTypes.func.isRequired,
 };
 
 export default observer( Node );

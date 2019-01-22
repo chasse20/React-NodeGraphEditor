@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import NodesBase from "../../../../nodegraph/views/graph/nodes/Nodes";
 
 export default class Nodes extends NodesBase
@@ -25,7 +26,8 @@ export default class Nodes extends NodesBase
 				onLinking: this._onPinLinking,
 				onRemove: this.props.onRemoveNode,
 				onSelected: this._onNodeSelected,
-				onDragStart: this._onDragStart 
+				onDragStart: this._onDragStart ,
+				onPhysics: this.props.onPhysics
 			}
 		);
 	}
@@ -72,3 +74,8 @@ export default class Nodes extends NodesBase
 		);
 	}
 }
+
+Nodes.propTypes =
+{
+	onPhysics: PropTypes.func.isRequired
+};

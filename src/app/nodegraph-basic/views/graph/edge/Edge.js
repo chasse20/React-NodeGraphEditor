@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { observer } from "mobx-react";
 import Vector2D from "../../../../core/Vector2D";
 import EdgeBase from "../../../../nodegraph/views/graph/edge/Edge";
@@ -13,9 +14,34 @@ class Edge extends EdgeBase
 
 		// Variables
 		this._textElement = null;
+		this._physicsBody = this.createPhysics();
 
 		// Events
 		this._onTextElement = ( tElement ) => { this._textElement = tElement; };
+	}
+	
+	componentDidMount()
+	{
+		super.componentDidMount();
+		
+		this.props.onPhysics( this._physicsBody, true );
+	}
+	
+	componentWillUnmount()
+	{
+		super.componentWillUnmount();
+		
+		this.props.onPhysics( this._physicsBody, false );
+	}
+	
+	createPhysics()
+	{
+		const tempModel = this.props.model;
+		
+		return {
+			source: tempModel._source._node._id,
+			target: tempModel._target._node._id
+		};
 	}
 	
 	set sourcePosition( tVector )
@@ -75,5 +101,10 @@ class Edge extends EdgeBase
 		);
 	}
 }
+
+Edge.propTypes =
+{
+	onPhysics: PropTypes.func.isRequired
+};
 
 export default observer( Edge );
