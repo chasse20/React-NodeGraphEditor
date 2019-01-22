@@ -13,16 +13,16 @@
 {
 	user-select: none;
 	pointer-events: none;
-	stroke-linecap:square;
+	stroke-linecap: square;
 	stroke: #000;
 	stroke-width: 2;
 	fill: none;
 	opacity: 0;
 	transition: 0.2s opacity ease;
-	transition-property: opacity;
 }
 
 .node.selected .outline
 {
 	opacity: 1;
+	transition: 0.2s opacity ease;
 }

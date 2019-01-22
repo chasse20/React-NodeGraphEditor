@@ -14,7 +14,7 @@ export default class Nodes extends React.Component
 		super( tProps );
 		
 		// State
-		this.state =
+		this.state = // TODO: Check if the CSS transitions are preserved if these are arrays
 		{
 			selected: {},
 			nodes: {} // all node elements
