@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { Switch, Route } from "react-router";
-import Graph from "./nodegraph/views/graph/Graph";
-import GraphVizReader from "./format/GraphVizReader";
-import GraphJSONReader from "./format/GraphJSONReader";
-import GraphModel from "./nodegraph/Graph";
+import Graph from "./nodegraph/views/graph/graph/Graph";
+import GraphVizReader from "./nodegraph/formats/GraphVizReader";
+import GraphJSONReader from "./nodegraph/formats/GraphJSONReader";
+import GraphModel from "./nodegraph/models/Graph";
 import Data from "../data.json";
 import DataGraphJSON from "../graphjson.json";
 import "./App.css";
