@@ -4,6 +4,7 @@ import { observe } from "mobx";
 import Bounds from "../../../../core/Bounds";
 import Vector2D from "../../../../core/Vector2D";
 import NodeModel from "../../../models/Node";
+import Node from "../node/Node";
 import "./Nodes.css";
 
 export default class Nodes extends React.Component
@@ -83,7 +84,13 @@ export default class Nodes extends React.Component
 	
 	createElement( tModel )
 	{
-		return React.createElement( tModel._type._viewClass,
+		var tempViewClass = tModel._type._viewClass;
+		if ( tempViewClass == null )
+		{
+			tempViewClass = Node;
+		}
+		
+		return React.createElement( tempViewClass,
 			{
 				model: tModel,
 				key: tModel._id,

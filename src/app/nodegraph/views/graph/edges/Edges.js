@@ -1,4 +1,5 @@
 import React from "react";
+import Edge from "../edge/Edge";
 import "./Edges.css";
 
 export default class Edges extends React.PureComponent
@@ -33,6 +34,12 @@ export default class Edges extends React.PureComponent
 	
 	createElement( tModel )
 	{
+		var tempViewClass = tModel._type._viewClass;
+		if ( tempViewClass == null )
+		{
+			tempViewClass = Edge;
+		}
+		
 		return React.createElement( tModel._type._viewClass, { model: tModel, key: tModel.id } );
 	}
 	

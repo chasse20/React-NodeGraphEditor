@@ -4,7 +4,7 @@ import Type from "../models/Type";
 
 export default class GraphJSONReader // TODO: Clustering
 {
-	static Read( tGraphModel, tJSON )
+	read( tGraphModel, tJSON, tNodeTextField = "caption", tEdgeTextField = "caption" )
 	{
 		if ( tGraphModel != null && tJSON != null && tJSON.nodes != null )
 		{
@@ -14,7 +14,7 @@ export default class GraphJSONReader // TODO: Clustering
 			for ( let i = 0; i < tempListLength; ++i )
 			{
 				let tempNodeJSON = tJSON.nodes[i];
-				let tempNode = GraphJSONReader.ReadNode( tGraphModel, tempNodeJSON );
+				let tempNode = this.readNode( tGraphModel, tempNodeJSON, tNodeTextField );
 				if ( tGraphModel.setNode( tempNode ) )
 				{
 					tempNodeRefs[ tempNodeJSON.id ] = tempNode;
@@ -27,13 +27,13 @@ export default class GraphJSONReader // TODO: Clustering
 				tempListLength = tJSON.edges.length;
 				for ( let i = 0; i < tempListLength; ++i )
 				{
-					GraphJSONReader.ReadEdge( tGraphModel, tJSON.edges[i], tempNodeRefs );
+					this.readEdge( tGraphModel, tJSON.edges[i], tempNodeRefs, tEdgeTextField );
 				}
 			}
 		}
 	}
 	
-	static ReadNode( tGraphModel, tJSON )
+	readNode( tGraphModel, tJSON, tTextField = "caption" )
 	{
 		if ( tGraphModel != null && tJSON != null )
 		{
@@ -48,19 +48,33 @@ export default class GraphJSONReader // TODO: Clustering
 				tempType = tGraphModel._nodeTypes[ tJSON.type ];
 				if ( tempType === undefined )
 				{
-					tempType = new Type( tJSON.type, tGraphModel._nodeTypes[ "default" ]._viewClass );
-					
+					tempType = this.readNodeType( tJSON, tGraphModel._nodeTypes[ "default" ]._viewClass );
 					tGraphModel.setNodeType( tempType );
 				}
 			}
 			
-			return new Node( tempType );
+			return this.createNode( tempType );
 		}
 		
 		return null;
 	}
 	
-	static ReadEdge( tGraphModel, tJSON, tNodeRefs, tEdgeTextField = "caption" )
+	readNodeType( tJSON, tViewClass )
+	{
+		return this.createNodeType( tJSON.type, tViewClass );
+	}
+	
+	createNodeType( tName, tViewClass )
+	{
+		return new Type( tName, tViewClass );
+	}
+	
+	createNode( tType )
+	{
+		return new Node( tType );
+	}
+	
+	readEdge( tGraphModel, tJSON, tNodeRefs, tTextField = "caption" )
 	{
 		if ( tGraphModel != null && tJSON != null && tJSON.source != null && tJSON.target != null && tNodeRefs != null )
 		{
@@ -74,7 +88,7 @@ export default class GraphJSONReader // TODO: Clustering
 				{
 					// Model class
 					var tempType = null;
-					const tempTypeName = tJSON[ tEdgeTextField ];
+					const tempTypeName = tJSON[ tTextField ];
 					if ( tempTypeName == null )
 					{
 						tempType = tGraphModel._edgeTypes[ "default" ];
@@ -84,14 +98,13 @@ export default class GraphJSONReader // TODO: Clustering
 						tempType = tGraphModel._edgeTypes[ tempTypeName ];
 						if ( tempType === undefined )
 						{
-							tempType = new Type( tempTypeName, tGraphModel._edgeTypes[ "default" ]._viewClass );
-							
+							tempType = this.readEdgeType( tJSON, tGraphModel._edgeTypes[ "default" ]._viewClass, tTextField );
 							tGraphModel.setEdgeType( tempType );
 						}
 					}
 
 					const tempSourcePin = tempSourceNode._pins.out;
-					const tempEdge = new Edge( tempType, tempSourcePin, tempTargetNode._pins.in );
+					const tempEdge = this.createEdge( tempType, tempSourcePin, tempTargetNode._pins.in );
 					tempSourcePin.setLink( tempEdge );
 					
 					return tempEdge;
@@ -100,5 +113,20 @@ export default class GraphJSONReader // TODO: Clustering
 		}
 		
 		return null;
+	}
+	
+	readEdgeType( tJSON, tViewClass, tTextField = "caption" )
+	{
+		return this.createEdgeType( tJSON[ tTextField ], tViewClass );
+	}
+	
+	createEdgeType( tName, tViewClass )
+	{
+		return new Type( tName, tViewClass );
+	}
+	
+	createEdge( tType, tSourcePin, tTargetPin )
+	{
+		return new Edge( tType, tSourcePin, tTargetPin );
 	}
 }

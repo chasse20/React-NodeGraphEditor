@@ -6,20 +6,20 @@ import NodeView from "../views/graph/node/Node";
 
 export default class GraphVizReader
 {
-	static Read( tModel, tJSON )
+	read( tModel, tJSON )
 	{
 		if ( tModel != null && tJSON != null )
 		{
-			GraphVizReader.ReadGraph( tModel, tJSON );
+			this.readGraph( tModel, tJSON );
 		}
 	}
 	
-	static ReadGraph( tGraphModel, tJSON )
+	readGraph( tGraphModel, tJSON )
 	{
 		if ( tGraphModel != null && tJSON != null )
 		{
 			// Position
-			GraphVizReader.ReadVector( tGraphModel.position, tJSON.position );
+			this.readVector( tGraphModel.position, tJSON.position );
 			
 			// Zoom
 			if ( tJSON.zoom != null )
@@ -33,7 +33,7 @@ export default class GraphVizReader
 				const tempListLength = tJSON.nodeTypes.length;
 				for ( let i = 0; i < tempListLength; ++i )
 				{
-					tGraphModel.setNodeType( GraphVizReader.ReadType( tJSON.nodeTypes[i], tGraphModel._nodeTypes[ "default" ], NodeView.SerializableClasses ) );
+					tGraphModel.setNodeType( this.readNodeType( tJSON.nodeTypes[i], tGraphModel._nodeTypes[ "default" ], NodeView.SerializableClasses ) );
 				}
 			}
 			
@@ -43,7 +43,7 @@ export default class GraphVizReader
 				const tempListLength = tJSON.edgeTypes.length;
 				for ( let i = 0; i < tempListLength; ++i )
 				{
-					tGraphModel.setEdgeType( GraphVizReader.ReadType( tJSON.edgeTypes[i], tGraphModel._edgeTypes[ "default" ], EdgeView.SerializableClasses ) );
+					tGraphModel.setEdgeType( this.readEdgeType( tJSON.edgeTypes[i], tGraphModel._edgeTypes[ "default" ], EdgeView.SerializableClasses ) );
 				}
 			}
 			
@@ -57,7 +57,7 @@ export default class GraphVizReader
 				for ( let i = 0; i < tempListLength; ++i )
 				{
 					let tempNodeJSON = tJSON.nodes[i];
-					let tempNode = GraphVizReader.ReadNode( tempNodeJSON, tGraphModel._nodeTypes );
+					let tempNode = this.readNode( tempNodeJSON, tGraphModel._nodeTypes );
 					if ( tGraphModel.setNode( tempNode ) )
 					{
 						tempNodeJSONs[ tempNode._id ] = tempNodeJSON;
@@ -68,13 +68,13 @@ export default class GraphVizReader
 				// Post with references
 				for ( let tempID in tempNodeRefs )
 				{
-					GraphVizReader.ReadNodePost( tempNodeRefs[ tempID ], tempNodeJSONs[ tempNodeRefs[ tempID ]._id ], tempNodeRefs, tGraphModel._edgeTypes );
+					this.readNodePost( tempNodeRefs[ tempID ], tempNodeJSONs[ tempNodeRefs[ tempID ]._id ], tempNodeRefs, tGraphModel._edgeTypes );
 				}
 			}
 		}
 	}
 	
-	static ReadVector( tVectorModel, tJSON )
+	readVector( tVectorModel, tJSON )
 	{
 		if ( tVectorModel != null && tJSON != null )
 		{
@@ -92,7 +92,7 @@ export default class GraphVizReader
 		}
 	}
 	
-	static ReadType( tJSON, tDefaultType, tSerializableViews )
+	readNodeType( tJSON, tDefaultType, tSerializableViews )
 	{
 		if ( tJSON != null && tJSON.name != null && tSerializableViews != null )
 		{
@@ -103,31 +103,54 @@ export default class GraphVizReader
 				tempViewClass = tSerializableViews[ "default" ];
 			}
 			
-			return new Type( tJSON.name, tempViewClass );
+			return this.createNodeType( tJSON.name, tempViewClass );
 		}
 		
 		return null;
 	}
 	
-	static ReadNode( tJSON, tTypes )
+	createNodeType( tName, tViewClass )
+	{
+		return new Type( tName, tViewClass );
+	}
+	
+	readEdgeType( tJSON, tDefaultType, tSerializableViews )
+	{
+		if ( tJSON != null && tJSON.name != null && tSerializableViews != null )
+		{
+			// View class
+			var tempViewClass = tJSON.viewClass == null ? null : tSerializableViews[ tJSON.viewClass ];
+			if ( tempViewClass == null )
+			{
+				tempViewClass = tSerializableViews[ "default" ];
+			}
+			
+			return this.createEdgeType( tJSON.name, tempViewClass );
+		}
+		
+		return null;
+	}
+	
+	createEdgeType( tName, tViewClass )
+	{
+		return new Type( tName, tViewClass );
+	}
+	
+	readNode( tJSON, tTypes )
 	{
 		if ( tJSON != null && tTypes != null )
 		{
-			// Model class
-			var tempType = null;
-			if ( tJSON.type == null )
+			// Type
+			var tempType = tJSON.type == null ? null : tTypes[ tJSON.type ];
+			if ( tempType == null )
 			{
 				tempType = tTypes[ "default" ];
 			}
-			else
-			{
-				tempType = tTypes[ tJSON.type ];
-			}
 			
-			const tempNode = new Node( tempType );
+			const tempNode = this.createNode( tempType );
 			
 			// Position
-			GraphVizReader.ReadVector( tempNode.position, tJSON.position );
+			this.readVector( tempNode.position, tJSON.position );
 			
 			return tempNode;
 		}
@@ -135,7 +158,12 @@ export default class GraphVizReader
 		return null;
 	}
 	
-	static ReadNodePost( tNodeModel, tJSON, tNodeRefs, tEdgeTypes )
+	createNode( tType )
+	{
+		return new Node( tType );
+	}
+	
+	readNodePost( tNodeModel, tJSON, tNodeRefs, tEdgeTypes )
 	{
 		if ( tJSON != null && tJSON.pins != null )
 		{
@@ -145,24 +173,24 @@ export default class GraphVizReader
 				let tempPin = tNodeModel._pins[ tempName ];
 				if ( tempPin != null )
 				{
-					GraphVizReader.ReadPinPost( tempPin, tJSON.pins[ tempName ], tNodeRefs, tEdgeTypes );
+					this.readPinPost( tempPin, tJSON.pins[ tempName ], tNodeRefs, tEdgeTypes );
 				}
 			}
 		}
 	}
 	
-	static ReadPinPost( tPinModel, tJSON, tNodeRefs, tEdgeTypes )
+	readPinPost( tPinModel, tJSON, tNodeRefs, tEdgeTypes )
 	{
 		if ( tPinModel != null && tPinModel._isOut && tJSON != null && tJSON.links != null && tNodeRefs != null )
 		{
 			for ( let i = ( tJSON.links.length - 1 ); i >= 0; --i )
 			{
-				tPinModel.setLink( GraphVizReader.ReadEdge( tJSON.links[i], tPinModel, tNodeRefs, tEdgeTypes ) );
+				tPinModel.setLink( this.readEdge( tJSON.links[i], tPinModel, tNodeRefs, tEdgeTypes ) );
 			}
 		}
 	}
 	
-	static ReadEdge( tJSON, tSourcePin, tNodeRefs, tTypes )
+	readEdge( tJSON, tSourcePin, tNodeRefs, tTypes )
 	{
 		if ( tJSON != null && tJSON.node != null && tJSON.pin != null && tSourcePin != null && tNodeRefs != null && tTypes != null )
 		{
@@ -173,22 +201,23 @@ export default class GraphVizReader
 				const tempTargetPin = tempTargetNode._pins[ tJSON.pin ];
 				if ( tempTargetPin != null )
 				{
-					// Model class
-					var tempType = null;
-					if ( tJSON.type == null )
+					// Type
+					var tempType = tJSON.type == null ? null : tTypes[ tJSON.type ];
+					if ( tempType == null )
 					{
 						tempType = tTypes[ "default" ];
 					}
-					else
-					{
-						tempType = tTypes[ tJSON.type ];
-					}
 
-					return new Edge( tempType, tSourcePin, tempTargetPin );
+					return this.createEdge( tempType, tSourcePin, tempTargetPin );
 				}
 			}
 		}
 		
 		return null;
+	}
+	
+	createEdge( tType, tSourcePin, tTargetPin )
+	{
+		return new Edge( tType, tSourcePin, tTargetPin );
 	}
 }
