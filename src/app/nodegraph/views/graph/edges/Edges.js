@@ -34,12 +34,6 @@ export default class Edges extends React.PureComponent
 	
 	createElement( tModel )
 	{
-		var tempViewClass = tModel._type._viewClass;
-		if ( tempViewClass == null )
-		{
-			tempViewClass = Edge;
-		}
-		
 		return React.createElement( tModel._type._viewClass, { model: tModel, key: tModel.id } );
 	}
 	

@@ -4,7 +4,7 @@ import TypeModel from "../../../models/Type";
 
 export default class Arrows extends React.PureComponent
 {
-	render() // TODO: dynamic marker size
+	render()
 	{
 		return (
 			<defs>

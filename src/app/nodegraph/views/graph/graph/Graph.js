@@ -194,8 +194,21 @@ class Graph extends React.Component
 	
 	render()
 	{
+		// Class
+		var tempClass = "graph";
+		if ( this.props.model.isPanning )
+		{
+			tempClass += " panning";
+		}
+		
+		if ( this.props.model.isMarqueeing )
+		{
+			tempClass += " marqueeing";
+		}
+		
+		// Render
 		return (
-			<svg className={ ( this.props.model.isPanning ? "graph panning" : "graph" ) + ( this.props.model.isMarqueeing ? " marqueeing" : "" ) } onWheel={ this._onMouseWheel } onMouseDown={ this._onMouseDown }>
+			<svg className={ tempClass } onWheel={ this._onMouseWheel } onMouseDown={ this._onMouseDown }>
 				<Arrows types={ this.props.model._edgeTypes }/>
 				<Grid isVisible={ this.props.isGridVisible } offset={ this.props.model.position } zoom={ this.props.model.zoom }/>
 				<g ref={ this._onViewElement }>

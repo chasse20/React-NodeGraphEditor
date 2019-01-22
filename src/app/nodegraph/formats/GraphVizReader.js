@@ -33,7 +33,7 @@ export default class GraphVizReader
 				const tempListLength = tJSON.nodeTypes.length;
 				for ( let i = 0; i < tempListLength; ++i )
 				{
-					tGraphModel.setNodeType( this.readNodeType( tJSON.nodeTypes[i], tGraphModel._nodeTypes[ "default" ], NodeView.SerializableClasses ) );
+					tGraphModel.setNodeType( this.readNodeType( tJSON.nodeTypes[i], tGraphModel._nodeTypes[ "default" ] ) );
 				}
 			}
 			
@@ -43,7 +43,7 @@ export default class GraphVizReader
 				const tempListLength = tJSON.edgeTypes.length;
 				for ( let i = 0; i < tempListLength; ++i )
 				{
-					tGraphModel.setEdgeType( this.readEdgeType( tJSON.edgeTypes[i], tGraphModel._edgeTypes[ "default" ], EdgeView.SerializableClasses ) );
+					tGraphModel.setEdgeType( this.readEdgeType( tJSON.edgeTypes[i], tGraphModel._edgeTypes[ "default" ] ) );
 				}
 			}
 			
@@ -92,7 +92,7 @@ export default class GraphVizReader
 		}
 	}
 	
-	readNodeType( tJSON, tDefaultType, tSerializableViews )
+	readNodeType( tJSON, tDefaultType, tSerializableViews = { "default": NodeView, "Node": NodeView } )
 	{
 		if ( tJSON != null && tJSON.name != null && tSerializableViews != null )
 		{
@@ -114,7 +114,7 @@ export default class GraphVizReader
 		return new Type( tName, tViewClass );
 	}
 	
-	readEdgeType( tJSON, tDefaultType, tSerializableViews )
+	readEdgeType( tJSON, tDefaultType, tSerializableViews = { "default": EdgeView, "Edge": EdgeView } )
 	{
 		if ( tJSON != null && tJSON.name != null && tSerializableViews != null )
 		{

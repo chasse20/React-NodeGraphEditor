@@ -9,8 +9,6 @@ import "./Node.css";
 
 class Node extends React.Component
 {
-	static SerializableClasses = { "default": Node, "Node": Node };
-	
 	constructor( tProps )
 	{
 		// Inheritance
