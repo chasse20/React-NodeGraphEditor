@@ -7,7 +7,7 @@
 	box-sizing: border-box;
 }
 
-.node .outline, .node foreignObject, .node .text
+.node foreignObject, .node .text
 {
 	user-select: none;
 	pointer-events: none;

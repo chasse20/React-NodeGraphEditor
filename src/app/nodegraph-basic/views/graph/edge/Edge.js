@@ -1,8 +1,6 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { observer } from "mobx-react";
 import Vector2D from "../../../../core/Vector2D";
-import EdgeModel from "../../../../nodegraph/models/Edge";
 import EdgeBase from "../../../../nodegraph/views/graph/edge/Edge";
 import "./Edge.css";
 
@@ -22,8 +20,7 @@ class Edge extends EdgeBase
 	
 	set sourcePosition( tVector )
 	{
-		this._element.setAttribute( "x1", tVector.x );
-		this._element.setAttribute( "y1", tVector.y );
+		super.sourcePosition = tVector;
 		
 		this.updatePosition( tVector, this.props.model._target.position ); // TODO: prevent from calling twice
 	}
@@ -78,10 +75,5 @@ class Edge extends EdgeBase
 		);
 	}
 }
-
-Edge.propTypes =
-{
-	model: PropTypes.instanceOf( EdgeModel ).isRequired
-};
 
 export default observer( Edge );
