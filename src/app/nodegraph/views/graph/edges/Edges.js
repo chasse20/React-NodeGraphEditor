@@ -1,7 +1,7 @@
 import React from "react";
 import "./Edges.css";
 
-export default class Edges extends React.Component
+export default class Edges extends React.PureComponent
 {
 	constructor( tProps )
 	{
@@ -11,44 +11,90 @@ export default class Edges extends React.Component
 		// State
 		this.state =
 		{
-			edges: {}
+			edges: null
 		};
+		
+		// Variables
+		this._edges = null;
+		this._edgesCount = 0;
 	}
-	
-	shouldComponentUpdate( tNextProps, tNextState )
-	{
-		return false; // TODO: why have a state if this is false?
-	}
-	
+
 	onLink( tModel, tIsSet )
 	{
-		var tempEdges = this.state.edges;
 		if ( tIsSet )
 		{
-			const tempEdge = this.createElement( tModel );
-			if ( tempEdge != null )
-			{
-				tempEdges[ tModel.id ] = tempEdge;
-			}
+			this.setEdge( this.createElement( tModel ) );
 		}
 		else
 		{
-			delete tempEdges[ tModel.id ];
+			this.removeEdge( tModel.id );
 		}
-		
-		this.forceUpdate(); // TODO: figure out how to optimize this so render isn't called each time
 	}
-
+	
 	createElement( tModel )
 	{
 		return React.createElement( tModel._type._viewClass, { model: tModel, key: tModel.id } );
 	}
 	
+	setEdge( tEdgeView )
+	{
+		if ( tEdgeView != null )
+		{
+			if ( this._edgesCount <= 0 )
+			{
+				this._edgesCount = 1;
+				this._edges = {};
+				this._edges[ tEdgeView.key ] = tEdgeView;
+				
+				this.setState( { edges: Object.values( this._edges ) } );
+				
+				return true;
+			}
+			else if ( this._edges[ tEdgeView.key ] === undefined )
+			{
+				this._edges[ tEdgeView.key ] = tEdgeView;
+				++this._edgesCount;
+				
+				this.setState( { edges: Object.values( this._edges ) } );
+				
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	removeEdge( tID )
+	{
+		if ( this._edgesCount > 0 && this._edges[ tID ] !== undefined )
+		{
+			delete this._edges[ tID ];
+			
+			--this._edgesCount;
+			if ( this._edgesCount <= 0 )
+			{
+				this._edgesCount = 0;
+				this._edges = null;
+				
+				this.setState( { edges: null } );
+			}
+			else
+			{
+				this.setState( { edges: Object.values( this._edges ) } );
+			}
+			
+			return true;
+		}
+		
+		return false;
+	}
+	
 	render()
 	{
+		console.log( "??" );
 		return (
 			<g className="edges">
-				{ Object.values( this.state.edges ) }
+				{ this.state.edges }
 			</g>
 		);
 	}
