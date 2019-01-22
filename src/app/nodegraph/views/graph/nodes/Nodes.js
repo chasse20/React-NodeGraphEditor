@@ -18,8 +18,7 @@ export default class Nodes extends React.Component
 		this.state =
 		{
 			nodes: null,
-			isDragging: false,
-			linkingPin: null
+			isDragging: false
 		};
 		
 		// Variables
@@ -54,7 +53,6 @@ export default class Nodes extends React.Component
 				this.removeSelected( tNode._id );
 			}
 		};
-		this._onPinLinking = ( tPin, tIsStart ) => { this.onPinLinking( tPin, tIsStart ); };
 		this._onDragStart = ( tEvent ) => { this.onDragStart( tEvent ); };
 		this._onDragMove = ( tEvent ) => { this.onDragMove( tEvent ); };
 		this._onDragUp = ( tEvent ) => { this.onDragUp( tEvent ); };
@@ -95,8 +93,6 @@ export default class Nodes extends React.Component
 				model: tModel,
 				key: tModel._id,
 				onLink: this.props.onLink,
-				onLinking: this._onPinLinking,
-				onRemove: this.props.onRemoveNode,
 				onSelected: this._onNodeSelected,
 				onDragStart: this._onDragStart 
 			}
@@ -195,11 +191,6 @@ export default class Nodes extends React.Component
 				this._selected = null;
 				
 				document.removeEventListener( "keydown", this._onKeyDown );
-			}
-			
-			if ( this.state.linkingPin != null && this.state.linkingPin._node._id === tID )
-			{
-				this.setState( { linkingPin: null } );
 			}
 			
 			this.updateElements();
@@ -327,12 +318,7 @@ export default class Nodes extends React.Component
 			}
 		}
 	}
-	
-	onPinLinking( tPin, tIsStart )
-	{
-		
-	}
-	
+
 	render()
 	{
 		// Class
@@ -340,11 +326,6 @@ export default class Nodes extends React.Component
 		if ( this.state.isDragging )
 		{
 			tempClass += " dragging";
-		}
-		
-		if ( this.state.isLinking )
-		{
-			tempClass += " linking";
 		}
 		
 		// Render

@@ -3,7 +3,7 @@ import TypeBase from "../../nodegraph/models/Type";
 
 export default class EdgeType extends TypeBase
 {
-	constructor( tName, tViewClass = null, tStroke = "#a9a9a9", tText = "" )
+	constructor( tName, tViewClass = null, tStroke = "#808080", tText = "" )
 	{
 		super( tName, tViewClass );
 		

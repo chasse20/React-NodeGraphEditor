@@ -1,9 +1,5 @@
 import React from "react";
-import PropTypes from "prop-types";
-import { observe } from "mobx";
 import { observer } from "mobx-react";
-import Vector2D from "../../../../core/Vector2D";
-import GraphModel from "../../../models/Graph";
 import GraphBase from "../../../../nodegraph/views/graph/graph/Graph";
 import Nodes from "../nodes/Nodes";
 import Edges from "../../../../nodegraph/views/graph/edges/Edges";

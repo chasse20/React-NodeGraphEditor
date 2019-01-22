@@ -110,13 +110,16 @@ class Node extends React.Component
 	render()
 	{
 		const tempModel = this.props.model;
-		const tempRadius = 5;
+		const tempText = tempModel.text;
+		const tempType = tempModel._type;
+		const tempRadius = tempType.radius;
 		const tempOutlineDiameter = ( tempRadius + 10 ) * 2;
+		const tempFill = tempType.fill;
 		
 		return (
 			<g className={ "node " + this.constructor.name + ( tempModel.isSelected ? " selected" : "" ) } guid={ tempModel._id } ref={ this._onElement }>
-				<rect className="outline" height={ tempOutlineDiameter } width={ tempOutlineDiameter } x={ -tempOutlineDiameter * 0.5 } y={ -tempOutlineDiameter * 0.5 } strokeDasharray={ tempOutlineDiameter * 0.125 + " " + tempOutlineDiameter * 0.75 + " " + tempOutlineDiameter * 0.125 + " 0" }/>
-				<circle className="graphic" cx="0" cy="0" r={ tempRadius } onMouseDown={ this._onMouseDown } onMouseUp={ this._onMouseUp }/>
+				<rect className="outline" stroke={ tempFill } height={ tempOutlineDiameter } width={ tempOutlineDiameter } x={ -tempOutlineDiameter * 0.5 } y={ -tempOutlineDiameter * 0.5 } strokeDasharray={ tempOutlineDiameter * 0.125 + " " + tempOutlineDiameter * 0.75 + " " + tempOutlineDiameter * 0.125 + " 0" }/>
+				<circle className="graphic" cx="0" cy="0" r={ tempRadius } fill={ tempFill } stroke={ tempType.stroke } onMouseDown={ this._onMouseDown } onMouseUp={ this._onMouseUp }/>
 				<g className="pins">
 					{
 						Object.values( tempModel._pins ).map(
@@ -128,8 +131,16 @@ class Node extends React.Component
 					}
 				</g>
 				{
+					tempText != null &&
+						<foreignObject width={ tempRadius * 2 } height={ tempRadius * 2 } x={ -tempRadius } y={ -tempRadius }>
+							<div className="text" style={ { height: tempRadius * 2 } }>
+								<p>{ tempText }</p>
+							</div>
+						</foreignObject>
+				}
+				{
 					tempModel.isSelected &&
-						<NodeMenu onRemove={ this._onRemove } onLinking={ this.props.onLinking }/>
+						<NodeMenu radius={ tempRadius + 40 } onRemove={ this._onRemove } onLinking={ this.props.onLinking }/>
 				}
 			</g>
 		);

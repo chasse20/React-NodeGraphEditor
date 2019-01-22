@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { observer } from "mobx-react";
-import { observe } from "mobx";
 import Vector2D from "../../../../core/Vector2D";
 import EdgeModel from "../../../../nodegraph/models/Edge";
 import EdgeBase from "../../../../nodegraph/views/graph/edge/Edge";
@@ -63,12 +62,12 @@ class Edge extends EdgeBase
 	render()
 	{
 		const tempType = this.props.model._type;
-		const tempText = tempType._name;
+		const tempText = tempType.text;
 		const tempStroke = tempType.stroke;
 		
 		return (
 			<g className={ "edge " + this.constructor.name + ( this.props.model.isSelected ? " selected" : "" ) }>
-				<line ref={ this._onElement } stroke={ tempStroke } strokeOpacity="0.6" markerEnd={ "url(#arrow-" + this.props.model._type._name + ")" }/>
+				<line ref={ this._onElement } stroke={ tempStroke } strokeOpacity="0.6" markerEnd={ "url(#arrow-" + tempType._name + ")" }/>
 				{
 					tempText != null &&
 						<text ref={ this._onTextElement } alignmentBaseline="middle" textAnchor="middle" fill={ tempStroke }>

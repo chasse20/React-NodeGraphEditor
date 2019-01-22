@@ -44,10 +44,19 @@ export default class GraphVizReader extends GraphVizReaderBase
 	{
 		const tempType = super.readEdgeType( tJSON, tDefaultType, tSerializableViews );
 		
-		// Stroke
-		if ( tempType != null && tJSON.stroke != null )
+		if ( tempType != null )
 		{
-			tempType.stroke = tJSON.stroke;
+			// Stroke
+			if ( tJSON.stroke != null )
+			{
+				tempType.stroke = tJSON.stroke;
+			}
+			
+			// Text
+			if ( tJSON.text != null )
+			{
+				tempType.text = tJSON.text;
+			}
 		}
 		
 		return tempType;
@@ -67,7 +76,7 @@ export default class GraphVizReader extends GraphVizReaderBase
 			// Text
 			if ( tJSON.text != null )
 			{
-				tempNode.text = tJSON.radius;
+				tempNode.text = tJSON.text;
 			}
 			
 			// Data

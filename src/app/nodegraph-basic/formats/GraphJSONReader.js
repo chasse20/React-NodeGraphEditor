@@ -53,6 +53,23 @@ export default class GraphJSONReader extends GraphJSONReaderBase
 		return new Node( tType );
 	}
 	
+	readEdgeType( tJSON, tViewClass, tTextField = "caption" )
+	{
+		const tempType = super.readEdgeType( tJSON, tViewClass, tTextField );
+		
+		if ( tempType != null )
+		{
+			// Text
+			const tempText = tJSON[ tTextField ];
+			if ( tempText != null )
+			{
+				tempType.text = tempText;
+			}
+		}
+		
+		return tempType;
+	}
+	
 	createEdgeType( tName, tViewClass )
 	{
 		return new EdgeType( tName, tViewClass );
