@@ -2,13 +2,12 @@ import React from "react";
 import PropTypes from "prop-types";
 import { observe } from "mobx";
 import { observer } from "mobx-react";
-import Vector2D from "../../../core/Vector2D";
-import GraphModel from "../../Graph";
-import Physics from "./physics/Physics";
-import Nodes from "./nodes/Nodes";
-import Edges from "./edges/Edges";
-import Grid from "./grid/Grid";
-import Arrows from "./arrows/Arrows";
+import Vector2D from "../../../../core/Vector2D";
+import GraphModel from "../../../models/Graph";
+import Nodes from "../nodes/Nodes";
+import Edges from "../edges/Edges";
+import Grid from "../grid/Grid";
+import Arrows from "../arrows/Arrows";
 import "./Graph.css";
 
 class Graph extends React.Component
@@ -31,21 +30,19 @@ class Graph extends React.Component
 		// Events
 		this._onZoomDispose = observe( this.props.model, "zoom", ( tChange ) => { this.zoom = tChange.newValue; } );
 		this._onPositionDispose = observe( this.props.model, "position", ( tChange ) => { this.position = tChange.newValue; } );
-		this._onPhysics = ( tComponent ) => { this._physics = tComponent; };
 		this._onNodes = ( tComponent ) => { this._nodes = tComponent; };
 		this._onEdges = ( tComponent ) => { this._edges = tComponent; };
 		this._onViewElement = ( tElement ) => { this._viewElement = tElement; };
 		this._onContainerElement = ( tElement ) => { this._containerElement = tElement; };
 		this._onMarqueeElement = ( tElement ) => { this._marqueeElement = tElement; };
 		this._onLink = ( tModel, tIsSet ) => { this._edges.onLink( tModel, tIsSet ); };
+		this._onRemoveNode = ( tModel ) => { this.props.model.removeNode( tModel ); };
 		this._onMouseWheel = ( tEvent ) => { this.tryZoom( tEvent, tEvent.deltaY > 0 ? -1 : 1 ); }; // only Mozilla respects mouse wheel delta
 		this._onMouseDown = ( tEvent ) => { this.onMouseDown( tEvent ); };
 		this._onPanMove = ( tEvent ) => { this.onPanMove( tEvent ); };
 		this._onPanUp = ( tEvent ) => { this.onPanUp( tEvent ); };
 		this._onMarqueeMove = ( tEvent ) => { this.onMarqueeMove( tEvent ); };
 		this._onMarqueeUp = ( tEvent ) => { this.onMarqueeUp( tEvent ); };
-		this._onNodePhysics = ( tNode, tIsAdded ) => { this._physics.onNodePhysics( tNode, tIsAdded ); };
-		this._onEdgePhysics = ( tEdge, tIsAdded ) => { this._physics.onEdgePhysics( tEdge, tIsAdded ); };
 	}
 
 	componentDidMount()
@@ -72,7 +69,7 @@ class Graph extends React.Component
 	{
 		// Enable pan
 		this._isPanHeld = tEvent.button === 1; // middle mouse pans!		
-		if ( this._isPanHeld || this.props.model.isPanMode )
+		if ( this._isPanHeld || this.props.isPanMode )
 		{
 			this.props.model.isPanning = true;
 			this._panOffset = Vector2D.Subtract( this.props.model.position, new Vector2D( tEvent.clientX, tEvent.clientY ).scale( 1 / this.props.model.zoom ) ); // originally used a transform/matrix class, but this is more efficient
@@ -83,7 +80,8 @@ class Graph extends React.Component
 		// Enable marquee
 		else
 		{
-			this.props.model.isMarquee = true;
+			this.props.model.isMarqueeing = true;
+			this._nodes.clearSelected();
 			this._marqueeOffset = new Vector2D( tEvent.clientX, tEvent.clientY ).scale( 1 / this.props.model.zoom ).subtract( this.props.model.position );
 			
 			document.addEventListener( "mousemove", this._onMarqueeMove );
@@ -110,7 +108,7 @@ class Graph extends React.Component
 	{
 		if ( !this._isPanHeld )
 		{
-			this.props.model.isMarquee = false;
+			this.props.model.isMarqueeing = false;
 			this._marqueeOffset = null;
 			
 			this._marqueeElement.setAttribute( "x", 0 );
@@ -197,20 +195,17 @@ class Graph extends React.Component
 	render()
 	{
 		return (
-			<React.Fragment>
-				<Physics ref={ this._onPhysics } graph={ this.props.model }/>
-				<svg className={ ( this.props.model.isPanning ? "graph panning" : "graph" ) + ( this.props.model.isMarquee ? " marqueeing" : "" ) } onWheel={ this._onMouseWheel } onMouseDown={ this._onMouseDown }>
-					<Arrows types={ this.props.model._edgeTypes }/>
-					<Grid graph={ this.props.model }/>
-					<g ref={ this._onViewElement }>
-						<g ref={ this._onContainerElement }>
-							<Edges ref={ this._onEdges } onPhysics={ this._onEdgePhysics }/>
-							<Nodes ref={ this._onNodes } graph={ this.props.model } onLink={ this._onLink } onPhysics={ this._onNodePhysics }/>
-						</g>
+			<svg className={ ( this.props.model.isPanning ? "graph panning" : "graph" ) + ( this.props.model.isMarqueeing ? " marqueeing" : "" ) } onWheel={ this._onMouseWheel } onMouseDown={ this._onMouseDown }>
+				<Arrows types={ this.props.model._edgeTypes }/>
+				<Grid isVisible={ this.props.isGridVisible } offset={ this.props.model.position } zoom={ this.props.model.zoom }/>
+				<g ref={ this._onViewElement }>
+					<g ref={ this._onContainerElement }>
+						<Edges ref={ this._onEdges }/>
+						<Nodes ref={ this._onNodes } nodes={ this.props.model._nodes } onLink={ this._onLink } onRemoveNode={ this._onRemoveNode } position={ this.props.model.position } zoom={ this.props.model.zoom } isGridSnap={ this.props.isGridSnap }/>
 					</g>
-					<rect ref={ this._onMarqueeElement } className={ this.props.model.isMarquee ? "marquee active" : "marquee" }/>
-				</svg>
-			</React.Fragment>
+				</g>
+				<rect ref={ this._onMarqueeElement } className="marquee"/>
+			</svg>
 		);
 	}
 }
@@ -218,16 +213,22 @@ class Graph extends React.Component
 Graph.propTypes =
 {
 	model: PropTypes.instanceOf( GraphModel ).isRequired,
-	zoomSpeed: PropTypes.number.isRequired,
-	minZoom: PropTypes.number.isRequired,
-	maxZoom: PropTypes.number.isRequired
+	zoomSpeed: PropTypes.number,
+	minZoom: PropTypes.number,
+	maxZoom: PropTypes.number,
+	isPanMode: PropTypes.bool,
+	isGridVisible: PropTypes.bool,
+	isGridSnap: PropTypes.bool
 };
 
 Graph.defaultProps =
 {
 	zoomSpeed: 0.05,
 	minZoom: 0.1,
-	maxZoom: 1
+	maxZoom: 1,
+	isPanMode: false,
+	isGridVisible: true,
+	isGridSnap: false
 };
 
 export default observer( Graph );

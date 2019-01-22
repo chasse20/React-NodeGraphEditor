@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { observer } from "mobx-react";
 import { observe } from "mobx";
 import EdgeModel from "../../../models/Edge";
-import Vector2D from "../../../../core/Vector2D";
 import "./Edge.css";
 
 class Edge extends React.Component // TODO: Selectable

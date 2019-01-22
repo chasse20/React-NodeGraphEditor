@@ -15,6 +15,11 @@ export default class Edges extends React.Component
 		};
 	}
 	
+	shouldComponentUpdate( tNextProps, tNextState )
+	{
+		return false; // TODO: why have a state if this is false?
+	}
+	
 	onLink( tModel, tIsSet )
 	{
 		var tempEdges = this.state.edges;
@@ -23,7 +28,7 @@ export default class Edges extends React.Component
 			const tempEdge = this.createElement( tModel );
 			if ( tempEdge != null )
 			{
-				tempEdges[ tempEdge.id ] = tempEdge;
+				tempEdges[ tModel.id ] = tempEdge;
 			}
 		}
 		else
@@ -31,7 +36,7 @@ export default class Edges extends React.Component
 			delete tempEdges[ tModel.id ];
 		}
 		
-		this.setState( { edges: tempEdges } ); // TODO: figure out how to optimize this so render isn't called each time
+		this.forceUpdate(); // TODO: figure out how to optimize this so render isn't called each time
 	}
 
 	createElement( tModel )

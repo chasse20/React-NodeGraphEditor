@@ -1,8 +1,8 @@
 import Edge from "../models/Edge";
 import Node from "../models/Node";
 import Type from "../models/Type";
-import EdgeView from "../views/Edge/Edge";
-import NodeView from "../views/Node/Node";
+import EdgeView from "../views/graph/edge/Edge";
+import NodeView from "../views/graph/node/Node";
 
 export default class GraphVizReader
 {

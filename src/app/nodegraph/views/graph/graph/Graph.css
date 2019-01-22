@@ -21,6 +21,11 @@
 	cursor: crosshair;
 }
 
+.graph.marqueeing .marquee
+{
+	opacity: 1;
+}
+
 .graph button
 {
 	box-sizing: border-box;
@@ -37,9 +42,4 @@
 	fill: #2891ca29;
 	stroke-width: 1px;
 	stroke: #2891caba;
-}
-
-.marquee.active
-{
-	opacity: 1;
 }

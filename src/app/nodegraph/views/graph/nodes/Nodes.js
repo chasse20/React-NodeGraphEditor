@@ -57,7 +57,7 @@ export default class Nodes extends React.Component
 			}
 		}
 		
-		this.setState( { nodes: tempNodes } );
+		this.forceUpdate();
 	}
 	
 	componentWillUnmount()
@@ -73,7 +73,7 @@ export default class Nodes extends React.Component
 	
 	shouldComponentUpdate( tNextProps, tNextState )
 	{
-		return false;
+		return false; // TODO: why have a state if this is false?
 	}
 	
 	onNodes( tChange )
@@ -280,7 +280,7 @@ export default class Nodes extends React.Component
 
 Nodes.propTypes =
 {
-	nodes: PropTypes.objectOf( instanceOf( NodeModel ) ).isRequired,
+	nodes: PropTypes.objectOf( PropTypes.instanceOf( NodeModel ) ).isRequired,
 	onLink: PropTypes.func.isRequired,
 	onRemoveNode: PropTypes.func.isRequired,
 	snapIncrement: PropTypes.number,
