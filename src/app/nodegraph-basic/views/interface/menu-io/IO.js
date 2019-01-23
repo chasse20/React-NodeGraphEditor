@@ -4,7 +4,8 @@ import FileSaver from "file-saver";
 import GraphModel from "../../../models/Graph";
 import GraphVizReader from "../../../formats/GraphVizReader";
 import GraphJSONReader from "../../../formats/GraphJSONReader";
-import { searchComplex } from "common-components/lib/js/searchController";
+import GraphSONReader from "../../../../nodegraph/formats/GraphSONReader";
+//import { searchComplex } from "common-components/lib/js/searchController";
 import "./IO.css";
 
 export default class IO extends React.Component
@@ -50,6 +51,9 @@ export default class IO extends React.Component
 					case 1: // GraphJSON
 						tempReader = new GraphJSONReader();
 						break;
+					case 2: // GraphSON
+						tempReader = new GraphSONReader();
+						break;
 					default: // GraphViz
 						tempReader = new GraphVizReader();
 						break;
@@ -74,7 +78,30 @@ export default class IO extends React.Component
 	
 	onAPIGet()
 	{
+		const testRequest = {"type":"OEDocument","pageSize":10,"pageNumber":1,"propertyNames":["OEDocumentRecordset.DocumentSource","OEDocumentRecordset.NER_LOCATION","OEDocumentRecordset.NER_ORGANIZATION","OEDocumentRecordset.NER_PERSON","OEDocumentRecordset.DocumentTitle"],"group":{"operator":"AND","criteria":[{"key":"9bdd1676-1110-4fed-8bbe-ece438fd95d7","recordset":"CoalesceEntity","field":"name","operator":"EqualTo","value":"OEDocument","matchCase":false}],"groups":[]}};
 		
+		fetch( "oedevnode26:8181/cxf/data/search/complex",
+			{
+				method: "XPOST",
+				headers:
+				{
+					"content-type": "application/json",
+				},
+				body: JSON.stringify( testRequest )
+			}
+		).then(
+			( tResponse ) =>
+			{
+				return new GraphSONReader().read( this.props.graph, tResponse );
+			}
+		);
+
+		/*searchComplex( JSON.stringify( testRequest ) ).then(
+			( tData ) =>
+			{ 
+				return new GraphSONReader().read( this.props.graph, tData );
+			}
+		);*/
 	}
 	
 	render()
@@ -88,6 +115,7 @@ export default class IO extends React.Component
 						<select onChange={ this._onImportFormat }>
 							<option value="GraphViz">GraphViz</option>
 							<option value="GraphJSON">GraphJSON</option>
+							<option value="GraphSON">GraphJSON</option>
 						</select>
 						<button onMouseDown={ this._onImport }>Import</button>
 					</div>
@@ -105,7 +133,6 @@ export default class IO extends React.Component
 				<div className="api">
 					<h1>API REQUEST</h1>
 					<div className="inner">
-						<input type="text" value={ this.state.APIGetURL } onChange={ this._onAPIGetURL }/>
 						<select onChange={ this._onAPIGetFormat }>
 							<option value="GraphSON">GraphSON</option>
 						</select>
