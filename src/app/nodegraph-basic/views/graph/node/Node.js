@@ -18,8 +18,7 @@ class Node extends NodeBase
 		this._physicsBody = this.createPhysics();
 		
 		// Events
-		this._onSelectedDispose();
-		this._onSelectedDispose = observe( tProps.model, "isSelected", ( tChange ) => { this.isSelected = tChange.newValue; } );
+		this._onSelectedDispose = observe( tProps.model, "_isSelected", ( tChange ) => { this.isSelected = tChange.newValue; } );
 		this._onRemove = ( tEvent ) => { this.onRemove( tEvent ); };
 		this._onLinking = ( tIsStart ) =>
 		{
@@ -31,6 +30,7 @@ class Node extends NodeBase
 	{
 		super.componentDidMount();
 		
+		this.isSelected = this.props.model._isSelected;
 		this.props.onPhysics( this._physicsBody, true );
 	}
 	
@@ -66,14 +66,12 @@ class Node extends NodeBase
 			delete this._physicsBody.fx;
 			delete this._physicsBody.fy;
 		}
-		
-		this.props.onSelected( this.props.model );
 	}
 
 	set position( tPosition )
 	{
 		// Physics
-		if ( this.props.model.isSelected )
+		if ( this.props.model._isSelected )
 		{
 			this._physicsBody.fx = tPosition.x;
 			this._physicsBody.fy = tPosition.y;
@@ -102,7 +100,7 @@ class Node extends NodeBase
 		const tempFill = tempType.fill;
 		
 		return (
-			<g className={ "node " + this.constructor.name + ( tempModel.isSelected ? " selected" : "" ) } guid={ tempModel._id } ref={ this._onElement }>
+			<g className={ "node " + this.constructor.name + ( tempModel._isSelected ? " selected" : "" ) } guid={ tempModel._id } ref={ this._onElement }>
 				<rect className="outline" stroke={ tempFill } height={ tempOutlineDiameter } width={ tempOutlineDiameter } x={ -tempOutlineDiameter * 0.5 } y={ -tempOutlineDiameter * 0.5 } strokeDasharray={ tempOutlineDiameter * 0.125 + " " + tempOutlineDiameter * 0.75 + " " + tempOutlineDiameter * 0.125 + " 0" }/>
 				<circle className="graphic" cx="0" cy="0" r={ tempRadius } fill={ tempFill } stroke={ tempType.stroke } onMouseDown={ this._onMouseDown } onMouseUp={ this._onMouseUp }/>
 				<g className="pins">
@@ -124,7 +122,7 @@ class Node extends NodeBase
 						</foreignObject>
 				}
 				{
-					tempModel.isSelected &&
+					tempModel._isSelected &&
 						<NodeMenu radius={ tempRadius + 40 } onRemove={ this._onRemove } onLinking={ this.props.onLinking }/>
 				}
 			</g>

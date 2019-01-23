@@ -47,7 +47,7 @@ class Graph extends GraphBase
 					<g ref={ this._onViewElement }>
 						<g ref={ this._onContainerElement }>
 							<Edges ref={ this._onEdges } onPhysics={ this._onEdgePhysics }/>
-							<Nodes ref={ this._onNodes } nodes={ this.props.model._nodes } onLink={ this._onLink } onRemoveNode={ this._onRemoveNode } position={ this.props.model.position } zoom={ this.props.model.zoom } isGridSnap={ this.props.isGridSnap } onPhysics={ this._onNodePhysics }/>
+							<Nodes ref={ this._onNodes } nodes={ this.props.model._nodes } selected={ this.props.model._selectedNodes } onLink={ this._onLink } onSelectNode={ this._onSelectNode } onRemoveNode={ this._onRemoveNode } position={ this.props.model.position } zoom={ this.props.model.zoom } isGridSnap={ this.props.isGridSnap } onPhysics={ this._onNodePhysics }/>
 						</g>
 					</g>
 					<rect ref={ this._onMarqueeElement } className="marquee"/>

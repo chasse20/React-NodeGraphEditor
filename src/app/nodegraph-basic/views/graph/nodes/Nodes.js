@@ -25,26 +25,21 @@ export default class Nodes extends NodesBase
 				onLink: this.props.onLink,
 				onLinking: this._onPinLinking,
 				onRemove: this.props.onRemoveNode,
-				onSelected: this._onNodeSelected,
+				onSelected: this.props.onSelectNode,
 				onDragStart: this._onDragStart ,
 				onPhysics: this.props.onPhysics
 			}
 		);
 	}
 	
-	removeSelected( tID )
+	onSelected( tChange )
 	{
-		if ( super.removeSelected( tID ) )
-		{
-			if ( this.state.linkingPin != null && this.state.linkingPin._node._id === tID )
-			{
-				this.setState( { linkingPin: null } );
-			}
-
-			return true;
-		}
+		super.onSelected( tChange );
 		
-		return false;
+		if ( tChange.removedCount > 0 && this.state.linkingPin !== null && tChange.removed.indexOf( this.state.linkingPin._node ) >= 0 )
+		{
+			this.setState( { linkingPin: null } );
+		}
 	}
 	
 	onPinLinking( tPin, tIsStart )
