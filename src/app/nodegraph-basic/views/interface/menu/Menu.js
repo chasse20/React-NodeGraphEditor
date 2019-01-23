@@ -1,28 +1,38 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { observer } from "mobx-react";
-import GraphModel from "../../nodegraph/Graph";
-import MenuModel from "../Menu";
-import File from "./File";
+import GraphModel from "../../../models/Graph";
+import IO from "../menu-io/IO";
 import "./Menu.css";
 
-class Menu extends React.Component
+export default class Menu extends React.Component
 {
+	constructor( tProps )
+	{
+		// Inheritance
+		super( tProps );
+		
+		// State
+		this.state =
+		{
+			tab: 0
+		};
+	}
+	
 	render()
 	{
-		const tempTab = this.props.model.openTab;
+		const tempTab = this.state.tab;
 		
 		return (
 			<div className="menu">
 				<div className="tabs" >
-					<button className={ tempTab === 0 ? "selected" : null } onMouseDown={ () =>{ this.props.model.openTab = 0; } }>file</button>
-					<button className={ tempTab === 1 ? "selected" : null } onMouseDown={ () =>{ this.props.model.openTab = 1; } }>graph</button>
-					<button className={ tempTab === 2 ? "selected" : null } onMouseDown={ () =>{ this.props.model.openTab = 2; } }>data</button>
+					<button className={ tempTab === 0 ? "selected" : null } onMouseDown={ () => { this.setState( { tab: 0 } ) } }>file</button>
+					<button className={ tempTab === 1 ? "selected" : null } onMouseDown={ () => { this.setState( { tab: 1 } ) } }>graph</button>
+					<button className={ tempTab === 2 ? "selected" : null } onMouseDown={ () => { this.setState( { tab: 2 } ) } }>data</button>
 				</div>
 				<div className="content">
 					{
 						tempTab === 0 &&
-							<File graph={ this.props.graph }/>
+							<IO graph={ this.props.graph }/>
 					}
 				</div>
 			</div>
@@ -30,10 +40,7 @@ class Menu extends React.Component
 	}
 }
 
-export default observer( Menu );
-
 Menu.propTypes =
 {
-	model: PropTypes.instanceOf( MenuModel ).isRequired,
 	graph: PropTypes.instanceOf( GraphModel ).isRequired
 };

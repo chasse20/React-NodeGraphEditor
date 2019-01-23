@@ -1,15 +1,3 @@
-:root
-{
-	--menu-width: 360px;
-	--controls-width: 60px;
-	--button-spacing: 10px;
-	--button-radius: 6px;
-	--button-color-light-gray: #bbbbbb;
-	--button-color-gray: #484a4b;
-	--button-color-selected: #2e78a2;
-	--icon-color-selected: #fff;
-}
-
 html, body
 {
 	height: 100%;
@@ -21,14 +9,4 @@ html, body
 body
 {
 	overflow: hidden;
-}
-
-button
-{
-	box-sizing: border-box;
-	background: transparent;
-	border: none;
-	padding: 0;
-	outline: none;
-	cursor: pointer;
 }

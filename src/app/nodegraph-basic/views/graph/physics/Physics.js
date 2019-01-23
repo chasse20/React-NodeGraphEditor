@@ -30,9 +30,14 @@ export default class Physics extends React.Component
 	componentWillUnmount()
 	{
 		this._simulation.stop();
-		
-		this._onPhysicsDispose();
-		this._onPhysicsDispose = null;
+	}
+	
+	componentDidUpdate( tPreviousProps )
+	{
+		if ( tPreviousProps.isEnabled !== this.props.isEnabled )
+		{
+			this.isEnabled = this.props.isEnabled;
+		}
 	}
 	
 	set isEnabled( tIsEnabled )

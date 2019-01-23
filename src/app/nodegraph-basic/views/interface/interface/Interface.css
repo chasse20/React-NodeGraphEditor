@@ -1,7 +1,15 @@
 .interface
 {
+	--menu-width: 360px;
+	--controls-width: 60px;
+	--button-spacing: 10px;
+	--button-radius: 6px;
+	--button-color-gray: #bfbfbf;
+	--button-color-selected: #2e78a2;
+	--icon-color-selected: #fff;
 	position: fixed;
 	height: 100%;
+	z-index: 1;
 	display: flex;
 	transform: translateX( calc( -1 * var( --menu-width ) ) );
 	transition-property: transform;
@@ -11,4 +19,14 @@
 .interface.open
 {
 	transform: translateX( 0 );
+}
+
+nav
+{
+	position: absolute;
+	left: var( --menu-width );
+	pointer-events: auto;
+	box-sizing: border-box;
+	width: var( --controls-width );
+	padding: var( --button-spacing );
 }

@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { observer } from "mobx-react";
-import PhysicsModel from "../Physics";
+import OptionsModel from "../../../models/Options";
 import "./PhysicsToggle.css";
 
 class PhysicsToggle extends React.Component
@@ -12,13 +12,13 @@ class PhysicsToggle extends React.Component
 		super( tProps );
 		
 		// Events
-		this._onPhysicsToggle = () => { this.props.model.isEnabled = !this.props.model.isEnabled; };
+		this._onToggle = () => { this.props.options.isPhysics = !this.props.options.isPhysics; };
 	}
 	
 	render()
 	{
 		return (
-			<button className={ this.props.model.isEnabled ? "physics selected" : "physics" } onMouseDown={ this._onPhysicsToggle }>
+			<button className={ this.props.options.isPhysics ? "physics selected" : "physics" } onMouseDown={ this._onToggle }>
 				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
 					<circle cx="15.9" cy="15.9" r="8"/>
 					<path d="M7.6,16.2c-0.5-0.9-0.8-2-0.8-3.1c0-3.5,2.8-6.3,6.3-6.3c1.1,0,2.2,0.3,3.1,0.8c0.9,0.1,1.7,0.3,2.5,0.6 c-1.4-1.6-3.4-2.6-5.6-2.6C9,5.7,5.7,9,5.7,13.1c0,2.2,1,4.2,2.6,5.6C7.9,17.9,7.7,17.1,7.6,16.2z"/>
@@ -32,7 +32,7 @@ class PhysicsToggle extends React.Component
 
 PhysicsToggle.propTypes =
 {
-	model: PropTypes.instanceOf( PhysicsModel ).isRequired
+	options: PropTypes.instanceOf( OptionsModel ).isRequired
 };
 
 export default observer( PhysicsToggle );

@@ -1,0 +1,25 @@
+.menu-toggle
+{
+	box-sizing: border-box;
+	background: transparent;
+	border: none;
+	outline: none;
+	cursor: pointer;
+	padding: 8px;
+	display: flex;
+	height: calc( var( --controls-width ) - 2 * var( --button-spacing ) );
+	width: 100%;
+}
+
+.menu-toggle svg
+{
+	transition: 0.5s fill ease;
+	transition-property: fill;
+	width: inherit;
+	fill: var( --button-color-gray );
+}
+
+.interface.open .menu-toggle svg
+{
+	fill: var( --button-color-selected );
+}

@@ -1,18 +1,25 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { observer } from "mobx-react";
 import FileSaver from "file-saver";
-import GraphModel from "../../nodegraph/Graph";
-import GraphVizReader from "../../format/GraphVizReader";
-import GraphVizWriter from "../../format/GraphVizWriter";
-import "./File.css";
+import GraphModel from "../../../models/Graph";
+import GraphVizReader from "../../../formats/GraphVizReader";
+import GraphJSONReader from "../../../formats/GraphJSONReader";
+import { searchComplex } from "common-components/lib/js/searchController";
+import "./IO.css";
 
-class File extends React.Component
+export default class IO extends React.Component
 {
 	constructor( tProps )
 	{
 		// Inheritance
 		super( tProps );
+
+		// State
+		this.state =
+		{
+			APIGetURL: "",
+			reader: 0
+		};
 
 		// Variables
 		this._file = null;
@@ -21,6 +28,8 @@ class File extends React.Component
 		this._onFileInput = ( tEvent ) => { this.onFileInput( tEvent.target.files ); };
 		this._onImport = () => { this.onImport(); };
 		this._onExport = () => { this.onExport(); };
+		this._onAPIGetURL = ( tEvent ) => { this.onAPIGetURL( tEvent ); };
+		this._onAPIGet = () => { this.onAPIGet(); };
 	}
 	
 	onFileInput( tFiles )
@@ -35,7 +44,18 @@ class File extends React.Component
 			const tempReader = new FileReader();
 			tempReader.onload = ( tEvent ) =>
 			{
-				GraphVizReader.Read( this.props.graph, JSON.parse( tEvent.target.result ) );
+				var tempReader = null;
+				switch ( this.state.reader )
+				{
+					case 1: // GraphJSON
+						tempReader = new GraphJSONReader();
+						break;
+					default: // GraphViz
+						tempReader = new GraphVizReader();
+						break;
+				}
+				
+				tempReader.read( this.props.graph, JSON.parse( tEvent.target.result ) );
 				console.log( this.props.graph );
 			};
 			tempReader.readAsText( this._file );
@@ -44,7 +64,17 @@ class File extends React.Component
 	
 	onExport()
 	{
-		FileSaver.saveAs( new Blob( [ JSON.stringify( GraphVizWriter.Write( this.props.graph ) ) ], { type: "application/json" } ), "data.json" ); // format goes here
+		//FileSaver.saveAs( new Blob( [ JSON.stringify( GraphVizWriter.Write( this.props.graph ) ) ], { type: "application/json" } ), "data.json" ); // format goes here
+	}
+	
+	onAPIGetURL( tEvent )
+	{
+		this.setState( { APIGetURL: tEvent.target.value } );
+	}
+	
+	onAPIGet()
+	{
+		
 	}
 	
 	render()
@@ -72,14 +102,22 @@ class File extends React.Component
 						<button onClick={ this._onExport }>Export</button>
 					</div>
 				</div>
+				<div className="api">
+					<h1>API REQUEST</h1>
+					<div className="inner">
+						<input type="text" value={ this.state.APIGetURL } onChange={ this._onAPIGetURL }/>
+						<select onChange={ this._onAPIGetFormat }>
+							<option value="GraphSON">GraphSON</option>
+						</select>
+						<button onClick={ this._onAPIGet }>Get</button>
+					</div>
+				</div>
 			</div>
 		);
 	}
 }
 
-export default observer( File );
-
-File.propTypes =
+IO.propTypes =
 {
 	graph: PropTypes.instanceOf( GraphModel ).isRequired
 };

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Switch, Route } from "react-router";
+import { observer } from "mobx-react";
 import Graph from "./nodegraph-basic/views/graph/graph/Graph";
 import Interface from "./nodegraph-basic/views/interface/interface/Interface";
 import GraphVizReader from "./nodegraph-basic/formats/GraphVizReader";
@@ -10,7 +11,7 @@ import Data from "../data.json";
 import DataGraphJSON from "../graphjson.json";
 import "./App.css";
 
-export default class App extends Component
+class App extends Component
 {
 	constructor( tProps )
 	{
@@ -28,8 +29,11 @@ export default class App extends Component
 	{
 		return (
 			<React.Fragment>
+				<Interface graph={ this._graph } options={ this._options }/>
 				<Graph model={ this._graph } isPanMode={ this._options.isPanMode } isPhysics={ this._options.isPhysics } isGridVisible={ this._options.isGridVisible } isGridSnap={ this._options.isGridSnap }/>
 			</React.Fragment>
 		);
 	}
 }
+
+export default observer( App );
