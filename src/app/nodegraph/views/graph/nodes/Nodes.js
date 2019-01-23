@@ -85,7 +85,8 @@ export default class Nodes extends React.Component
 	
 	onNodes( tChange )
 	{
-		if ( tChange.type === "added" )
+		console.log( tChange );
+		if ( tChange.type === "add" )
 		{
 			this.setNode( this.createElement( tChange.newValue ) );
 		}

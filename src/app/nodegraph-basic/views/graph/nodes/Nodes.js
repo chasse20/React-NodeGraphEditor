@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import NodesBase from "../../../../nodegraph/views/graph/nodes/Nodes";
+import Node from "../node/Node";
 
 export default class Nodes extends NodesBase
 {
@@ -18,7 +19,13 @@ export default class Nodes extends NodesBase
 	
 	createElement( tModel )
 	{
-		return React.createElement( tModel._type._viewClass,
+		var tempViewClass = tModel._type._viewClass;
+		if ( tempViewClass == null )
+		{
+			tempViewClass = Node;
+		}
+		
+		return React.createElement( tempViewClass,
 			{
 				model: tModel,
 				key: tModel._id,

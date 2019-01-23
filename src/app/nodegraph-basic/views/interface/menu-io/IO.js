@@ -60,7 +60,6 @@ export default class IO extends React.Component
 				}
 				
 				tempReader.read( this.props.graph, JSON.parse( tEvent.target.result ) );
-				console.log( this.props.graph );
 			};
 			tempReader.readAsText( this._file );
 		}
@@ -115,7 +114,7 @@ export default class IO extends React.Component
 						<select onChange={ this._onImportFormat }>
 							<option value="GraphViz">GraphViz</option>
 							<option value="GraphJSON">GraphJSON</option>
-							<option value="GraphSON">GraphJSON</option>
+							<option value="GraphSON">GraphSON</option>
 						</select>
 						<button onMouseDown={ this._onImport }>Import</button>
 					</div>
