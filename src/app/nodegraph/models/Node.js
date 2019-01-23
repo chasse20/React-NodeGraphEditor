@@ -15,7 +15,7 @@ export default class Node
 			out: new Pin( this )
 		};
 		this.position = new Vector2D();
-		this.isSelected = false;
+		this._isSelected = false;
 	}
 	
 	removeEdgeType( tType )
@@ -34,6 +34,6 @@ decorate( Node,
 	{
 		_pins: observable,
 		position: observable,
-		isSelected: observable
+		_isSelected: observable
 	}
 );

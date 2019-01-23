@@ -7,6 +7,7 @@ export default class Graph
 	constructor()
 	{
 		this._nodes = {};
+		this._selectedNodes = [];
 		this._nodeTypes =
 		{
 			"default": new Type( "default" )
@@ -23,7 +24,7 @@ export default class Graph
 	
 	setNode( tNode )
 	{
-		if ( tNode != null  )
+		if ( tNode != null )
 		{
 			set( this._nodes, tNode._id, tNode );
 			
@@ -38,11 +39,47 @@ export default class Graph
 		if ( tNode != null && this._nodes[ tNode._id ] !== undefined )
 		{
 			remove( this._nodes, tNode._id );
+			this.removeSelectedNode( tNode );
 
 			return true;
 		}
 		
 		return false;
+	}
+	
+	setSelectedNode( tNode )
+	{
+		if ( tNode != null && this._selectedNodes.indexOf( tNode ) === -1 )
+		{
+			this._selectedNodes.push( tNode );
+			tNode._isSelected = true;
+			
+			return true;
+		}
+		
+		return false;
+	}
+	
+	removeSelectedNode( tNode )
+	{
+		if ( tNode != null && this._selectedNodes.remove( tNode ) )
+		{
+			tNode._isSelected = false;
+
+			return true;
+		}
+		
+		return false;
+	}
+	
+	clearSelectedNodes()
+	{
+		for ( let i = ( this._selectedNodes.length - 1 ); i >= 0; --i )
+		{
+			this._selectedNodes[i]._isSelected = false;
+		}
+		
+		this._selectedNodes.clear();
 	}
 	
 	setNodeType( tType )
@@ -121,6 +158,7 @@ export default class Graph
 decorate( Graph,
 	{
 		_nodes: observable.shallow,
+		_selectedNodes: observable.shallow,
 		_nodeTypes: observable.shallow,
 		_edgeTypes: observable.shallow,
 		position: observable,

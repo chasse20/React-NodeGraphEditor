@@ -19,7 +19,6 @@ class Node extends React.Component
 		
 		// Events
 		this._onPositionDispose = observe( tProps.model, "position", ( tChange ) => { this.position = tChange.newValue; } );
-		this._onSelectedDispose = observe( tProps.model, "isSelected", ( tChange ) => { this.props.onSelected( this.props.model ); } );
 		this._onElement = ( tElement ) => { this._element = tElement; };
 		this._onMouseDown = ( tEvent ) => { this.onMouseDown( tEvent ); };
 		this._onMouseUp = ( tEvent ) => { this.onMouseUp( tEvent ); };
@@ -27,20 +26,13 @@ class Node extends React.Component
 	
 	componentDidMount()
 	{
-		const tempModel = this.props.model;
-		
-		this.isSelected = tempModel.isSelected;
-		this.position = tempModel.position;
+		this.position = this.props.model.position;
 	}
 	
 	componentWillUnmount()
 	{
-		this.isSelected = false;
-		
 		this._onPositionDispose();
 		this._onPositionDispose = null;
-		this._onSelectedDispose();
-		this._onSelectedDispose = null;
 		
 		if ( this._clickTimeout !== null )
 		{
@@ -56,7 +48,7 @@ class Node extends React.Component
 		{
 			// Check for selection toggle click if node is already selected
 			const tempModel = this.props.model;
-			if ( tempModel.isSelected )
+			if ( tempModel._isSelected )
 			{
 				clearTimeout( this._clickTimeout );
 				this._clickTimeout = setTimeout(
@@ -69,7 +61,7 @@ class Node extends React.Component
 			}
 			
 			// Set
-			tempModel.isSelected = true;
+			this.props.onSelected( this.props.model, true );
 			this.props.onDragStart( tEvent );
 		}
 	}
@@ -83,7 +75,7 @@ class Node extends React.Component
 			clearTimeout( this._clickTimeout );
 			this._clickTimeout = null;
 			
-			this.props.model.isSelected = !this.props.model.isSelected;
+			this.props.onSelected( this.props.model, !this.props.model._isSelected );
 		}
 	}
 
@@ -99,8 +91,8 @@ class Node extends React.Component
 		const tempOutlineDiameter = ( tempRadius + 10 ) * 2;
 		
 		return (
-			<g className={ "node " + this.constructor.name + ( tempModel.isSelected ? " selected" : "" ) } guid={ tempModel._id } ref={ this._onElement }>
-				<rect className="outline" fill="#000000" height={ tempOutlineDiameter } width={ tempOutlineDiameter } x={ -tempOutlineDiameter * 0.5 } y={ -tempOutlineDiameter * 0.5 } strokeDasharray={ tempOutlineDiameter * 0.125 + " " + tempOutlineDiameter * 0.75 + " " + tempOutlineDiameter * 0.125 + " 0" }/>
+			<g className={ "node " + this.constructor.name + ( tempModel._isSelected ? " selected" : "" ) } guid={ tempModel._id } ref={ this._onElement }>
+				<rect className="outline" stroke="#000000" fillOpacity="0" height={ tempOutlineDiameter } width={ tempOutlineDiameter } x={ -tempOutlineDiameter * 0.5 } y={ -tempOutlineDiameter * 0.5 } strokeDasharray={ tempOutlineDiameter * 0.125 + " " + tempOutlineDiameter * 0.75 + " " + tempOutlineDiameter * 0.125 + " 0" }/>
 				<circle className="graphic" cx="0" cy="0" r={ tempRadius } onMouseDown={ this._onMouseDown } onMouseUp={ this._onMouseUp }/>
 				<g className="pins">
 					{

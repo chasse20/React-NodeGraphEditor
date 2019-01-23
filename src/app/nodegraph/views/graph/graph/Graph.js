@@ -36,6 +36,17 @@ class Graph extends React.Component
 		this._onContainerElement = ( tElement ) => { this._containerElement = tElement; };
 		this._onMarqueeElement = ( tElement ) => { this._marqueeElement = tElement; };
 		this._onLink = ( tModel, tIsSet ) => { this._edges.onLink( tModel, tIsSet ); };
+		this._onSelectNode = ( tModel, tIsSelected ) =>
+		{
+			if ( tIsSelected )
+			{
+				this.props.model.setSelectedNode( tModel );
+			}
+			else
+			{
+				this.props.model.removeSelectedNode( tModel );
+			}
+		};
 		this._onRemoveNode = ( tModel ) => { this.props.model.removeNode( tModel ); };
 		this._onMouseWheel = ( tEvent ) => { this.tryZoom( tEvent, tEvent.deltaY > 0 ? -1 : 1 ); }; // only Mozilla respects mouse wheel delta
 		this._onMouseDown = ( tEvent ) => { this.onMouseDown( tEvent ); };
@@ -81,7 +92,7 @@ class Graph extends React.Component
 		else
 		{
 			this.props.model.isMarqueeing = true;
-			this._nodes.clearSelected();
+			this.props.model.clearSelectedNodes();
 			this._marqueeOffset = new Vector2D( tEvent.clientX, tEvent.clientY ).scale( 1 / this.props.model.zoom ).subtract( this.props.model.position );
 			
 			document.addEventListener( "mousemove", this._onMarqueeMove );
@@ -214,7 +225,7 @@ class Graph extends React.Component
 				<g ref={ this._onViewElement }>
 					<g ref={ this._onContainerElement }>
 						<Edges ref={ this._onEdges }/>
-						<Nodes ref={ this._onNodes } nodes={ this.props.model._nodes } onLink={ this._onLink } onRemoveNode={ this._onRemoveNode } position={ this.props.model.position } zoom={ this.props.model.zoom } isGridSnap={ this.props.isGridSnap }/>
+						<Nodes ref={ this._onNodes } nodes={ this.props.model._nodes } selected={ this.props.model._selectedNodes } onLink={ this._onLink } onSelectNode={ this._onSelectNode } onRemoveNode={ this._onRemoveNode } position={ this.props.model.position } zoom={ this.props.model.zoom } isGridSnap={ this.props.isGridSnap }/>
 					</g>
 				</g>
 				<rect ref={ this._onMarqueeElement } className="marquee"/>

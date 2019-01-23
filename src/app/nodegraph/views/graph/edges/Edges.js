@@ -1,5 +1,4 @@
 import React from "react";
-import Edge from "../edge/Edge";
 import "./Edges.css";
 
 export default class Edges extends React.PureComponent

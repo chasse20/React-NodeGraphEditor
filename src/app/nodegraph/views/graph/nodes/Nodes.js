@@ -24,35 +24,11 @@ export default class Nodes extends React.Component
 		// Variables
 		this._nodes = null;
 		this._nodesCount = 0;
-		this._selected = null;
-		this._selectedCount = 0;
 		this._dragOffsets = null;
 		
 		// Events
-		this._onNodesDispose = observe( tProps.nodes,
-			( tChange ) =>
-			{
-				if ( tChange.type === "add" )
-				{
-					this.setNode( this.createElement( tChange.newValue ) );
-				}
-				else if ( tChange.type === "remove" )
-				{
-					this.removeNode( tChange.name );
-				}
-			}
-		);
-		this._onNodeSelected = ( tNode ) =>
-		{
-			if ( tNode.isSelected )
-			{
-				this.setSelected( tNode );
-			}
-			else
-			{
-				this.removeSelected( tNode._id );
-			}
-		};
+		this._onNodesDispose = observe( tProps.nodes, ( tChange ) => { this.onNodes( tChange ) } );
+		this._onSelectedDispose = observe( tProps.selected, ( tChange ) => { this.onSelected( tChange ) } );
 		this._onDragStart = ( tEvent ) => { this.onDragStart( tEvent ); };
 		this._onDragMove = ( tEvent ) => { this.onDragMove( tEvent ); };
 		this._onDragUp = ( tEvent ) => { this.onDragUp( tEvent ); };
@@ -62,10 +38,16 @@ export default class Nodes extends React.Component
 	componentDidMount()
 	{
 		// Initialize nodes
-		const tempList = this.props.nodes;
-		for ( let tempKey in tempList )
+		const tempNodes = this.props.nodes;
+		for ( let tempID in tempNodes )
 		{
-			this.setNode( this.createElement( tempList[ tempKey ] ) );
+			this.setNode( this.createElement( tempNodes[ tempID ] ) );
+		}
+		
+		// Selected state
+		if ( this.props.selected.size > 0 )
+		{
+			document.addEventListener( "keydown", this._onKeyDown );
 		}
 	}
 	
@@ -74,6 +56,8 @@ export default class Nodes extends React.Component
 		// Clear events
 		this._onNodesDispose();
 		this._onNodesDispose = null;
+		this._onSelectedDispose();
+		this._onSelectedDispose = null;
 		
 		document.removeEventListener( "mousemove", this._onDragMove );
 		document.removeEventListener( "mouseup", this._onDragUp );
@@ -93,10 +77,22 @@ export default class Nodes extends React.Component
 				model: tModel,
 				key: tModel._id,
 				onLink: this.props.onLink,
-				onSelected: this._onNodeSelected,
+				onSelected: this.props.onSelectNode,
 				onDragStart: this._onDragStart 
 			}
 		);
+	}
+	
+	onNodes( tChange )
+	{
+		if ( tChange.type === "added" )
+		{
+			this.setNode( this.createElement( tChange.newValue ) );
+		}
+		else if ( tChange.type === "remove" )
+		{
+			this.removeNode( tChange.name );
+		}
 	}
 	
 	setNode( tNodeView )
@@ -105,23 +101,18 @@ export default class Nodes extends React.Component
 		{
 			if ( this._nodesCount <= 0 )
 			{
-				this._nodesCount = 1;
 				this._nodes = {};
-				this._nodes[ tNodeView.key ] = tNodeView;
-				
-				this.updateElements();
-				
-				return true;
+				this._nodesCount = 1;
 			}
 			else if ( this._nodes[ tNodeView.key ] === undefined )
 			{
-				this._nodes[ tNodeView.key ] = tNodeView;
 				++this._nodesCount;
-				
-				this.updateElements();
-				
-				return true;
 			}
+			
+			this._nodes[ tNodeView.key ] = tNodeView;
+			this.updateElements();
+			
+			return true;
 		}
 		
 		return false;
@@ -132,12 +123,12 @@ export default class Nodes extends React.Component
 		if ( this._nodesCount > 0 && this._nodes[ tID ] !== undefined )
 		{
 			delete this._nodes[ tID ];
-			
 			--this._nodesCount;
+			
 			if ( this._nodesCount <= 0 )
 			{
-				this._nodesCount = 0;
 				this._nodes = null;
+				this._nodesCount = 0;
 			}
 			
 			this.updateElements();
@@ -148,112 +139,77 @@ export default class Nodes extends React.Component
 		return false;
 	}
 	
-	setSelected( tNode )
+	onSelected( tChange )
 	{
-		if ( tNode != null )
+		if ( tChange.addedCount > 0 && tChange.object.length === 1 )
 		{
-			if ( this._selectedCount <= 0 )
-			{
-				this._selectedCount = 1;
-				this._selected = {};
-				this._selected[ tNode._id ] = tNode;
-				
-				this.updateElements();
-				
-				document.addEventListener( "keydown", this._onKeyDown );
-				
-				return true;
-			}
-			else if ( this._selected[ tNode._id ] === undefined )
-			{
-				this._selected[ tNode._id ] = tNode;
-				++this._selectedCount;
-				
-				this.updateElements();
-				
-				return true;
-			}
+			document.addEventListener( "keydown", this._onKeyDown );
+		}
+		else if ( tChange.removedCount > 0 && tChange.object.length === 0 )
+		{
+			document.removeEventListener( "keydown", this._onKeyDown );
 		}
 		
-		return false;
-	}
-	
-	removeSelected( tID )
-	{
-		if ( this._selectedCount > 0 && this._selected[ tID ] !== undefined )
-		{
-			delete this._selected[ tID ];
-			
-			--this._selectedCount;
-			if ( this._selectedCount <= 0 )
-			{
-				this._selectedCount = 0;
-				this._selected = null;
-				
-				document.removeEventListener( "keydown", this._onKeyDown );
-			}
-			
-			this.updateElements();
-			
-			return true;
-		}
-		
-		return false;
-	}
-	
-	clearSelected()
-	{
-		if ( this._selectedCount > 0 )
-		{
-			for ( let tempID in this._selected )
-			{
-				this._selected[ tempID ].isSelected = false;
-			}
-		}
+		this.updateElements();
 	}
 	
 	updateElements()
 	{
-		if ( this._nodesCount <= 0 )
+		var tempElements = null;
+		if ( this._nodesCount > 0 )
 		{
-			this.setState( { nodes: null } );
-		}
-		else if ( this._selectedCount > 0 )
-		{
-			// Deselected nodes
-			const tempElements = [];
-			for ( let tempID in this._nodes )
+			tempElements = [];
+			
+			const tempSelected = this.props.selected;
+			const tempLength = tempSelected.length;
+			if ( tempLength === 0 )
 			{
-				if ( this._selected[ tempID ] === undefined )
-				{
+				for ( let tempID in this._nodes )
+				{				
 					tempElements.push( this._nodes[ tempID ] );
 				}
 			}
-			
-			// Selected nodes
-			for ( let tempID in this._selected )
+			else
 			{
-				tempElements.push( this._nodes[ tempID ] );
+				// Selected nodes
+				const tempAlreadySelected = {};
+				const tempOffset = this._nodesCount - tempLength;
+				tempElements.length = this._nodesCount;
+				for ( let i = ( tempLength - 1 ); i >= 0; --i )
+				{
+					let tempID = tempSelected[i]._id;
+					tempAlreadySelected[ tempID ] = true;
+					tempElements[ tempOffset + i ] = this._nodes[ tempID ];
+				}
+				
+				// Unselected
+				var tempIndex = 0;
+				for ( let tempID in this._nodes )
+				{
+					if ( tempAlreadySelected[ tempID ] === undefined )
+					{
+						tempElements[ tempIndex ] = this._nodes[ tempID ];
+						++tempIndex;
+					}
+				}
 			}
-			
-			this.setState( { nodes: tempElements } );
 		}
-		else
-		{
-			this.setState( { nodes: Object.values( this._nodes ) } );
-		}
+		
+		this.setState( { nodes: tempElements } );
 	}
 	
 	onDragStart( tEvent )
 	{
-		if ( this._selectedCount > 0 )
+		const tempListLength = this.props.selected.length;
+		if ( tempListLength > 0 )
 		{
 			const tempLocalStart = new Vector2D( tEvent.clientX, tEvent.clientY ).scale( 1 / this.props.zoom ).subtract( this.props.position );
 			
-			this._dragOffsets = {};
-			for ( let tempID in this._selected )
+			this._dragOffsets = [];
+			
+			for ( let i = 0; i < tempListLength; ++i )
 			{
-				this._dragOffsets[ tempID ] = Vector2D.Subtract( tempLocalStart, this._selected[ tempID ].position );
+				this._dragOffsets.push( Vector2D.Subtract( tempLocalStart, this.props.selected[i].position ) );
 			}
 		
 			document.addEventListener( "mousemove", this._onDragMove );
@@ -268,22 +224,22 @@ export default class Nodes extends React.Component
 		const tempLocalEnd = new Vector2D( tEvent.clientX, tEvent.clientY ).scale( 1 / this.props.zoom ).subtract( this.props.position );
 		
 		// Grid snap
-		const tempSelected = this._selected;
+		const tempSelected = this.props.selected;
 		if ( this.props.isGridSnap )
 		{
 			const tempGridSnap = this.props.gridSize / this.props.snapIncrement;
-			for ( let tempID in tempSelected )
+			for ( let i = ( tempSelected.length - 1 ); i >= 0; --i )
 			{
-				let tempOffset = this._dragOffsets[ tempID ];
-				tempSelected[ tempID ].position = new Vector2D( Math.round( ( tempLocalEnd.x - tempOffset.x ) / tempGridSnap ) * tempGridSnap, Math.round( ( tempLocalEnd.y - tempOffset.y ) / tempGridSnap ) * tempGridSnap );
+				let tempOffset = this._dragOffsets[i];
+				tempSelected[i].position = new Vector2D( Math.round( ( tempLocalEnd.x - tempOffset.x ) / tempGridSnap ) * tempGridSnap, Math.round( ( tempLocalEnd.y - tempOffset.y ) / tempGridSnap ) * tempGridSnap );
 			}
 		}
 		// No snap
 		else
 		{
-			for ( let tempID in tempSelected )
+			for ( let i = ( tempSelected.length - 1 ); i >= 0; --i )
 			{
-				tempSelected[ tempID ].position = Vector2D.Subtract( tempLocalEnd, this._dragOffsets[ tempID ] );
+				tempSelected[i].position = Vector2D.Subtract( tempLocalEnd, this._dragOffsets[i] );
 			}
 		}
 	}
@@ -304,7 +260,7 @@ export default class Nodes extends React.Component
 		for ( let tempID in this._nodes )
 		{
 			let tempModel = this._nodes[ tempID ].props.model;
-			tempModel.isSelected = tempBounds.contains( tempModel.position );
+			this.props.onSelectNode( tempModel, tempBounds.contains( tempModel.position ) );
 		}
 	}
 	
@@ -312,9 +268,11 @@ export default class Nodes extends React.Component
 	{
 		if ( tEvent.keyCode === 46 ) // delete
 		{
-			for ( let tempID in this._selected )
+			const tempSelected = this.props.selected;
+			console.log( tempSelected );
+			for ( let i = ( tempSelected.length - 1 ); i >= 0; --i )
 			{
-				this.props.onRemoveNode( this._selected[ tempID ] );
+				this.props.onRemoveNode( tempSelected[i] );
 			}
 		}
 	}
@@ -340,7 +298,9 @@ export default class Nodes extends React.Component
 Nodes.propTypes =
 {
 	nodes: PropTypes.objectOf( PropTypes.instanceOf( NodeModel ) ).isRequired,
+	selected: PropTypes.arrayOf( PropTypes.instanceOf( NodeModel ) ).isRequired,
 	onLink: PropTypes.func.isRequired,
+	onSelectNode: PropTypes.func.isRequired,
 	onRemoveNode: PropTypes.func.isRequired,
 	snapIncrement: PropTypes.number,
 	position: PropTypes.instanceOf( Vector2D ),

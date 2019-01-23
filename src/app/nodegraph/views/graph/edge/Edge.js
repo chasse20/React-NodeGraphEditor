@@ -50,7 +50,7 @@ class Edge extends React.Component // TODO: Selectable
 	render()
 	{
 		return (
-			<g className={ "edge " + this.constructor.name + ( this.props.model.isSelected ? " selected" : "" ) }>
+			<g className={ "edge " + this.constructor.name + ( this.props.model._isSelected ? " selected" : "" ) }>
 				<line ref={ this._onElement } stroke="#000000" strokeOpacity="0.6" markerEnd={ "url(#arrow-" + this.props.model._type._name + ")" }/>
 			</g>
 		);

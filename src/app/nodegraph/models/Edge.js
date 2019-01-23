@@ -7,7 +7,7 @@ export default class Edge
 		this._type = tType;
 		this._source = tSource;
 		this._target = tTarget;
-		this.isSelected = false;
+		this._isSelected = false;
 	}
 	
 	get id()
@@ -18,6 +18,6 @@ export default class Edge
 
 decorate( Edge,
 	{
-		isSelected: observable
+		_isSelected: observable
 	}
 );
