@@ -130,11 +130,13 @@ class Node extends NodeBase
 	}
 }
 
-Node.propTypes =
-{
-	onLinking: PropTypes.func.isRequired,
-	onRemove: PropTypes.func.isRequired,
-	onPhysics: PropTypes.func.isRequired,
-};
+Node.propTypes = Object.assign(
+	{
+		onLinking: PropTypes.func.isRequired,
+		onRemove: PropTypes.func.isRequired,
+		onPhysics: PropTypes.func.isRequired,
+	},
+	NodeBase.propTypes
+);
 
 export default observer( Node );

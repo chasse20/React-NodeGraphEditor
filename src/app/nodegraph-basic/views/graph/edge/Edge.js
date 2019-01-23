@@ -102,9 +102,11 @@ class Edge extends EdgeBase
 	}
 }
 
-Edge.propTypes =
-{
-	onPhysics: PropTypes.func.isRequired
-};
+Edge.propTypes = Object.assign(
+	{
+		onPhysics: PropTypes.func.isRequired
+	},
+	EdgeBase.propTypes
+);
 
 export default observer( Edge );

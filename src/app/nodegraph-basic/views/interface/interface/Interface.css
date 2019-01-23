@@ -1,14 +1,14 @@
-.sidebar
+.interface
 {
-	position: absolute;
-	height: inherit;
+	position: fixed;
+	height: 100%;
 	display: flex;
 	transform: translateX( calc( -1 * var( --menu-width ) ) );
 	transition-property: transform;
 	transition: transform 0.3s;
 }
 
-.sidebar.open
+.interface.open
 {
 	transform: translateX( 0 );
 }

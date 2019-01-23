@@ -70,7 +70,9 @@ export default class Nodes extends NodesBase
 	}
 }
 
-Nodes.propTypes =
-{
-	onPhysics: PropTypes.func.isRequired
-};
+Nodes.propTypes = Object.assign(
+	{
+		onPhysics: PropTypes.func.isRequired
+	},
+	NodesBase.propTypes
+);

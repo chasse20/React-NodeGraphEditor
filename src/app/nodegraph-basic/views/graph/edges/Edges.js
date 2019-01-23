@@ -10,7 +10,9 @@ export default class Edges extends EdgesBase
 	}
 }
 
-Edges.propTypes =
-{
-	onPhysics: PropTypes.func.isRequired
-};
+Edges.propTypes = Object.assign(
+	{
+		onPhysics: PropTypes.func.isRequired
+	},
+	EdgesBase.propTypes
+);

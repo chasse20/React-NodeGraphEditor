@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { observer } from "mobx-react";
 import GraphBase from "../../../../nodegraph/views/graph/graph/Graph";
 import Nodes from "../nodes/Nodes";
@@ -40,7 +41,7 @@ class Graph extends GraphBase
 		// Render
 		return (
 			<React.Fragment>
-				<Physics ref={ this._onPhysics } graph={ this.props.model }/>
+				<Physics ref={ this._onPhysics } isEnabled={ this.props.isPhysics }/>
 				<svg className={ tempClass } onWheel={ this._onMouseWheel } onMouseDown={ this._onMouseDown }>
 					<Arrows types={ this.props.model._edgeTypes }/>
 					<Grid isVisible={ this.props.isGridVisible } offset={ this.props.model.position } zoom={ this.props.model.zoom }/>
@@ -56,5 +57,19 @@ class Graph extends GraphBase
 		);
 	}
 }
+
+Graph.propTypes = Object.assign(
+	{
+		isPhysics: PropTypes.bool
+	},
+	GraphBase.propTypes
+);
+
+Graph.defaultProps = Object.assign(
+	{
+		isPhysics: true
+	},
+	GraphBase.defaultProps
+);
 
 export default observer( Graph );
