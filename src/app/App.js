@@ -28,7 +28,6 @@ export default class App extends Component
 	{
 		return (
 			<React.Fragment>
-				<Interface graph={ this._graph } options={ this._options }/>
 				<Graph model={ this._graph } isPanMode={ this._options.isPanMode } isPhysics={ this._options.isPhysics } isGridVisible={ this._options.isGridVisible } isGridSnap={ this._options.isGridSnap }/>
 			</React.Fragment>
 		);
