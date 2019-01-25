@@ -4,7 +4,7 @@
 	height: inherit;
 	pointer-events: auto;
 	width: var( --menu-width );
-	background-color: var( --button-color-gray );
+	background-color: var( --button-color );
 }
 
 .tabs button
@@ -19,7 +19,7 @@
 .tabs button.selected
 {
 	color: #fff;
-	background-color: var( --button-color-gray );
+	background-color: var( --button-color );
 	border-bottom: none;
 }
 

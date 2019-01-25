@@ -22,5 +22,5 @@
 {
 	width: 100%;
 	padding: var( --button-radius );
-	background-color: var( --button-color-light-gray );
+	background-color: var( --button-color );
 }
