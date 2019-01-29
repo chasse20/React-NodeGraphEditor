@@ -1,15 +1,16 @@
 import React from "react";
 import PropTypes from "prop-types";
-import TypeModel from "../../../models/Type";
+import { observer } from "mobx-react";
+import GraphModel from "../../../models/Graph";
 
-export default class Arrows extends React.PureComponent
+class Arrows extends React.Component
 {
 	render()
 	{
 		return (
 			<defs>
 				{
-					Object.keys( this.props.types ).map(
+					Object.keys( this.props.graph._edgeTypes ).map(
 						( tKey ) =>
 						(
 							<marker key={ tKey } id={ "arrow-" + tKey } markerWidth="12" markerHeight="12" viewBox="-10 -5 10 10" orient="auto">
@@ -23,7 +24,9 @@ export default class Arrows extends React.PureComponent
 	}
 }
 
+export default observer( Arrows );
+
 Arrows.propTypes =
 {
-	types: PropTypes.objectOf( PropTypes.instanceOf( TypeModel ) ).isRequired
+	graph: PropTypes.instanceOf( GraphModel ).isRequired
 };

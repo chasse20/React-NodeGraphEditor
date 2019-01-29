@@ -18,8 +18,16 @@ export default class Graph
 		};
 		this.position = new Vector2D();
 		this.zoom = 1;
+		this.zoomSpeed = 0.05;
+		this.minZoom = 0.1;
+		this.maxZoom = 1;
 		this.isPanning = false;
 		this.isMarqueeing = false;
+		this.isPanMode = false;
+		this.gridSize = 80;
+		this.gridSnapIncrement = 5;
+		this.isGridVisible = true;
+		this.isGridSnap = false;
 	}
 	
 	setNode( tNode )
@@ -38,8 +46,8 @@ export default class Graph
 	{
 		if ( tNode != null && this._nodes[ tNode._id ] !== undefined )
 		{
-			remove( this._nodes, tNode._id );
 			this.removeSelectedNode( tNode );
+			remove( this._nodes, tNode._id );
 
 			return true;
 		}
@@ -165,6 +173,10 @@ decorate( Graph,
 		zoom: observable,
 		isPanning: observable,
 		isMarqueeing: observable,
+		isPanMode: observable,
+		gridSize: observable,
+		isGridVisible: observable,
+		isGridSnap: observable,
 		setNode: action,
 		removeNode: action,
 		setNodeType: action,

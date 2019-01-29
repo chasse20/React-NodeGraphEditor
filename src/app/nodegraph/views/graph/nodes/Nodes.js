@@ -1,13 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { observe } from "mobx";
+import GraphModel from "../../../models/Graph";
 import Bounds from "../../../../core/Bounds";
 import Vector2D from "../../../../core/Vector2D";
-import NodeModel from "../../../models/Node";
 import Node from "../node/Node";
 import "./Nodes.css";
 
-export default class Nodes extends React.Component
+export default class Nodes extends React.PureComponent
 {
 	constructor( tProps )
 	{
@@ -27,8 +27,20 @@ export default class Nodes extends React.Component
 		this._dragOffsets = null;
 		
 		// Events
-		this._onNodesDispose = observe( tProps.nodes, ( tChange ) => { this.onNodes( tChange ) } );
-		this._onSelectedDispose = observe( tProps.selected, ( tChange ) => { this.onSelected( tChange ) } );
+		this._onNodesDispose = observe( tProps.graph._nodes, ( tChange ) => { this.onNodes( tChange ) } );
+		this._onSelectedDispose = observe( tProps.graph._selectedNodes, ( tChange ) => { this.onSelected( tChange ) } );
+		this._onSelectNode = ( tModel, tIsSelected ) =>
+		{
+			if ( tIsSelected )
+			{
+				this.props.graph.setSelectedNode( tModel );
+			}
+			else
+			{
+				this.props.graph.removeSelectedNode( tModel );
+			}
+		};
+		this._onRemoveNode = ( tModel ) => { this.props.graph.removeNode( tModel ); };
 		this._onDragStart = ( tEvent ) => { this.onDragStart( tEvent ); };
 		this._onDragMove = ( tEvent ) => { this.onDragMove( tEvent ); };
 		this._onDragUp = ( tEvent ) => { this.onDragUp( tEvent ); };
@@ -38,14 +50,14 @@ export default class Nodes extends React.Component
 	componentDidMount()
 	{
 		// Initialize nodes
-		const tempNodes = this.props.nodes;
+		const tempNodes = this.props.graph._nodes;
 		for ( let tempID in tempNodes )
 		{
 			this.setNode( this.createElement( tempNodes[ tempID ] ) );
 		}
 		
 		// Selected state
-		if ( this.props.selected.size > 0 )
+		if ( this.props.graph._selectedNodes.length > 0 )
 		{
 			document.addEventListener( "keydown", this._onKeyDown );
 		}
@@ -77,7 +89,8 @@ export default class Nodes extends React.Component
 				model: tModel,
 				key: tModel._id,
 				onLink: this.props.onLink,
-				onSelected: this.props.onSelectNode,
+				onSelected: this._onSelectNode,
+				onRemove: this._onRemoveNode,
 				onDragStart: this._onDragStart 
 			}
 		);
@@ -85,7 +98,6 @@ export default class Nodes extends React.Component
 	
 	onNodes( tChange )
 	{
-		console.log( tChange );
 		if ( tChange.type === "add" )
 		{
 			this.setNode( this.createElement( tChange.newValue ) );
@@ -150,7 +162,7 @@ export default class Nodes extends React.Component
 		{
 			document.removeEventListener( "keydown", this._onKeyDown );
 		}
-		
+
 		this.updateElements();
 	}
 	
@@ -161,7 +173,7 @@ export default class Nodes extends React.Component
 		{
 			tempElements = [];
 			
-			const tempSelected = this.props.selected;
+			const tempSelected = this.props.graph._selectedNodes;
 			const tempLength = tempSelected.length;
 			if ( tempLength === 0 )
 			{
@@ -201,16 +213,17 @@ export default class Nodes extends React.Component
 	
 	onDragStart( tEvent )
 	{
-		const tempListLength = this.props.selected.length;
+		const tempGraph = this.props.graph;
+		const tempListLength = tempGraph._selectedNodes.length;
 		if ( tempListLength > 0 )
 		{
-			const tempLocalStart = new Vector2D( tEvent.clientX, tEvent.clientY ).scale( 1 / this.props.zoom ).subtract( this.props.position );
+			const tempLocalStart = new Vector2D( tEvent.clientX, tEvent.clientY ).scale( 1 / tempGraph.zoom ).subtract( tempGraph.position );
 			
 			this._dragOffsets = [];
 			
 			for ( let i = 0; i < tempListLength; ++i )
 			{
-				this._dragOffsets.push( Vector2D.Subtract( tempLocalStart, this.props.selected[i].position ) );
+				this._dragOffsets.push( Vector2D.Subtract( tempLocalStart, tempGraph._selectedNodes[i].position ) );
 			}
 		
 			document.addEventListener( "mousemove", this._onDragMove );
@@ -222,13 +235,14 @@ export default class Nodes extends React.Component
 	
 	onDragMove( tEvent )
 	{
-		const tempLocalEnd = new Vector2D( tEvent.clientX, tEvent.clientY ).scale( 1 / this.props.zoom ).subtract( this.props.position );
+		const tempGraph = this.props.graph;
+		const tempLocalEnd = new Vector2D( tEvent.clientX, tEvent.clientY ).scale( 1 / tempGraph.zoom ).subtract( tempGraph.position );
 		
 		// Grid snap
-		const tempSelected = this.props.selected;
-		if ( this.props.isGridSnap )
+		const tempSelected = tempGraph._selectedNodes;
+		if ( tempGraph.isGridSnap )
 		{
-			const tempGridSnap = this.props.gridSize / this.props.snapIncrement;
+			const tempGridSnap = tempGraph.gridSize / tempGraph.gridSnapIncrement;
 			for ( let i = ( tempSelected.length - 1 ); i >= 0; --i )
 			{
 				let tempOffset = this._dragOffsets[i];
@@ -261,7 +275,14 @@ export default class Nodes extends React.Component
 		for ( let tempID in this._nodes )
 		{
 			let tempModel = this._nodes[ tempID ].props.model;
-			this.props.onSelectNode( tempModel, tempBounds.contains( tempModel.position ) );
+			if ( tempBounds.contains( tempModel.position ) )
+			{
+				this.props.graph.setSelectedNode( tempModel );
+			}
+			else
+			{
+				this.props.graph.removeSelectedNode( tempModel );
+			}
 		}
 	}
 	
@@ -269,11 +290,11 @@ export default class Nodes extends React.Component
 	{
 		if ( tEvent.keyCode === 46 ) // delete
 		{
-			const tempSelected = this.props.selected;
-			console.log( tempSelected );
+			const tempGraph = this.props.graph;
+			const tempSelected = tempGraph._selectedNodes;
 			for ( let i = ( tempSelected.length - 1 ); i >= 0; --i )
 			{
-				this.props.onRemoveNode( tempSelected[i] );
+				tempGraph.removeNode( tempSelected[i] );
 			}
 		}
 	}
@@ -298,23 +319,6 @@ export default class Nodes extends React.Component
 
 Nodes.propTypes =
 {
-	nodes: PropTypes.objectOf( PropTypes.instanceOf( NodeModel ) ).isRequired,
-	selected: PropTypes.arrayOf( PropTypes.instanceOf( NodeModel ) ).isRequired,
-	onLink: PropTypes.func.isRequired,
-	onSelectNode: PropTypes.func.isRequired,
-	onRemoveNode: PropTypes.func.isRequired,
-	snapIncrement: PropTypes.number,
-	position: PropTypes.instanceOf( Vector2D ),
-	zoom: PropTypes.number,
-	gridSize: PropTypes.number,
-	isGridSnap: PropTypes.bool
-};
-
-Nodes.defaultProps =
-{
-	snapIncrement: 5,
-	position: new Vector2D(),
-	zoom: 1,
-	gridSize: 80,
-	isGridSnap: false
+	graph: PropTypes.instanceOf( GraphModel ).isRequired,
+	onLink: PropTypes.func.isRequired
 };

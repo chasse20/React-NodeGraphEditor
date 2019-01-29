@@ -1,10 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { observer } from "mobx-react";
 import { observe } from "mobx";
 import PinModel from "../../../models/Pin";
 
-class Pin extends React.Component
+export default class Pin extends React.PureComponent
 {
 	constructor( tProps )
 	{
@@ -34,7 +33,7 @@ class Pin extends React.Component
 	componentWillUnmount()
 	{
 		const tempModel = this.props.model;
-		if (tempModel._isOut )
+		if ( tempModel._isOut )
 		{
 			this._onLinksDispose();
 			this._onLinksDispose = null;
@@ -53,7 +52,7 @@ class Pin extends React.Component
 		{
 			this.props.onLink( tChange.newValue, true );
 		}
-		else
+		else if ( tChange.type === "remove" )
 		{
 			this.props.onLink( tChange.oldValue );
 		}
@@ -70,5 +69,3 @@ Pin.propTypes =
 	model: PropTypes.instanceOf( PinModel ).isRequired,
 	onLink: PropTypes.func.isRequired
 };
-
-export default observer( Pin );

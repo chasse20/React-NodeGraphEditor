@@ -40,6 +40,11 @@ export default class Physics extends React.Component
 		}
 	}
 	
+	shouldComponentUpdate()
+	{
+		return false;
+	}
+	
 	set isEnabled( tIsEnabled )
 	{
 		if ( tIsEnabled && this._nodes !== null )

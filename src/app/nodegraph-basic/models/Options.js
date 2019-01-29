@@ -1,21 +1,18 @@
 import { decorate, observable, action } from "mobx";
+import OptionsBase from "../../nodegraph/models/Options";
 
-export default class Options
+export default class Options extends OptionsBase
 {
 	constructor( tIsPanMode = false, tIsGridVisible = true, tIsGridSnap = false, tIsPhysics = true )
 	{
-		this.isPanMode = tIsPanMode;
-		this.isGridVisible = tIsGridVisible;
-		this.isGridSnap = tIsGridSnap;
+		super( tIsPanMode, tIsGridVisible, tIsGridSnap );
+		
 		this.isPhysics = tIsPhysics;
 	}
 }
 
 decorate( Options,
 	{
-		isPanMode: observable,
-		isGridVisible: observable,
-		isGridSnap: observable,
 		isPhysics: observable
 	}
 );

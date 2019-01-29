@@ -36,18 +36,6 @@ class Graph extends React.Component
 		this._onContainerElement = ( tElement ) => { this._containerElement = tElement; };
 		this._onMarqueeElement = ( tElement ) => { this._marqueeElement = tElement; };
 		this._onLink = ( tModel, tIsSet ) => { this._edges.onLink( tModel, tIsSet ); };
-		this._onSelectNode = ( tModel, tIsSelected ) =>
-		{
-			if ( tIsSelected )
-			{
-				this.props.model.setSelectedNode( tModel );
-			}
-			else
-			{
-				this.props.model.removeSelectedNode( tModel );
-			}
-		};
-		this._onRemoveNode = ( tModel ) => { this.props.model.removeNode( tModel ); };
 		this._onMouseWheel = ( tEvent ) => { this.tryZoom( tEvent, tEvent.deltaY > 0 ? -1 : 1 ); }; // only Mozilla respects mouse wheel delta
 		this._onMouseDown = ( tEvent ) => { this.onMouseDown( tEvent ); };
 		this._onPanMove = ( tEvent ) => { this.onPanMove( tEvent ); };
@@ -80,7 +68,7 @@ class Graph extends React.Component
 	{
 		// Enable pan
 		this._isPanHeld = tEvent.button === 1; // middle mouse pans!		
-		if ( this._isPanHeld || this.props.isPanMode )
+		if ( this._isPanHeld || this.props.model.isPanMode )
 		{
 			this.props.model.isPanning = true;
 			this._panOffset = Vector2D.Subtract( this.props.model.position, new Vector2D( tEvent.clientX, tEvent.clientY ).scale( 1 / this.props.model.zoom ) ); // originally used a transform/matrix class, but this is more efficient
@@ -170,17 +158,17 @@ class Graph extends React.Component
 	{
 		// Calculate
 		const tempModel = this.props.model;
-		var tempAmount = tempModel.zoom + ( tVelocity * this.props.zoomSpeed );
+		var tempAmount = tempModel.zoom + ( tVelocity * tempModel.zoomSpeed );
 		if ( tVelocity < 0 )
 		{
-			if ( tempAmount < this.props.minZoom )
+			if ( tempAmount < tempModel.minZoom )
 			{
-				tempAmount = this.props.minZoom;
+				tempAmount = tempModel.minZoom;
 			}
 		}
-		else if ( tempAmount > this.props.maxZoom )
+		else if ( tempAmount > tempModel.maxZoom )
 		{
-			tempAmount = this.props.maxZoom;
+			tempAmount = tempModel.maxZoom;
 		}
 
 		// Apply
@@ -220,12 +208,12 @@ class Graph extends React.Component
 		// Render
 		return (
 			<svg className={ tempClass } onWheel={ this._onMouseWheel } onMouseDown={ this._onMouseDown }>
-				<Arrows types={ this.props.model._edgeTypes }/>
-				<Grid isVisible={ this.props.isGridVisible } offset={ this.props.model.position } zoom={ this.props.model.zoom }/>
+				<Arrows graph={ this.props.model }/>
+				<Grid graph={ this.props.model }/>
 				<g ref={ this._onViewElement }>
 					<g ref={ this._onContainerElement }>
 						<Edges ref={ this._onEdges }/>
-						<Nodes ref={ this._onNodes } nodes={ this.props.model._nodes } selected={ this.props.model._selectedNodes } onLink={ this._onLink } onSelectNode={ this._onSelectNode } onRemoveNode={ this._onRemoveNode } position={ this.props.model.position } zoom={ this.props.model.zoom } isGridSnap={ this.props.isGridSnap }/>
+						<Nodes ref={ this._onNodes } graph={ this.props.model } onLink={ this._onLink }/>
 					</g>
 				</g>
 				<rect ref={ this._onMarqueeElement } className="marquee"/>
@@ -237,22 +225,6 @@ class Graph extends React.Component
 Graph.propTypes =
 {
 	model: PropTypes.instanceOf( GraphModel ).isRequired,
-	zoomSpeed: PropTypes.number,
-	minZoom: PropTypes.number,
-	maxZoom: PropTypes.number,
-	isPanMode: PropTypes.bool,
-	isGridVisible: PropTypes.bool,
-	isGridSnap: PropTypes.bool
-};
-
-Graph.defaultProps =
-{
-	zoomSpeed: 0.05,
-	minZoom: 0.1,
-	maxZoom: 1,
-	isPanMode: false,
-	isGridVisible: true,
-	isGridSnap: false
 };
 
 export default observer( Graph );
