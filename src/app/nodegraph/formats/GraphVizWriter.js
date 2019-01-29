@@ -6,29 +6,7 @@ import Vector2DModel from "../core/Vector2D";
 
 export default class GraphVizWriter
 {
-	static Write( tModel )
-	{
-		if ( tModel != null )
-		{
-			const tempJSON =
-			{
-				version: 1
-			};
-			
-			// Graph
-			const tempGraph = GraphVizWriter.WriteGraph( tModel.graph );
-			if ( tempGraph != null )
-			{
-				tempJSON.graph = tempGraph;
-			}
-			
-			return tempJSON;
-		}
-		
-		return null;
-	}
-	
-	static WriteGraph( tGraphModel )
+	write( tGraphModel )
 	{
 		if ( tGraphModel != null )
 		{

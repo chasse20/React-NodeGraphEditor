@@ -1,0 +1,26 @@
+.file h1
+{
+	font-size: 0.9em;
+	border: 1px solid #5b5c5d;
+	background-color: #343537;
+	padding: 6px 24px;
+	color: #bbb;
+	margin: 0;
+	font-weight: normal;
+}
+
+.file button
+{
+	width: 100%;
+	background-color: var( --button-color-selected );
+	border-radius: var( --button-radius );
+	padding: var( --button-spacing );
+	color: #fff;
+}
+
+.file select
+{
+	width: 100%;
+	padding: var( --button-radius );
+	background-color: var( --button-color );
+}

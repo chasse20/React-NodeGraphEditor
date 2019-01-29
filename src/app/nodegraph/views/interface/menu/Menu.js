@@ -2,9 +2,11 @@ import React from "react";
 import PropTypes from "prop-types";
 import GraphModel from "../../../models/Graph";
 import IO from "../menu-io/IO";
+//import Graph from "../menu-graph/Graph";
+//import Data from "../menu-data/Data";
 import "./Menu.css";
 
-export default class Menu extends React.Component
+export default class Menu extends React.PureComponent
 {
 	constructor( tProps )
 	{
@@ -16,27 +18,50 @@ export default class Menu extends React.Component
 		{
 			tab: 0
 		};
+		
+		// Variables
+		this._tabs =
+		[
+			"file",
+			"graph",
+			"data"
+		];
 	}
 	
 	render()
 	{
-		const tempTab = this.state.tab;
-		
 		return (
 			<div className="menu">
 				<div className="tabs" >
-					<button className={ tempTab === 0 ? "selected" : null } onMouseDown={ () => { this.setState( { tab: 0 } ) } }>file</button>
-					<button className={ tempTab === 1 ? "selected" : null } onMouseDown={ () => { this.setState( { tab: 1 } ) } }>graph</button>
-					<button className={ tempTab === 2 ? "selected" : null } onMouseDown={ () => { this.setState( { tab: 2 } ) } }>data</button>
+					{
+						this._tabs.map(
+							( tTitle, tIndex ) =>
+							(
+								<button key={ tTitle } className={ tIndex === this.state.tab ? "selected" : null } onMouseDown={ () => { this.setState( { tab: tIndex } ); } }>{ tTitle }</button>
+							)
+						)
+					}
 				</div>
 				<div className="content">
-					{
-						tempTab === 0 &&
-							<IO graph={ this.props.graph }/>
-					}
+					{ this.renderContent() }
 				</div>
 			</div>
 		);
+	}
+	
+	renderContent()
+	{
+		switch ( this.state.tab )
+		{
+			case 1:
+				//return <Graph graph={ this.props.graph }/>
+			case 2:
+				//return <Data graph={ this.props.graph }/>
+			default:
+				break;
+		}
+		
+		return <IO graph={ this.props.graph }/>
 	}
 }
 
