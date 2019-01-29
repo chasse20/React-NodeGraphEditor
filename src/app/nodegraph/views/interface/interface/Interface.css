@@ -1,0 +1,34 @@
+.interface
+{
+	--menu-width: 360px;
+	--menu-bg: #333333;
+	--menu-text: #aeaeae;
+	--button-color: #2e78a2;
+	--button-radius: 4px;	
+	--controls-width: 56px;
+	--button-spacing: 10px;
+	position: fixed;
+	height: 100%;
+	z-index: 1;
+	display: flex;
+	transform: translateX( calc( -1 * var( --menu-width ) ) );
+	transition-property: transform;
+	transition: transform 0.3s;
+	font-family: 'Roboto', sans-serif;
+	color: var( --menu-text );
+}
+
+.interface.open
+{
+	transform: translateX( 0 );
+}
+
+nav
+{
+	position: absolute;
+	left: var( --menu-width );
+	pointer-events: auto;
+	box-sizing: border-box;
+	width: var( --controls-width );
+	padding: var( --button-spacing );
+}
