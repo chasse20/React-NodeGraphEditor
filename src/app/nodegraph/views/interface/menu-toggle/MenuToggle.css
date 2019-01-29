@@ -18,8 +18,3 @@
 	width: inherit;
 	fill: var( --button-color );
 }
-
-.interface.open .menu-toggle svg
-{
-	fill: var( --button-color-selected );
-}

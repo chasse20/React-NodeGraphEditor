@@ -14,7 +14,7 @@
 
 .controls svg
 {
-	fill: var( --button-icon );
+	fill: #fff;
 	transition: 0.5s fill ease;
 	transition-property: fill;
 	width: inherit;
@@ -27,7 +27,7 @@
 
 .controls button
 {
-	background-color: var( --button-color );
+	background-color: #a2a2a2;
 	transition: 0.5s background-color ease;
 	transition-property: background-color;
 	position: relative;
@@ -35,12 +35,7 @@
 
 .controls button.selected
 {
-	background-color: var( --button-color-selected );
-}
-
-.controls button.selected svg
-{
-	fill: var( --button-icon-selected );
+	background-color: var( --button-color );
 }
 
 .controls button:first-child

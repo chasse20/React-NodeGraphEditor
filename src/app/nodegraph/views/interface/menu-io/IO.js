@@ -129,15 +129,6 @@ export default class IO extends React.Component
 						<button onClick={ this._onExport }>Export</button>
 					</div>
 				</div>
-				<div className="api">
-					<h1>API REQUEST</h1>
-					<div className="inner">
-						<select onChange={ this._onAPIGetFormat }>
-							<option value="GraphSON">GraphSON</option>
-						</select>
-						<button onClick={ this._onAPIGet }>Get</button>
-					</div>
-				</div>
 			</div>
 		);
 	}

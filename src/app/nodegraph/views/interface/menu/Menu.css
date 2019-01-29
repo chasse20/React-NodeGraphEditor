@@ -4,7 +4,7 @@
 	height: inherit;
 	pointer-events: auto;
 	width: var( --menu-width );
-	background-color: var( --button-color );
+	background-color: var( --menu-bg );
 }
 
 .tabs button
