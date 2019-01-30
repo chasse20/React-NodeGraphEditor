@@ -35,6 +35,8 @@
 	border: none;
 	outline: none;
 	cursor: pointer;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
 }
 
 .interface nav

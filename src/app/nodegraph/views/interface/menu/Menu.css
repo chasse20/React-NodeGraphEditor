@@ -8,15 +8,9 @@
 	color: var( --menu-text );
 }
 
-.menu, .menu .tabs button
+.menu, .menu .tabs > *
 {
 	height: inherit;
-}
-
-.menu button
-{
-	letter-spacing: 0.1em;
-	text-transform: uppercase;
 }
 
 .menu, .menu .tabs button:disabled

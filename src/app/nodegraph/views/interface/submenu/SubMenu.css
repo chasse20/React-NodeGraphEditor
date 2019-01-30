@@ -13,7 +13,6 @@
 
 .submenu.open .subcontent
 {
-	letter-spacing: initial;
 	display: flex;
 	flex-direction: column;
 }
@@ -34,11 +33,6 @@
 	padding: 4px 8px;
 	background-color: var( --button-color );
 	color: #fff;
-}
-
-.submenu .subcontent button
-{
-	border-radius: var( --button-radius );
 }
 
 .submenu .toggle
@@ -69,8 +63,9 @@
 	content: ":"
 }
 
-.submenu button.confirm
+.submenu .confirm
 {
+	border-radius: var( --button-radius );
 	padding: 4px 32px;
 	margin: calc( var( --button-spacing ) * 2 ) auto;
 }
