@@ -15,8 +15,8 @@
 
 .menu button
 {
+	letter-spacing: 0.1em;
 	text-transform: uppercase;
-	font-weight: bold;
 }
 
 .menu, .menu .tabs button:disabled
@@ -26,6 +26,7 @@
 
 .menu .tabs button
 {
+	font-weight: bold;
 	color: #818181;
 	padding: 0;
 	background-color: transparent;

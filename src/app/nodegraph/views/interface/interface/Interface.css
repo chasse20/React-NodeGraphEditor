@@ -15,9 +15,13 @@
 	transform: translateX( calc( -1 * var( --menu-width ) ) );
 	transition-property: transform;
 	transition: transform 0.3s;
-	font-family: "Roboto", sans-serif;
-	letter-spacing: 0.1em;
 	color: var( --menu-text );
+}
+
+.interface, .interface input, .interface textarea, .interface select, .interface button
+{
+	font-family: "Roboto", sans-serif;
+	font-size: 0.95em;
 }
 
 .interface.open
@@ -30,7 +34,6 @@
 	border: none;
 	outline: none;
 	cursor: pointer;
-	letter-spacing: 0.1em;
 }
 
 .interface nav

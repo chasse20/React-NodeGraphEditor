@@ -69,16 +69,19 @@ export default class Import extends SubMenu
 		return (
 			<React.Fragment>
 				<input type="file" onChange={ this._onFileInput }/>
-				<select onChange={ this._onFormat }>
-					{
-						this._formats.map(
-							( tName, tIndex ) =>
-							(
-								<option key={ tName } value={ tIndex }>{ tName }</option>
+				<div>
+					<span>Format</span>
+					<select onChange={ this._onFormat }>
+						{
+							this._formats.map(
+								( tName, tIndex ) =>
+								(
+									<option key={ tName } value={ tIndex }>{ tName }</option>
+								)
 							)
-						)
-					}
-				</select>
+						}
+					</select>
+				</div>
 				<button onClick={ this._onImport }>import</button>
 			</React.Fragment>
 		);

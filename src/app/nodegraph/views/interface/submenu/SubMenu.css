@@ -17,6 +17,7 @@
 
 .submenu.open .subcontent
 {
+	letter-spacing: initial;
 	display: block;
 }
 
@@ -31,14 +32,25 @@
 	transform: rotate( 90deg );
 }
 
-.submenu .toggle
+.submenu button
 {
-	padding: 4px 8px;
-	display: flex;
-	width: inherit;
 	background-color: var( --button-color );
 	color: #fff;
+}
+
+.submenu .subcontent button
+{
+	padding: 4px 8px;
+	border-radius: var( --button-radius );
+}
+
+.submenu .toggle
+{
+	align-items: center;
+	padding: 4px 8px;
 	text-shadow: var( --text-shadow );
+	width: inherit;
+	display: flex;
 	border: 1px solid #59aede;
 }
 
