@@ -3,3 +3,8 @@
 	background-color: var( --button-color );
 	cursor: initial;
 }
+
+.controls .select-toggle button:disabled svg
+{
+	fill: #fff;
+}

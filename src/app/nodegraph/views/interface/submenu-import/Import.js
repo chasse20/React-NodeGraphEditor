@@ -67,7 +67,7 @@ export default class Import extends SubMenu
 	renderContent()
 	{
 		return (
-			<div className="submenu-content">
+			<React.Fragment>
 				<input type="file" onChange={ this._onFileInput }/>
 				<select onChange={ this._onFormat }>
 					{
@@ -80,7 +80,7 @@ export default class Import extends SubMenu
 					}
 				</select>
 				<button onClick={ this._onImport }>import</button>
-			</div>
+			</React.Fragment>
 		);
 	}
 }

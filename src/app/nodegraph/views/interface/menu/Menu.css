@@ -1,52 +1,62 @@
 .menu
 {
+	--text-shadow: 2px 2px 1px #00000091;
+	--menu-spacing: 4px;
 	position: absolute;
-	height: inherit;
 	pointer-events: auto;
 	width: var( --menu-width );
+	color: var( --menu-text );
+}
+
+.menu, .menu .tabs button
+{
+	height: inherit;
+}
+
+.menu button
+{
+	text-transform: uppercase;
+	font-weight: bold;
+}
+
+.menu, .menu .tabs button:disabled
+{
 	background-color: var( --menu-bg );
 }
 
-.tabs button
+.menu .tabs button
 {
-	background-color: #343537;
-	color: #848484;
-	padding: 10px;
-	border-bottom: 1px solid #5b5c5d;
-	width: 33.333%;
+	color: #818181;
+	padding: 0;
+	background-color: transparent;
+	border-bottom: 1px solid #777777;
 }
 
-.tabs button.selected
+.menu .tabs button:disabled
 {
-	color: #fff;
-	background-color: var( --button-color );
+	text-shadow: var( --text-shadow );
+	color: #ffffff;
 	border-bottom: none;
+	cursor: initial;
 }
 
-.tabs button.selected:not(:first-child)
+.menu .tabs
 {
-	border-left: 1px solid #5b5c5d;
+	background-color: var( --menu-tabs-bg );
+	height: 36px;
 }
 
-.tabs button.selected:not(:last-child)
+.menu .tabs > *
 {
-	border-right: 1px solid #5b5c5d;
+	width: 33.3333%;
 }
 
-.content
+.menu .content
 {
-	box-sizing: border-box;
-	padding: 20px;
-	font-family: Tahoma, Verdana, Segoe, sans-serif;
-	color: #fff;
+	padding: var( --menu-spacing );
 }
 
-.submenu > *:not(:first-child)
+.menu .content > *:not(:first-child)
 {
-	margin-top: 60px;
-}
-
-.submenu .inner > *
-{
-	margin-top: 10px;
+	margin-top: var( --menu-spacing );
 }

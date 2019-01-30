@@ -52,7 +52,7 @@ export default class Export extends SubMenu
 	renderContent()
 	{
 		return (
-			<div className="submenu-content">
+			<React.Fragment>
 				<select onChange={ this._onFormat }>
 					{
 						this._formats.map(
@@ -64,7 +64,7 @@ export default class Export extends SubMenu
 					}
 				</select>
 				<button onClick={ this._onExport }>export</button>
-			</div>
+			</React.Fragment>
 		);
 	}
 }

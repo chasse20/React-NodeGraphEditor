@@ -7,5 +7,15 @@
 .controls .delete:disabled
 {
 	cursor: initial;
-	background-color: var( --button-color-disabled );
+	background-color: var( --menu-bg );
+}
+
+.controls .delete svg
+{
+	fill: #fff;
+}
+
+.controls .delete:disabled svg
+{
+	fill: var( --menu-text );
 }

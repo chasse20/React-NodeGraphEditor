@@ -37,7 +37,7 @@ export default class Menu extends React.PureComponent
 						this._tabs.map(
 							( tTitle, tIndex ) =>
 							(
-								<button key={ tTitle } className={ tIndex === this.state.tab ? "selected" : null } onClick={ () => { this.setState( { tab: tIndex } ); } }>{ tTitle }</button>
+								<button key={ tTitle } disabled={ tIndex === this.state.tab } onMouseDown={ () => { this.setState( { tab: tIndex } ); } }>{ tTitle }</button>
 							)
 						)
 					}

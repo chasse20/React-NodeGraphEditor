@@ -5,17 +5,16 @@
 
 .controls svg
 {
-	fill: #fff;
+	fill: var( --menu-text );
 	width: inherit;
+	transition: 0.5s fill ease;
+	transition-property: fill;
 }
 
 .controls button
 {
 	box-sizing: border-box;
-	background-color: var( --button-color-disabled );
-	border: none;
-	outline: none;
-	cursor: pointer;
+	background-color: var( --menu-bg );
 	padding: 8px;
 	width: 100%;
 	display: flex;
@@ -28,6 +27,11 @@
 .controls button.selected
 {
 	background-color: var( --button-color );
+}
+
+.controls button.selected svg
+{
+	fill: #fff;
 }
 
 .controls button:first-child

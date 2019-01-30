@@ -1,12 +1,7 @@
 .menu-toggle
 {
-	box-sizing: border-box;
 	background: transparent;
-	border: none;
-	outline: none;
-	cursor: pointer;
-	padding: 8px;
-	display: flex;
+	padding: 6px;
 	height: calc( var( --controls-width ) - 2 * var( --button-spacing ) );
 	width: 100%;
 }
