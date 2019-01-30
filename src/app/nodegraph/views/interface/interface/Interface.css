@@ -16,6 +16,7 @@
 	transition-property: transform;
 	transition: transform 0.3s;
 	color: var( --menu-text );
+	font-weight: 300;
 }
 
 .interface, .interface input, .interface textarea, .interface select, .interface button
