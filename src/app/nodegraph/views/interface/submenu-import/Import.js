@@ -4,7 +4,6 @@ import SubMenu from "../submenu/SubMenu";
 import GraphModel from "../../../models/Graph";
 import GraphVizReader from "../../../formats/GraphVizReader";
 import GraphJSONReader from "../../../formats/GraphJSONReader";
-import "./Import.css";
 
 export default class Import extends SubMenu
 {
@@ -68,8 +67,9 @@ export default class Import extends SubMenu
 	{
 		return (
 			<React.Fragment>
-				<input type="file" onChange={ this._onFileInput }/>
-				<div>
+				<div className="kvp">
+					<span>File</span>
+					<input type="file" onChange={ this._onFileInput }/>
 					<span>Format</span>
 					<select onChange={ this._onFormat }>
 						{
@@ -82,7 +82,7 @@ export default class Import extends SubMenu
 						}
 					</select>
 				</div>
-				<button onClick={ this._onImport }>import</button>
+				<button className="confirm" onClick={ this._onImport }>import</button>
 			</React.Fragment>
 		);
 	}

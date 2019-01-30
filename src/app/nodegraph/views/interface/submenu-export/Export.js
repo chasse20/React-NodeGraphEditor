@@ -53,17 +53,20 @@ export default class Export extends SubMenu
 	{
 		return (
 			<React.Fragment>
-				<select onChange={ this._onFormat }>
-					{
-						this._formats.map(
-							( tName, tIndex ) =>
-							(
-								<option key={ tName } value={ tIndex }>{ tName }</option>
+				<div className="kvp">
+					<span>Format</span>
+					<select onChange={ this._onFormat }>
+						{
+							this._formats.map(
+								( tName, tIndex ) =>
+								(
+									<option key={ tName } value={ tIndex }>{ tName }</option>
+								)
 							)
-						)
-					}
-				</select>
-				<button onClick={ this._onExport }>export</button>
+						}
+					</select>
+				</div>
+				<button className="confirm" onClick={ this._onExport }>export</button>
 			</React.Fragment>
 		);
 	}

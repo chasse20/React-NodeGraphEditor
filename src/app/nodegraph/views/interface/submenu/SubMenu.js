@@ -25,8 +25,14 @@ export default class SubMenu extends React.Component
 	
 	renderSubmenu( tTitle )
 	{
+		var tempClassName = "submenu " + tTitle;
+		if ( this.state.isOpen )
+		{
+			tempClassName += " open";
+		}
+		
 		return (
-			<div className={ this.state.isOpen ? "submenu open" : "submenu" }>
+			<div className={ tempClassName }>
 				<button className="toggle" onClick={ this._onStateToggle }>
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 24" xmlSpace="preserve">
 						<path d="M0,24l12-12L0,0V24z"/>
