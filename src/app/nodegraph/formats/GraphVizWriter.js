@@ -1,8 +1,8 @@
-import NodeModel from "../nodegraph/Node";
-import NodeView from "../nodegraph/views/graph/nodes/node/Node";
-import EdgeModel from "../nodegraph/Edge";
-import EdgeView from "../nodegraph/views/graph/edges/edge/Edge";
-import Vector2DModel from "../core/Vector2D";
+import NodeModel from "../models/Node";
+import NodeView from "../views/graph/node/Node";
+import EdgeModel from "../models/Edge";
+import EdgeView from "../views/graph/edge/Edge";
+import Vector2DModel from "../../core/Vector2D";
 
 export default class GraphVizWriter
 {
@@ -13,24 +13,24 @@ export default class GraphVizWriter
 			var tempJSON = null;
 			
 			// Position
-			const tempPosition = GraphVizWriter.WriteVector( tGraphModel.position );
+			const tempPosition = this.writeVector( tGraphModel.position );
 			if ( tempPosition != null )
 			{
 				tempJSON = { position: tempPosition };
 			}
 			
-			// Rotation
+			// Zoom
 			if ( tGraphModel.zoom !== 1 )
 			{
 				if ( tempJSON === null )
 				{
 					tempJSON = {};
 				}
-				tempJSON.zoom = tTransformModel.zoom;
+				tempJSON.zoom = tGraphModel.zoom;
 			}
 			
 			// Node types
-			var tempArray = GraphVizWriter.WriteTypes( tGraphModel._nodeTypes, NodeModel.SerializableClasses, NodeView.SerializableClasses );
+			var tempArray = this.writeNodeTypes( tGraphModel._nodeTypes );
 			if ( tempArray != null )
 			{
 				if ( tempJSON == null )
@@ -41,7 +41,7 @@ export default class GraphVizWriter
 			}
 			
 			// Edge types
-			tempArray = GraphVizWriter.WriteTypes( tGraphModel._edgeTypes, EdgeModel.SerializableClasses, EdgeView.SerializableClasses );
+			tempArray = this.writeEdgeTypes( tGraphModel._edgeTypes );
 			if ( tempArray != null )
 			{
 				if ( tempJSON == null )
@@ -64,7 +64,7 @@ export default class GraphVizWriter
 					tempJSON.nodes = [];
 				}
 				
-				tempJSON.nodes.push( GraphVizWriter.WriteNode( tGraphModel._nodes[ tempKey ] ) );
+				tempJSON.nodes.push( this.writeNode( tGraphModel._nodes[ tempKey ] ) );
 			}
 			
 			return tempJSON;

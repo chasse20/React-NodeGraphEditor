@@ -10,8 +10,8 @@ export default class IO extends React.PureComponent
 	{
 		return (
 			<React.Fragment>
-				<Import graph={ this.graph }/>
-				<Export graph={ this.graph }/>
+				<Import graph={ this.props.graph }/>
+				<Export graph={ this.props.graph }/>
 			</React.Fragment>
 		);
 	}

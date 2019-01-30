@@ -22,7 +22,7 @@ export default class Menu extends React.PureComponent
 		// Variables
 		this._tabs =
 		[
-			"file",
+			"i/o",
 			"graph",
 			"data"
 		];
@@ -37,7 +37,7 @@ export default class Menu extends React.PureComponent
 						this._tabs.map(
 							( tTitle, tIndex ) =>
 							(
-								<button key={ tTitle } className={ tIndex === this.state.tab ? "selected" : null } onMouseDown={ () => { this.setState( { tab: tIndex } ); } }>{ tTitle }</button>
+								<button key={ tTitle } className={ tIndex === this.state.tab ? "selected" : null } onClick={ () => { this.setState( { tab: tIndex } ); } }>{ tTitle }</button>
 							)
 						)
 					}
@@ -53,15 +53,19 @@ export default class Menu extends React.PureComponent
 	{
 		switch ( this.state.tab )
 		{
+			case 0:
+				return ( <IO graph={ this.props.graph }/> );
 			case 1:
+				break;
 				//return <Graph graph={ this.props.graph }/>
 			case 2:
+				break;
 				//return <Data graph={ this.props.graph }/>
 			default:
 				break;
 		}
 		
-		return <IO graph={ this.props.graph }/>
+		return null;
 	}
 }
 

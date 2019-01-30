@@ -1,15 +1,11 @@
-.controls .delete:not(.selected)
-{
-	pointer-events: none;
-	cursor: initial;
-}
-
 .controls .delete
 {
 	border-radius: var( --button-radius );
+	background-color: #af3737;
 }
 
-.controls .delete.selected
+.controls .delete:disabled
 {
-	background-color: #af3737;
+	cursor: initial;
+	background-color: var( --button-color-disabled );
 }

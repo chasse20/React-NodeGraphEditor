@@ -1,36 +1,28 @@
+.controls > *
+{
+	margin-top: var( --button-spacing );
+}
+
+.controls svg
+{
+	fill: #fff;
+	width: inherit;
+}
+
 .controls button
 {
 	box-sizing: border-box;
-	background: transparent;
+	background-color: var( --button-color-disabled );
 	border: none;
-	padding: 0;
 	outline: none;
 	cursor: pointer;
 	padding: 8px;
 	width: 100%;
 	display: flex;
 	height: calc( var( --controls-width ) - 2 * var( --button-spacing ) );
-}
-
-.controls svg
-{
-	fill: #fff;
-	transition: 0.5s fill ease;
-	transition-property: fill;
-	width: inherit;
-}
-
-.controls > *
-{
-	margin-top: var( --button-spacing );
-}
-
-.controls button
-{
-	background-color: #a2a2a2;
+	position: relative;
 	transition: 0.5s background-color ease;
 	transition-property: background-color;
-	position: relative;
 }
 
 .controls button.selected

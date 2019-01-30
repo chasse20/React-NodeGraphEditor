@@ -6,15 +6,7 @@ import NodeView from "../views/graph/node/Node";
 
 export default class GraphVizReader
 {
-	read( tModel, tJSON )
-	{
-		if ( tModel != null && tJSON != null )
-		{
-			this.readGraph( tModel, tJSON );
-		}
-	}
-	
-	readGraph( tGraphModel, tJSON )
+	read( tGraphModel, tJSON )
 	{
 		if ( tGraphModel != null && tJSON != null )
 		{

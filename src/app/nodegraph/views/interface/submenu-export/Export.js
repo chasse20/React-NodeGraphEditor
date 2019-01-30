@@ -25,7 +25,7 @@ export default class Export extends SubMenu
 		];
 		
 		// Events
-		this._onFormat = ( tEvent ) => { console.log( tEvent ); };
+		this._onFormat = ( tEvent ) => { this.setState( { format: tEvent.target.value } ); };
 		this._onExport = () => { this.onExport(); };
 	}
 	
@@ -46,22 +46,24 @@ export default class Export extends SubMenu
 	
 	render()
 	{
+		return this.renderSubmenu( "export" );
+	}
+	
+	renderContent()
+	{
 		return (
-			<div className={ this.state.isOpen ? "submenu open" : "submenu" }>
-				<button onMouseDown={ this._onStateToggle }><h1>Export</h1></button>
-				<div className="submenu-content">
-					<select onChange={ this._onFormat }>
-						{
-							this._formats.map(
-								( tName, tIndex ) =>
-								(
-									<option key={ tName } value={ tIndex }>{ tName }</option>
-								)
+			<div className="submenu-content">
+				<select onChange={ this._onFormat }>
+					{
+						this._formats.map(
+							( tName, tIndex ) =>
+							(
+								<option key={ tName } value={ tIndex }>{ tName }</option>
 							)
-						}
-					</select>
-					<button onClick={ this._onExport }>Export</button>
-				</div>
+						)
+					}
+				</select>
+				<button onClick={ this._onExport }>export</button>
 			</div>
 		);
 	}

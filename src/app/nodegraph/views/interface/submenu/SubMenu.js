@@ -20,11 +20,26 @@ export default class SubMenu extends React.Component
 	
 	render()
 	{
+		return this.renderSubmenu();
+	}
+	
+	renderSubmenu( tTitle )
+	{
 		return (
 			<div className={ this.state.isOpen ? "submenu open" : "submenu" }>
-				<button onMouseDown={ this._onStateToggle }><h1>Title</h1></button>
-				<div className="submenu-content"/>
+				<button className="submenu-toggle" onClick={ this._onStateToggle }>
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+						<path d="M10 17l5-5-5-5v10z"/>
+					</svg>
+					<div>{ tTitle }</div>
+				</button>
+				{ this.renderContent() }
 			</div>
 		);
+	}
+	
+	renderContent()
+	{
+		return null;
 	}
 }
