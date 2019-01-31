@@ -1,21 +1,20 @@
-.controls .delete
+.controls button.delete
 {
 	border-radius: var( --button-radius );
-	background-color: #af3737;
+	background-color: var( --color-red );
 }
 
-.controls .delete:disabled
+.controls button.delete:disabled
 {
-	cursor: initial;
-	background-color: var( --menu-bg );
+	background-color: var( --color-light-gray );
 }
 
-.controls .delete svg
+.controls button.delete svg
 {
-	fill: #fff;
+	fill: var( --color-white );
 }
 
-.controls .delete:disabled svg
+.controls button.delete:disabled svg
 {
-	fill: var( --menu-text );
+	fill: var( --color-gray );
 }

@@ -6,6 +6,7 @@
 	pointer-events: auto;
 	width: var( --menu-width );
 	color: var( --menu-text );
+	font-weight: 300;
 }
 
 .menu, .menu .tabs > *
@@ -15,28 +16,41 @@
 
 .menu, .menu .tabs button:disabled
 {
-	background-color: var( --menu-bg );
+	background-color: var( --color-gray );
+}
+
+
+.menu, .menu input, .menu textarea, .menu select, .menu button
+{
+	font-family: "Roboto", sans-serif;
+	font-size: 0.95em;
+}
+
+.menu button
+{
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
 }
 
 .menu .tabs button
 {
-	color: #818181;
+	color: var( --color-gray );
 	padding: 0;
 	background-color: transparent;
-	border-bottom: 1px solid #777777;
+	border-bottom: 1px solid var( --color-light-gray );
 }
 
 .menu .tabs button:disabled
 {
 	text-shadow: var( --text-shadow );
-	color: #ffffff;
+	color: var( --color-white );
 	border-bottom: none;
 	cursor: initial;
 }
 
 .menu .tabs
 {
-	background-color: var( --menu-tabs-bg );
+	background-color: var( --color-dark-gray );
 	height: 36px;
 }
 

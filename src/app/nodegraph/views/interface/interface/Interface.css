@@ -1,12 +1,20 @@
 .interface
 {
 	--menu-width: 360px;
+	--controls-width: 56px;
+	--color-red: #af3737;
+	--color-white: #ffffff;
+	--color-blue: #2e78a2;
+	--color-light-gray: #b1b1b1;
+	--color-gray: #777777;
+	--color-dark-gray: #3c3c3c;
+	--spacing-small: 10px;
+	--button-radius: 4px;	
+	
 	--menu-bg: #525252;
 	--menu-text: #aeaeae;
 	--menu-tabs-bg: #313131;
 	--button-color: #2e78a2;
-	--button-radius: 4px;	
-	--controls-width: 56px;
 	--button-spacing: 10px;
 	position: fixed;
 	height: 100%;
@@ -15,14 +23,6 @@
 	transform: translateX( calc( -1 * var( --menu-width ) ) );
 	transition-property: transform;
 	transition: transform 0.3s;
-	color: var( --menu-text );
-	font-weight: 300;
-}
-
-.interface, .interface input, .interface textarea, .interface select, .interface button
-{
-	font-family: "Roboto", sans-serif;
-	font-size: 0.95em;
 }
 
 .interface.open
@@ -35,8 +35,6 @@
 	border: none;
 	outline: none;
 	cursor: pointer;
-	letter-spacing: 0.1em;
-	text-transform: uppercase;
 }
 
 .interface nav

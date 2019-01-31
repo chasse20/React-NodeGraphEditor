@@ -1,10 +1,9 @@
 .controls .select-toggle button:disabled
 {
-	background-color: var( --button-color );
-	cursor: initial;
+	background-color: var( --color-blue );
 }
 
 .controls .select-toggle button:disabled svg
 {
-	fill: #fff;
+	fill: var( --color-white );
 }
