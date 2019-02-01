@@ -1,0 +1,16 @@
+.controls button.menu-toggle
+{
+	background: transparent;
+	padding: 6px;
+}
+
+.controls button.menu-toggle svg
+{
+	width: 100%;
+	fill: var( --color-blue );
+}
+
+.open .controls button.menu-toggle svg
+{
+	fill: var( --color-gray );
+}

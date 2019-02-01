@@ -1,14 +1,14 @@
 .graph
 {
-	background-color: #edeff1;
+	background-color: #c9cccd;
 	position: absolute;
 	top: 0;
 	left: 0;
 	height: 100%;
 	width: 100%;
 	overflow: hidden;
-	font-family: Arial, Helvetica, sans-serif;
-	color: #fff;
+	font-family: "Roboto", sans-serif;
+	color: #ffffff;
 }
 
 .graph.panning

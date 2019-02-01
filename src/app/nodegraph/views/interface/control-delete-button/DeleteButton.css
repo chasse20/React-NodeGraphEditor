@@ -6,7 +6,7 @@
 
 .controls button.delete:disabled
 {
-	background-color: var( --color-light-gray );
+	background-color: var( --color-gray );
 }
 
 .controls button.delete svg
@@ -16,5 +16,5 @@
 
 .controls button.delete:disabled svg
 {
-	fill: var( --color-gray );
+	fill: var( --color-light-gray );
 }

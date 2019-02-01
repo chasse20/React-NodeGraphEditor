@@ -1,51 +1,68 @@
-.controls > *
+.controls
+{
+	position: absolute;
+	left: var( --menu-width );
+	pointer-events: auto;
+	box-sizing: border-box;
+	padding: var( --spacing-small );
+}
+
+.controls > *:not(:first-child), .controls .side > *:not(:first-child)
 {
 	margin-top: var( --spacing-small );
 }
 
 .controls button
 {
-	box-sizing: border-box;
-	background-color: var( --color-light-gray );
-	padding: 8px;
-	width: 100%;
-	display: flex;
-	height: calc( var( --controls-width ) - 2 * var( --spacing-small ) );
-	position: relative;
-	transition: 0.5s background-color ease;
-	transition-property: background-color;
-}
-
-.controls button:disabled
-{
-	cursor: initial;
-}
-
-.controls button svg
-{
-	fill: var( --color-gray );
-	width: inherit;
+	border: none;
+	outline: none;
+	cursor: pointer;
+	height: var( --button-size );
+	width: var( --button-size );
 	transition: 0.5s fill ease;
 	transition-property: fill;
 }
 
-.controls button.selected
+.controls button svg
+{
+	width: 100%;
+}
+
+.controls .side button svg
+{
+	fill: var( --color-light-gray );
+}
+
+.controls .side button
+{
+	background-color: var( --color-gray );
+	padding: 8px;
+	transition: 0.5s background-color ease;
+	transition-property: background-color;
+}
+
+.controls .side button:disabled
+{
+	cursor: initial;
+}
+
+.controls .side button.selected
 {
 	background-color: var( --color-blue );
 }
 
-.controls button.selected svg
+.controls .side button.selected svg
 {
 	fill: var( --color-white );
 }
 
-.controls button:first-child
+.controls .side button:first-child
 {
 	border-top-left-radius: var( --button-radius );
 	border-top-right-radius: var( --button-radius );
 }
 
-.controls button:last-child
+.controls .side button:last-child
 {
 	border-bottom-left-radius: var( --button-radius );
 	border-bottom-right-radius: var( --button-radius );

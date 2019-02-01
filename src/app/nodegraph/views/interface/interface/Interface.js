@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import GraphModel from "../../../models/Graph";
 import Menu from "../menu/Menu";
-import MenuToggle from "../menu-toggle/MenuToggle";
 import Controls from "../controls/Controls";
 import "./Interface.css";
 
@@ -28,10 +27,7 @@ export default class Interface extends React.PureComponent
 		return (
 			<div className={ this.state.isOpen ? "interface open" : "interface" }>
 				<Menu graph={ this.props.graph }/>
-				<nav>
-					<MenuToggle onToggle={ this._onMenuToggle }/>
-					<Controls graph={ this.props.graph }/>
-				</nav>
+				<Controls graph={ this.props.graph } onMenuToggle={ this._onMenuToggle }/>
 			</div>
 		);
 	}

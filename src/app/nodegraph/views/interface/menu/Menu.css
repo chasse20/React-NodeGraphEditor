@@ -1,57 +1,73 @@
 .menu
 {
-	--text-shadow: 2px 2px 1px #00000091;
-	--menu-spacing: 4px;
-	position: absolute;
 	pointer-events: auto;
+	position: absolute;
 	width: var( --menu-width );
-	color: var( --menu-text );
+	color: var( --color-light-gray );
 	font-weight: 300;
+	height: 100%;
 }
 
-.menu, .menu .tabs > *
+.menu, .menu button
 {
-	height: inherit;
+	letter-spacing: 0.1em;
 }
 
-.menu, .menu .tabs button:disabled
+.menu, .menu .inner
+{
+	height: 100%;
+	box-sizing: border-box;
+	padding: 1px 1px 0 1px;
+}
+
+.menu, .menu .inner, .menu .tabs button:disabled
 {
 	background-color: var( --color-gray );
 }
 
-
-.menu, .menu input, .menu textarea, .menu select, .menu button
+.menu .inner
 {
-	font-family: "Roboto", sans-serif;
-	font-size: 0.95em;
+	border: 1px solid var( --color-dark-gray );
+	border-bottom: none;
+}
+
+.menu .tabs
+{
+	height: var( --button-size );
+}
+
+.menu .tabs > *
+{
+	height: inherit;
 }
 
 .menu button
 {
-	letter-spacing: 0.1em;
+	border: none;
+	outline: none;
+	cursor: pointer;
 	text-transform: uppercase;
-}
-
-.menu .tabs button
-{
-	color: var( --color-gray );
-	padding: 0;
-	background-color: transparent;
-	border-bottom: 1px solid var( --color-light-gray );
-}
-
-.menu .tabs button:disabled
-{
-	text-shadow: var( --text-shadow );
-	color: var( --color-white );
-	border-bottom: none;
-	cursor: initial;
 }
 
 .menu .tabs
 {
 	background-color: var( --color-dark-gray );
-	height: 36px;
+}
+
+.menu .tabs button
+{
+	color: var( --color-medium-gray );
+	background-color: transparent;
+	border-bottom: 1px solid var( --color-medium-gray );
+}
+
+.menu .tabs button:disabled
+{
+	border-top: 2px solid var( --color-light-blue );
+	text-shadow: var( --text-shadow );
+	color: var( --color-white );
+	border-bottom: none;
+	cursor: initial;
 }
 
 .menu .tabs > *
@@ -61,7 +77,8 @@
 
 .menu .content
 {
-	padding: var( --menu-spacing );
+	padding: var( --spacing-small );
+	padding-top: calc( var( --spacing-small ) + 2px );
 }
 
 .menu .content > *:not(:first-child)
