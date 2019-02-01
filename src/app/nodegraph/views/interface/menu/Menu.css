@@ -11,6 +11,7 @@
 .menu, .menu button
 {
 	letter-spacing: 0.1em;
+	font-size: 0.94em;
 }
 
 .menu, .menu .inner
@@ -83,5 +84,5 @@
 
 .menu .content > *:not(:first-child)
 {
-	margin-top: var( --menu-spacing );
+	margin-top: var( --spacing-tiny );
 }

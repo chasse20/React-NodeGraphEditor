@@ -1,71 +1,67 @@
-.submenu
+.submenu, .submenu .kvp input
 {
 	width: 100%;
+}
+
+.submenu button
+{
+	color: var( --color-white );
+}
+
+.submenu button.toggle, .submenu.open .subcontent
+{
+	display: flex;
+}
+
+.submenu button.toggle
+{
+	align-items: center;
+	text-shadow: var( --text-shadow );
+	width: inherit;
+	border: 1px solid var( --color-light-blue );
+	background-color: var( --color-blue );
+}
+
+.submenu button, .submenu.open .subcontent
+{
+	padding: var( --spacing-tiny ) var( --spacing-small );
+}
+
+.submenu button.toggle svg
+{
+	display: block;
+	height: 1em;
+	fill: var( --color-white );
+	margin-right: var( --spacing-small );
+}
+
+.submenu.open button.toggle svg
+{
+	transform: rotate( 90deg );
 }
 
 .submenu .subcontent
 {
 	display: none;
-	border: 1px solid var( --menu-tabs-bg );
-	padding: var( --menu-spacing );
-	margin-top: var( --menu-spacing );
 }
 
 .submenu.open .subcontent
 {
-	display: flex;
+	box-sizing: border-box;
 	flex-direction: column;
-}
-
-.submenu .toggle svg
-{
-	display: block;
-	height: 1em;
-}
-
-.submenu.open .toggle svg
-{
-	transform: rotate( 90deg );
-}
-
-.submenu button
-{
-	padding: 4px 8px;
-	background-color: var( --button-color );
-	color: #fff;
-}
-
-.submenu .toggle
-{
-	align-items: center;
-	text-shadow: var( --text-shadow );
-	width: inherit;
-	display: flex;
-	border: 1px solid #59aede;
-}
-
-.submenu .toggle svg
-{
-	fill: #fff;
-	margin-right: 8px;
+	border: 1px solid var( --color-dark-gray );
+	margin-top: var( --spacing-tiny );
 }
 
 .submenu .kvp
 {
 	display: grid;
 	grid-template-columns: auto 1fr;
-	grid-row-gap: var( --menu-spacing );
-	grid-column-gap: var( --button-spacing );
+	grid-row-gap: var( --spacing-tiny );
+	grid-column-gap: var( --spacing-small );
 }
 
 .submenu .kvp :nth-child(2n+1):after
 {
 	content: ":"
-}
-
-.submenu .confirm
-{
-	border-radius: var( --button-radius );
-	padding: 4px 32px;
-	margin: calc( var( --button-spacing ) * 2 ) auto;
 }
