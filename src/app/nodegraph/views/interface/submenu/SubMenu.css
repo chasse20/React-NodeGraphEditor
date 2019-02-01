@@ -63,9 +63,8 @@
 
 .submenu .kvp
 {
-	margin-left: calc( 1em + var( --spacing-small ) );
-	margin-right: var( --spacing-small );
-	margin-top: var( --spacing-small );
+	margin: var( --spacing-small );
+	margin-bottom: 0;
 	display: grid;
 	grid-template-columns: auto 1fr;
 	grid-row-gap: var( --spacing-tiny );
