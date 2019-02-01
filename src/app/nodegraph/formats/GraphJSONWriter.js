@@ -1,166 +1,90 @@
-import TypeModel from "../nodegraph/Type";
-
-export default class GraphJSONReader // TODO: Clustering
+export default class GraphJSONWriter // TODO: Clustering
 {
-	static Read( tGraphModel, tJSON, tNodeTextField = "caption", tEdgeTextField = "caption" )
+	write( tGraphModel, tNodeTextField = "caption", tEdgeTextField = "caption" )
 	{
-		if ( tGraphModel != null && tJSON != null && tJSON.nodes != null )
+		if ( tGraphModel != null )
 		{
+			var tempJSON = null;
+			
 			// Nodes
-			const tempNodeRefs = {};
-			var tempListLength = tJSON.nodes.length;
-			for ( let i = 0; i < tempListLength; ++i )
+			const tempEdges = [];
+			for ( let tempID in tGraphModel._nodes )
 			{
-				let tempNodeJSON = tJSON.nodes[i];
-				let tempNode = GraphJSONReader.ReadNode( tGraphModel, tempNodeJSON, tNodeTextField );
-				if ( tGraphModel.setNode( tempNode ) )
+				let tempNode = this.writeNode( tGraphModel._nodes[ tempID ], tempEdges, tNodeTextField, tEdgeTextField );
+				if ( tempNode != null )
 				{
-					tempNodeRefs[ tempNodeJSON.id ] = tempNode;
+					if ( tempJSON === null )
+					{
+						tempJSON =
+						{
+							nodes: []
+						};
+					}
+					
+					tempJSON.nodes.push( tempNode );
 				}
 			}
 			
 			// Edges
-			if ( tJSON.edges != null )
+			if ( tempEdges.length > 0 )
 			{
-				tempListLength = tJSON.edges.length;
-				for ( let i = 0; i < tempListLength; ++i )
-				{
-					GraphJSONReader.ReadEdge( tGraphModel, tJSON.edges[i], tempNodeRefs, tEdgeTextField );
-				}
-			}
-		}
-	}
-	
-	static ReadNode( tGraphModel, tJSON, tNodeTextField = "caption" )
-	{
-		if ( tGraphModel != null && tJSON != null )
-		{
-			// Model class
-			var tempType = null;
-			if ( tJSON.type == null )
-			{
-				tempType = tGraphModel._nodeTypes[ "default" ];
-			}
-			else
-			{
-				tempType = tGraphModel._nodeTypes[ tJSON.type ];
-				if ( tempType == null )
-				{
-					const tempDefaultType = tGraphModel._nodeTypes[ "default" ];
-					tempType = new TypeModel( tJSON.type, tempDefaultType._modelClass, tempDefaultType._viewClass );
-					tempType.data = Object.assign( tempType.data, tempDefaultType.data ); // TODO: Randomize colors????
-					
-					tGraphModel.setNodeType( tempType );
-				}
+				tempJSON.edges = tempEdges;
 			}
 			
-			const tempNode = new tempType._modelClass( tempType );
-			
-			// Data
-			delete tJSON.type;
-			var tempData = null;
-			
-			if ( tNodeTextField != null )
-			{
-				const tempText = tJSON[ tNodeTextField ];
-				if ( tempText != null )
-				{
-					tempData =
-					{
-						text: tempText
-					};
-					
-					delete tJSON[ tNodeTextField ];
-				}
-			}
-			
-			for ( let tempField in tJSON )
-			{
-				if ( tempField !== "id" )
-				{
-					if ( tempData === null )
-					{
-						tempData = {};
-					}
-					tempData[ tempField ] = tJSON[ tempField ];
-				}
-			}
-			
-			if ( tempData !== null )
-			{
-				tempNode.data = Object.assign( tempNode.data, tempData ); // merge/overwrite!
-			}
-			
-			return tempNode;
+			return tempJSON;
 		}
 		
 		return null;
 	}
 	
-	static ReadEdge( tGraphModel, tJSON, tNodeRefs, tEdgeTextField = "caption" )
+	writeNode( tNodeModel, tEdges, tNodeTextField = "caption", tEdgeTextField = "caption" )
 	{
-		if ( tGraphModel != null && tJSON != null && tJSON.source != null && tJSON.target != null && tNodeRefs != null )
+		if ( tNodeModel != null )
 		{
-			// Source node
-			const tempSourceNode = tNodeRefs[ tJSON.source ];
-			if ( tempSourceNode != null )
+			// Edges
+			if ( tNodeModel._pins != null && tEdges != null )
 			{
-				// Target node
-				const tempTargetNode = tNodeRefs[ tJSON.target ];
-				if ( tempTargetNode != null )
+				for ( let tempKey in tNodeModel._pins )
 				{
-					// Model class
-					const tempTypeName = tJSON[ tEdgeTextField ];
-					var tempType = null;
-					if ( tempTypeName == null )
-					{
-						tempType = tGraphModel._edgeTypes[ "default" ];
-					}
-					else
-					{
-						tempType = tGraphModel._edgeTypes[ tempTypeName ];
-						if ( tempType === undefined )
-						{
-							const tempDefaultType = tGraphModel._edgeTypes[ "default" ];
-							tempType = new TypeModel( tempTypeName, tempDefaultType._modelClass, tempDefaultType._viewClass );
-							tempType.data = Object.assign( tempType.data, tempDefaultType.data ); // TODO: Randomize colors????
-							tempType.data.text = tempTypeName;
-							
-							tGraphModel.setEdgeType( tempType );
-						}
-					}
-
-					const tempSourcePin = tempSourceNode._pins.out;
-					const tempEdge = new tempType._modelClass( tempType, tempSourcePin, tempTargetNode._pins.in );
-					tempSourcePin.setLink( tempEdge );
-					
-					// Data
-					delete tJSON.source;
-					delete tJSON.target;
-					var tempData = null;
-					
-					if ( tEdgeTextField != null )
-					{
-						delete tJSON[ tEdgeTextField ];
-					}
-					
-					for ( let tempField in tJSON )
-					{
-						if ( tempData === null )
-						{
-							tempData = {};
-						}
-						tempData[ tempField ] = tJSON[ tempField ];
-					}
-					
-					if ( tempData !== null )
-					{
-						tempEdge.data = Object.assign( tempEdge.data, tempData ); // merge/overwrite!
-					}
-					
-					return tempEdge;
+					this.writePinEdges( tNodeModel._pins[ tempKey ], tEdges, tEdgeTextField );
 				}
 			}
+			
+			// Node
+			return {
+				id: tNodeModel._id,
+				type: tNodeModel._type._name
+			};
+		}
+		
+		return null;
+	}
+	
+	writePinEdges( tPinModel, tEdges, tEdgeTextField = "caption" )
+	{
+		if ( tPinModel != null && tPinModel._isOut && tEdges != null )
+		{
+			for ( let tempKey in tPinModel._links )
+			{
+				let tempEdge = this.writeEdge( tPinModel._links[ tempKey ], tEdges, tEdgeTextField );
+				if ( tempEdge != null )
+				{
+					tEdges.push( tempEdge );
+				}
+			}
+		}
+	}
+	
+	writeEdge( tEdgeModel, tEdgeTextField = "caption" )
+	{
+		if ( tEdgeModel != null )
+		{
+			// Edge
+			return {
+				source: tEdgeModel._source._node._id,
+				target: tEdgeModel._target._node._id,
+				type: tEdgeModel._type._name
+			};
 		}
 		
 		return null;

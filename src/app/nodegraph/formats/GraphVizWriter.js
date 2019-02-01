@@ -1,9 +1,3 @@
-import NodeModel from "../models/Node";
-import NodeView from "../views/graph/node/Node";
-import EdgeModel from "../models/Edge";
-import EdgeView from "../views/graph/edge/Edge";
-import Vector2DModel from "../../core/Vector2D";
-
 export default class GraphVizWriter
 {
 	write( tGraphModel )

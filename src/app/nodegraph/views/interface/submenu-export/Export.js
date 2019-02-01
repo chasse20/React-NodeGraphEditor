@@ -4,7 +4,7 @@ import FileSaver from "file-saver";
 import SubMenu from "../submenu/SubMenu";
 import GraphModel from "../../../models/Graph";
 import GraphVizWriter from "../../../formats/GraphVizWriter";
-import GraphJSONWriter from "../../../formats/GraphJSONReader";
+import GraphJSONWriter from "../../../formats/GraphJSONWriter";
 
 export default class Export extends SubMenu
 {
