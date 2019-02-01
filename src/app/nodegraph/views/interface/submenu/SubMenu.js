@@ -44,6 +44,7 @@ export default class SubMenu extends React.Component
 				<div className="subcontent">
 					{ this.renderContent() }
 				</div>
+				<div className="accent"/>
 			</div>
 		);
 	}

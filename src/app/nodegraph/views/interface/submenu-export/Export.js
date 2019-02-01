@@ -46,7 +46,7 @@ export default class Export extends SubMenu
 	
 	render()
 	{
-		return this.renderSubmenu( "export" );
+		return this.renderSubmenu( "export file" );
 	}
 	
 	renderContent()

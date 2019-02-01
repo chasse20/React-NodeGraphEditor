@@ -53,6 +53,7 @@
 .menu .tabs
 {
 	background-color: var( --color-dark-gray );
+	display: flex;
 }
 
 .menu .tabs button
@@ -78,8 +79,8 @@
 
 .menu .content
 {
-	padding: var( --spacing-small );
-	padding-top: calc( var( --spacing-small ) + 2px );
+	padding: calc( var( --spacing-tiny ) - 2px );
+	padding-top: var( --spacing-tiny );
 }
 
 .menu .content > *:not(:first-child)

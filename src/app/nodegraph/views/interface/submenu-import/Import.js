@@ -60,7 +60,7 @@ export default class Import extends SubMenu
 	
 	render()
 	{
-		return this.renderSubmenu( "import" );
+		return this.renderSubmenu( "import file" );
 	}
 	
 	renderContent()

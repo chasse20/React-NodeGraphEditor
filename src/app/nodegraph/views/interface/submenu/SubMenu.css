@@ -44,7 +44,7 @@
 	transform: rotate( 90deg );
 }
 
-.submenu .subcontent
+.submenu .subcontent, .submenu .accent
 {
 	display: none;
 }
@@ -69,7 +69,7 @@
 	display: grid;
 	grid-template-columns: auto 1fr;
 	grid-row-gap: var( --spacing-tiny );
-	grid-column-gap: var( --spacing-small );
+	grid-column-gap: calc( 2 * var( --spacing-small ) );
 }
 
 .submenu .kvp span
@@ -78,7 +78,7 @@
 	align-items: center;
 }
 
-.submenu .kvp :nth-child(2n+1):after
+.submenu .kvp :nth-child(2n+1)::after
 {
 	content: ":"
 }
@@ -112,4 +112,13 @@
 .submenu select
 {
 	border: none;
+}
+
+.submenu.open .accent
+{
+	margin-top: 1px;
+	display: block;
+	border-bottom: 1px solid var( --color-medium-gray );
+	width: calc( 100% - 4px );
+	margin-left: 2px;
 }
