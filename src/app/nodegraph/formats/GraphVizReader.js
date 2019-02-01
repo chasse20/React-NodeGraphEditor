@@ -92,7 +92,7 @@ export default class GraphVizReader
 			var tempViewClass = tJSON.viewClass == null ? null : tSerializableViews[ tJSON.viewClass ];
 			if ( tempViewClass == null )
 			{
-				tempViewClass = tSerializableViews[ "default" ];
+				tempViewClass = tDefaultType._viewClass;
 			}
 			
 			return this.createNodeType( tJSON.name, tempViewClass );
@@ -114,7 +114,7 @@ export default class GraphVizReader
 			var tempViewClass = tJSON.viewClass == null ? null : tSerializableViews[ tJSON.viewClass ];
 			if ( tempViewClass == null )
 			{
-				tempViewClass = tSerializableViews[ "default" ];
+				tempViewClass = tDefaultType._viewClass;
 			}
 			
 			return this.createEdgeType( tJSON.name, tempViewClass );

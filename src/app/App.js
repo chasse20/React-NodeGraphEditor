@@ -20,7 +20,7 @@ class App extends Component
 		// Variables
 		this._graph = new GraphModel();
 		( new GraphVizReader() ).read( this._graph, Data );
-		//( new GraphJSONReader ).read( this._graph, DataGraphJSON );
+		//( new GraphJSONReader() ).read( this._graph, DataGraphJSON );
 	}
 
 	render()

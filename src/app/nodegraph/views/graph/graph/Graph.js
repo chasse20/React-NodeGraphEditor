@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { observe } from "mobx";
 import { observer } from "mobx-react";
+import Bounds from "../../../../core/Bounds";
 import Vector2D from "../../../../core/Vector2D";
 import GraphModel from "../../../models/Graph";
 import Nodes from "../nodes/Nodes";
@@ -123,13 +124,27 @@ class Graph extends React.Component
 	onMarqueeMove( tEvent )
 	{
 		// Select
+		const tempModel = this.props.model;
 		const tempScreenEnd = new Vector2D( tEvent.clientX, tEvent.clientY );
-		const tempLocalEnd = Vector2D.Scale( tempScreenEnd, 1 / this.props.model.zoom ).subtract( this.props.model.position );
-		
-		this._nodes.onMarqueeMove( this._marqueeOffset, tempLocalEnd );
+		const tempBounds = Bounds.FromCorners( this._marqueeOffset, Vector2D.Scale( tempScreenEnd, 1 / tempModel.zoom ).subtract( tempModel.position ) );
+		for ( let tempID in tempModel._nodes )
+		{
+			let tempNode = tempModel._nodes[ tempID ];
+			if ( tempBounds.contains( tempNode.position ) )
+			{
+				if ( !tempNode._isSelected )
+				{
+					tempModel.setSelectedNode( tempNode );
+				}
+			}
+			else if ( tempNode._isSelected )
+			{
+				tempModel.removeSelectedNode( tempNode );
+			}
+		}
 		
 		// Render
-		const tempScreenStart = Vector2D.Scale( Vector2D.Add( this._marqueeOffset, this.props.model.position ), this.props.model.zoom );
+		const tempScreenStart = Vector2D.Scale( Vector2D.Add( this._marqueeOffset, tempModel.position ), tempModel.zoom );
 		
 		if ( tempScreenEnd.x < tempScreenStart.x )
 		{

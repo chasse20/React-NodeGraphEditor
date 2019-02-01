@@ -72,11 +72,6 @@
 	cursor: initial;
 }
 
-.menu .tabs > *
-{
-	width: 33.3333%;
-}
-
 .menu .content
 {
 	padding: calc( var( --spacing-small ) - 2px );

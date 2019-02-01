@@ -3,25 +3,21 @@
 	[
 		{
 			"name": "Person",
-			"viewClass": "Node",
 			"fill": "#c567bf",
 			"stroke": "#9f4a9a"
 		},
 		{
 			"name": "Organization",
-			"viewClass": "Node",
 			"fill": "#2891ca",
 			"stroke": "#1f729f"
 		},
 		{
 			"name": "Publication",
-			"viewClass": "Node",
 			"fill": "#d2a565",
 			"stroke": "#ac8247"
 		},
 		{
 			"name": "Tech",
-			"viewClass": "Node",
 			"fill": "#38d47a",
 			"stroke": "#1cac59",
 			"radius": 75
@@ -31,43 +27,36 @@
 	[
 		{
 			"name": "PersonOrg",
-			"viewClass": "Edge",
 			"stroke": "#9f4a9a",
 			"text": "Belongs to"
 		},
 		{
 			"name": "PersonPub",
-			"viewClass": "Edge",
 			"stroke": "#9f4a9a",
 			"text": "Writes"
 		},
 		{
 			"name": "OrgPub",
-			"viewClass": "Edge",
 			"stroke": "#2891ca",
 			"text": "Writes"
 		},
 		{
 			"name": "OrgTech",
-			"viewClass": "Edge",
 			"stroke": "#2891ca",
 			"text": "Writes"
 		},
 		{
 			"name": "PubPub",
-			"viewClass": "Edge",
 			"stroke": "#ac8247",
 			"text": "References"
 		},
 		{
 			"name": "PubTech",
-			"viewClass": "Edge",
 			"stroke": "#ac8247",
 			"text": "Inspires"
 		},
 		{
 			"name": "TechTech",
-			"viewClass": "Edge",
 			"stroke": "#1cac59",
 			"text": "Required by"
 		}

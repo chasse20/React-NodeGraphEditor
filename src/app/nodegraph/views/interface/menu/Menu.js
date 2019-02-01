@@ -22,8 +22,7 @@ export default class Menu extends React.PureComponent
 		this._tabs =
 		[
 			"i/o",
-			"graph",
-			"data"
+			"graph"
 		];
 	}
 	
@@ -37,7 +36,7 @@ export default class Menu extends React.PureComponent
 							this._tabs.map(
 								( tTitle, tIndex ) =>
 								(
-									<button key={ tTitle } disabled={ tIndex === this.state.tab } onMouseDown={ () => { this.setState( { tab: tIndex } ); } }>{ tTitle }</button>
+									<button key={ tTitle } disabled={ tIndex === this.state.tab } style={ { width: ( 100 / this._tabs.length ) + "%" } } onMouseDown={ () => { this.setState( { tab: tIndex } ); } }>{ tTitle }</button>
 								)
 							)
 						}

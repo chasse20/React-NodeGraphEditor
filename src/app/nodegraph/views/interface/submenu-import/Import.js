@@ -25,7 +25,7 @@ export default class Import extends SubMenu
 		
 		// Events
 		this._onFileInput = ( tEvent ) => { this.onFileInput( tEvent.target.files ); };
-		this._onFormat = ( tEvent ) => { this.setState( { format: tEvent.target.value } ); };
+		this._onFormat = ( tEvent ) => { this.setState( { format: parseInt( tEvent.target.value ) } ); };
 		this._onImport = () => { this.onImport(); };
 	}
 	
@@ -40,7 +40,7 @@ export default class Import extends SubMenu
 		{
 			const tempReader = new FileReader();
 			tempReader.onload = ( tEvent ) =>
-			{				
+			{
 				this.selectedFormat.read( this.props.graph, JSON.parse( tEvent.target.result ) );
 			};
 			

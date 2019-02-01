@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import { observe } from "mobx";
 import GraphModel from "../../../models/Graph";
-import Bounds from "../../../../core/Bounds";
 import Vector2D from "../../../../core/Vector2D";
 import Node from "../node/Node";
 import "./Nodes.css";
@@ -267,23 +266,6 @@ export default class Nodes extends React.PureComponent
 		document.removeEventListener( "mouseup", this._onDragUp );
 		
 		this.setState( { isDragging: false } );
-	}
-	
-	onMarqueeMove( tLocalStart, tLocalEnd ) // TODO: clean up
-	{
-		const tempBounds = Bounds.FromCorners( tLocalStart, tLocalEnd );
-		for ( let tempID in this._nodes )
-		{
-			let tempModel = this._nodes[ tempID ].props.model;
-			if ( tempBounds.contains( tempModel.position ) )
-			{
-				this.props.graph.setSelectedNode( tempModel );
-			}
-			else
-			{
-				this.props.graph.removeSelectedNode( tempModel );
-			}
-		}
 	}
 	
 	onKeyDown( tEvent )

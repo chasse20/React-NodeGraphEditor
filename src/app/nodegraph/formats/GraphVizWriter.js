@@ -54,17 +54,21 @@ export default class GraphVizWriter
 			// Nodes
 			for ( let tempKey in tGraphModel._nodes )
 			{
-				if ( tempJSON == null )
+				let tempNode = this.writeNode( tGraphModel._nodes[ tempKey ] );
+				if ( tempNode != null )
 				{
-					tempJSON = {};
+					if ( tempJSON == null )
+					{
+						tempJSON = {};
+					}
+					
+					if ( tempJSON.nodes == null )
+					{
+						tempJSON.nodes = [];
+					}
+					
+					tempJSON.nodes.push( tempNode );
 				}
-				
-				if ( tempJSON.nodes == null )
-				{
-					tempJSON.nodes = [];
-				}
-				
-				tempJSON.nodes.push( this.writeNode( tGraphModel._nodes[ tempKey ] ) );
 			}
 			
 			return tempJSON;
@@ -73,7 +77,7 @@ export default class GraphVizWriter
 		return null;
 	}
 	
-	static WriteVector( tVectorModel )
+	writeVector( tVectorModel )
 	{
 		if ( tVectorModel != null )
 		{
@@ -101,24 +105,21 @@ export default class GraphVizWriter
 		return null;
 	}
 	
-	static WriteTypes( tTypes, tSerializableModels, tSerializableViews )
+	writeNodeTypes( tTypes )
 	{
-		if ( tTypes != null && tSerializableModels != null && tSerializableViews != null )
+		if ( tTypes != null )
 		{
 			var tempTypesJSON = null;
 			for ( let tempKey in tTypes )
 			{
-				if ( tempKey !== "default" )
+				let tempType = this.writeNodeType( tTypes[ tempKey ] );
+				if ( tempType != null )
 				{
-					let tempType = GraphVizWriter.WriteType( tempKey, tTypes[ tempKey ], tSerializableModels, tSerializableViews );
-					if ( tempType != null )
+					if ( tempTypesJSON == null )
 					{
-						if ( tempTypesJSON == null )
-						{
-							tempTypesJSON = [];
-						}
-						tempTypesJSON.push( tempType );
+						tempTypesJSON = [];
 					}
+					tempTypesJSON.push( tempType );
 				}
 			}
 			
@@ -128,46 +129,19 @@ export default class GraphVizWriter
 		return null;
 	}
 	
-	static WriteType( tTypeName, tTypeModel, tSerializableModels, tSerializableViews )
+	writeNodeType( tTypeModel )
 	{
-		if ( tTypeModel != null && tSerializableModels != null && tSerializableViews != null )
+		if ( tTypeModel != null && tTypeModel._name !== "default" )
 		{
 			const tempJSON =
 			{
-				name: tTypeName
+				name: tTypeModel._name
 			};
 			
-			// Model class			
-			if ( tTypeModel._modelClass !== tSerializableModels[ "default" ] )
-			{
-				for ( let tempKey in tSerializableModels )
-				{
-					if ( tSerializableModels[ tempKey ] === tTypeModel._modelClass )
-					{
-						tempJSON.modelClass = tempKey;
-						break;
-					}
-				}
-			}
-			
 			// View class
-			if ( tTypeModel._viewClass !== tSerializableViews[ "default" ] )
+			if ( tTypeModel._viewClass != null )
 			{
-				for ( let tempKey in tSerializableViews )
-				{
-					if ( tSerializableViews[ tempKey ] === tTypeModel._viewClass )
-					{
-						tempJSON.viewClass = tempKey;
-						break;
-					}
-				}
-			}
-			
-			// Data	
-			for ( let tempKey in tTypeModel.data )
-			{
-				tempJSON.data = tTypeModel.data;
-				break;
+				tempJSON.viewClass = tTypeModel._viewClass.constructor.name;
 			}
 			
 			return tempJSON;
@@ -176,7 +150,12 @@ export default class GraphVizWriter
 		return null;
 	}
 	
-	static WriteNode( tNodeModel )
+	writeEdgeTypes( tTypes )
+	{
+		return this.writeNodeTypes( tTypes );
+	}
+	
+	writeNode( tNodeModel )
 	{
 		if ( tNodeModel != null )
 		{
@@ -191,7 +170,7 @@ export default class GraphVizWriter
 			{
 				for ( let tempKey in tNodeModel._pins )
 				{
-					let tempPin = GraphVizWriter.WritePin( tNodeModel._pins[ tempKey ] );
+					let tempPin = this.writePin( tNodeModel._pins[ tempKey ] );
 					if ( tempPin != null )
 					{
 						if ( tempJSON.pins == null )
@@ -205,17 +184,10 @@ export default class GraphVizWriter
 			}
 			
 			// Position
-			const tempPosition = GraphVizWriter.WriteVector( tNodeModel.position );
+			const tempPosition = this.writeVector( tNodeModel.position );
 			if ( tempPosition != null )
 			{
 				tempJSON.position = tempPosition;
-			}
-			
-			// Data
-			for ( let tempKey in tNodeModel.data )
-			{
-				tempJSON.data = tNodeModel.data;
-				break;
 			}
 			
 			return tempJSON;
@@ -224,7 +196,7 @@ export default class GraphVizWriter
 		return null;
 	}
 	
-	static WritePin( tPinModel )
+	writePin( tPinModel )
 	{
 		if ( tPinModel != null )
 		{
@@ -235,7 +207,7 @@ export default class GraphVizWriter
 			{
 				for ( let tempKey in tPinModel._links )
 				{
-					let tempEdge = GraphVizWriter.WriteEdge( tPinModel._links[ tempKey ] );
+					let tempEdge = this.writeEdge( tPinModel._links[ tempKey ] );
 					if ( tempEdge != null )
 					{
 						if ( tempJSON == null )
@@ -253,7 +225,7 @@ export default class GraphVizWriter
 		return null;
 	}
 	
-	static WriteEdge( tEdgeModel )
+	writeEdge( tEdgeModel )
 	{
 		if ( tEdgeModel != null )
 		{
@@ -273,13 +245,6 @@ export default class GraphVizWriter
 					tempJSON.pin = tempKey;
 					break;
 				}
-			}
-			
-			// Data
-			for ( let tempKey in tEdgeModel.data )
-			{
-				tempJSON.data = tEdgeModel.data;
-				break;
 			}
 			
 			return tempJSON;

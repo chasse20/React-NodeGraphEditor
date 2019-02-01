@@ -25,7 +25,7 @@ export default class Export extends SubMenu
 		];
 		
 		// Events
-		this._onFormat = ( tEvent ) => { this.setState( { format: tEvent.target.value } ); };
+		this._onFormat = ( tEvent ) => { this.setState( { format: parseInt( tEvent.target.value ) } ); };
 		this._onExport = () => { this.onExport(); };
 	}
 	
