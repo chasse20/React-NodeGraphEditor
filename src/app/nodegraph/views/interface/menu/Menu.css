@@ -8,7 +8,7 @@
 	height: 100%;
 }
 
-.menu, .menu button
+.menu, .menu button, .menu select, .menu input
 {
 	letter-spacing: 0.1em;
 	font-size: 0.94em;
