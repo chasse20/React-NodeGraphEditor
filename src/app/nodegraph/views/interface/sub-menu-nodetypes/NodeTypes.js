@@ -1,26 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { observer } from "mobx-react";
-import SubMenu from "../sub-menu/SubMenu";
+import Types from "../sub-menu-types/Types";
 import NodeType from "../sub-item-nodetype/NodeType";
 import GraphModel from "../../../models/Graph";
 import TypeModel from "../../../models/Type";
 
-class NodeTypes extends SubMenu
+class NodeTypes extends Types
 {
-	constructor( tProps )
-	{
-		// Inheritance
-		super( tProps );
-
-		// State
-		this.state.newKey = "";
-		
-		// Events
-		this._onNewText = ( tEvent ) => { this.setState( { newKey: tEvent.target.value } ); };
-		this._onNew = () => { this.onNew(); };
-	}
-	
 	onNew()
 	{
 		if ( this.state.newKey !== "" && this.props.graph._nodeTypes[ this.state.newKey ] === undefined )
@@ -48,10 +35,7 @@ class NodeTypes extends SubMenu
 						)
 					}
 				</div>
-				<div className="new">
-					<input type="text" value={ this.newKey } onChange={ this._onNewText }/>
-					<button onClick={ this._onNew }>new type</button>
-				</div>
+				{ super.renderContent() }
 			</React.Fragment>
 		);
 	}

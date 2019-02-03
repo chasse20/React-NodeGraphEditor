@@ -12,3 +12,13 @@
 {
 	transform: rotate( 90deg );
 }
+
+.sub-item .sub-item-content
+{
+	display: none;
+}
+
+.sub-item.open .sub-item-content
+{
+	display: flex;
+}
