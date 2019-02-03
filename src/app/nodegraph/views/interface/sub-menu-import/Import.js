@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import SubMenu from "../submenu/SubMenu";
+import SubMenu from "../sub-menu/SubMenu";
 import GraphModel from "../../../models/Graph";
 import GraphVizReader from "../../../formats/GraphVizReader";
 import GraphJSONReader from "../../../formats/GraphJSONReader";

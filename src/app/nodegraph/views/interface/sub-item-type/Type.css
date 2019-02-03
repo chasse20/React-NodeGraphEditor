@@ -1,0 +1,14 @@
+.sub-item
+{
+	width: 100%;
+}
+
+.sub-item button.sub-item-toggle
+{
+	background-color: var( --color-dark-gray );
+}
+
+.sub-item.open button.sub-item-toggle svg
+{
+	transform: rotate( 90deg );
+}

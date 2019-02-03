@@ -1,8 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import GraphModel from "../../../models/Graph";
-import Import from "../submenu-import/Import";
-import Export from "../submenu-export/Export";
+import Import from "../sub-menu-import/Import";
+import Export from "../sub-menu-export/Export";
+import NodeTypes from "../sub-menu-nodetypes/NodeTypes";
 import "./Menu.css";
 
 export default class Menu extends React.PureComponent
@@ -61,11 +62,11 @@ export default class Menu extends React.PureComponent
 					</React.Fragment>
 				);
 			case 1: // Graph
-				break;
-				//return <Graph graph={ this.props.graph }/>
-			case 2: // Data
-				break;
-				//return <Data graph={ this.props.graph }/>
+				return (
+					<React.Fragment>
+						<NodeTypes graph={ this.props.graph }/>
+					</React.Fragment>
+				);
 			default:
 				break;
 		}
