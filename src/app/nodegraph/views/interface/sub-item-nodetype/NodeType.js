@@ -29,11 +29,6 @@ export default class NodeType extends SubItem
 			tempClassName += " open";
 		}
 		
-		if ( this.props.model._name === "default" )
-		{
-			tempClassName += " default";
-		}
-		
 		// Render
 		return (
 			<div className={ tempClassName }>

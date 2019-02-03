@@ -43,8 +43,7 @@ class NodeTypes extends SubMenu
 						Object.keys( this.props.graph._nodeTypes ).map(
 							( tKey ) =>
 							(
-								tKey !== "default" &&
-									<NodeType graph={ this.props.graph } model={ this.props.graph._nodeTypes[ tKey ] } key={ tKey }/>
+								<NodeType graph={ this.props.graph } model={ this.props.graph._nodeTypes[ tKey ] } key={ tKey }/>
 							)
 						)
 					}
