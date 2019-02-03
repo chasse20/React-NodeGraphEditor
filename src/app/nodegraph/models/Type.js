@@ -1,17 +1,9 @@
-import { decorate, observable } from "mobx";
-
 export default class Type
 {
-	constructor( tName, tViewClass = null )
+	constructor( tName, tModelClass, tViewClass )
 	{
 		this._name = tName;
+		this._modelClass = tModelClass;
 		this._viewClass = tViewClass;
-		this.isVisible = true;
 	}
 }
-
-decorate( Type,
-	{
-		isVisible: observable
-	}
-);

@@ -1,6 +1,5 @@
-import { action, decorate, observable, set, remove } from "mobx";
+import { action, decorate, observable, set, remove, get, has, values } from "mobx";
 import Vector2D from "../../core/Vector2D";
-import Type from "./Type";
 
 export default class Graph
 {
@@ -8,14 +7,8 @@ export default class Graph
 	{
 		this._nodes = {};
 		this._selectedNodes = [];
-		this._nodeTypes =
-		{
-			"default": new Type( "default" )
-		};
-		this._edgeTypes =
-		{
-			"default": new Type( "default" )
-		};
+		this._nodeTypes = {};
+		this._edgeTypes = {};
 		this.position = new Vector2D();
 		this.zoom = 1;
 		this.zoomSpeed = 0.05;
@@ -32,7 +25,7 @@ export default class Graph
 	
 	setNode( tNode )
 	{
-		if ( tNode != null )
+		if ( tNode != null && !has( this._nodes, tNode._id ) )
 		{
 			set( this._nodes, tNode._id, tNode );
 			
@@ -44,7 +37,7 @@ export default class Graph
 	
 	removeNode( tNode )
 	{
-		if ( tNode != null && this._nodes[ tNode._id ] !== undefined )
+		if ( tNode != null && tNode === get( this._nodes, tNode._id ) )
 		{
 			this.removeSelectedNode( tNode );
 			remove( this._nodes, tNode._id );
@@ -92,7 +85,7 @@ export default class Graph
 	
 	setNodeType( tType )
 	{
-		if ( tType != null  )
+		if ( tType != null && !has( this._nodeTypes, tType._name ) )
 		{
 			set( this._nodeTypes, tType._name, tType );
 			
@@ -104,25 +97,21 @@ export default class Graph
 	
 	removeNodeType( tType )
 	{
-		if ( tType != null )
+		if ( tType != null && tType === get( this._nodeTypes, tType._name ) )
 		{
-			const tempType = this._nodeTypes[ tType._name ];
-			if ( tempType !== undefined )
+			// Remove nodes that belong to the type
+			const tempNodes = values( this._nodes );
+			for ( let i = ( tempNodes.length - 1 ); i >= 0; --i )
 			{
-				// Remove nodes that belong to the type
-				for ( let tempID in this._nodes )
+				if ( tempNodes[i]._type === tType )
 				{
-					let tempNode = this._nodes[ tempID ];
-					if ( tempNode._type === tempType )
-					{
-						this.removeNode( tempNode );
-					}
+					this.removeNode( tempNodes[i] );
 				}
-
-				remove( this._nodeTypes, tType._name );
-				
-				return true;
 			}
+
+			remove( this._nodeTypes, tType._name );
+			
+			return true;
 		}
 		
 		return false;
@@ -130,7 +119,7 @@ export default class Graph
 	
 	setEdgeType( tType )
 	{
-		if ( tType != null  )
+		if ( tType != null && !has( this._edgeTypes, tType._name ) )
 		{
 			set( this._edgeTypes, tType._name, tType );
 			
@@ -142,21 +131,18 @@ export default class Graph
 	
 	removeEdgeType( tType )
 	{
-		if ( tType != null )
+		if ( tType != null && tType === get( this._edgeTypes, tType._name ) )
 		{
-			const tempType = this._edgeTypes[ tType._name ];
-			if ( tempType !== undefined )
+			// Remove edges that belong to the type
+			const tempNodes = values( this._nodes );
+			for ( let i = ( tempNodes.length - 1 ); i >= 0; --i )
 			{
-				// Remove edges that belong to the type
-				for ( let tempID in this._nodes )
-				{
-					this._nodes[ tempID ].removeEdgeType( tempType );
-				}
-				
-				remove( this._edgeTypes, tType._name );
-
-				return true;
+				tempNodes[i].removeEdgesOfType( tType );
 			}
+			
+			remove( this._edgeTypes, tType._name );
+
+			return true;
 		}
 		
 		return false;

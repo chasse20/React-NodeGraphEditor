@@ -39,30 +39,32 @@ export default class GraphJSONWriter // TODO: Clustering
 	
 	writeNode( tNodeModel, tEdges, tNodeTextField = "caption", tEdgeTextField = "caption" )
 	{
-		if ( tNodeModel != null )
+		const tempJSON =
 		{
-			// Edges
-			if ( tNodeModel._pins != null && tEdges != null )
+			id: tNodeModel._id
+		};
+		
+		// Edges
+		if ( tNodeModel._pins != null )
+		{
+			for ( let tempKey in tNodeModel._pins )
 			{
-				for ( let tempKey in tNodeModel._pins )
-				{
-					this.writePinEdges( tNodeModel._pins[ tempKey ], tEdges, tEdgeTextField );
-				}
+				this.writePinEdges( tNodeModel._pins[ tempKey ], tEdges, tEdgeTextField );
 			}
-			
-			// Node
-			return {
-				id: tNodeModel._id,
-				type: tNodeModel._type._name
-			};
 		}
 		
-		return null;
+		// Type
+		if ( tNodeModel._type._name !== "default" )
+		{
+			tempJSON.type = tNodeModel._type._name;
+		}
+		
+		return tempJSON;
 	}
 	
 	writePinEdges( tPinModel, tEdges, tEdgeTextField = "caption" )
 	{
-		if ( tPinModel != null && tPinModel._isOut && tEdges != null )
+		if ( tPinModel._isOut )
 		{
 			for ( let tempKey in tPinModel._links )
 			{
@@ -77,16 +79,18 @@ export default class GraphJSONWriter // TODO: Clustering
 	
 	writeEdge( tEdgeModel, tEdgeTextField = "caption" )
 	{
-		if ( tEdgeModel != null )
+		const tempJSON =
 		{
-			// Edge
-			return {
-				source: tEdgeModel._source._node._id,
-				target: tEdgeModel._target._node._id,
-				type: tEdgeModel._type._name
-			};
+			source: tEdgeModel._source._node._id,
+			target: tEdgeModel._target._node._id,
+		};
+		
+		// Type
+		if ( tEdgeModel._type._name !== "default" )
+		{
+			tempJSON.type = tEdgeModel._type._name;
 		}
 		
-		return null;
+		return tempJSON;
 	}
 }

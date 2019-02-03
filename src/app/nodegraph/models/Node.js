@@ -1,4 +1,4 @@
-import { observable, decorate } from "mobx";
+import { observable, decorate, values } from "mobx";
 import Vector2D from "../../core/Vector2D";
 import GUID from "../../core/GUID";
 import Pin from "./Pin";
@@ -11,20 +11,21 @@ export default class Node
 		this._type = tType;
 		this._pins =
 		{
-			in: new Pin( this, false ),
-			out: new Pin( this )
+			in: new Pin( "in", this, false ),
+			out: new Pin( "out", this )
 		};
 		this.position = new Vector2D();
 		this._isSelected = false;
 	}
 	
-	removeEdgeType( tType )
+	removeEdgesOfType( tType )
 	{
 		if ( tType != null )
 		{
-			for ( let tempKey in this._pins )
+			const tempPins = values( this._pins );
+			for ( let i = ( tempPins.length - 1 ); i >= 0; --i )
 			{
-				this._pins[ tempKey ].removeEdgeType( tType );
+				tempPins[i].removeEdgesOfType( tType );
 			}
 		}
 	}
@@ -32,7 +33,7 @@ export default class Node
 
 decorate( Node,
 	{
-		_pins: observable,
+		_pins: observable.shallow,
 		position: observable,
 		_isSelected: observable
 	}

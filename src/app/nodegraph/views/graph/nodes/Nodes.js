@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { observe } from "mobx";
 import GraphModel from "../../../models/Graph";
 import Vector2D from "../../../../core/Vector2D";
-import Node from "../node/Node";
 import "./Nodes.css";
 
 export default class Nodes extends React.PureComponent
@@ -77,13 +76,7 @@ export default class Nodes extends React.PureComponent
 	
 	createElement( tModel )
 	{
-		var tempViewClass = tModel._type._viewClass;
-		if ( tempViewClass == null )
-		{
-			tempViewClass = Node;
-		}
-		
-		return React.createElement( tempViewClass,
+		return React.createElement( tModel._type._viewClass,
 			{
 				model: tModel,
 				key: tModel._id,

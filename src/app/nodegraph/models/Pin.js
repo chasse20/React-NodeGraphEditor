@@ -1,10 +1,11 @@
-import { observable, computed, decorate, set, remove, action } from "mobx";
+import { observable, computed, decorate, set, remove, has, get, values, action } from "mobx";
 import Vector2D from "../../core/Vector2D";
 
 export default class Pin
 {
-	constructor( tNode, tIsOut = true, tEdgeTypes = null, tOffset = new Vector2D() )
+	constructor( tName, tNode, tIsOut = true, tEdgeTypes = null, tOffset = new Vector2D() )
 	{
+		this._name = tName;
 		this._node = tNode;
 		this._isOut = tIsOut;
 		this._edgeTypes = tEdgeTypes;
@@ -20,7 +21,7 @@ export default class Pin
 			&& ( tEdge._target._edgeTypes == null || ( tEdge._source._edgeTypes != null && tEdge._target._edgeTypes[ tEdge._source._edgeTypes._name ] ) ) ) ) // edgetype of source must be allowed edgetypes of target
 		{
 			const tempKey = tEdge.id;
-			if ( tEdge !== this._links[ tempKey ] )
+			if ( !has( this._links, tempKey ) )
 			{
 				set( this._links, tempKey, tEdge );
 
@@ -48,7 +49,7 @@ export default class Pin
 		if ( tEdge != null )
 		{
 			const tempKey = tEdge.id;
-			if ( this._links[ tempKey ] !== undefined )
+			if ( tEdge === get( this._links, tempKey ) )
 			{
 				remove( this._links, tempKey );
 				
@@ -68,34 +69,24 @@ export default class Pin
 		return false;
 	}
 	
-	removeEdgeType( tType )
+	removeEdgesOfType( tType )
 	{
 		if ( this._isOut && tType != null && ( this._edgeTypes == null || this._edgeTypes === tType ) )
 		{
-			for ( let tempKey in this._links )
+			const tempLinks = values( this._links );
+			for ( let i = ( tempLinks.length - 1 ); i >= 0; --i )
 			{
-				let tempLink = this._links[ tempKey ];
-				if ( tempLink._type === tType )
+				if ( tempLinks[i]._type === tType )
 				{
-					this.removeLink( tempLink );
+					this.removeLink( tempLinks[i] );
 				}
 			}
 		}
 	}
-
+	
 	get id()
 	{
-		var tempName = null;
-		for ( let tempKey in this._node._pins )
-		{
-			if ( this._node._pins[ tempKey ] === this )
-			{
-				tempName = tempKey;
-				break;
-			}
-		}
-		
-		return this._node._id + tempName;
+		return this._node._id + this._name;
 	}
 	
 	get position()
