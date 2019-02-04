@@ -50,6 +50,11 @@
 	text-transform: uppercase;
 }
 
+.menu button:disabled
+{
+	cursor: initial;
+}
+
 .menu .tabs
 {
 	background-color: var( --color-dark-gray );
@@ -69,7 +74,6 @@
 	text-shadow: var( --text-shadow );
 	color: var( --color-white );
 	border-bottom: none;
-	cursor: initial;
 }
 
 .menu .content

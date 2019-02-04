@@ -32,10 +32,7 @@ export default class NodeType extends SubItem
 		// Render
 		return (
 			<div className={ tempClassName }>
-				<button className="sub-item-toggle toggle" onClick={ this._onStateToggle }>
-					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 24" xmlSpace="preserve">
-						<path d="M0,24l12-12L0,0V24z"/>
-					</svg>
+				<button className="sub-item-toggle toggle" disabled>
 					<div>{ this.props.model._name }</div>
 				</button>
 				<div className="sub-item-content">

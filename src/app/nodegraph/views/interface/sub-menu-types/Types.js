@@ -24,7 +24,7 @@ export default class Types extends SubMenu
 	{
 		return (
 			<div className="new">
-				<input type="text" value={ this.newKey } onChange={ this._onNewText }/>
+				<input type="text" value={ this.newKey } placeholder="Enter Type Name..." onChange={ this._onNewText }/>
 				<button onClick={ this._onNew }>new type</button>
 			</div>
 		);
