@@ -66,7 +66,9 @@ export default class Export extends SubMenu
 						}
 					</select>
 				</div>
-				<button className="confirm" onClick={ this._onExport }>export</button>
+				<div className="buttons">
+					<button className="confirm" onClick={ this._onExport }>export</button>
+				</div>
 			</React.Fragment>
 		);
 	}

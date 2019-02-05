@@ -35,16 +35,18 @@ export default class SubMenu extends React.Component
 		// Render
 		return (
 			<div className={ tempClassName }>
-				<button className="sub-menu-toggle toggle" onClick={ this._onStateToggle }>
+				<button className="toggle" onClick={ this._onStateToggle }>
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 24" xmlSpace="preserve">
 						<path d="M0,24l12-12L0,0V24z"/>
 					</svg>
 					<div>{ tTitle }</div>
 				</button>
 				<div className="sub-content">
-					{ this.renderContent() }
+					<div className="sub-inner">
+						{ this.renderContent() }
+					</div>
+					<div className="accent"/>
 				</div>
-				<div className="accent"/>
 			</div>
 		);
 	}

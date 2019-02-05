@@ -9,5 +9,9 @@ html, body
 body
 {
 	overflow: hidden;
+}
+
+body, button, input, select, option
+{
 	font-family: "Roboto", sans-serif;
 }

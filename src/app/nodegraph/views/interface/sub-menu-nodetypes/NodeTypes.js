@@ -25,7 +25,7 @@ class NodeTypes extends Types
 	{
 		return (
 			<React.Fragment>
-				<div className="items">
+				<div>
 					{
 						Object.keys( this.props.graph._nodeTypes ).map(
 							( tKey ) =>

@@ -82,7 +82,9 @@ export default class Import extends SubMenu
 						}
 					</select>
 				</div>
-				<button className="confirm" onClick={ this._onImport }>import</button>
+				<div className="buttons">
+					<button onClick={ this._onImport }>import</button>
+				</div>
 			</React.Fragment>
 		);
 	}

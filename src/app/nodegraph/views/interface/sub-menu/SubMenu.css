@@ -1,73 +1,81 @@
-.sub-menu, .sub-menu .kvp input, .sub-menu .new
+.sub-menu > *:not(:first-child)
+{
+	margin-top: var( --spacing-tiny );
+}
+
+.sub-menu .toggle
+{
+	border: 1px solid var( --color-light-blue );
+}
+
+.sub-menu .toggle, .sub-menu .buttons button
+{
+	padding: 0 var( --spacing-small );
+}
+
+.sub-menu button, .sub-menu select
+{
+	height: 28px;
+}
+
+.sub-menu .toggle, .sub-menu input
 {
 	width: 100%;
 }
 
-.sub-menu button
-{
-	color: var( --color-white );
-}
-
-.sub-menu button.toggle, .sub-menu.open .sub-content, .sub-menu .kvp span, .sub-menu .new
-{
-	display: flex;
-}
-
-.sub-menu button.sub-menu-toggle, .sub-menu button.confirm, .sub-menu .new button
-{
-	background-color: var( --color-blue );
-}
-
-.sub-menu button.toggle
+.sub-menu .toggle, .sub-menu .kvp span
 {
 	align-items: center;
-	text-shadow: var( --text-shadow );
-	width: inherit;
 }
 
-.sub-menu button.sub-menu-toggle
+.sub-menu .toggle svg
 {
-	padding: var( --spacing-tiny ) var( --spacing-small );
-	border: 1px solid var( --color-light-blue );
-}
-
-.sub-menu button
-{
-	padding: calc( var( --spacing-tiny ) + 1px ) calc( var( --spacing-small ) + 1px );
-}
-
-.sub-menu button.toggle svg
-{
-	display: block;
-	height: 1em;
 	fill: var( --color-white );
+	height: 1em;
 }
 
-.sub-menu button.toggle svg, .sub-menu .new input
-{
-	margin-right: var( --spacing-small );
-}
-
-.sub-menu.open button.sub-menu-toggle svg
+.sub-menu.open .toggle svg
 {
 	transform: rotate( 90deg );
 }
 
-.sub-menu .sub-content, .sub-menu .accent
+.sub-menu .toggle, .sub-menu .sub-inner, .sub-menu .kvp span
+{
+	display: flex;
+}
+
+.sub-menu .toggle > *:not(:first-child)
+{
+	margin-left: var( --spacing-small );
+}
+
+.sub-menu .sub-content
 {
 	display: none;
 }
 
 .sub-menu.open .sub-content
 {
-	flex-direction: column;
-	border: 1px solid var( --color-dark-gray );
-	margin-top: var( --spacing-tiny );
+	display: block;
 }
 
-.sub-menu button, .sub-menu input, .sub-menu select, .sub-menu.open .sub-content, .sub-menu .new
+.sub-menu .sub-inner
 {
-	box-sizing: border-box;
+	flex-direction: column;
+	border: 1px	solid var( --color-dark-gray );
+}
+
+.sub-menu .sub-inner, .sub-menu input, .sub-menu select, .sub-menu select > *
+{
+	letter-spacing: 0.1em;
+	font-size: 0.95em;
+	font-weight: 300;
+}
+
+.sub-menu select, .sub-menu input
+{
+	color: var( --color-light-gray );
+	border: none;
 }
 
 .sub-menu .kvp
@@ -80,38 +88,20 @@
 	grid-column-gap: calc( 2 * var( --spacing-small ) );
 }
 
-.sub-menu .kvp span
-{
-	align-items: center;
-}
-
-.sub-menu .kvp :nth-child(2n+1)::after
+.sub-menu .kvp span:nth-child(2n+1)::after
 {
 	content: ":"
 }
 
-.sub-menu button.confirm
+.sub-menu input
 {
-	margin: var( --spacing-small ) auto;
+	padding: 3px;
+	box-sizing: border-box;
 }
 
-.sub-menu button.confirm, .sub-menu .new button
-{
-	border-radius: var( --button-radius );
-}
-
-.sub-menu button.confirm:active, .sub-menu select, .sub-menu input
+.sub-menu input, .sub-menu select, .sub-menu .buttons button:active
 {
 	background-color: var( --color-dark-gray );
-}
-
-.sub-menu select, .sub-menu input
-{
-	outline: 1px solid transparent;
-	color: var( --color-light-gray );
-	padding: 3px;
-	transition: 0.2s outline ease;
-	transition-property: outline;
 }
 
 .sub-menu input:focus, .sub-menu select:focus
@@ -120,9 +110,16 @@
 	outline-offset: 0;
 }
 
-.sub-menu select, .sub-menu input
+.sub-menu .buttons
 {
-	border: none;
+	margin-left: auto;
+	margin-right: auto;
+	padding: var( --spacing-small );
+}
+
+.sub-menu .buttons button
+{
+	border-radius: var( --button-radius );
 }
 
 .sub-menu.open .accent
@@ -131,19 +128,5 @@
 	border-bottom: 1px solid var( --color-medium-gray );
 	width: calc( 100% - 4px );
 	margin-left: 2px;
-}
-
-.sub-menu.open .accent, .sub-menu .items > *:not(:first-child)
-{
 	margin-top: 1px;
-}
-
-.sub-menu .new
-{
-	padding: var( --spacing-small );
-}
-
-.sub-menu .new input
-{
-	flex-grow: 1;
 }
