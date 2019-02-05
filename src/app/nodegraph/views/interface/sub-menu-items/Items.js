@@ -1,7 +1,7 @@
 import React from "react";
 import SubMenu from "../sub-menu/SubMenu";
 
-export default class Types extends SubMenu
+export default class Items extends SubMenu
 {
 	constructor( tProps )
 	{
@@ -18,6 +18,11 @@ export default class Types extends SubMenu
 	
 	onNew()
 	{
+	}
+	
+	get specificClass()
+	{
+		return " sub-items";
 	}
 	
 	renderContent()

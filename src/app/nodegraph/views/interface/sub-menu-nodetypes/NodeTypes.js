@@ -1,12 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { observer } from "mobx-react";
-import Types from "../sub-menu-types/Types";
+import Items from "../sub-menu-items/Items";
 import NodeType from "../sub-item-nodetype/NodeType";
 import GraphModel from "../../../models/Graph";
 import TypeModel from "../../../models/Type";
 
-class NodeTypes extends Types
+class NodeTypes extends Items
 {
 	onNew()
 	{

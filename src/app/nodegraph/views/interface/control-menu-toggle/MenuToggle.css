@@ -9,7 +9,7 @@
 	fill: var( --color-blue );
 }
 
-.open .controls .menu-toggle svg
+.interface.open .controls .menu-toggle svg
 {
 	fill: var( --color-gray );
 }

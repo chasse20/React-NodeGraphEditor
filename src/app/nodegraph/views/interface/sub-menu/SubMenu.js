@@ -18,6 +18,11 @@ export default class SubMenu extends React.Component
 		this._onStateToggle = () => { this.setState( { isOpen: !this.state.isOpen } ); };
 	}
 	
+	get specificClass()
+	{
+		return "";
+	}
+	
 	render()
 	{
 		return this.renderSubmenu();
@@ -26,7 +31,7 @@ export default class SubMenu extends React.Component
 	renderSubmenu( tTitle )
 	{
 		// Class
-		var tempClassName = "sub-menu";
+		var tempClassName = "sub-menu" + this.specificClass;
 		if ( this.state.isOpen )
 		{
 			tempClassName += " open";
