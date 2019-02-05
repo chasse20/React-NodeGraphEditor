@@ -3,6 +3,11 @@
 	width: 100%;
 }
 
+.sub-item .toggle
+{
+	border: none;
+}
+
 .sub-item button.sub-item-toggle
 {
 	background-color: var( --color-dark-gray );

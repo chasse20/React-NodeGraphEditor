@@ -32,7 +32,7 @@ export default class NodeType extends SubItem
 		// Render
 		return (
 			<div className={ tempClassName }>
-				<button className="sub-item-toggle toggle" disabled>
+				<button className="toggle" disabled>
 					<div>{ this.props.model._name }</div>
 				</button>
 				<div className="sub-item-content">
