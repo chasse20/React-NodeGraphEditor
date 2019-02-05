@@ -7,8 +7,6 @@
 	height: 100%;
 	width: 100%;
 	overflow: hidden;
-	font-family: "Roboto", sans-serif;
-	color: #ffffff;
 }
 
 .graph.panning
@@ -24,16 +22,6 @@
 .graph.marqueeing .marquee
 {
 	opacity: 1;
-}
-
-.graph button
-{
-	box-sizing: border-box;
-	background: transparent;
-	border: none;
-	padding: 0;
-	outline: none;
-	cursor: pointer;
 }
 
 .marquee

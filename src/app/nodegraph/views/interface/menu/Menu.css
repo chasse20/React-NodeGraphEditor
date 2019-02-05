@@ -47,7 +47,6 @@
 	border: none;
 	outline: none;
 	cursor: pointer;
-	text-transform: uppercase;
 }
 
 .menu button:disabled
@@ -63,6 +62,7 @@
 
 .menu .tabs button
 {
+	text-transform: uppercase;
 	color: var( --color-medium-gray );
 	background-color: transparent;
 	border-bottom: 1px solid var( --color-medium-gray );
