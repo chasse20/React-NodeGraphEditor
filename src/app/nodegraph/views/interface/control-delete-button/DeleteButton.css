@@ -1,20 +1,4 @@
-.controls button.delete
+.controls .delete
 {
-	border-radius: var( --button-radius );
 	background-color: var( --color-red );
-}
-
-.controls button.delete:disabled
-{
-	background-color: var( --color-gray );
-}
-
-.controls button.delete svg
-{
-	fill: var( --color-white );
-}
-
-.controls button.delete:disabled svg
-{
-	fill: var( --color-light-gray );
 }

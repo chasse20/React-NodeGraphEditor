@@ -1,9 +1,19 @@
-.controls .select-toggle button:disabled
+.controls .select button
+{
+	background-color: var( --color-gray );
+}
+
+.controls .select button:disabled
 {
 	background-color: var( --color-blue );
 }
 
-.controls .select-toggle button:disabled svg
+.controls .select button svg
+{
+	fill: var( --color-light-gray );
+}
+
+.controls .select button:disabled svg
 {
 	fill: var( --color-white );
 }

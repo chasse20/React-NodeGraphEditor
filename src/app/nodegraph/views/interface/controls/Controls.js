@@ -18,10 +18,10 @@ export default class Controls extends React.PureComponent
 					this.props.onMenuToggle != null &&
 						<MenuToggle onToggle={ this.props.onMenuToggle }/>
 				}
-				<div className="side">
+				<div className="buttons">
 					<SelectionMode graph={ this.props.graph }/>
 					<DeleteButton graph={ this.props.graph }/>
-					<div>
+					<div className="group">
 						<GridToggle graph={ this.props.graph }/>
 						<GridSnapToggle graph={ this.props.graph }/>
 					</div>

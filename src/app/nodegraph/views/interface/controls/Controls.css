@@ -7,7 +7,7 @@
 	padding: var( --spacing-small );
 }
 
-.controls > *:not(:first-child), .controls .side > *:not(:first-child)
+.controls > *:not(:first-child), .controls .buttons > *:not(:first-child)
 {
 	margin-top: var( --spacing-small );
 }
@@ -19,50 +19,54 @@
 	cursor: pointer;
 	height: var( --button-size );
 	width: var( --button-size );
-	transition: 0.5s fill ease;
-	transition-property: fill;
+	transition: 0.5s fill ease, 0.5s background-color ease;
+	transition-property: fill, background-color;
 }
 
-.controls button svg
+.controls svg
 {
 	width: 100%;
 }
 
-.controls .side button svg
+.controls button
 {
-	fill: var( --color-light-gray );
-}
-
-.controls .side button
-{
-	background-color: var( --color-gray );
+	background-color: var( --color-blue );
 	padding: 8px;
-	transition: 0.5s background-color ease;
-	transition-property: background-color;
+	border-radius: var( --button-radius );
 }
 
-.controls .side button:disabled
+.controls button:disabled
 {
 	cursor: initial;
 }
 
-.controls .side button.selected
+.controls button:disabled, .controls .deselected
 {
-	background-color: var( --color-blue );
+	background-color: var( --color-gray );
 }
 
-.controls .side button.selected svg
+.controls button svg
 {
 	fill: var( --color-white );
 }
 
-.controls .side button:first-child
+.controls button:disabled svg, .controls .deselected svg
+{
+	fill: var( --color-light-gray );
+}
+
+.controls .group button
+{
+	border-radius: 0;
+}
+
+.controls .group button:first-child
 {
 	border-top-left-radius: var( --button-radius );
 	border-top-right-radius: var( --button-radius );
 }
 
-.controls .side button:last-child
+.controls .group button:last-child
 {
 	border-bottom-left-radius: var( --button-radius );
 	border-bottom-right-radius: var( --button-radius );
