@@ -1,9 +1,0 @@
-.controls .select button:disabled
-{
-	background-color: var( --color-blue );
-}
-
-.controls .select button:disabled svg
-{
-	fill: var( --color-white );
-}
