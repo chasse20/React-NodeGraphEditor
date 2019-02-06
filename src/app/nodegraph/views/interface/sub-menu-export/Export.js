@@ -44,9 +44,9 @@ export default class Export extends SubMenu
 		return new GraphVizWriter();
 	}
 	
-	render()
+	get title()
 	{
-		return this.renderSubmenu( "export file" );
+		return "export file";
 	}
 	
 	renderContent()
@@ -67,7 +67,7 @@ export default class Export extends SubMenu
 					</select>
 				</div>
 				<div className="buttons">
-					<button className="confirm" onClick={ this._onExport }>export</button>
+					<button onClick={ this._onExport }>export</button>
 				</div>
 			</React.Fragment>
 		);

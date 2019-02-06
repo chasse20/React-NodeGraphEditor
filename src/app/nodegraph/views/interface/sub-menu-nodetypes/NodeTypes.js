@@ -16,9 +16,9 @@ class NodeTypes extends Items
 		}
 	}
 	
-	render()
+	get title()
 	{
-		return this.renderSubmenu( "node types" );
+		return "node types";
 	}
 	
 	renderContent()

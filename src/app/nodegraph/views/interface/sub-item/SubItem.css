@@ -3,8 +3,9 @@
 	width: 100%;
 }
 
-.sub-item .toggle
+.items .sub-item .toggle
 {
+	color: var( --color-white );
 	border: none;
 }
 

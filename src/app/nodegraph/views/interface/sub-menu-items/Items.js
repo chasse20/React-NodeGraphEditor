@@ -1,5 +1,6 @@
 import React from "react";
 import SubMenu from "../sub-menu/SubMenu";
+import "./Items.css";
 
 export default class Items extends SubMenu
 {
@@ -22,7 +23,7 @@ export default class Items extends SubMenu
 	
 	get specificClass()
 	{
-		return " sub-items";
+		return " items";
 	}
 	
 	renderContent()

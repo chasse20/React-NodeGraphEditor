@@ -58,9 +58,9 @@ export default class Import extends SubMenu
 		return new GraphVizReader();
 	}
 	
-	render()
+	get title()
 	{
-		return this.renderSubmenu( "import file" );
+		return "import file";
 	}
 	
 	renderContent()

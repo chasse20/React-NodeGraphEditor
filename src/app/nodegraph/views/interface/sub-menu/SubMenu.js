@@ -23,12 +23,12 @@ export default class SubMenu extends React.Component
 		return "";
 	}
 	
-	render()
+	get title()
 	{
-		return this.renderSubmenu();
+		return "";
 	}
 	
-	renderSubmenu( tTitle )
+	render()
 	{
 		// Class
 		var tempClassName = "sub-menu" + this.specificClass;
@@ -44,7 +44,7 @@ export default class SubMenu extends React.Component
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 24" xmlSpace="preserve">
 						<path d="M0,24l12-12L0,0V24z"/>
 					</svg>
-					<div>{ tTitle }</div>
+					<div>{ this.title }</div>
 				</button>
 				<div className="sub-content">
 					<div className="sub-inner">
