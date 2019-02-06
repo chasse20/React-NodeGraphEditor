@@ -1,9 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 import GraphModel from "../../../models/Graph";
-import Import from "../sub-menu-import/Import";
-import Export from "../sub-menu-export/Export";
-import NodeTypes from "../sub-menu-nodetypes/NodeTypes";
+import Import from "../menu-sub-import/Import";
+import Export from "../menu-sub-export/Export";
+import Node from "../menu-sub-types-node/Node";
+import Edge from "../menu-sub-types-edge/Edge";
 import "./Menu.css";
 
 export default class Menu extends React.PureComponent
@@ -31,8 +32,8 @@ export default class Menu extends React.PureComponent
 	{
 		return (
 			<div className="menu">
-				<div className="inner">
-					<div className="tabs" >
+				<div className="menu-inner">
+					<div className="menu-tabs" >
 						{
 							this._tabs.map(
 								( tTitle, tIndex ) =>
@@ -42,7 +43,7 @@ export default class Menu extends React.PureComponent
 							)
 						}
 					</div>
-					<div className="content">
+					<div className="menu-content">
 						{ this.renderContent() }
 					</div>
 				</div>
@@ -64,7 +65,8 @@ export default class Menu extends React.PureComponent
 			case 1: // Graph
 				return (
 					<React.Fragment>
-						<NodeTypes graph={ this.props.graph }/>
+						<Node graph={ this.props.graph }/>
+						<Edge graph={ this.props.graph }/>
 					</React.Fragment>
 				);
 			default:

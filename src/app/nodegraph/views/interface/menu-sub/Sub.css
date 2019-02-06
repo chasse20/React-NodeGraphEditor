@@ -1,0 +1,144 @@
+.menu .sub > *:not(:first-child), .menu .sub .sub-inner > *:not(:first-child)
+{
+	margin-top: var( --spacing-tiny );
+}
+
+.menu .sub .toggle
+{
+	border: 1px solid var( --color-light-blue );
+	text-shadow: var( --text-shadow );
+}
+
+.menu .sub .toggle, .menu .sub .buttons button
+{
+	padding: 0 var( --spacing-small );
+}
+
+.menu .sub .toggle, .menu .sub input
+{
+	width: 100%;
+}
+
+.menu .sub .toggle, .menu .sub .kvp span
+{
+	align-items: center;
+}
+
+.menu .sub .toggle svg
+{
+	fill: var( --color-white );
+	height: 14px;
+}
+
+.menu .sub.open .toggle svg
+{
+	transform: rotate( 90deg );
+}
+
+.menu .sub .toggle, .menu .sub .sub-inner, .menu .sub .kvp span
+{
+	display: flex;
+}
+
+.menu .sub .toggle > *:not(:first-child)
+{
+	margin-left: var( --spacing-small );
+}
+
+.menu .sub .sub-content
+{
+	display: none;
+	font-size: 11pt;
+}
+
+.menu .sub.open .sub-content
+{
+	display: block;
+}
+
+.menu .sub .sub-inner
+{
+	flex-direction: column;
+	border: 1px	solid var( --color-dark-gray );
+}
+
+.menu .sub .sub-inner, .menu .sub input, .menu .sub select, .menu .sub select > *
+{
+	letter-spacing: 0.1em;
+	font-weight: 300;
+}
+
+.menu .sub button, .menu .sub select, .menu .sub input
+{
+	height: 28px;
+}
+
+.menu .sub input
+{
+	padding: var( --spacing-tiny );
+	box-sizing: border-box;
+}
+
+.menu .sub input[type="file"]
+{
+	padding: 3px;
+	height: auto;
+}
+
+.menu .sub input, .menu .sub select, .menu .sub select > *
+{
+	font-size: 1em;
+}
+
+.menu .sub input, .menu .sub select, .menu .sub .buttons button:active
+{
+	background-color: var( --color-dark-gray );
+}
+
+.menu .sub input:focus, .menu .sub select:focus
+{
+	outline: 1px solid var( --color-light-blue );
+	outline-offset: 0;
+}
+
+.menu .sub select, .menu .sub input
+{
+	color: var( --color-light-gray );
+	border: none;
+}
+
+.menu .sub .kvp
+{
+	margin: var( --spacing-small );
+	margin-bottom: 0;
+	display: grid;
+	grid-template-columns: auto 1fr;
+	grid-row-gap: var( --spacing-tiny );
+	grid-column-gap: calc( 2 * var( --spacing-small ) );
+}
+
+.menu .sub .kvp span:nth-child(2n+1)::after
+{
+	content: ":"
+}
+
+.menu .sub .buttons
+{
+	margin-left: auto;
+	margin-right: auto;
+	padding: var( --spacing-small );
+}
+
+.menu .sub .buttons button
+{
+	border-radius: var( --button-radius );
+}
+
+.menu .sub.open .accent
+{
+	display: block;
+	border-bottom: 1px solid var( --color-medium-gray );
+	width: calc( 100% - 4px );
+	margin-left: 2px;
+	margin-top: 1px;
+}

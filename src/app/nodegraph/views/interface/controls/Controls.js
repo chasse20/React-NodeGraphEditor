@@ -1,11 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 import GraphModel from "../../../models/Graph";
-import MenuToggle from "../control-menu-toggle/MenuToggle";
-import SelectionMode from "../control-selection-mode/SelectionMode";
-import DeleteButton from "../control-delete-button/DeleteButton";
-import GridToggle from "../control-grid-toggle/GridToggle";
-import GridSnapToggle from "../control-grid-snap-toggle/GridSnapToggle";
+import Menu from "../controls-menu/Menu";
+import Selection from "../controls-selection/Selection";
+import Delete from "../controls-delete/Delete";
+import Grid from "../controls-grid/Grid";
+import GridSnap from "../controls-gridsnap/GridSnap";
 import "./Controls.css";
 
 export default class Controls extends React.PureComponent
@@ -16,14 +16,14 @@ export default class Controls extends React.PureComponent
 			<nav className="controls">
 				{
 					this.props.onMenuToggle != null &&
-						<MenuToggle onToggle={ this.props.onMenuToggle }/>
+						<Menu onToggle={ this.props.onMenuToggle }/>
 				}
 				<div className="buttons">
-					<SelectionMode graph={ this.props.graph }/>
-					<DeleteButton graph={ this.props.graph }/>
+					<Selection graph={ this.props.graph }/>
+					<Delete graph={ this.props.graph }/>
 					<div className="group">
-						<GridToggle graph={ this.props.graph }/>
-						<GridSnapToggle graph={ this.props.graph }/>
+						<Grid graph={ this.props.graph }/>
+						<GridSnap graph={ this.props.graph }/>
 					</div>
 				</div>
 			</nav>
