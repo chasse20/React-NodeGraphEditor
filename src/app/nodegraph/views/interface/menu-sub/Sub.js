@@ -43,7 +43,7 @@ export default class Sub extends React.Component
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 24" xmlSpace="preserve">
 						<path d="M0,24l12-12L0,0V24z"/>
 					</svg>
-					<div>{ this.props.title }</div>
+					<span>{ this.props.title }</span>
 				</button>
 				{
 					tempContent != null &&

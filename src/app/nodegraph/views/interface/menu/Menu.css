@@ -5,16 +5,17 @@
 	width: var( --menu-width );
 	color: var( --color-light-gray );
 	font-weight: 300;
+	font-size: 11pt;
 	height: 100%;
 }
 
-.menu, .menu .inner
+.menu, .menu .menu-inner
 {
 	box-sizing: border-box;
 	padding: 1px 1px 0 1px;
 }
 
-.menu, .menu .tabs button:disabled
+.menu, .menu .menu-tabs button:disabled
 {
 	background-color: var( --color-gray );
 }
@@ -27,52 +28,52 @@
 	background-color: var( --color-blue );
 }
 
-.menu button, .menu .tabs button:disabled
+.menu button, .menu .menu-tabs button:disabled
 {
 	color: var( --color-white );
 }
 
-.menu button:disabled, .menu .tabs button
+.menu button:disabled, .menu .menu-tabs button
 {
 	background-color: var( --color-dark-gray );
 	color: var( --color-medium-gray );
 }
 
-.menu .inner
+.menu .menu-inner
 {
 	border: 1px solid var( --color-dark-gray );
 	height: inherit;
 }
 
-.menu .inner, .menu .tabs button:disabled
+.menu .menu-inner, .menu .menu-tabs button:disabled
 {
 	border-bottom: none;
 }
 
-.menu .tabs
+.menu .menu-tabs
 {
 	display: flex;
 }
 
-.menu .tabs button
+.menu .menu-tabs button
 {
 	height: var( --button-size );
 	border-bottom: 1px solid var( --color-medium-gray );
 }
 
-.menu .tabs button:disabled
+.menu .menu-tabs button:disabled
 {
 	border-top: 2px solid var( --color-light-blue );
 	text-shadow: var( --text-shadow );
 }
 
-.menu .content
+.menu .menu-content
 {
 	padding: calc( var( --spacing-small ) - 2px );
 	padding-top: var( --spacing-small );
 }
 
-.menu .content > *:not(:first-child)
+.menu .menu-content > *:not(:first-child)
 {
 	margin-top: var( --spacing-tiny );
 }

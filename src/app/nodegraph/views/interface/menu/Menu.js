@@ -33,7 +33,7 @@ export default class Menu extends React.PureComponent
 		return (
 			<div className="menu">
 				<div className="menu-inner">
-					<div className="menu-tabs" >
+					<div className="menu-tabs">
 						{
 							this._tabs.map(
 								( tTitle, tIndex ) =>

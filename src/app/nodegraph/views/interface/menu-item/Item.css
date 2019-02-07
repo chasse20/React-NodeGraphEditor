@@ -1,30 +1,16 @@
-.sub-item
+.menu .item .item-bar
 {
-	width: 100%;
-}
-
-.items .sub-item .toggle
-{
-	color: var( --color-white );
-	border: none;
-}
-
-.sub-item button.sub-item-toggle
-{
-	background-color: var( --color-dark-gray );
-}
-
-.sub-item.open button.sub-item-toggle svg
-{
-	transform: rotate( 90deg );
-}
-
-.sub-item .sub-item-content
-{
-	display: none;
-}
-
-.sub-item.open .sub-item-content
-{
+	height: var( --bar-height );
 	display: flex;
+	align-items: center;
+	color: var( --color-white );
+	background-color: var( --color-dark-gray );
+	text-shadow: var( --text-shadow );
+	font-weight: 500;
+}
+
+.menu .item .item-bar :first-child
+{
+	flex-grow: 1;
+	padding-left: var( --spacing-small );
 }

@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import TypeModel from "../../../models/TypeNode";
 import GraphModel from "../../../models/Graph";
 import Item from "../menu-item/Item";
-import "./NodeType.css";
 
 export default class NodeType extends Item
 {
@@ -21,15 +20,10 @@ export default class NodeType extends Item
 		this.props.graph.removeNodeType( this.props.model );
 	}
 	
-	renderContent()
+	renderBar()
 	{
 		return (
-			<div className="item-bar" disabled>
-				<div>{ this.props.model._name }</div>
-				<div className="item-buttons">
-					<button>ERR</button>
-				</div>
-			</button>
+			<span>{ this.props.model._name }</span>
 		);
 	}
 }

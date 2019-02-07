@@ -15,6 +15,7 @@
 	--button-radius: 4px;
 	--button-size: 36px;
 	--text-shadow: 2px 2px 1px #00000091;
+	--bar-height: 28px;
 	position: fixed;
 	height: 100%;
 	z-index: 1;

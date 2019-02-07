@@ -38,6 +38,9 @@ export default class Item extends React.Component
 		// Render
 		return (
 			<div className={ tempClassName }>
+				<div className="item-bar">
+					{ this.renderBar() }
+				</div>
 				{
 					tempContent != null &&
 						<div className="item-content">
@@ -46,6 +49,11 @@ export default class Item extends React.Component
 				}
 			</div>
 		);
+	}
+	
+	renderBar()
+	{
+		return null;
 	}
 	
 	renderContent()

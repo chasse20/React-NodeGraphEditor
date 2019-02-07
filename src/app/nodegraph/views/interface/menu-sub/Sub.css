@@ -3,44 +3,45 @@
 	margin-top: var( --spacing-tiny );
 }
 
-.menu .sub .toggle
+.menu .sub .sub-toggle
 {
 	border: 1px solid var( --color-light-blue );
 	text-shadow: var( --text-shadow );
+	font-weight: 500;
 }
 
-.menu .sub .toggle, .menu .sub .buttons button
+.menu .sub .sub-toggle, .menu .sub .sub-buttons button
 {
 	padding: 0 var( --spacing-small );
 }
 
-.menu .sub .toggle, .menu .sub input
+.menu .sub .sub-toggle, .menu .sub input
 {
 	width: 100%;
 }
 
-.menu .sub .toggle, .menu .sub .kvp span
+.menu .sub .sub-toggle, .menu .sub .sub-kvp span
 {
 	align-items: center;
 }
 
-.menu .sub .toggle svg
+.menu .sub .sub-toggle svg
 {
 	fill: var( --color-white );
 	height: 14px;
 }
 
-.menu .sub.open .toggle svg
+.menu .sub.open .sub-toggle svg
 {
 	transform: rotate( 90deg );
 }
 
-.menu .sub .toggle, .menu .sub .sub-inner, .menu .sub .kvp span
+.menu .sub .sub-toggle, .menu .sub .sub-inner, .menu .sub .sub-kvp span
 {
 	display: flex;
 }
 
-.menu .sub .toggle > *:not(:first-child)
+.menu .sub .sub-toggle > *:not(:first-child)
 {
 	margin-left: var( --spacing-small );
 }
@@ -48,7 +49,6 @@
 .menu .sub .sub-content
 {
 	display: none;
-	font-size: 11pt;
 }
 
 .menu .sub.open .sub-content
@@ -59,7 +59,7 @@
 .menu .sub .sub-inner
 {
 	flex-direction: column;
-	border: 1px	solid var( --color-dark-gray );
+	border: 1px solid var( --color-dark-gray );
 }
 
 .menu .sub .sub-inner, .menu .sub input, .menu .sub select, .menu .sub select > *
@@ -68,9 +68,9 @@
 	font-weight: 300;
 }
 
-.menu .sub button, .menu .sub select, .menu .sub input
+.menu .sub-toggle, .menu .sub button, .menu .sub select, .menu .sub input
 {
-	height: 28px;
+	height: var( --bar-height );
 }
 
 .menu .sub input
@@ -90,7 +90,7 @@
 	font-size: 1em;
 }
 
-.menu .sub input, .menu .sub select, .menu .sub .buttons button:active
+.menu .sub input, .menu .sub select, .menu .sub .sub-buttons button:active
 {
 	background-color: var( --color-dark-gray );
 }
@@ -107,7 +107,7 @@
 	border: none;
 }
 
-.menu .sub .kvp
+.menu .sub .sub-kvp
 {
 	margin: var( --spacing-small );
 	margin-bottom: 0;
@@ -117,24 +117,24 @@
 	grid-column-gap: calc( 2 * var( --spacing-small ) );
 }
 
-.menu .sub .kvp span:nth-child(2n+1)::after
+.menu .sub .sub-kvp span:nth-child(2n+1)::after
 {
 	content: ":"
 }
 
-.menu .sub .buttons
+.menu .sub .sub-buttons
 {
 	margin-left: auto;
 	margin-right: auto;
 	padding: var( --spacing-small );
 }
 
-.menu .sub .buttons button
+.menu .sub .sub-buttons button
 {
 	border-radius: var( --button-radius );
 }
 
-.menu .sub.open .accent
+.menu .sub.open .sub-accent
 {
 	display: block;
 	border-bottom: 1px solid var( --color-medium-gray );
