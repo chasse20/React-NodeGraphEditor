@@ -19,7 +19,6 @@ class Graph extends React.Component
 		super( tProps );
 
 		// Variables
-		this._nodes = null;
 		this._edges = null;
 		this._viewElement = null;
 		this._containerElement = null;
@@ -31,7 +30,6 @@ class Graph extends React.Component
 		// Events
 		this._onZoomDispose = observe( this.props.model, "zoom", ( tChange ) => { this.zoom = tChange.newValue; } );
 		this._onPositionDispose = observe( this.props.model, "position", ( tChange ) => { this.position = tChange.newValue; } );
-		this._onNodes = ( tComponent ) => { this._nodes = tComponent; };
 		this._onEdges = ( tComponent ) => { this._edges = tComponent; };
 		this._onViewElement = ( tElement ) => { this._viewElement = tElement; };
 		this._onContainerElement = ( tElement ) => { this._containerElement = tElement; };
@@ -210,13 +208,14 @@ class Graph extends React.Component
 	render()
 	{
 		// Class
+		const tempModel = this.props.model;
 		var tempClass = "graph";
-		if ( this.props.model.isPanning )
+		if ( tempModel.isPanning )
 		{
 			tempClass += " panning";
 		}
 		
-		if ( this.props.model.isMarqueeing )
+		if ( tempModel.isMarqueeing )
 		{
 			tempClass += " marqueeing";
 		}
@@ -224,12 +223,12 @@ class Graph extends React.Component
 		// Render
 		return (
 			<svg className={ tempClass } onWheel={ this._onMouseWheel } onMouseDown={ this._onMouseDown }>
-				<Arrows graph={ this.props.model }/>
-				<Grid graph={ this.props.model }/>
+				<Arrows graph={ tempModel }/>
+				<Grid graph={ tempModel }/>
 				<g ref={ this._onViewElement }>
 					<g ref={ this._onContainerElement }>
 						<Edges ref={ this._onEdges }/>
-						<Nodes ref={ this._onNodes } graph={ this.props.model } onLink={ this._onLink }/>
+						<Nodes graph={ tempModel } onLink={ this._onLink }/>
 					</g>
 				</g>
 				<rect ref={ this._onMarqueeElement } className="marquee"/>

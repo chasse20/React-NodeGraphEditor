@@ -1,10 +1,9 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { observer } from "mobx-react";
 import { observe } from "mobx";
 import NodeBase from "../../../../nodegraph/views/graph/node/Node";
+import NodeMenu from "../../../../nodegraph/views/graph/nodemenu/NodeMenu";
 import Pin from "../../../../nodegraph/views/graph/pin/Pin";
-import NodeMenu from "../nodemenu/NodeMenu";
 import "./Node.css";
 
 class Node extends NodeBase
@@ -15,15 +14,10 @@ class Node extends NodeBase
 		super( tProps );
 		
 		// Variables
-		this._physicsBody = this.createPhysics();
+		//this._physicsBody = this.createPhysics();
 		
 		// Events
 		this._onSelectedDispose = observe( tProps.model, "_isSelected", ( tChange ) => { this.isSelected = tChange.newValue; } );
-		this._onRemove = ( tEvent ) => { this.onRemove( tEvent ); };
-		this._onLinking = ( tIsStart ) =>
-		{
-			this.props.onStart( tIsStart ? this.props.model._pins.out : this.props.model._pins.in );
-		};
 	}
 	
 	componentDidMount()
@@ -31,17 +25,17 @@ class Node extends NodeBase
 		super.componentDidMount();
 		
 		this.isSelected = this.props.model._isSelected;
-		this.props.onPhysics( this._physicsBody, true );
+		//this.props.onPhysics( this._physicsBody, true );
 	}
 	
 	componentWillUnmount()
 	{
 		super.componentWillUnmount();
 		
-		this.props.onPhysics( this._physicsBody, false );
+		//this.props.onPhysics( this._physicsBody, false );
 	}
 	
-	createPhysics()
+	/*createPhysics()
 	{
 		const tempModel = this.props.model;
 		
@@ -82,13 +76,7 @@ class Node extends NodeBase
 		
 		// Inheritance
 		super.position = tPosition;
-	}
-	
-	onRemove( tEvent )
-	{
-		tEvent.stopPropagation();
-		this.props.onRemove( this.props.model );
-	}
+	}*/
 	
 	render()
 	{
@@ -130,13 +118,6 @@ class Node extends NodeBase
 	}
 }
 
-Node.propTypes = Object.assign(
-	{
-		onLinking: PropTypes.func.isRequired,
-		onRemove: PropTypes.func.isRequired,
-		onPhysics: PropTypes.func.isRequired,
-	},
-	NodeBase.propTypes
-);
+Node.propTypes = Object.assign( {}, NodeBase.propTypes );
 
 export default observer( Node );

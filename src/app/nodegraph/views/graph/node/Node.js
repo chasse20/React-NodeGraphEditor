@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { observer } from "mobx-react";
 import { observe } from "mobx";
+import GraphModel from "../../../models/Graph";
 import NodeModel from "../../../models/Node";
 import NodeMenu from "../nodemenu/NodeMenu";
 import Pin from "../pin/Pin";
@@ -129,6 +130,7 @@ class Node extends React.Component
 Node.propTypes =
 {
 	model: PropTypes.instanceOf( NodeModel ).isRequired,
+	graph: PropTypes.instanceOf( GraphModel ).isRequired,
 	onLink: PropTypes.func.isRequired,
 	onDragStart: PropTypes.func.isRequired
 };
