@@ -27,21 +27,6 @@ export default class Nodes extends React.PureComponent
 		// Events
 		this._onNodesDispose = observe( tProps.graph._nodes, ( tChange ) => { this.onNodes( tChange ) } );
 		this._onSelectedDispose = observe( tProps.graph._selectedNodes, ( tChange ) => { this.onSelected( tChange ) } );
-		this._onSelectNode = ( tModel, tIsSelected ) =>
-		{
-			if ( tIsSelected )
-			{
-				if ( !tModel._isSelected )
-				{
-					this.props.graph.addSelectedNode( tModel );
-				}
-			}
-			else if ( tModel._isSelected )
-			{
-				this.props.graph.removeSelectedNode( tModel );
-			}
-		};
-		this._onRemoveNode = ( tModel ) => { this.props.graph.removeNode( tModel ); };
 		this._onDragStart = ( tEvent ) => { this.onDragStart( tEvent ); };
 		this._onDragMove = ( tEvent ) => { this.onDragMove( tEvent ); };
 		this._onDragUp = ( tEvent ) => { this.onDragUp( tEvent ); };
@@ -51,14 +36,15 @@ export default class Nodes extends React.PureComponent
 	componentDidMount()
 	{
 		// Initialize nodes
-		const tempNodes = this.props.graph._nodes;
+		const tempGraph = this.props.graph;
+		const tempNodes = tempGraph._nodes;
 		for ( let tempID in tempNodes )
 		{
 			this.setNode( this.createElement( tempNodes[ tempID ] ) );
 		}
 		
 		// Selected state
-		if ( this.props.graph._selectedNodes.length > 0 )
+		if ( tempGraph._selectedNodes.length > 0 )
 		{
 			document.addEventListener( "keydown", this._onKeyDown );
 		}
@@ -82,10 +68,9 @@ export default class Nodes extends React.PureComponent
 		return React.createElement( tModel._type._viewClass,
 			{
 				model: tModel,
+				graph: this.props.graph,
 				key: tModel._id,
 				onLink: this.props.onLink,
-				onSelected: this._onSelectNode,
-				onRemove: this._onRemoveNode,
 				onDragStart: this._onDragStart 
 			}
 		);

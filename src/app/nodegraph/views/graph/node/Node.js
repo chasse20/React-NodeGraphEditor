@@ -23,7 +23,7 @@ class Node extends React.Component
 		this._onElement = ( tElement ) => { this._element = tElement; };
 		this._onMouseDown = ( tEvent ) => { this.onMouseDown( tEvent ); };
 		this._onMouseUp = ( tEvent ) => { this.onMouseUp( tEvent ); };
-		this._onRemove = () => { this.props.onRemove( this.props.model ); };
+		this._onRemove = () => { this.props.graph.removeNode( this.props.model ); };
 	}
 	
 	componentDidMount()
@@ -61,9 +61,12 @@ class Node extends React.Component
 					200
 				);
 			}
+			else
+			{
+				this.props.graph.addSelectedNode( tempModel );
+			}
 			
 			// Set
-			this.props.onSelected( this.props.model, true );
 			this.props.onDragStart( tEvent );
 		}
 	}
@@ -77,7 +80,15 @@ class Node extends React.Component
 			clearTimeout( this._clickTimeout );
 			this._clickTimeout = null;
 			
-			this.props.onSelected( this.props.model, !this.props.model._isSelected );
+			const tempModel = this.props.model;
+			if ( tempModel._isSelected )
+			{
+				this.props.graph.removeSelectedNode( tempModel );
+			}
+			else
+			{
+				this.props.graph.addSelectedNode( tempModel );
+			}
 		}
 	}
 
@@ -118,9 +129,7 @@ class Node extends React.Component
 Node.propTypes =
 {
 	model: PropTypes.instanceOf( NodeModel ).isRequired,
-	onRemove: PropTypes.func.isRequired,
 	onLink: PropTypes.func.isRequired,
-	onSelected: PropTypes.func.isRequired,
 	onDragStart: PropTypes.func.isRequired
 };
 
