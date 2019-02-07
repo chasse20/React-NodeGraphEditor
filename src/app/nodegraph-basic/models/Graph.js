@@ -1,6 +1,5 @@
+import { decorate, observable } from "mobx";
 import GraphBase from "../../nodegraph/models/Graph";
-import NodeType from "./NodeType";
-import EdgeType from "./EdgeType";
 
 export default class Graph extends GraphBase
 {
@@ -8,7 +7,12 @@ export default class Graph extends GraphBase
 	{
 		super();
 		
-		this._nodeTypes[ "default" ] = new NodeType( "default" );
-		this._edgeTypes[ "default" ] = new EdgeType( "default" );
+		this.isPhysics = false;
 	}
 }
+
+decorate( Graph,
+	{
+		isPhysics: observable
+	}
+);

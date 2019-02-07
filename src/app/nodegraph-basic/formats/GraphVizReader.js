@@ -1,15 +1,16 @@
 import GraphVizReaderBase from "../../nodegraph/formats/GraphVizReader";
 import Node from "../models/Node";
-import NodeType from "../models/NodeType";
-import EdgeType from "../models/EdgeType";
+import Edge from "../../nodegraph/models/Edge";
+import TypeNode from "../models/TypeNode";
+import TypeEdge from "../models/TypeEdge";
 import EdgeView from "../views/graph/edge/Edge";
 import NodeView from "../views/graph/node/Node";
 
 export default class GraphVizReader extends GraphVizReaderBase
 {
-	readNodeType( tJSON, tDefaultType, tSerializableViews = { "default": NodeView, "Node": NodeView } )
+	readNodeType( tJSON, tSerializableModels = { "Node": Node }, tSerializableViews = { "Node": NodeView } )
 	{
-		const tempType = super.readNodeType( tJSON, tDefaultType, tSerializableViews );
+		const tempType = super.readNodeType( tJSON, tSerializableModels, tSerializableViews );
 		
 		if ( tempType != null )
 		{
@@ -35,14 +36,14 @@ export default class GraphVizReader extends GraphVizReaderBase
 		return tempType;
 	}
 	
-	createNodeType( tName, tViewClass )
+	createNodeType( tName, tModelClass, tViewClass )
 	{
-		return new NodeType( tName, tViewClass );
+		return new TypeNode( tName, tModelClass, tViewClass );
 	}
 	
-	readEdgeType( tJSON, tDefaultType, tSerializableViews = { "default": EdgeView, "Edge": EdgeView } )
+	readEdgeType( tJSON, tSerializableModels = { "Edge": Edge }, tSerializableViews = { "Edge": EdgeView } )
 	{
-		const tempType = super.readEdgeType( tJSON, tDefaultType, tSerializableViews );
+		const tempType = super.readEdgeType( tJSON, tSerializableModels, tSerializableViews );
 		
 		if ( tempType != null )
 		{
@@ -62,14 +63,14 @@ export default class GraphVizReader extends GraphVizReaderBase
 		return tempType;
 	}
 	
-	createEdgeType( tName, tViewClass )
+	createEdgeType( tName, tModelClass, tViewClass )
 	{
-		return new EdgeType( tName, tViewClass );
+		return new TypeEdge( tName, tModelClass, tViewClass );
 	}
 	
-	readNode( tJSON, tTypes )
+	readNode( tGraphModel, tJSON )
 	{
-		const tempNode = super.readNode( tJSON, tTypes );
+		const tempNode = super.readNode( tGraphModel, tJSON );
 		
 		if ( tempNode != null )
 		{
@@ -87,10 +88,5 @@ export default class GraphVizReader extends GraphVizReaderBase
 		}
 		
 		return tempNode;
-	}
-	
-	createNode( tType )
-	{
-		return new Node( tType );
 	}
 }

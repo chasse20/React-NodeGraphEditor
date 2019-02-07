@@ -1,13 +1,12 @@
 import GraphJSONReaderBase from "../../nodegraph/formats/GraphJSONReader";
-import Node from "../models/Node";
-import NodeType from "../models/NodeType";
-import EdgeType from "../models/EdgeType";
+import TypeNode from "../models/TypeNode";
+import TypeEdge from "../models/TypeEdge";
 
 export default class GraphJSONReader extends GraphJSONReaderBase
 {
 	readNode( tGraphModel, tJSON, tTextField = "caption" )
 	{
-		const tempNode = super.readNode( tGraphModel, tJSON );
+		const tempNode = super.readNode( tGraphModel, tJSON, tTextField );
 		
 		// Data
 		if ( tempNode != null )
@@ -43,19 +42,14 @@ export default class GraphJSONReader extends GraphJSONReaderBase
 		return tempNode;
 	}
 	
-	createNodeType( tName, tViewClass )
+	createNodeType( tName, tModelClass, tViewClass )
 	{
-		return new NodeType( tName, tViewClass );
+		return new TypeNode( tName, tModelClass, tViewClass );
 	}
 	
-	createNode( tType )
+	readEdgeType( tJSON, tTextField = "caption" )
 	{
-		return new Node( tType );
-	}
-	
-	readEdgeType( tJSON, tViewClass, tTextField = "caption" )
-	{
-		const tempType = super.readEdgeType( tJSON, tViewClass, tTextField );
+		const tempType = super.readEdgeType( tJSON, tTextField );
 		
 		if ( tempType != null )
 		{
@@ -70,8 +64,8 @@ export default class GraphJSONReader extends GraphJSONReaderBase
 		return tempType;
 	}
 	
-	createEdgeType( tName, tViewClass )
+	createEdgeType( tName, tModelClass, tViewClass )
 	{
-		return new EdgeType( tName, tViewClass );
+		return new TypeEdge( tName, tModelClass, tViewClass );
 	}
 }

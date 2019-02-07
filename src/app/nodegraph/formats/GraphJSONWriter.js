@@ -88,7 +88,7 @@ export default class GraphJSONWriter // TODO: Clustering
 		// Type
 		if ( tEdgeModel._type._name !== "default" )
 		{
-			tempJSON.type = tEdgeModel._type._name;
+			tempJSON[ tEdgeTextField ] = tEdgeModel._type._name;
 		}
 		
 		return tempJSON;
