@@ -48,7 +48,7 @@ export default class Graph
 		return false;
 	}
 	
-	setSelectedNode( tNode )
+	addSelectedNode( tNode )
 	{
 		if ( tNode != null && this._selectedNodes.indexOf( tNode ) === -1 )
 		{

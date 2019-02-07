@@ -127,6 +127,7 @@ class Graph extends React.Component
 		const tempModel = this.props.model;
 		const tempScreenEnd = new Vector2D( tEvent.clientX, tEvent.clientY );
 		const tempBounds = Bounds.FromCorners( this._marqueeOffset, Vector2D.Scale( tempScreenEnd, 1 / tempModel.zoom ).subtract( tempModel.position ) );
+		
 		for ( let tempID in tempModel._nodes )
 		{
 			let tempNode = tempModel._nodes[ tempID ];
@@ -134,7 +135,7 @@ class Graph extends React.Component
 			{
 				if ( !tempNode._isSelected )
 				{
-					tempModel.setSelectedNode( tempNode );
+					tempModel.addSelectedNode( tempNode );
 				}
 			}
 			else if ( tempNode._isSelected )

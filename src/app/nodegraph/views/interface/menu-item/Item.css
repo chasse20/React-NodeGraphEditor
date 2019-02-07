@@ -9,8 +9,34 @@
 	font-weight: 500;
 }
 
-.menu .item .item-bar :first-child
+.menu .item .item-bar > *
+{
+	margin-left: var( --spacing-small );
+}
+
+.menu .item .item-bar span
 {
 	flex-grow: 1;
-	padding-left: var( --spacing-small );
+}
+
+.menu .item .item-bar .item-buttons button
+{
+	padding: var( --spacing-tiny );
+	background-color: transparent;
+}
+
+.menu .item .item-bar .item-buttons button svg
+{
+	height: 100%;
+	fill: var( --color-light-blue );
+}
+
+.menu .item .item-bar .item-buttons button:active svg
+{
+	fill: var( --color-white );
+}
+
+.menu .item .item-bar .item-buttons .item-delete svg
+{
+	fill: var( --color-red );
 }

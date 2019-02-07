@@ -31,9 +31,12 @@ export default class Nodes extends React.PureComponent
 		{
 			if ( tIsSelected )
 			{
-				this.props.graph.setSelectedNode( tModel );
+				if ( !tModel._isSelected )
+				{
+					this.props.graph.addSelectedNode( tModel );
+				}
 			}
-			else
+			else if ( tModel._isSelected )
 			{
 				this.props.graph.removeSelectedNode( tModel );
 			}
