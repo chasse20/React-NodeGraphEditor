@@ -1,0 +1,50 @@
+.node-menu
+{
+	opacity: 0;
+	transition-property: opacity;
+	transition: 0.2s opacity ease-in;
+	transition-delay: 0.2s;
+}
+
+.graph:not(.marqueeing) .nodes:not(.dragging) .node-menu:hover
+{
+	opacity: 1;
+}
+
+.node-menu .link
+{
+	transform: rotate( -90deg );
+}
+
+.node-menu .delete
+{
+	transform: rotate( 90deg );
+}
+
+.node-menu circle
+{
+	fill: none;
+	stroke: #404040;
+	transition: 0.4s stroke ease;
+	transition-property: stroke;
+}
+
+.node-menu > *:hover circle
+{
+	stroke: #1d6cb7;
+}
+
+.node-menu .icon
+{
+	display: block;
+	fill: #b1b1b1;
+	transition: 0.5s fill ease;
+	transition-property: fill;
+	user-select: none;
+	pointer-events: none;
+}
+
+.node-menu > *:hover .icon
+{
+	fill: #fff;
+}

@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import TypeModel from "../../../models/TypeNode";
+import TypeModel from "../../../models/TypeEdge";
 import GraphModel from "../../../models/Graph";
 import Item from "../menu-item/Item";
 
