@@ -4,7 +4,7 @@ import { observer } from "mobx-react";
 import GraphModel from "../../../models/Graph";
 import TypeModel from "../../../models/TypeNode";
 import Types from "../menu-sub-types/Types";
-import NodeItem from "../menu-item-nodetype/NodeType";
+import NodeType from "../menu-item-nodetype/NodeType";
 
 class Node extends Types
 {	
@@ -24,7 +24,7 @@ class Node extends Types
 					Object.keys( this.props.graph._nodeTypes ).map(
 						( tKey ) =>
 						(
-							<NodeItem key={ tKey } graph={ this.props.graph } model={ this.props.graph._nodeTypes[ tKey ] }/>
+							<NodeType key={ tKey } graph={ this.props.graph } model={ this.props.graph._nodeTypes[ tKey ] }/>
 						)
 					)
 				}
