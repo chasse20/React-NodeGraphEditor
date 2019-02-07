@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Switch, Route } from "react-router";
 import { observer } from "mobx-react";
-import Graph from "./nodegraph/views/graph/graph/Graph";
+import Graph from "./nodegraph-basic/views/graph/graph/Graph";
 import Interface from "./nodegraph/views/interface/interface/Interface";
 import GraphVizReader from "./nodegraph-basic/formats/GraphVizReader";
 import GraphJSONReader from "./nodegraph-basic/formats/GraphJSONReader";
