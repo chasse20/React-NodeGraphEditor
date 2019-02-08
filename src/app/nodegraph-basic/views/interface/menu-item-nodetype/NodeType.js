@@ -17,7 +17,7 @@ class NodeType extends NodeTypeBase
 		
 		// Events
 		this._onToggleVisible = () => { this.onToggleVisible(); };
-		this._onRadius = ( tEvent ) => { this.props.model.radius = tEvent.target.value; };
+		this._onRadius = ( tEvent ) => { this.props.model.radius = parseInt( tEvent.target.value ); };
 		this._onFill = ( tEvent ) => { this.props.model.fill = tEvent.target.value; };
 		this._onStroke = ( tEvent ) => { this.props.model.stroke = tEvent.target.value; };
 	}
