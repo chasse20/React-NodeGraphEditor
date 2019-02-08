@@ -1,5 +1,6 @@
 import React from "react";
 import { observer } from "mobx-react";
+import { observe } from "mobx";
 import Vector2D from "../../../../core/Vector2D";
 import EdgeBase from "../../../../nodegraph/views/graph/edge/Edge";
 import "./Edge.css";
@@ -17,6 +18,8 @@ class Edge extends EdgeBase
 
 		// Events
 		this._onTextElement = ( tElement ) => { this._textElement = tElement; };
+		this._onSourceRadius = observe( tProps.model._source._node._type, "radius", ( tChange ) => { this.sourcePosition = this.props.model._source.position; } );
+		this._onTargetRadius = observe( tProps.model._target._node._type, "radius", ( tChange ) => { this.targetPosition = this.props.model._target.position; } );
 	}
 	
 	componentDidMount()
@@ -30,6 +33,10 @@ class Edge extends EdgeBase
 	{
 		super.componentWillUnmount();
 		
+		this._onSourceRadius();
+		this._onSourceRadius = null;
+		this._onTargetRadius();
+		this._onTargetRadius = null;
 		//this.props.onPhysics( this._physicsBody, false );
 	}
 	

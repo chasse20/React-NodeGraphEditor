@@ -1,4 +1,4 @@
-.menu .sub > *:not(:first-child), .menu .sub .sub-inner > *:not(:first-child)
+.menu .sub > *:not(:first-child)
 {
 	margin-top: var( --spacing-tiny );
 }
@@ -60,6 +60,7 @@
 {
 	flex-direction: column;
 	border: 1px solid var( --color-dark-gray );
+	padding: var( --spacing-small );
 }
 
 .menu .sub .sub-inner, .menu .sub input, .menu .sub select, .menu .sub select > *
@@ -109,8 +110,6 @@
 
 .menu .sub .sub-kvp
 {
-	margin: var( --spacing-small );
-	margin-bottom: 0;
 	display: grid;
 	grid-template-columns: auto 1fr;
 	grid-row-gap: var( --spacing-tiny );
@@ -124,9 +123,9 @@
 
 .menu .sub .sub-buttons
 {
+	margin-top: var( --spacing-small);
 	margin-left: auto;
 	margin-right: auto;
-	padding: var( --spacing-small );
 }
 
 .menu .sub .sub-buttons button

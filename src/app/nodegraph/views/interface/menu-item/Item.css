@@ -78,7 +78,8 @@
 	display: none;
 }
 
-.menu .item.open .item.content
+.menu .item.open .item-content
 {
 	display: block;
+	padding: var( --spacing-small ) 0 var( --spacing-small ) calc( 3 * var( --spacing-small ) );
 }
