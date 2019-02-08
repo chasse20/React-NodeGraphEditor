@@ -1,8 +1,11 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { observer } from "mobx-react";
 import { observe } from "mobx";
 import NodeBase from "../../../../nodegraph/views/graph/node/Node";
 import NodeMenu from "../../../../nodegraph/views/graph/nodemenu/NodeMenu";
+import GraphModel from "../../../models/Graph";
+import NodeModel from "../../../models/Node";
 import Pin from "../../../../nodegraph/views/graph/pin/Pin";
 import "./Node.css";
 
@@ -118,6 +121,13 @@ class Node extends NodeBase
 	}
 }
 
-Node.propTypes = Object.assign( {}, NodeBase.propTypes );
+Node.propTypes = Object.assign(
+	{},
+	NodeBase.propTypes,
+	{
+		model: PropTypes.instanceOf( NodeModel ).isRequired,
+		graph: PropTypes.instanceOf( GraphModel ).isRequired
+	}
+);
 
 export default observer( Node );

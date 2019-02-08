@@ -2,7 +2,7 @@
 {
 	opacity: 0;
 	transition-property: opacity;
-	transition: 0.2s opacity ease-in;
+	transition: 0.2s opacity;
 	transition-delay: 0.2s;
 }
 

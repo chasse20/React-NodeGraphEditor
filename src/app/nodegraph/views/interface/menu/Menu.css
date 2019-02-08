@@ -69,8 +69,8 @@
 
 .menu .menu-content
 {
-	padding: calc( var( --spacing-small ) - 2px );
-	padding-top: var( --spacing-small );
+	padding: calc( var( --spacing-tiny ) - 2px );
+	padding-top: var( --spacing-tiny );
 }
 
 .menu .menu-content > *:not(:first-child)

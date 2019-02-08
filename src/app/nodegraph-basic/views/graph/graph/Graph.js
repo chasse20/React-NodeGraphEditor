@@ -1,6 +1,8 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { observer } from "mobx-react";
 import GraphBase from "../../../../nodegraph/views/graph/graph/Graph";
+import GraphModel from "../../../models/Graph";
 import Edges from "../../../../nodegraph/views/graph/edges/Edges";
 import Nodes from "../../../../nodegraph/views/graph/nodes/Nodes";
 import Grid from "../../../../nodegraph/views/graph/grid/Grid";
@@ -40,6 +42,12 @@ class Graph extends GraphBase
 	}
 }
 
-Graph.propTypes = Object.assign( {}, GraphBase.propTypes );
+Graph.propTypes = Object.assign(
+	{},
+	GraphBase.propTypes,
+	{
+		model: PropTypes.instanceOf( GraphModel ).isRequired
+	}
+);
 
 export default observer( Graph );

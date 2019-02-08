@@ -1,10 +1,12 @@
 import GraphVizWriterBase from "../../nodegraph/formats/GraphVizWriter";
+import EdgeView from "../views/graph/edge/Edge";
+import NodeView from "../views/graph/node/Node";
 
 export default class GraphVizWriter extends GraphVizWriterBase
 {	
-	writeNodeType( tTypeModel )
+	writeNodeType( tTypeModel, tDefaultViewClass = NodeView )
 	{
-		const tempJSON = super.writeNodeType( tTypeModel );
+		const tempJSON = super.writeNodeType( tTypeModel, tDefaultViewClass );
 		
 		if ( tempJSON != null )
 		{
@@ -32,33 +34,9 @@ export default class GraphVizWriter extends GraphVizWriterBase
 		return null;
 	}
 	
-	writeEdgeTypes( tTypes )
+	writeEdgeType( tTypeModel, tDefaultViewClass = EdgeView )
 	{
-		if ( tTypes != null )
-		{
-			var tempTypesJSON = null;
-			for ( let tempKey in tTypes )
-			{
-				let tempType = this.writeEdgeType( tTypes[ tempKey ] );
-				if ( tempType != null )
-				{
-					if ( tempTypesJSON == null )
-					{
-						tempTypesJSON = [];
-					}
-					tempTypesJSON.push( tempType );
-				}
-			}
-			
-			return tempTypesJSON;
-		}
-		
-		return null;
-	}
-	
-	writeEdgeType( tTypeModel )
-	{
-		const tempJSON = super.writeNodeType( tTypeModel );
+		const tempJSON = super.writeEdgeType( tTypeModel, tDefaultViewClass );
 		
 		if ( tempJSON != null )
 		{

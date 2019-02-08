@@ -1,3 +1,6 @@
+import EdgeView from "../views/graph/edge/Edge";
+import NodeView from "../views/graph/node/Node";
+
 export default class GraphVizWriter
 {
 	write( tGraphModel )
@@ -123,7 +126,7 @@ export default class GraphVizWriter
 		return null;
 	}
 	
-	writeNodeType( tTypeModel )
+	writeNodeType( tTypeModel, tDefaultViewClass = NodeView )
 	{
 		if ( tTypeModel != null && tTypeModel._name !== "default" )
 		{
@@ -133,9 +136,9 @@ export default class GraphVizWriter
 			};
 			
 			// View class
-			if ( tTypeModel._viewClass != null )
+			if ( tTypeModel._viewClass != null && tTypeModel._viewClass !== tDefaultViewClass )
 			{
-				tempJSON.viewClass = tTypeModel._viewClass.constructor.name;
+				tempJSON.viewClass = tTypeModel._viewClass.name;
 			}
 			
 			return tempJSON;
@@ -146,7 +149,31 @@ export default class GraphVizWriter
 	
 	writeEdgeTypes( tTypes )
 	{
-		return this.writeNodeTypes( tTypes );
+		if ( tTypes != null )
+		{
+			var tempTypesJSON = null;
+			for ( let tempKey in tTypes )
+			{
+				let tempType = this.writeEdgeType( tTypes[ tempKey ] );
+				if ( tempType != null )
+				{
+					if ( tempTypesJSON == null )
+					{
+						tempTypesJSON = [];
+					}
+					tempTypesJSON.push( tempType );
+				}
+			}
+			
+			return tempTypesJSON;
+		}
+		
+		return null;
+	}
+	
+	writeEdgeType( tTypeModel, tDefaultViewClass = EdgeView )
+	{
+		return this.writeNodeType( tTypeModel, tDefaultViewClass );
 	}
 	
 	writeNode( tNodeModel )

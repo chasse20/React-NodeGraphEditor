@@ -1,5 +1,7 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { observer } from "mobx-react";
+import GraphModel from "../../../models/Graph";
 import ArrowsBase from "../../../../nodegraph/views/graph/arrows/Arrows";
 
 class Arrows extends ArrowsBase
@@ -27,4 +29,10 @@ class Arrows extends ArrowsBase
 
 export default observer( Arrows );
 
-Arrows.propTypes = Object.assign( {}, ArrowsBase.propTypes );
+Arrows.propTypes = Object.assign(
+	{},
+	ArrowsBase.propTypes,
+	{
+		graph: PropTypes.instanceOf( GraphModel ).isRequired
+	}
+);
