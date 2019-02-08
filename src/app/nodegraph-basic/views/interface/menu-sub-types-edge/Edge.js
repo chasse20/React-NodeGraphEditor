@@ -3,19 +3,11 @@ import PropTypes from "prop-types";
 import { observer } from "mobx-react";
 import GraphModel from "../../../models/Graph";
 import TypeModel from "../../../models/TypeEdge";
-import Types from "../menu-sub-types/Types";
-import EdgeType from "../menu-item-edgetype/EdgeType";
+import EdgeBase from "../../../../nodegraph/views/interface/menu-sub-types-edge/Edge";
+import EdgeType from "../../../../nodegraph/views/interface/menu-item-edgetype/EdgeType";
 
-class Edge extends Types
-{	
-	onNew()
-	{
-		if ( this.state.newKey !== "" && this.props.graph._edgeTypes[ this.state.newKey ] === undefined )
-		{
-			this.props.graph.setEdgeType( this.createType( this.state.newKey ) );
-		}
-	}
-	
+class Edge extends EdgeBase
+{
 	createType( tName )
 	{
 		return new TypeModel( tName );
@@ -39,15 +31,11 @@ class Edge extends Types
 }
 
 Edge.propTypes = Object.assign(
+	{},
+	EdgeBase.propTypes,
 	{
 		graph: PropTypes.instanceOf( GraphModel ).isRequired
-	},
-	Types.propTypes
+	}
 );
-
-Edge.defaultProps =
-{
-	title: "edge types"
-};
 
 export default observer( Edge );

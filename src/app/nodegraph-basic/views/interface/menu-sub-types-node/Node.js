@@ -3,19 +3,11 @@ import PropTypes from "prop-types";
 import { observer } from "mobx-react";
 import GraphModel from "../../../models/Graph";
 import TypeModel from "../../../models/TypeNode";
-import Types from "../menu-sub-types/Types";
-import NodeType from "../menu-item-nodetype/NodeType";
+import NodeBase from "../../../../nodegraph/views/interface/menu-sub-types-node/Node";
+import NodeType from "../../../../nodegraph/views/interface/menu-item-nodetype/NodeType";
 
-class Node extends Types
+class Node extends NodeBase
 {	
-	onNew()
-	{
-		if ( this.state.newKey !== "" && this.props.graph._nodeTypes[ this.state.newKey ] === undefined )
-		{
-			this.props.graph.setNodeType( this.createType( this.state.newKey ) );
-		}
-	}
-	
 	createType( tName )
 	{
 		return new TypeModel( tName );
@@ -39,15 +31,11 @@ class Node extends Types
 }
 
 Node.propTypes = Object.assign(
+	{},
+	NodeBase.propTypes,
 	{
 		graph: PropTypes.instanceOf( GraphModel ).isRequired
-	},
-	Types.propTypes
+	}
 );
-
-Node.defaultProps =
-{
-	title: "node types"
-};
 
 export default observer( Node );

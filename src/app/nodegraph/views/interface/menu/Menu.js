@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 import GraphModel from "../../../models/Graph";
 import Import from "../menu-sub-import/Import";
 import Export from "../menu-sub-export/Export";
-import Node from "../menu-sub-types-node/Node";
-import Edge from "../menu-sub-types-edge/Edge";
+import NodeTypes from "../menu-sub-types-node/Node";
+import EdgeTypes from "../menu-sub-types-edge/Edge";
 import "./Menu.css";
 
 export default class Menu extends React.PureComponent
@@ -65,8 +65,8 @@ export default class Menu extends React.PureComponent
 			case 1: // Graph
 				return (
 					<React.Fragment>
-						<Node graph={ this.props.graph }/>
-						<Edge graph={ this.props.graph }/>
+						<NodeTypes graph={ this.props.graph }/>
+						<EdgeTypes graph={ this.props.graph }/>
 					</React.Fragment>
 				);
 			default:

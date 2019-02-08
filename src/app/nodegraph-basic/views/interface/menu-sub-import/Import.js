@@ -1,4 +1,3 @@
-import React from "react";
 import PropTypes from "prop-types";
 import ImportBase from "../../../../nodegraph/views/interface/menu-sub-import/Import";
 import GraphModel from "../../../models/Graph";

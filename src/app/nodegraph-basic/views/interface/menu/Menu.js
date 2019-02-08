@@ -4,6 +4,8 @@ import GraphModel from "../../../models/Graph";
 import MenuBase from "../../../../nodegraph/views/interface/menu/Menu";
 import Import from "../menu-sub-import/Import";
 import Export from "../menu-sub-export/Export";
+import NodeTypes from "../menu-sub-types-node/Node";
+import EdgeTypes from "../menu-sub-types-edge/Edge";
 
 export default class Menu extends MenuBase
 {
@@ -35,6 +37,8 @@ export default class Menu extends MenuBase
 			case 1: // Graph
 				return (
 					<React.Fragment>
+						<NodeTypes graph={ this.props.graph }/>
+						<EdgeTypes graph={ this.props.graph }/>
 					</React.Fragment>
 				);
 			default:
