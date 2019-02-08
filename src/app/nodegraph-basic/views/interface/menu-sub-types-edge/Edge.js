@@ -4,7 +4,7 @@ import { observer } from "mobx-react";
 import GraphModel from "../../../models/Graph";
 import TypeModel from "../../../models/TypeEdge";
 import EdgeBase from "../../../../nodegraph/views/interface/menu-sub-types-edge/Edge";
-import EdgeType from "../../../../nodegraph/views/interface/menu-item-edgetype/EdgeType";
+import EdgeType from "../menu-item-edgetype/EdgeType";
 
 class Edge extends EdgeBase
 {
