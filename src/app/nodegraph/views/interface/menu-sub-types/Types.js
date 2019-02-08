@@ -23,7 +23,7 @@ export default class Types extends Sub
 	
 	get specificClass()
 	{
-		return " types";
+		return super.specificClass + " types";
 	}
 	
 	renderContent()

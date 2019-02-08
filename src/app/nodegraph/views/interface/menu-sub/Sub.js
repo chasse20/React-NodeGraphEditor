@@ -21,17 +21,13 @@ export default class Sub extends React.Component
 	
 	get specificClass()
 	{
-		return "";
+		return this.state.isOpen ? " open" : "";
 	}
 	
 	render()
 	{
 		// Class
 		var tempClass = "sub" + this.specificClass;
-		if ( this.state.isOpen )
-		{
-			tempClass += " open";
-		}
 		
 		// Content
 		const tempContent = this.renderContent();
