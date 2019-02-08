@@ -4,7 +4,7 @@ import { observer } from "mobx-react";
 import GraphModel from "../../../models/Graph";
 import TypeModel from "../../../models/TypeNode";
 import NodeBase from "../../../../nodegraph/views/interface/menu-sub-types-node/Node";
-import NodeType from "../../../../nodegraph/views/interface/menu-item-nodetype/NodeType";
+import NodeType from "../menu-item-nodetype/NodeType";
 
 class Node extends NodeBase
 {	

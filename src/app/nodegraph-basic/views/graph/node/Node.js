@@ -83,6 +83,7 @@ class Node extends NodeBase
 	
 	render()
 	{
+		// Variables
 		const tempModel = this.props.model;
 		const tempText = tempModel.text;
 		const tempType = tempModel._type;
@@ -90,8 +91,21 @@ class Node extends NodeBase
 		const tempOutlineDiameter = ( tempRadius + 10 ) * 2;
 		const tempFill = tempType.fill;
 		
+		// Class
+		var tempClass = "node " + this.constructor.name;
+		if ( tempModel._isSelected )
+		{
+			tempClass += " selected";
+		}
+		
+		if ( tempType.isVisible )
+		{
+			tempClass += " visible";
+		}
+		
+		// Render
 		return (
-			<g className={ "node " + this.constructor.name + ( tempModel._isSelected ? " selected" : "" ) } guid={ tempModel._id } ref={ this._onElement }>
+			<g className={ tempClass } guid={ tempModel._id } ref={ this._onElement }>
 				<rect className="outline" stroke={ tempFill } height={ tempOutlineDiameter } width={ tempOutlineDiameter } x={ -tempOutlineDiameter * 0.5 } y={ -tempOutlineDiameter * 0.5 } strokeDasharray={ tempOutlineDiameter * 0.125 + " " + tempOutlineDiameter * 0.75 + " " + tempOutlineDiameter * 0.125 + " 0" }/>
 				<circle className="graphic" cx="0" cy="0" r={ tempRadius } fill={ tempFill } stroke={ tempType.stroke } onMouseDown={ this._onMouseDown } onMouseUp={ this._onMouseUp }/>
 				<g className="pins">

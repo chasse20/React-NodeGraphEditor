@@ -1,3 +1,13 @@
+.node
+{
+	display: none;
+}
+
+.node.visible
+{
+	display: initial;
+}
+
 .node .text
 {
 	display: flex;

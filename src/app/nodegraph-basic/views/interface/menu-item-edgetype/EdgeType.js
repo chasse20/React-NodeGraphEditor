@@ -15,11 +15,6 @@ export default class EdgeType extends Item
 		this._onDelete = () => { this.onDelete(); };
 	}
 	
-	get specificClass()
-	{
-		return super.specificClass + " edgetype";
-	}
-	
 	onDelete()
 	{
 		this.props.graph.removeEdgeType( this.props.model );

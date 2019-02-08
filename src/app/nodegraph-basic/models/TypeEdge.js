@@ -9,6 +9,7 @@ export default class TypeEdge extends TypeEdgeBase
 	{
 		super( tName, tModelClass, tViewClass );
 		
+		this.isVisible = true;
 		this.stroke = tStroke;
 		this.text = tText;
 	}
@@ -16,6 +17,7 @@ export default class TypeEdge extends TypeEdgeBase
 
 decorate( TypeEdge,
 	{
+		isVisible: observable,
 		stroke: observable,
 		text: observable
 	}

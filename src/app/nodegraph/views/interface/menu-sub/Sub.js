@@ -26,15 +26,12 @@ export default class Sub extends React.Component
 	
 	render()
 	{
-		// Class
-		var tempClass = "sub" + this.specificClass;
-		
 		// Content
 		const tempContent = this.renderContent();
 		
 		// Render
 		return (
-			<div className={ tempClass }>
+			<div className={ "sub" + this.specificClass }>
 				<button className="sub-toggle" onClick={ this._onStateToggle }>
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 24" xmlSpace="preserve">
 						<path d="M0,24l12-12L0,0V24z"/>

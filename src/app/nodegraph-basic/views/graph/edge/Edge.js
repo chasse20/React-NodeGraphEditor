@@ -83,12 +83,27 @@ class Edge extends EdgeBase
 	
 	render()
 	{
-		const tempType = this.props.model._type;
+		// Variables
+		const tempModel = this.props.model;
+		const tempType = tempModel._type;
 		const tempText = tempType.text;
 		const tempStroke = tempType.stroke;
 		
+		// Class
+		var tempClass = "edge " + this.constructor.name;
+		if ( tempModel.isSelected )
+		{
+			tempClass += " selected";
+		}
+		
+		if ( tempType.isVisible && tempModel._source._node._type.isVisible && tempModel._target._node._type.isVisible )
+		{
+			tempClass += " visible";
+		}
+		
+		// Render
 		return (
-			<g className={ "edge " + this.constructor.name + ( this.props.model.isSelected ? " selected" : "" ) }>
+			<g className={ tempClass }>
 				<line ref={ this._onElement } stroke={ tempStroke } strokeOpacity="0.6" markerEnd={ "url(#arrow-" + tempType._name + ")" }/>
 				{
 					tempText != null &&

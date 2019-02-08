@@ -3,22 +3,34 @@ import "./Item.css";
 
 export default class Item extends React.Component // TODO: Why have open?
 {
+	constructor( tProps )
+	{
+		// Inheritance
+		super( tProps );
+
+		// State
+		this.state =
+		{
+			isOpen: true
+		};
+		
+		// Events
+		this._onStateToggle = () => { this.setState( { isOpen: !this.state.isOpen } ); };
+	}
+	
 	get specificClass()
 	{
-		return "";
+		return this.state.isOpen ? " open" : "";
 	}
 	
 	render()
 	{
-		// Class
-		var tempClassName = "item" + this.specificClass;
-		
 		// Content
 		const tempContent = this.renderContent();
 		
 		// Render
 		return (
-			<div className={ tempClassName }>
+			<div className={ "item" + this.specificClass }>
 				<div className="item-bar">
 					{ this.renderBar() }
 				</div>

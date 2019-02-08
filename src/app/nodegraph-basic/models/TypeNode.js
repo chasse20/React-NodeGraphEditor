@@ -9,6 +9,7 @@ export default class TypeNode extends TypeNodeBase
 	{
 		super( tName, tModelClass, tViewClass );
 		
+		this.isVisible = true;
 		this.radius = tRadius;
 		this.stroke = tStroke;
 		this.fill = tFill;
@@ -17,6 +18,7 @@ export default class TypeNode extends TypeNodeBase
 
 decorate( TypeNode,
 	{
+		isVisible: observable,
 		radius: observable,
 		stroke: observable,
 		fill: observable

@@ -1,62 +1,48 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Vector2D from "../../../../core/Vector2D";
+import { observer } from "mobx-react";
 import TypeModel from "../../../models/TypeNode";
-import GraphModel from "../../../models/Graph";
-import Item from "../menu-item/Item";
+import NodeTypeBase from "../../../../nodegraph/views/interface/menu-item-nodetype/NodeType";
+import "./NodeType.css";
 
-export default class NodeType extends Item
+class NodeType extends NodeTypeBase
 {
 	constructor( tProps )
 	{
 		// Inheritance
 		super( tProps );
-
-		// Events
-		this._onSelect = () => { this.onSelect(); };
-		this._onAdd = () => { this.onAdd(); };
-		this._onDelete = () => { this.onDelete(); };
-	}
-	
-	get specificClass()
-	{
-		return super.specificClass + " nodetype";
-	}
-	
-	onSelect()
-	{
-		const tempGraph = this.props.graph;
-		for ( let tempID in tempGraph._nodes )
-		{
-			let tempNode = tempGraph._nodes[ tempID ];
-			if ( tempNode._type === this.props.model )
-			{
-				tempGraph.addSelectedNode( tempGraph._nodes[ tempID ] );
-			}
-		}
-	}
-	
-	onAdd()
-	{
-		const tempGraph = this.props.graph;
-		const tempNode = new this.props.model._modelClass( this.props.model );
-		tempNode.position = new Vector2D( window.screen.width * 0.5, window.screen.height * 0.5 ).scale( 1 / tempGraph.zoom ).subtract( tempGraph.position )
-		tempGraph.setNode( tempNode );
 		
-		return tempNode;
+		// State
+		this.state.isOpen = false;
+		
+		// Events
+		this._onToggleVisible = () => { this.onToggleVisible(); };
 	}
 	
-	onDelete()
+	onToggleVisible()
 	{
-		this.props.graph.removeNodeType( this.props.model );
+		this.props.model.isVisible = !this.props.model.isVisible;
 	}
 	
 	renderBar()
 	{
+		const tempModel = this.props.model;
+		
 		return (
 			<React.Fragment>
-				<span>{ this.props.model._name }</span>
+				<button className="item-toggle" onClick={ this._onStateToggle }>
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 24">
+						<path d="M0,24l12-12L0,0V24z"/>
+					</svg>
+					<div className="circle" style={ { backgroundColor: tempModel.fill, borderColor: tempModel.stroke } }/>
+					<span>{ tempModel._name }</span>
+				</button>
 				<div className="item-buttons">
+					<button className={ tempModel.isVisible ? null : "deselected" } onClick={ this._onToggleVisible }>
+						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 15">
+							<path d="M10,1C5.5,1,1.6,3.7,0,7.5C1.6,11.3,5.5,14,10,14s8.4-2.7,10-6.5C18.4,3.7,14.5,1,10,1z M10,11.8 c-2.5,0-4.5-1.9-4.5-4.3s2-4.3,4.5-4.3s4.5,1.9,4.5,4.3S12.5,11.8,10,11.8z M10,4.9c-1.5,0-2.7,1.2-2.7,2.6s1.2,2.6,2.7,2.6 s2.7-1.2,2.7-2.6S11.5,4.9,10,4.9z"/>
+						</svg>
+					</button>
 					<button onClick={ this._onSelect }>
 						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18">
 							<path d="M0,2h2V0C0.9,0,0,0.9,0,2z M0,10h2V8H0V10z M4,18h2v-2H4V18z M0,6h2V4H0V6z M10,0H8v2h2V0z M16,0v2h2 C18,0.9,17.1,0,16,0z M2,18v-2H0C0,17.1,0.9,18,2,18z M0,14h2v-2H0V14z M6,0H4v2h2V0z M8,18h2v-2H8V18z M16,10h2V8h-2V10z M16,18 c1.1,0,2-0.9,2-2h-2V18z M16,6h2V4h-2V6z M16,14h2v-2h-2V14z M12,18h2v-2h-2V18z M12,2h2V0h-2V2z M4,14h10V4H4V14z M6,6h6v6H6V6z"/>
@@ -78,8 +64,12 @@ export default class NodeType extends Item
 	}
 }
 
-NodeType.propTypes =
-{
-	model: PropTypes.instanceOf( TypeModel ).isRequired,
-	graph: PropTypes.instanceOf( GraphModel ).isRequired
-};
+NodeType.propTypes = Object.assign(
+	{},
+	NodeTypeBase.propTypes,
+	{
+		model: PropTypes.instanceOf( TypeModel ).isRequired
+	}
+);
+
+export default observer( NodeType );

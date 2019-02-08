@@ -1,3 +1,13 @@
+.edge
+{
+	display: none;
+}
+
+.edge.visible
+{
+	display: initial;
+}
+
 .edge text
 {
 	user-select: none;
