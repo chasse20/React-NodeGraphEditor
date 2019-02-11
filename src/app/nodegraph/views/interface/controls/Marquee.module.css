@@ -1,0 +1,26 @@
+@value controls: "./Controls.module.css";
+@value colors: "../../Colors.css";
+@value gray, light-gray, blue, white from colors;
+
+.button
+{
+	composes: button from controls;
+	background-color: gray;
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+}
+
+.button svg
+{
+	fill: light-gray;
+}
+
+.button:disabled
+{
+	background-color: blue;
+}
+
+.button:disabled svg
+{
+	fill: white;
+}

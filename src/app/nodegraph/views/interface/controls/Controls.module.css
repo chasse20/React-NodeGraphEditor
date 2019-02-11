@@ -1,0 +1,94 @@
+@value interface: "../Interface.module.css";
+@value menu-width, spacing-small, button-radius from interface;
+@value colors: "../../Colors.css";
+@value white, gray, blue, light-gray from colors;
+
+.controls
+{
+	position: absolute;
+	left: menu-width;
+	pointer-events: auto;
+	box-sizing: border-box;
+	padding: spacing-small;
+}
+
+.controls > *:not(:first-child), .buttons > *:not(:first-child)
+{
+	margin-top: spacing-small;
+}
+
+.button
+{
+	composes: button from interface;
+	height: 36px;
+	width: 36px;
+	transition: 0.5s fill ease, 0.5s background-color ease;
+	transition-property: fill, background-color;
+	background-color: blue;
+	padding: 8px;
+	border-radius: button-radius;
+}
+
+.button svg
+{
+	width: 100%;
+	fill: white;
+}
+
+.button:disabled, .button-deselected
+{
+	background-color: gray;
+}
+
+.button:disabled svg, .button-deselected svg
+{
+	fill: light-gray;
+}
+
+/*.controls .button
+{
+	height: 36px;
+	width: 36px;
+	transition: 0.5s fill ease, 0.5s background-color ease;
+	transition-property: fill, background-color;
+	background-color: blue;
+	padding: 8px;
+	border-radius: button-radius;
+}
+
+.controls svg
+{
+	width: 100%;
+}
+
+.controls button:disabled, .controls .deselected
+{
+	background-color: gray;
+}
+
+.controls button svg
+{
+	fill: white;
+}
+
+.controls button:disabled svg, .controls .deselected svg
+{
+	fill: light-gray;
+}
+
+.group button
+{
+	border-radius: 0;
+}
+
+.group button:first-child
+{
+	border-top-left-radius: button-radius;
+	border-top-right-radius: button-radius;
+}
+
+.group button:last-child
+{
+	border-bottom-left-radius: button-radius;
+	border-bottom-right-radius: button-radius;
+}*/

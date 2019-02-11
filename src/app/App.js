@@ -1,14 +1,14 @@
 import React, { Component } from "react";
 import { Switch, Route } from "react-router";
 import { observer } from "mobx-react";
-import Graph from "./nodegraph-basic/views/graph/graph/Graph";
-import Interface from "./nodegraph-basic/views/interface/interface/Interface";
-import GraphVizReader from "./nodegraph-basic/formats/GraphVizReader";
-import GraphJSONReader from "./nodegraph-basic/formats/GraphJSONReader";
-import GraphModel from "./nodegraph-basic/models/Graph";
+import Interface from "./nodegraph/views/interface/Interface";
+import Graph from "./nodegraph/views/graph/Graph";
+import GraphVizReader from "./nodegraph/formats/GraphVizReader";
+import GraphJSONReader from "./nodegraph/formats/GraphJSONReader";
+import GraphModel from "./nodegraph/models/Graph";
 import Data from "../data.json";
 import DataGraphJSON from "../graphjson.json";
-import "./App.css";
+import Style from './App.module.css';
 
 class App extends Component
 {
@@ -23,13 +23,13 @@ class App extends Component
 		//( new GraphJSONReader() ).read( this._graph, DataGraphJSON );
 	}
 
-	render()
+	render( tStyle = Style )
 	{
 		return (
-			<React.Fragment>
-				<Interface graph={ this._graph }/>
+			<div className={ tStyle.app }>
 				<Graph model={ this._graph }/>
-			</React.Fragment>
+				<Interface graph={ this._graph }/>
+			</div>
 		);
 	}
 }

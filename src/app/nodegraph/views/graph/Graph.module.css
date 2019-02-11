@@ -1,0 +1,36 @@
+@value colors: "../Colors.css";
+@value graph-bg, marquee-bg, marquee-stroke from colors;
+
+.graph
+{
+	background-color: graph-bg;
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	overflow: hidden;
+}
+
+.panning
+{
+	cursor: move;
+}
+
+.marqueeing:not(.panning)
+{
+	cursor: crosshair;
+}
+
+.marqueeing .marquee
+{
+	opacity: 1;
+}
+
+.marquee
+{
+	opacity: 0;
+	fill: marquee-bg;
+	stroke-width: 1px;
+	stroke: marquee-stroke;
+}

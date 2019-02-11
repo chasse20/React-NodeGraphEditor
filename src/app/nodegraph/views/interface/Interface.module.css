@@ -1,0 +1,32 @@
+@value menu-width: 360px;
+@value spacing-tiny: 5px;
+@value spacing-small: 10px;
+@value button-radius: 4px;
+
+.interface
+{
+	position: absolute;
+	height: 100%;
+	z-index: 1;
+	display: flex;
+	transform: translateX( calc( -1 * menu-width ) );
+	transition-property: transform;
+	transition: transform 0.3s;
+}
+
+.open
+{
+	transform: translateX( 0 );
+}
+
+.button
+{
+	border: none;
+	outline: none;
+	cursor: pointer;
+}
+
+.button:disabled
+{
+	cursor: initial;
+}

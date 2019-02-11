@@ -1,9 +1,0 @@
-.grid
-{
-	opacity: 0;
-}
-
-.grid.visible
-{
-	opacity: 1;
-}

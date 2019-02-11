@@ -1,0 +1,17 @@
+@value colors: "../Colors.css";
+@value grid-stroke from colors;
+
+.grid
+{
+	opacity: 0;
+}
+
+.grid.visible
+{
+	opacity: 1;
+}
+
+.stroke
+{
+	stroke: grid-stroke;
+}

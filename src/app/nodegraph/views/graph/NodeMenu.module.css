@@ -1,0 +1,53 @@
+@value colors: "../Colors.css";
+@value white, gray, blue, light-gray from colors;
+
+.menu
+{
+	opacity: 0;
+	transition-property: opacity;
+	transition: 0.2s opacity;
+	transition-delay: 0.2s;
+}
+
+.menu circle
+{
+	fill: none;
+	stroke: gray;
+	transition: 0.4s stroke ease;
+	transition-property: stroke;
+}
+
+.menu.active:hover
+{
+	opacity: 1;
+}
+
+.active > *:hover circle
+{
+	stroke: blue;
+}
+
+.active > *:hover .icon
+{
+	fill: white;
+}
+
+.link
+{
+	transform: rotate( -90deg );
+}
+
+.delete
+{
+	transform: rotate( 90deg );
+}
+
+.icon
+{
+	display: block;
+	fill: light-gray;
+	transition: 0.5s fill ease;
+	transition-property: fill;
+	user-select: none;
+	pointer-events: none;
+}

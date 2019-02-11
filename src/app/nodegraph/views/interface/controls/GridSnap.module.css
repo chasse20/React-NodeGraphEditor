@@ -1,0 +1,13 @@
+@value controls: "./Controls.module.css";
+
+.button
+{
+	composes: button from controls;
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+}
+
+.deselected
+{
+	composes: button-deselected from controls;
+}

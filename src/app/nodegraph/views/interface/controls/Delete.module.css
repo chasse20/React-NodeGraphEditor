@@ -1,0 +1,9 @@
+@value controls: "./Controls.module.css";
+@value colors: "../../Colors.css";
+@value red from colors;
+
+.button
+{
+	composes: button from controls;
+	background-color: red;
+}

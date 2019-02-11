@@ -1,0 +1,20 @@
+@value controls: "./Controls.module.css";
+@value colors: "../../Colors.css";
+@value gray, blue from colors;
+
+.button
+{
+	composes: button from controls;
+	background: transparent;
+	padding: 6px;
+}
+
+.button svg
+{
+	fill: blue;
+}
+
+.button.open svg
+{
+	fill: gray;
+}
