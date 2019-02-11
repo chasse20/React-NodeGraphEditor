@@ -13,13 +13,13 @@ class Marquee extends React.Component
 		super( tProps );
 		
 		// Events
-		this._onMarquee = () => { this.props.graph.isPanMode = false; };
+		this._onToggle = () => { this.props.graph.isPanMode = false; };
 	}
 	
 	render( tStyle = Style )
 	{
 		return (
-			<button className={ tStyle.button } onMouseDown={ this._onMarquee } disabled={ !this.props.graph.isPanMode }>
+			<button className={ tStyle.button } onMouseDown={ this._onToggle } disabled={ !this.props.graph.isPanMode }>
 				{ Icons.marquee }
 			</button>
 		);

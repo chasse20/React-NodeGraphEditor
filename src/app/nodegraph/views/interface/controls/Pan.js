@@ -13,7 +13,7 @@ class Pan extends React.Component
 		super( tProps );
 		
 		// Events
-		this._onPan = () => { this.props.graph.isPanMode = true; };
+		this._onToggle = () => { this.props.graph.isPanMode = true; };
 	}
 	
 	render( tStyle = Style )
@@ -21,7 +21,7 @@ class Pan extends React.Component
 		const tempIsPanning = this.props.graph.isPanMode || this.props.graph.isPanning;
 		
 		return (
-			<button className={ tStyle.button } onMouseDown={ this._onPan } disabled={ tempIsPanning }>
+			<button className={ tStyle.button } onMouseDown={ this._onToggle } disabled={ tempIsPanning }>
 				{ Icons.pan }
 			</button>
 		);

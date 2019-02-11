@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import Icons from "../../Icons";
 import Style from "./Sub.module.css";
 
 export default class Sub extends React.Component
@@ -16,7 +17,7 @@ export default class Sub extends React.Component
 		};
 		
 		// Events
-		this._onStateToggle = () => { this.setState( { isOpen: !this.state.isOpen } ); };
+		this._onOpen = () => { this.setState( { isOpen: !this.state.isOpen } ); };
 	}
 	
 	render( tStyle = Style )
@@ -34,10 +35,8 @@ export default class Sub extends React.Component
 		// Render
 		return (
 			<div className={ tempClass }>
-				<button className={ tStyle.toggle } onClick={ this._onStateToggle }>
-					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 24" xmlSpace="preserve">
-						<path d="M0,24l12-12L0,0V24z"/>
-					</svg>
+				<button className={ tStyle.toggle } onClick={ this._onOpen }>
+					{ Icons.arrow }
 					<span>{ this.props.title }</span>
 				</button>
 				{

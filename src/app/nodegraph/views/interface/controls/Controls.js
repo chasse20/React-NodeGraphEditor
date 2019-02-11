@@ -20,17 +20,26 @@ export default class Controls extends React.PureComponent
 						<Menu onToggle={ this.props.onMenuToggle } isMenuOpen={ this.props.isMenuOpen }/>
 				}
 				<div className={ tStyle.buttons }>
-					<div>
-						<Pan graph={ this.props.graph }/>
-						<Marquee graph={ this.props.graph }/>
-					</div>
-					<Delete graph={ this.props.graph }/>
-					<div>
-						<Grid graph={ this.props.graph }/>
-						<GridSnap graph={ this.props.graph }/>
-					</div>
+					{ this.renderButtons() }
 				</div>
 			</nav>
+		);
+	}
+	
+	renderButtons()
+	{
+		return (
+			<React.Fragment>
+				<div>
+					<Pan graph={ this.props.graph }/>
+					<Marquee graph={ this.props.graph }/>
+				</div>
+				<Delete graph={ this.props.graph }/>
+				<div>
+					<Grid graph={ this.props.graph }/>
+					<GridSnap graph={ this.props.graph }/>
+				</div>
+			</React.Fragment>
 		);
 	}
 }

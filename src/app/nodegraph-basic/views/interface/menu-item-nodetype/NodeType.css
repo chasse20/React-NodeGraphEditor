@@ -1,8 +1,0 @@
-.menu .nodetype .circle
-{
-	border-style: solid;
-	border-width: 2px;
-	height: calc( var( --bar-height ) * 0.5 );
-	width: calc( var( --bar-height ) * 0.5 );
-	border-radius: 50px;
-}

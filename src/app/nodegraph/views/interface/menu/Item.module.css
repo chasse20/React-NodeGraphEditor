@@ -12,6 +12,8 @@
 	display: flex;
 	align-items: center;
 	font-weight: 500;
+	letter-spacing: 0.1em;
+	font: inherit;
 }
 
 .bar
@@ -47,4 +49,12 @@
 .content
 {
 	display: none;
+}
+
+.item.open .content
+{
+	display: block;
+	padding: spacing-small;
+	padding-left: calc( spacing-small * 3 );
+	box-sizing: border-box;
 }

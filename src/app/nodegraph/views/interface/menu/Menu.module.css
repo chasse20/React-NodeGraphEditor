@@ -12,6 +12,7 @@
 	font-weight: 300;
 	font-size: 11pt;
 	height: 100%;
+	overflow-y: auto;
 }
 
 .menu, .inner
@@ -38,10 +39,6 @@
 .inner
 {
 	border: 1px solid dark-gray;
-}
-
-.inner, .content
-{
 	height: inherit;
 }
 
@@ -76,7 +73,6 @@
 {
 	padding: calc( spacing-tiny - 2px );
 	padding-top: spacing-tiny;
-	overflow-y: auto;
 }
 
 .content > *:not(:first-child)

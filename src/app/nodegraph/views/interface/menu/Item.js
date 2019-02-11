@@ -15,7 +15,7 @@ export default class Item extends React.Component // TODO: Why have open?
 		};
 		
 		// Events
-		this._onStateToggle = () => { this.setState( { isOpen: !this.state.isOpen } ); };
+		this._onOpen = () => { this.setState( { isOpen: !this.state.isOpen } ); };
 	}
 	
 	render( tStyle = Style )
@@ -23,9 +23,16 @@ export default class Item extends React.Component // TODO: Why have open?
 		// Content
 		const tempContent = this.renderContent();
 		
+		// Class
+		var tempClass = `${ tStyle.item }`;
+		if ( this.state.isOpen )
+		{
+			tempClass += ` ${ tStyle.open }`;
+		}
+		
 		// Render
 		return (
-			<div>
+			<div className={ tempClass }>
 				<div className={ tStyle.bar }>
 					{ this.renderBar() }
 				</div>

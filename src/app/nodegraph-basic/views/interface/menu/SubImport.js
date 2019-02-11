@@ -1,10 +1,10 @@
 import PropTypes from "prop-types";
-import ImportBase from "../../../../nodegraph/views/interface/menu-sub-import/Import";
+import SubImportBase from "../../../../nodegraph/views/interface/menu/SubImport";
 import GraphModel from "../../../models/Graph";
 import GraphVizReader from "../../../formats/GraphVizReader";
 import GraphJSONReader from "../../../formats/GraphJSONReader";
 
-export default class Import extends ImportBase
+export default class SubImport extends SubImportBase
 {	
 	get selectedFormat()
 	{
@@ -17,9 +17,9 @@ export default class Import extends ImportBase
 	}
 }
 
-Import.propTypes = Object.assign(
+SubImport.propTypes = Object.assign(
 	{},
-	ImportBase.propTypes,
+	SubImportBase.propTypes,
 	{
 		graph: PropTypes.instanceOf( GraphModel ).isRequired
 	}
