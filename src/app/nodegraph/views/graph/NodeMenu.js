@@ -19,7 +19,7 @@ class NodeMenu extends React.Component
 		// Events
 		this._onMouseEnter = ( tEvent ) => { this.onMouseEnter( tEvent ); };
 		this._onMouseLeave = ( tEvent ) => { this.onMouseLeave( tEvent ); };
-		this._onRemove = () => { this.props.graph.removeNode( this.props.node ); };
+		this._onRemove = ( tEvent ) => { this.onRemove( tEvent ); };
 		this._onLinking = ( tEvent ) => { this.onLinking( tEvent ); };
 	}
 	
@@ -54,7 +54,7 @@ class NodeMenu extends React.Component
 		// Remove
 		if ( this._isInput )
 		{
-			this.props.onRemove();
+			this.props.graph.removeNode( this.props.node );
 		}
 	}
 	

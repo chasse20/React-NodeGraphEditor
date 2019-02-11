@@ -120,7 +120,7 @@ class Node extends NodeBase
 				</g>
 				{
 					tempText != null &&
-						<foreignObject width={ tempRadius * 2 } height={ tempRadius * 2 } x={ -tempRadius } y={ -tempRadius }>
+						<foreignObject width={ tempRadius * 2 } height="1000" x={ -tempRadius } y={ -tempRadius }>
 							<div className={ tStyle.text } style={ { height: tempRadius * 2 } }>
 								<p>{ tempText }</p>
 							</div>
@@ -128,7 +128,7 @@ class Node extends NodeBase
 				}
 				{
 					tempModel._isSelected &&
-						<NodeMenu node={ tempModel } graph={ this.props.graph }  radius={ tempRadius + 40 } onLinking={ this.props.onLinking }/>
+						<NodeMenu node={ tempModel } graph={ this.props.graph } radius={ tempRadius + 40 } onLinking={ this.props.onLinking }/>
 				}
 			</g>
 		);
