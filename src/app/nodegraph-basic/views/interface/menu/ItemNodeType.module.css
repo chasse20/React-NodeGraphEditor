@@ -2,8 +2,7 @@
 @value sub: "../../../../nodegraph/views/interface/menu/Sub.module.css";
 @value colors: "../../../../nodegraph/views/Colors.css";
 @value white, medium-gray from colors;
-@value interface: "../../../../nodegraph/views/interface/Interface.module.css";
-@value spacing-small from interface;
+@value spacing-small from itembase;
 
 .item
 {
