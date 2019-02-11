@@ -3,10 +3,10 @@ import PropTypes from "prop-types";
 import { observer } from "mobx-react";
 import GraphModel from "../../../models/Graph";
 import TypeModel from "../../../models/TypeNode";
-import Types from "../menu-sub-types/Types";
-import NodeType from "../menu-item-nodetype/NodeType";
+import SubTypes from "./SubTypes";
+import ItemNodeType from "./ItemNodeType";
 
-class Node extends Types
+class SubTypesNode extends SubTypes
 {	
 	onNew()
 	{
@@ -29,7 +29,7 @@ class Node extends Types
 					Object.keys( this.props.graph._nodeTypes ).map(
 						( tKey ) =>
 						(
-							<NodeType key={ tKey } graph={ this.props.graph } model={ this.props.graph._nodeTypes[ tKey ] }/>
+							<ItemNodeType key={ tKey } graph={ this.props.graph } model={ this.props.graph._nodeTypes[ tKey ] }/>
 						)
 					)
 				}
@@ -38,16 +38,16 @@ class Node extends Types
 	}
 }
 
-Node.propTypes = Object.assign(
+SubTypesNode.propTypes = Object.assign(
 	{
 		graph: PropTypes.instanceOf( GraphModel ).isRequired
 	},
-	Types.propTypes
+	SubTypes.propTypes
 );
 
-Node.defaultProps =
+SubTypesNode.defaultProps =
 {
 	title: "node types"
 };
 
-export default observer( Node );
+export default observer( SubTypesNode );

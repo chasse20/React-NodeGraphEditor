@@ -1,5 +1,5 @@
 import React from "react";
-import "./Item.css";
+import Style from "./Item.module.css";
 
 export default class Item extends React.Component // TODO: Why have open?
 {
@@ -18,25 +18,20 @@ export default class Item extends React.Component // TODO: Why have open?
 		this._onStateToggle = () => { this.setState( { isOpen: !this.state.isOpen } ); };
 	}
 	
-	get specificClass()
-	{
-		return this.state.isOpen ? " open" : "";
-	}
-	
-	render()
+	render( tStyle = Style )
 	{
 		// Content
 		const tempContent = this.renderContent();
 		
 		// Render
 		return (
-			<div className={ "item" + this.specificClass }>
-				<div className="item-bar">
+			<div>
+				<div className={ tStyle.bar }>
 					{ this.renderBar() }
 				</div>
 				{
 					tempContent != null &&
-						<div className="item-content">
+						<div className={ tStyle.content }>
 							{ tempContent }
 						</div>
 				}

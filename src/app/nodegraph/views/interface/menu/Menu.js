@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import GraphModel from "../../../models/Graph";
 import SubImport from "./SubImport";
 import SubExport from "./SubExport";
+import SubTypesNode from "./SubTypesNode";
 import Style from "./Menu.module.css";
 
 export default class Menu extends React.PureComponent
@@ -61,12 +62,11 @@ export default class Menu extends React.PureComponent
 					</React.Fragment>
 				);
 			case 1: // Graph
-				/*return (
+				return (
 					<React.Fragment>
-						<NodeTypes graph={ this.props.graph }/>
-						<EdgeTypes graph={ this.props.graph }/>
+						<SubTypesNode graph={ this.props.graph }/>
 					</React.Fragment>
-				);*/
+				);
 			default:
 				break;
 		}

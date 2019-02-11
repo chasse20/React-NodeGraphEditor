@@ -1,8 +1,8 @@
 import React from "react";
-import Sub from "../menu-sub/Sub";
-import "./Types.css";
+import Sub from "./Sub";
+import Style from "./SubTypes.module.css";
 
-export default class Types extends Sub
+export default class SubTypes extends Sub
 {
 	constructor( tProps )
 	{
@@ -21,12 +21,7 @@ export default class Types extends Sub
 	{
 	}
 	
-	get specificClass()
-	{
-		return super.specificClass + " types";
-	}
-	
-	renderContent()
+	renderContent( tStyle = Style )
 	{
 		// Items
 		const tempItems = this.renderItems();
@@ -36,13 +31,13 @@ export default class Types extends Sub
 			<React.Fragment>
 				{
 					tempItems != null &&
-						<div className="types-items">
+						<div className={ tStyle.items }>
 							{ tempItems }
 						</div>
 				}
-				<div className="types-new">
+				<div className={ tStyle.new }>
 					<input type="text" value={ this.newKey } placeholder="Enter Type Name..." onChange={ this._onNewText }/>
-					<button onClick={ this._onNew }>new type</button>
+					<button className={ tStyle.create } onClick={ this._onNew }>new type</button>
 				</div>
 			</React.Fragment>
 		);
@@ -54,7 +49,7 @@ export default class Types extends Sub
 	}
 }
 
-Types.propTypes = Object.assign(
+SubTypes.propTypes = Object.assign(
 	{},
 	Sub.propTypes
 );

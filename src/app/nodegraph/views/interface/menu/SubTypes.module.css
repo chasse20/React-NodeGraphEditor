@@ -1,32 +1,30 @@
-.menu .sub.types .types-items > *:not(:first-child)
+@value interface: "../Interface.module.css";
+@value spacing-small from interface;
+@value sub: "./Sub.module.css";
+
+.items > *:not(:first-child)
 {
 	margin-top: 2px;
 }
 
-.menu .sub.types .types-new
+.new
 {
 	box-sizing: border-box;
 	display: flex;
-	padding: var( --spacing-small );
 }
 
-.menu .sub.types .types-new > *:not(:first-child)
+.new > *:not(:first-child)
 {
-	margin-left: var( --spacing-small );
+	margin-left: spacing-small;
 }
 
-.menu .sub.types .types-new input
+.new input
 {
 	flex-grow: 1;
 	width: auto;
 }
 
-.menu .sub.types .types-new button
+.create
 {
-	border-radius: var( --button-radius );
-}
-
-.menu .sub.types .types-new button:active
-{
-	background-color: var( --color-dark-gray );
+	composes: button from sub;
 }

@@ -9,6 +9,60 @@
 	margin-top: spacing-tiny;
 }
 
+.sub input, .sub select, .button:active
+{
+	background-color: dark-gray;
+}
+
+.sub input
+{
+	padding: spacing-tiny;
+	box-sizing: border-box;
+}
+
+.sub input, .sub select
+{
+	border: none;
+}
+
+.sub input:focus, .sub select:focus
+{
+	outline: 1px solid light-blue;
+	outline-offset: 0;
+}
+
+.sub input, .sub select, .sub option
+{
+	color: inherit;
+	font: inherit;
+}
+
+.sub option
+{
+	font-weight: 300;
+}
+
+.sub input[type="file"]
+{
+	padding: 2px;
+	height: auto;
+}
+
+.sub input, .sub select, .sub option, .toggle, .button
+{
+	height: 26px;
+}
+
+.sub input, .toggle
+{
+	width: 100%;
+}
+
+.sub input, .sub select, .sub option, .inner
+{
+	letter-spacing: 0.1em;
+}
+
 .toggle
 {
 	composes: button from menu;
@@ -23,16 +77,6 @@
 .toggle, .button
 {
 	background-color: blue;
-}
-
-.toggle, .button, .kvp input, .kvp select, .kvp option
-{
-	height: 26px;
-}
-
-.toggle, .kvp input
-{
-	width: 100%;
 }
 
 .toggle svg
@@ -77,11 +121,6 @@
 	flex-direction: column;
 }
 
-.inner, .kvp input, .kvp select, .kvp option
-{
-	letter-spacing: 0.1em;
-}
-
 .inner > *:not(:first-child)
 {
 	margin-top: spacing-small;
@@ -113,43 +152,4 @@
 	composes: button from menu;
 	border-radius: button-radius;
 	padding: 0 spacing-small;
-}
-
-.button:active, .kvp input, .kvp select
-{
-	background-color: dark-gray;
-}
-
-.kvp input
-{
-	padding: spacing-tiny;
-	box-sizing: border-box;
-}
-
-.kvp input, .kvp select
-{
-	border: none;
-}
-
-.kvp input:focus, .kvp select:focus
-{
-	outline: 1px solid light-blue;
-	outline-offset: 0;
-}
-
-.kvp input, .kvp select, .kvp option
-{
-	color: inherit;
-	font: inherit;
-}
-
-.kvp option
-{
-	font-weight: 300;
-}
-
-.kvp input[type="file"]
-{
-	padding: 2px;
-	height: auto;
 }
