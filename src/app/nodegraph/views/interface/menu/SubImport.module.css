@@ -1,0 +1,143 @@
+.menu .sub > *:not(:first-child)
+{
+	margin-top: var( --spacing-tiny );
+}
+
+.menu .sub .sub-toggle
+{
+	border: 1px solid var( --color-light-blue );
+	text-shadow: var( --text-shadow );
+	font-weight: 500;
+}
+
+.menu .sub .sub-toggle, .menu .sub .sub-buttons button
+{
+	padding: 0 var( --spacing-small );
+}
+
+.menu .sub .sub-toggle, .menu .sub input
+{
+	width: 100%;
+}
+
+.menu .sub .sub-toggle, .menu .sub .sub-kvp span
+{
+	align-items: center;
+}
+
+.menu .sub .sub-toggle svg
+{
+	fill: var( --color-white );
+	height: 14px;
+}
+
+.menu .sub.open .sub-toggle svg
+{
+	transform: rotate( 90deg );
+}
+
+.menu .sub .sub-toggle, .menu .sub .sub-inner, .menu .sub .sub-kvp span
+{
+	display: flex;
+}
+
+.menu .sub .sub-toggle > *:not(:first-child)
+{
+	margin-left: var( --spacing-small );
+}
+
+.menu .sub .sub-content
+{
+	display: none;
+}
+
+.menu .sub.open .sub-content
+{
+	display: block;
+}
+
+.menu .sub .sub-inner
+{
+	flex-direction: column;
+	border: 1px solid var( --color-dark-gray );
+	padding: var( --spacing-small );
+}
+
+.menu .sub .sub-inner, .menu .sub input, .menu .sub select, .menu .sub select > *
+{
+	letter-spacing: 0.1em;
+	font-weight: 300;
+}
+
+.menu .sub-toggle, .menu .sub button, .menu .sub select, .menu .sub input
+{
+	height: var( --bar-height );
+}
+
+.menu .sub input
+{
+	padding: var( --spacing-tiny );
+	box-sizing: border-box;
+}
+
+.menu .sub input[type="file"]
+{
+	padding: 3px;
+	height: auto;
+}
+
+.menu .sub input, .menu .sub select, .menu .sub select > *
+{
+	font-size: 1em;
+}
+
+.menu .sub input, .menu .sub select, .menu .sub .sub-buttons button:active
+{
+	background-color: var( --color-dark-gray );
+}
+
+.menu .sub input:focus, .menu .sub select:focus
+{
+	outline: 1px solid var( --color-light-blue );
+	outline-offset: 0;
+}
+
+.menu .sub select, .menu .sub input
+{
+	color: var( --color-light-gray );
+	border: none;
+}
+
+.menu .sub .sub-kvp
+{
+	display: grid;
+	grid-template-columns: auto 1fr;
+	grid-row-gap: var( --spacing-tiny );
+	grid-column-gap: calc( 2 * var( --spacing-small ) );
+}
+
+.menu .sub .sub-kvp span:nth-child(2n+1)::after
+{
+	content: ":"
+}
+
+.menu .sub .sub-buttons
+{
+	margin-top: var( --spacing-small);
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.menu .sub .sub-buttons button
+{
+	border-radius: var( --button-radius );
+}
+
+.menu .sub.open .sub-accent
+{
+	display: block;
+	border-bottom: 1px solid var( --color-medium-gray );
+	width: calc( 100% - 4px );
+	margin-left: 2px;
+	margin-top: 1px;
+}

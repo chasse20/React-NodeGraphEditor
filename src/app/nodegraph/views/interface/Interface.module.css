@@ -14,7 +14,7 @@
 	transition: transform 0.3s;
 }
 
-.open
+.interface.open
 {
 	transform: translateX( 0 );
 }

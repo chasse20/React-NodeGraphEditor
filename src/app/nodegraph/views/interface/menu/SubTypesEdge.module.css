@@ -1,0 +1,32 @@
+.menu .sub.types .types-items > *:not(:first-child)
+{
+	margin-top: 2px;
+}
+
+.menu .sub.types .types-new
+{
+	box-sizing: border-box;
+	display: flex;
+	padding: var( --spacing-small );
+}
+
+.menu .sub.types .types-new > *:not(:first-child)
+{
+	margin-left: var( --spacing-small );
+}
+
+.menu .sub.types .types-new input
+{
+	flex-grow: 1;
+	width: auto;
+}
+
+.menu .sub.types .types-new button
+{
+	border-radius: var( --button-radius );
+}
+
+.menu .sub.types .types-new button:active
+{
+	background-color: var( --color-dark-gray );
+}

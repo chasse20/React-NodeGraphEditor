@@ -1,0 +1,85 @@
+.menu .item .item-bar
+{
+	height: var( --bar-height );
+	display: flex;
+	color: var( --color-white );
+	background-color: var( --color-dark-gray );
+	font-weight: 500;
+	padding-left: var( --spacing-tiny );
+}
+
+.menu .item .item-bar, .menu .item .item-toggle
+{
+	display: flex;
+	align-items: center;
+}
+
+.menu .item .item-bar span
+{
+	text-shadow: var( --text-shadow );
+	text-transform: none;
+}
+
+.menu .item .item-bar > *:not(:first-child), .menu .item .item-toggle > *:not(:first-child)
+{
+	margin-left: var( --spacing-small );
+}
+
+.menu .item .item-bar > *:first-child
+{
+	flex-grow: 1;
+}
+
+.menu .item .item-toggle
+{
+	background-color: transparent;
+}
+
+.menu .item .item-toggle svg
+{
+	fill: var( --color-white );
+	height: 14px;
+}
+
+.menu .item.open .item-toggle svg
+{
+	transform: rotate( 90deg );
+}
+
+.menu .item .item-buttons button
+{
+	padding: var( --spacing-tiny );
+	background-color: transparent;
+}
+
+.menu .item .item-buttons button.deselected svg
+{
+	fill: var( --color-gray );
+}
+
+.menu .item .item-buttons button svg
+{
+	height: 100%;
+	fill: var( --color-light-blue );
+}
+
+.menu .item .item-buttons button:active svg
+{
+	fill: var( --color-white );
+}
+
+.menu .item .item-buttons .item-delete svg
+{
+	fill: var( --color-red );
+}
+
+.menu .item .item-content
+{
+	display: none;
+}
+
+.menu .item.open .item-content
+{
+	display: block;
+	padding: var( --spacing-small ) 0 var( --spacing-small ) calc( 3 * var( --spacing-small ) );
+}

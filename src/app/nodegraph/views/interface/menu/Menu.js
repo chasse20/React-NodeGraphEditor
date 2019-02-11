@@ -1,11 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import GraphModel from "../../../models/Graph";
-import Import from "../menu-sub-import/Import";
-import Export from "../menu-sub-export/Export";
-import NodeTypes from "../menu-sub-types-node/Node";
-import EdgeTypes from "../menu-sub-types-edge/Edge";
-import "./Menu.css";
+import Style from "./Menu.module.css";
 
 export default class Menu extends React.PureComponent
 {
@@ -28,22 +24,22 @@ export default class Menu extends React.PureComponent
 		];
 	}
 	
-	render()
+	render( tStyle = Style )
 	{
 		return (
-			<div className="menu">
-				<div className="menu-inner">
-					<div className="menu-tabs">
+			<div className={ tStyle.menu }>
+				<div className={ tStyle.inner }>
+					<div className={ tStyle.tabs }>
 						{
 							this._tabs.map(
 								( tTitle, tIndex ) =>
 								(
-									<button key={ tTitle } disabled={ tIndex === this.state.tab } style={ { width: ( 100 / this._tabs.length ) + "%" } } onMouseDown={ () => { this.setState( { tab: tIndex } ); } }>{ tTitle }</button>
+									<button className={ tStyle.tab } key={ tTitle } disabled={ tIndex === this.state.tab } style={ { width: ( 100 / this._tabs.length ) + "%" } } onMouseDown={ () => { this.setState( { tab: tIndex } ); } }>{ tTitle }</button>
 								)
 							)
 						}
 					</div>
-					<div className="menu-content">
+					<div className={ tStyle.content }>
 						{ this.renderContent() }
 					</div>
 				</div>
@@ -53,7 +49,7 @@ export default class Menu extends React.PureComponent
 	
 	renderContent()
 	{
-		switch ( this.state.tab )
+		/*switch ( this.state.tab )
 		{
 			case 0: // I/O
 				return (
@@ -71,7 +67,7 @@ export default class Menu extends React.PureComponent
 				);
 			default:
 				break;
-		}
+		}*/
 		
 		return null;
 	}

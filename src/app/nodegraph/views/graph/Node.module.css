@@ -20,7 +20,7 @@
 	transition: 0.2s opacity ease;
 }
 
-.selected .outline
+.node.selected .outline
 {
 	opacity: 1;
 	transition: 0.2s opacity ease;

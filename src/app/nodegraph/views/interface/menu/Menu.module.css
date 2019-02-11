@@ -1,0 +1,84 @@
+@value interface: "../Interface.module.css";
+@value menu-width, spacing-tiny, spacing-small from interface;
+@value colors: "../../Colors.css";
+@value white, gray, light-blue, blue, light-gray, medium-gray, dark-gray from colors;
+
+.menu
+{
+	pointer-events: auto;
+	position: absolute;
+	width: menu-width;
+	color: light-gray;
+	font-weight: 300;
+	font-size: 11pt;
+	height: 100%;
+}
+
+.menu, .inner
+{
+	box-sizing: border-box;
+	padding: 1px 1px 0 1px;
+}
+
+.menu, .tab:disabled
+{
+	background-color: gray;
+}
+
+.button
+{
+	composes: button from interface;
+	letter-spacing: 0.1em;
+	font: inherit;
+	font-weight: 500;
+	text-transform: uppercase;
+}
+
+.inner
+{
+	border: 1px solid dark-gray;
+}
+
+.inner, .content
+{
+	height: inherit;
+}
+
+.inner, .tab:disabled
+{
+	border-bottom: none;
+}
+
+.tabs
+{
+	display: flex;
+}
+
+.tab
+{
+	composes: button;
+	height: 32px;
+	border-bottom: 1px solid medium-gray;
+	color: medium-gray;
+	background-color: dark-gray;
+}
+
+.tab:disabled
+{
+	border-top: 2px solid light-blue;
+	text-shadow: 2px 2px 1px #00000091;
+	color: white;
+	background-color: gray;
+}
+
+.content
+{
+	padding: calc( spacing-tiny - 2px );
+	padding-top: spacing-tiny;
+	overflow-y: auto;
+}
+
+.content > *:not(:first-child)
+{
+	margin-top: spacing-tiny;
+}

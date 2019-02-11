@@ -12,17 +12,17 @@
 	overflow: hidden;
 }
 
-.panning
+.graph.panning
 {
 	cursor: move;
 }
 
-.marqueeing:not(.panning)
+.graph.marqueeing:not(.panning)
 {
 	cursor: crosshair;
 }
 
-.marqueeing .marquee
+.graph.marqueeing .marquee
 {
 	opacity: 1;
 }
