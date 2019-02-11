@@ -1,12 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
 import FileSaver from "file-saver";
-import Sub from "../menu-sub/Sub";
+import Sub from "./Sub";
 import GraphModel from "../../../models/Graph";
 import GraphVizWriter from "../../../formats/GraphVizWriter";
 import GraphJSONWriter from "../../../formats/GraphJSONWriter";
+import Style from "./Sub.module.css";
 
-export default class Export extends Sub
+export default class SubExport extends Sub
 {
 	constructor( tProps )
 	{
@@ -44,11 +45,11 @@ export default class Export extends Sub
 		return new GraphVizWriter();
 	}
 
-	renderContent()
+	renderContent( tStyle = Style )
 	{
 		return (
 			<React.Fragment>
-				<div className="sub-kvp">
+				<div className={ tStyle.kvp }>
 					<span>Format</span>
 					<select onChange={ this._onFormat }>
 						{
@@ -61,22 +62,22 @@ export default class Export extends Sub
 						}
 					</select>
 				</div>
-				<div className="sub-buttons">
-					<button onClick={ this._onExport }>export</button>
+				<div className={ tStyle.buttons }>
+					<button className={ tStyle.button } onClick={ this._onExport }>export</button>
 				</div>
 			</React.Fragment>
 		);
 	}
 }
 
-Export.propTypes = Object.assign(
+SubExport.propTypes = Object.assign(
 	{
 		graph: PropTypes.instanceOf( GraphModel ).isRequired
 	},
 	Sub.propTypes
 );
 
-Export.defaultProps =
+SubExport.defaultProps =
 {
 	title: "export file"
 };

@@ -1,11 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Sub from "../menu-sub/Sub";
+import Sub from "./Sub";
 import GraphModel from "../../../models/Graph";
 import GraphVizReader from "../../../formats/GraphVizReader";
 import GraphJSONReader from "../../../formats/GraphJSONReader";
+import Style from "./Sub.module.css";
 
-export default class Import extends Sub
+export default class SubImport extends Sub
 {
 	constructor( tProps )
 	{
@@ -58,11 +59,11 @@ export default class Import extends Sub
 		return new GraphVizReader();
 	}
 
-	renderContent()
+	renderContent( tStyle = Style )
 	{
 		return (
 			<React.Fragment>
-				<div className="sub-kvp">
+				<div className={ tStyle.kvp }>
 					<span>File</span>
 					<input type="file" onChange={ this._onFileInput }/>
 					<span>Format</span>
@@ -77,22 +78,22 @@ export default class Import extends Sub
 						}
 					</select>
 				</div>
-				<div className="sub-buttons">
-					<button onClick={ this._onImport }>import</button>
+				<div className={ tStyle.buttons }>
+					<button className={ tStyle.button } onClick={ this._onImport }>import</button>
 				</div>
 			</React.Fragment>
 		);
 	}
 }
 
-Import.propTypes = Object.assign(
+SubImport.propTypes = Object.assign(
 	{
 		graph: PropTypes.instanceOf( GraphModel ).isRequired
 	},
 	Sub.propTypes
 );
 
-Import.defaultProps =
+SubImport.defaultProps =
 {
 	title: "import file"
 };

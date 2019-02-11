@@ -1,143 +1,155 @@
-.menu .sub > *:not(:first-child)
+@value interface: "../Interface.module.css";
+@value button-radius, spacing-tiny, spacing-small from interface;
+@value menu: "./Menu.module.css";
+@value colors: "../../Colors.css";
+@value white, light-blue, blue, medium-gray, light-gray, dark-gray from colors;
+
+.sub > *:not(:first-child)
 {
-	margin-top: var( --spacing-tiny );
+	margin-top: spacing-tiny;
 }
 
-.menu .sub .sub-toggle
+.toggle
 {
-	border: 1px solid var( --color-light-blue );
-	text-shadow: var( --text-shadow );
-	font-weight: 500;
+	composes: button from menu;
+	border: 1px solid light-blue;
 }
 
-.menu .sub .sub-toggle, .menu .sub .sub-buttons button
-{
-	padding: 0 var( --spacing-small );
-}
-
-.menu .sub .sub-toggle, .menu .sub input
-{
-	width: 100%;
-}
-
-.menu .sub .sub-toggle, .menu .sub .sub-kvp span
+.toggle, .buttons, .kvp span
 {
 	align-items: center;
 }
 
-.menu .sub .sub-toggle svg
+.toggle, .button
 {
-	fill: var( --color-white );
+	background-color: blue;
+}
+
+.toggle, .button, .kvp input, .kvp select, .kvp option
+{
+	height: 26px;
+}
+
+.toggle, .kvp input
+{
+	width: 100%;
+}
+
+.toggle svg
+{
+	fill: white;
 	height: 14px;
 }
 
-.menu .sub.open .sub-toggle svg
+.open .toggle svg
 {
 	transform: rotate( 90deg );
 }
 
-.menu .sub .sub-toggle, .menu .sub .sub-inner, .menu .sub .sub-kvp span
+.toggle, .inner, .content, .buttons, .kvp span
 {
 	display: flex;
 }
 
-.menu .sub .sub-toggle > *:not(:first-child)
+.toggle > *
 {
-	margin-left: var( --spacing-small );
+	margin-left: spacing-small;
 }
 
-.menu .sub .sub-content
+.content
 {
 	display: none;
 }
 
-.menu .sub.open .sub-content
+.open .content, .accent
 {
 	display: block;
 }
 
-.menu .sub .sub-inner
+.inner
+{
+	border: 1px solid dark-gray;
+	padding: spacing-small;
+}
+
+.inner, .buttons
 {
 	flex-direction: column;
-	border: 1px solid var( --color-dark-gray );
-	padding: var( --spacing-small );
 }
 
-.menu .sub .sub-inner, .menu .sub input, .menu .sub select, .menu .sub select > *
+.inner, .kvp input, .kvp select, .kvp option
 {
 	letter-spacing: 0.1em;
-	font-weight: 300;
 }
 
-.menu .sub-toggle, .menu .sub button, .menu .sub select, .menu .sub input
+.inner > *:not(:first-child)
 {
-	height: var( --bar-height );
+	margin-top: spacing-small;
 }
 
-.menu .sub input
+.accent
 {
-	padding: var( --spacing-tiny );
-	box-sizing: border-box;
+	border-bottom: 1px solid medium-gray;
+	width: calc( 100% - 4px );
+	margin-left: 2px;
+	margin-top: 1px;
 }
 
-.menu .sub input[type="file"]
-{
-	padding: 3px;
-	height: auto;
-}
-
-.menu .sub input, .menu .sub select, .menu .sub select > *
-{
-	font-size: 1em;
-}
-
-.menu .sub input, .menu .sub select, .menu .sub .sub-buttons button:active
-{
-	background-color: var( --color-dark-gray );
-}
-
-.menu .sub input:focus, .menu .sub select:focus
-{
-	outline: 1px solid var( --color-light-blue );
-	outline-offset: 0;
-}
-
-.menu .sub select, .menu .sub input
-{
-	color: var( --color-light-gray );
-	border: none;
-}
-
-.menu .sub .sub-kvp
+.kvp
 {
 	display: grid;
 	grid-template-columns: auto 1fr;
-	grid-row-gap: var( --spacing-tiny );
-	grid-column-gap: calc( 2 * var( --spacing-small ) );
+	grid-row-gap: spacing-tiny;
+	grid-column-gap: calc( 2 * spacing-small );
 }
 
-.menu .sub .sub-kvp span:nth-child(2n+1)::after
+.kvp > *:nth-child(2n+1)::after
 {
 	content: ":"
 }
 
-.menu .sub .sub-buttons
+.button
 {
-	margin-top: var( --spacing-small);
-	margin-left: auto;
-	margin-right: auto;
+	composes: button from menu;
+	border-radius: button-radius;
+	padding: 0 spacing-small;
 }
 
-.menu .sub .sub-buttons button
+.button:active, .kvp input, .kvp select
 {
-	border-radius: var( --button-radius );
+	background-color: dark-gray;
 }
 
-.menu .sub.open .sub-accent
+.kvp input
 {
-	display: block;
-	border-bottom: 1px solid var( --color-medium-gray );
-	width: calc( 100% - 4px );
-	margin-left: 2px;
-	margin-top: 1px;
+	padding: spacing-tiny;
+	box-sizing: border-box;
+}
+
+.kvp input, .kvp select
+{
+	border: none;
+}
+
+.kvp input:focus, .kvp select:focus
+{
+	outline: 1px solid light-blue;
+	outline-offset: 0;
+}
+
+.kvp input, .kvp select, .kvp option
+{
+	color: inherit;
+	font: inherit;
+}
+
+.kvp option
+{
+	font-weight: 300;
+}
+
+.kvp input[type="file"]
+{
+	padding: 2px;
+	height: auto;
 }

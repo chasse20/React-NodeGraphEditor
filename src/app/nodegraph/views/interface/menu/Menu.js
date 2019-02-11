@@ -1,6 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import GraphModel from "../../../models/Graph";
+import SubImport from "./SubImport";
+import SubExport from "./SubExport";
 import Style from "./Menu.module.css";
 
 export default class Menu extends React.PureComponent
@@ -49,25 +51,25 @@ export default class Menu extends React.PureComponent
 	
 	renderContent()
 	{
-		/*switch ( this.state.tab )
+		switch ( this.state.tab )
 		{
 			case 0: // I/O
 				return (
 					<React.Fragment>
-						<Import graph={ this.props.graph }/>
-						<Export graph={ this.props.graph }/>
+						<SubImport graph={ this.props.graph }/>
+						<SubExport graph={ this.props.graph }/>
 					</React.Fragment>
 				);
 			case 1: // Graph
-				return (
+				/*return (
 					<React.Fragment>
 						<NodeTypes graph={ this.props.graph }/>
 						<EdgeTypes graph={ this.props.graph }/>
 					</React.Fragment>
-				);
+				);*/
 			default:
 				break;
-		}*/
+		}
 		
 		return null;
 	}
