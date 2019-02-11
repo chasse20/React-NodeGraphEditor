@@ -1,5 +1,8 @@
+@value nodebase: "../../../nodegraph/views/graph/Node.module.css";
+
 .node
 {
+	composes: node from nodebase;
 	display: none;
 }
 
@@ -8,7 +11,7 @@
 	display: initial;
 }
 
-.node .text
+.text
 {
 	display: flex;
 	align-items: center;
@@ -17,7 +20,7 @@
 	box-sizing: border-box;
 }
 
-.node foreignObject, .node .text
+.node foreignObject, .text
 {
 	user-select: none;
 	pointer-events: none;
@@ -38,4 +41,19 @@
 {
 	text-shadow: 2px 2px 6px #000;
 	overflow: visible;
+}
+
+.outline
+{
+	composes: outline from nodebase;
+}
+
+.graphic
+{
+	composes: graphic from nodebase;
+}
+
+.selected
+{
+	composes: selected from nodebase;
 }

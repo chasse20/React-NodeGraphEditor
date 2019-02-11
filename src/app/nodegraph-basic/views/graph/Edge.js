@@ -1,9 +1,9 @@
 import React from "react";
 import { observer } from "mobx-react";
 import { observe } from "mobx";
-import Vector2D from "../../../../core/Vector2D";
-import EdgeBase from "../../../../nodegraph/views/graph/edge/Edge";
-import "./Edge.css";
+import Vector2D from "../../../core/Vector2D";
+import EdgeBase from "../../../nodegraph/views/graph/Edge";
+import Style from "./Edge.module.css";
 
 class Edge extends EdgeBase
 {
@@ -88,7 +88,7 @@ class Edge extends EdgeBase
 		}
 	}
 	
-	render()
+	render( tStyle = Style )
 	{
 		// Variables
 		const tempModel = this.props.model;
@@ -97,15 +97,15 @@ class Edge extends EdgeBase
 		const tempStroke = tempType.stroke;
 		
 		// Class
-		var tempClass = "edge " + this.constructor.name;
-		if ( tempModel.isSelected )
+		var tempClass = `${ tStyle.edge }`;
+		if ( tempModel._isSelected )
 		{
-			tempClass += " selected";
+			tempClass += ` ${ tStyle.selected }`;
 		}
 		
 		if ( tempType.isVisible && tempModel._source._node._type.isVisible && tempModel._target._node._type.isVisible )
 		{
-			tempClass += " visible";
+			tempClass += ` ${ tStyle.visible }`;
 		}
 		
 		// Render

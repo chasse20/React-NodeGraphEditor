@@ -1,28 +1,29 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { observer } from "mobx-react";
-import GraphBase from "../../../../nodegraph/views/graph/graph/Graph";
-import GraphModel from "../../../models/Graph";
-import Edges from "../../../../nodegraph/views/graph/edges/Edges";
-import Nodes from "../../../../nodegraph/views/graph/nodes/Nodes";
-import Grid from "../../../../nodegraph/views/graph/grid/Grid";
-import Arrows from "../arrows/Arrows";
+import GraphBase from "../../../nodegraph/views/graph/Graph";
+import GraphModel from "../../models/Graph";
+import Edges from "../../../nodegraph/views/graph/Edges";
+import Nodes from "../../../nodegraph/views/graph/Nodes";
+import Grid from "../../../nodegraph/views/graph/Grid";
+import Arrows from "./Arrows";
+import Style from "../../../nodegraph/views/graph/Graph.module.css";
 
 class Graph extends GraphBase
 {	
-	render()
+	render( tStyle = Style )
 	{
 		// Class
 		const tempModel = this.props.model;
-		var tempClass = "graph";
+		var tempClass = `${ tStyle.graph }`;
 		if ( tempModel.isPanning )
 		{
-			tempClass += " panning";
+			tempClass += ` ${ tStyle.panning }`;
 		}
 		
 		if ( tempModel.isMarqueeing )
 		{
-			tempClass += " marqueeing";
+			tempClass += ` ${ tStyle.marqueeing }`;
 		}
 		
 		// Render
@@ -36,7 +37,7 @@ class Graph extends GraphBase
 						<Nodes graph={ tempModel } onLink={ this._onLink }/>
 					</g>
 				</g>
-				<rect ref={ this._onMarqueeElement } className="marquee"/>
+				<rect ref={ this._onMarqueeElement } className={ tStyle.marquee }/>
 			</svg>
 		);
 	}

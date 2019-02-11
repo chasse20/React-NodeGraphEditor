@@ -1,5 +1,8 @@
+@value edgebase: "../../../nodegraph/views/graph/Edge.module.css";
+
 .edge
 {
+	composes: edge from edgebase;
 	display: none;
 }
 

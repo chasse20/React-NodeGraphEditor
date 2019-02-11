@@ -1,7 +1,7 @@
 import { observable, decorate } from "mobx";
 import TypeNodeBase from "../../nodegraph/models/TypeNode";
 import Node from "./Node";
-import NodeView from "../views/graph/node/Node";
+import NodeView from "../views/graph/Node";
 
 export default class TypeNode extends TypeNodeBase
 {

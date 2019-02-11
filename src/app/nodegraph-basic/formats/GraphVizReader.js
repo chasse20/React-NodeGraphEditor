@@ -3,8 +3,8 @@ import Node from "../models/Node";
 import Edge from "../../nodegraph/models/Edge";
 import TypeNode from "../models/TypeNode";
 import TypeEdge from "../models/TypeEdge";
-import EdgeView from "../views/graph/edge/Edge";
-import NodeView from "../views/graph/node/Node";
+import EdgeView from "../views/graph/Edge";
+import NodeView from "../views/graph/Node";
 
 export default class GraphVizReader extends GraphVizReaderBase
 {
