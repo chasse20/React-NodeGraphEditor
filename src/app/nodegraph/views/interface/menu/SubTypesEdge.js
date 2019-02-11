@@ -3,10 +3,10 @@ import PropTypes from "prop-types";
 import { observer } from "mobx-react";
 import GraphModel from "../../../models/Graph";
 import TypeModel from "../../../models/TypeEdge";
-import Types from "../menu-sub-types/Types";
-import EdgeType from "../menu-item-edgetype/EdgeType";
+import SubTypes from "./SubTypes";
+import ItemEdgeType from "./ItemEdgeType";
 
-class Edge extends Types
+class SubTypesNode extends SubTypes
 {	
 	onNew()
 	{
@@ -29,7 +29,7 @@ class Edge extends Types
 					Object.keys( this.props.graph._edgeTypes ).map(
 						( tKey ) =>
 						(
-							<EdgeType key={ tKey } graph={ this.props.graph } model={ this.props.graph._edgeTypes[ tKey ] }/>
+							<ItemEdgeType key={ tKey } graph={ this.props.graph } model={ this.props.graph._edgeTypes[ tKey ] }/>
 						)
 					)
 				}
@@ -38,16 +38,16 @@ class Edge extends Types
 	}
 }
 
-Edge.propTypes = Object.assign(
+SubTypesNode.propTypes = Object.assign(
 	{
 		graph: PropTypes.instanceOf( GraphModel ).isRequired
 	},
-	Types.propTypes
+	SubTypes.propTypes
 );
 
-Edge.defaultProps =
+SubTypesNode.defaultProps =
 {
 	title: "edge types"
 };
 
-export default observer( Edge );
+export default observer( SubTypesNode );

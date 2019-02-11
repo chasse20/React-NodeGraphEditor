@@ -4,6 +4,7 @@ import GraphModel from "../../../models/Graph";
 import SubImport from "./SubImport";
 import SubExport from "./SubExport";
 import SubTypesNode from "./SubTypesNode";
+import SubTypesEdge from "./SubTypesEdge";
 import Style from "./Menu.module.css";
 
 export default class Menu extends React.PureComponent
@@ -65,6 +66,7 @@ export default class Menu extends React.PureComponent
 				return (
 					<React.Fragment>
 						<SubTypesNode graph={ this.props.graph }/>
+						<SubTypesEdge graph={ this.props.graph }/>
 					</React.Fragment>
 				);
 			default:
