@@ -32,36 +32,46 @@ class Data extends React.Component
 			if ( !has( tempData, tempKey ) )
 			{
 				set( tempData, tempKey, "" );
+				this.setState( { newKey: "" } );
 			}
 		}
 	}
 	
 	render( tStyle = Style )
 	{
+		return (
+			<div className={ tStyle.data }>
+				<div className={ tStyle.fields }>
+					{ this.renderData() }
+				</div>
+				<div className={ tStyle.new }>
+					<input type="text" value={ this.state.newKey } placeholder="Enter Field Name..." onChange={ this._onNewText }/>
+					<button className={ tStyle.create } onClick={ this._onNew }>new field</button>
+				</div>
+			</div>
+		);
+	}
+	
+	renderData( tStyle = Style )
+	{
 		const tempData = this.props.data;
 		
 		return (
 			<React.Fragment>
-				<div className={ tStyle.data }>
-					{
-						Object.keys( tempData ).map(
-							( tKey ) =>
-							(
-								<React.Fragment key={ tKey }>
-									<span>{ tKey }</span>
-									<input type="text" value={ get( tempData, tKey ) } onChange={ ( tEvent ) => { set( tempData, tKey, tEvent.target.value); } }/>
-									<button className={ tStyle.button } onClick={ () => { remove( tempData, tKey ); } }>
-										{ Icons.delete }
-									</button>
-								</React.Fragment>
-							)
+				{
+					Object.keys( tempData ).map(
+						( tKey ) =>
+						(
+							<React.Fragment key={ tKey }>
+								<span>{ tKey }</span>
+								<input type="text" value={ get( tempData, tKey ) } onChange={ ( tEvent ) => { set( tempData, tKey, tEvent.target.value); } }/>
+								<button className={ tStyle.button } onClick={ () => { remove( tempData, tKey ); } }>
+									{ Icons.delete }
+								</button>
+							</React.Fragment>
 						)
-					}
-				</div>
-				<div className={ tStyle.new }>
-					<input type="text" value={ this.newKey } placeholder="Enter Field Name..." onChange={ this._onNewText }/>
-					<button className={ tStyle.create } onClick={ this._onNew }>new field</button>
-				</div>
+					)
+				}
 			</React.Fragment>
 		);
 	}

@@ -13,6 +13,7 @@ class SubTypesNode extends SubTypes
 		if ( this.state.newKey !== "" && this.props.graph._edgeTypes[ this.state.newKey ] === undefined )
 		{
 			this.props.graph.setEdgeType( this.createType( this.state.newKey ) );
+			this.setState( { newKey: "" } );
 		}
 	}
 	

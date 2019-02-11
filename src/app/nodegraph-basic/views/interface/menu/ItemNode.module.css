@@ -1,5 +1,6 @@
 @value itembase: "../../../../nodegraph/views/interface/menu/Item.module.css";
 @value sub: "../../../../nodegraph/views/interface/menu/Sub.module.css";
+@value spacing-small from itembase;
 
 .item
 {
@@ -19,6 +20,11 @@
 .content
 {
 	composes: content from itembase;
+}
+
+.content > *:not(:first-child)
+{
+	margin-top: spacing-small;
 }
 
 .toggle

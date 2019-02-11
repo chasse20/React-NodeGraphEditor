@@ -1,0 +1,70 @@
+@value colors: "../../../../nodegraph/views/Colors.css";
+@value white, light-blue, blue from colors;
+@value sub: "../../../../nodegraph/views/interface/menu/Sub.module.css";
+@value spacing-tiny, spacing-small from sub;
+@value interface: "../../../../nodegraph/views/interface/Interface.module.css";
+
+.data > *:not(:first-child)
+{
+	margin-top: spacing-small;
+}
+
+.fields
+{
+	display: grid;
+	grid-template-columns: auto 1fr auto;
+	grid-row-gap: spacing-tiny;
+	grid-column-gap: spacing-small;
+}
+
+.fields > *:nth-child(3n+1)::after
+{
+	content: ":"
+}
+
+.fields span
+{
+	display: flex;
+	align-items: center;
+}
+
+.button
+{
+	composes: button from interface;
+	padding: 0;
+	background-color: transparent;
+	display: inline-flex;
+}
+
+.button svg
+{
+	height: 20px;
+	fill: light-blue;
+}
+
+.button:active svg
+{
+	fill: white;
+}
+
+.new
+{
+	box-sizing: border-box;
+	display: flex;
+}
+
+.new > *:not(:first-child)
+{
+	margin-left: spacing-small;
+}
+
+.new input
+{
+	flex-grow: 1;
+	width: 0;
+}
+
+.create
+{
+	composes: button from sub;
+}

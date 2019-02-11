@@ -55,7 +55,7 @@
 {
 	display: block;
 	padding: spacing-small;
-	padding-left: calc( spacing-small * 3 );
+	padding-left: calc( spacing-small * 2 );
 	box-sizing: border-box;
 }
 

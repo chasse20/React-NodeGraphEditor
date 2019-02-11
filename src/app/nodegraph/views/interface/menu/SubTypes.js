@@ -36,7 +36,7 @@ export default class SubTypes extends Sub
 						</div>
 				}
 				<div className={ tStyle.new }>
-					<input type="text" value={ this.newKey } placeholder="Enter Type Name..." onChange={ this._onNewText }/>
+					<input type="text" value={ this.state.newKey } placeholder="Enter Type Name..." onChange={ this._onNewText }/>
 					<button className={ tStyle.create } onClick={ this._onNew }>new type</button>
 				</div>
 			</React.Fragment>
