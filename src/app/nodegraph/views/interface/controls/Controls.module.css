@@ -35,12 +35,12 @@
 	fill: white;
 }
 
-.button:disabled, .button-deselected
+.button:disabled
 {
 	background-color: gray;
 }
 
-.button:disabled svg, .button-deselected svg
+.button:disabled svg
 {
 	fill: light-gray;
 }
