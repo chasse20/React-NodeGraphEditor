@@ -4,6 +4,7 @@ import { observer } from "mobx-react";
 import GraphModel from "../../../models/Graph";
 import NodeModel from "../../../models/Node";
 import Item from "../../../../nodegraph/views/interface/menu/Item";
+import Data from "./Data";
 import IconsBase from "../../../../nodegraph/views/Icons";
 import Style from "./ItemNode.module.css";
 
@@ -38,10 +39,13 @@ class ItemNode extends Item
 		const tempModel = this.props.model;
 		
 		return (
-			<div className={ tStyle.kvp }>
-				<span>Text</span>
-				<input type="text" value={ tempModel.text } onChange={ this._onText }/>
-			</div>
+			<React.Fragment>
+				<div className={ tStyle.kvp }>
+					<span>Text</span>
+					<input type="text" value={ tempModel.text } onChange={ this._onText }/>
+				</div>
+				<Data data={ tempModel.data }/>
+			</React.Fragment>
 		);
 	}
 }
