@@ -11,7 +11,7 @@ export default class Item extends React.Component // TODO: Why have open?
 		// State
 		this.state =
 		{
-			isOpen: true
+			isOpen: false
 		};
 		
 		// Events

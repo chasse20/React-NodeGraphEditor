@@ -1,7 +1,5 @@
 @value itembase: "../../../../nodegraph/views/interface/menu/Item.module.css";
 @value sub: "../../../../nodegraph/views/interface/menu/Sub.module.css";
-@value colors: "../../../../nodegraph/views/Colors.css";
-@value medium-gray from colors;
 
 .item
 {
@@ -26,28 +24,18 @@
 .toggle
 {
 	composes: toggle from itembase;
+	width: 100%;
 }
 
-.button
+.toggle span
 {
-	composes: button from itembase;
+	text-align: left;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
 }
 
 .kvp
 {
 	composes: kvp from sub;
-}
-
-.invisible svg
-{
-	fill: medium-gray;
-}
-
-.circle
-{
-	border-style: solid;
-	border-width: 2px;
-	height: 12px;
-	width: 12px;
-	border-radius: 50px;
 }

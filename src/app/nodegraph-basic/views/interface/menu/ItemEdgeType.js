@@ -14,9 +14,6 @@ class ItemEdgeType extends ItemEdgeTypeBase
 		// Inheritance
 		super( tProps );
 		
-		// State
-		this.state.isOpen = false;
-		
 		// Events
 		this._onVisible = () => { this.props.model.isVisible = !this.props.model.isVisible; };
 		this._onStroke = ( tEvent ) => { this.props.model.stroke = tEvent.target.value; };

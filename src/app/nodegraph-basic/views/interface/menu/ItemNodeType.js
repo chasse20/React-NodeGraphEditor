@@ -14,9 +14,6 @@ class ItemNodeType extends ItemNodeTypeBase
 		// Inheritance
 		super( tProps );
 		
-		// State
-		this.state.isOpen = false;
-		
 		// Events
 		this._onVisible = () => { this.props.model.isVisible = !this.props.model.isVisible; };
 		this._onRadius = ( tEvent ) => { this.props.model.radius = parseInt( tEvent.target.value ); };
