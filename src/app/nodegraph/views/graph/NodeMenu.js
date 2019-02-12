@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { observer } from "mobx-react";
-import GraphModel from "../../models/Graph";
 import NodeModel from "../../models/Node";
 import Style from "./NodeMenu.module.css";
 
@@ -54,7 +53,7 @@ class NodeMenu extends React.Component
 		// Remove
 		if ( this._isInput )
 		{
-			this.props.graph.removeNode( this.props.node );
+			this.props.node._graph.removeNode( this.props.node );
 		}
 	}
 	
@@ -76,7 +75,7 @@ class NodeMenu extends React.Component
 		
 		// Class
 		var tempClass = `${ tStyle.menu }`;
-		if ( !this.props.graph.isMarqueeing )
+		if ( !this.props.node._graph.isMarqueeing )
 		{
 			tempClass += ` ${ tStyle.active }`
 		}
@@ -104,7 +103,6 @@ class NodeMenu extends React.Component
 NodeMenu.propTypes =
 {
 	node: PropTypes.instanceOf( NodeModel ).isRequired,
-	graph: PropTypes.instanceOf( GraphModel ).isRequired,
 	onLinking: PropTypes.func.isRequired,
 	radius: PropTypes.number,
 	thickness: PropTypes.number

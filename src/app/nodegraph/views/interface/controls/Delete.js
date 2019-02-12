@@ -18,18 +18,29 @@ class Delete extends React.Component
 	
 	onDelete()
 	{
-		// Clear from graph
-		const tempNodes = this.props.graph._selectedNodes;
+		// Delete nodes
+		const tempGraph = this.props.graph;
+		const tempNodes = tempGraph._selectedNodes;
 		for ( let i = ( tempNodes.length - 1 ); i >= 0; --i )
 		{
-			this.props.graph.removeNode( tempNodes[i] );
+			tempGraph.removeNode( tempNodes[i] );
+		}
+		
+		// Delete edges
+		const tempEdges = tempGraph._selectedEdges;
+		for ( let i = ( tempEdges.length - 1 ); i >= 0; --i )
+		{
+			let tempEdge = tempEdges[i];
+			tempEdge._source.removeLink( tempEdge );
 		}
 	}
 	
 	render( tStyle = Style )
 	{
+		const tempGraph = this.props.graph;
+		
 		return (
-			<button className={ tStyle.button } onMouseDown={ this._onDelete } disabled={ this.props.graph._selectedNodes.length <= 0 }>
+			<button className={ tStyle.button } onMouseDown={ this._onDelete } disabled={ tempGraph._selectedNodes.length <= 0 && tempGraph._selectedEdges.length <= 0 }>
 				{ Icons.delete }
 			</button>
 		);

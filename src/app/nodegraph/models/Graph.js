@@ -189,6 +189,7 @@ decorate( Graph,
 	{
 		_nodes: observable.shallow,
 		_selectedNodes: observable.shallow,
+		_selectedEdges: observable.shallow,
 		_nodeTypes: observable.shallow,
 		_edgeTypes: observable.shallow,
 		position: observable,

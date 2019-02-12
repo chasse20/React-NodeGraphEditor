@@ -33,7 +33,7 @@ class Graph extends GraphBase
 				<Grid graph={ tempModel }/>
 				<g ref={ this._onViewElement }>
 					<g ref={ this._onContainerElement }>
-						<Edges ref={ this._onEdges }/>
+						<Edges ref={ this._onEdges } graph={ tempModel }/>
 						<Nodes graph={ tempModel } onLink={ this._onLink }/>
 					</g>
 				</g>

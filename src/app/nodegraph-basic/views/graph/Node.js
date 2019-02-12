@@ -4,7 +4,6 @@ import { observer } from "mobx-react";
 import { observe } from "mobx";
 import NodeBase from "../../../nodegraph/views/graph/Node";
 import NodeMenu from "../../../nodegraph/views/graph/NodeMenu";
-import GraphModel from "../../models/Graph";
 import NodeModel from "../../models/Node";
 import Pin from "../../../nodegraph/views/graph/Pin";
 import Style from "./Node.module.css";
@@ -128,7 +127,7 @@ class Node extends NodeBase
 				}
 				{
 					tempModel._isSelected &&
-						<NodeMenu node={ tempModel } graph={ this.props.graph } radius={ tempRadius + 40 } onLinking={ this.props.onLinking }/>
+						<NodeMenu node={ tempModel } radius={ tempRadius + 40 } onLinking={ this.props.onLinking }/>
 				}
 			</g>
 		);
@@ -139,8 +138,7 @@ Node.propTypes = Object.assign(
 	{},
 	NodeBase.propTypes,
 	{
-		model: PropTypes.instanceOf( NodeModel ).isRequired,
-		graph: PropTypes.instanceOf( GraphModel ).isRequired
+		model: PropTypes.instanceOf( NodeModel ).isRequired
 	}
 );
 

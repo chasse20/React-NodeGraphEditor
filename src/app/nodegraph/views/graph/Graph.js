@@ -80,6 +80,7 @@ class Graph extends React.Component
 		{
 			this.props.model.isMarqueeing = true;
 			this.props.model.clearSelectedNodes();
+			this.props.model.clearSelectedEdges();
 			this._marqueeOffset = new Vector2D( tEvent.clientX, tEvent.clientY ).scale( 1 / this.props.model.zoom ).subtract( this.props.model.position );
 			
 			document.addEventListener( "mousemove", this._onMarqueeMove );
@@ -227,7 +228,7 @@ class Graph extends React.Component
 				<Grid graph={ tempModel }/>
 				<g ref={ this._onViewElement }>
 					<g ref={ this._onContainerElement }>
-						<Edges ref={ this._onEdges }/>
+						<Edges ref={ this._onEdges } graph={ tempModel }/>
 						<Nodes graph={ tempModel } onLink={ this._onLink }/>
 					</g>
 				</g>

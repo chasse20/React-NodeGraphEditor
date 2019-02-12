@@ -67,7 +67,6 @@ export default class Nodes extends React.PureComponent
 		return React.createElement( tModel._type._viewClass,
 			{
 				model: tModel,
-				graph: this.props.graph,
 				key: tModel._id,
 				onLink: this.props.onLink,
 				onDragStart: this._onDragStart 

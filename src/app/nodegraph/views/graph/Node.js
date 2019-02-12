@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import { observer } from "mobx-react";
 import { observe } from "mobx";
-import GraphModel from "../../models/Graph";
 import NodeModel from "../../models/Node";
 import NodeMenu from "./NodeMenu";
 import Pin from "./Pin";
@@ -63,7 +62,7 @@ class Node extends React.Component
 			}
 			else
 			{
-				this.props.graph.addSelectedNode( tempModel );
+				tempModel._graph.addSelectedNode( tempModel );
 			}
 			
 			// Set
@@ -83,11 +82,11 @@ class Node extends React.Component
 			const tempModel = this.props.model;
 			if ( tempModel._isSelected )
 			{
-				this.props.graph.removeSelectedNode( tempModel );
+				tempModel._graph.removeSelectedNode( tempModel );
 			}
 			else
 			{
-				this.props.graph.addSelectedNode( tempModel );
+				tempModel._graph.addSelectedNode( tempModel );
 			}
 		}
 	}
@@ -128,7 +127,7 @@ class Node extends React.Component
 				</g>
 				{
 					tempModel._isSelected &&
-						<NodeMenu node={ tempModel } graph={ this.props.graph } onLinking={ this.props.onLinking }/>
+						<NodeMenu node={ tempModel } onLinking={ this.props.onLinking }/>
 				}
 			</g>
 		);
@@ -138,7 +137,6 @@ class Node extends React.Component
 Node.propTypes =
 {
 	model: PropTypes.instanceOf( NodeModel ).isRequired,
-	graph: PropTypes.instanceOf( GraphModel ).isRequired,
 	onLink: PropTypes.func.isRequired,
 	onDragStart: PropTypes.func.isRequired
 };

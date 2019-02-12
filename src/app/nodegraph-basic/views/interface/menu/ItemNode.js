@@ -42,7 +42,7 @@ class ItemNode extends Item
 			<React.Fragment>
 				<div className={ tStyle.kvp }>
 					<span>Text</span>
-					<textarea onChange={ this._onText }>{ tempModel.text }</textarea>
+					<textarea value={ tempModel.text } onChange={ this._onText }/>
 				</div>
 				<Data data={ tempModel.data }/>
 			</React.Fragment>

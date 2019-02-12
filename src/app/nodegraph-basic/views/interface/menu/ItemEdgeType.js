@@ -65,7 +65,7 @@ class ItemEdgeType extends ItemEdgeTypeBase
 				<span>Stroke</span>
 				<input type="color" value={ tempModel.stroke } onChange={ this._onStroke }/>
 				<span>Text</span>
-				<textarea onChange={ this._onText }>{ tempModel.text }</textarea>
+				<textarea value={ tempModel.text } onChange={ this._onText }/>
 			</div>
 		);
 	}

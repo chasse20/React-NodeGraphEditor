@@ -31,8 +31,10 @@ class Edge extends EdgeBase
 	
 	componentWillUnmount()
 	{
+		// Inheritance
 		super.componentWillUnmount();
 		
+		// Events
 		this._onSourceRadius();
 		this._onSourceRadius = null;
 		this._onTargetRadius();
