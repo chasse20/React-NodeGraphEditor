@@ -9,29 +9,29 @@
 	margin-top: spacing-tiny;
 }
 
-.sub input, .sub select, .button:active
+.sub input, .sub select, .sub textarea, .button:active
 {
 	background-color: dark-gray;
 }
 
-.sub input
+.sub input, .sub textarea
 {
 	padding: spacing-tiny;
 	box-sizing: border-box;
 }
 
-.sub input, .sub select
+.sub input, .sub textarea, .sub select
 {
 	border: none;
 }
 
-.sub input:focus, .sub select:focus
+.sub input:focus, .sub textarea:focus, .sub select:focus
 {
 	outline: 1px solid light-blue;
 	outline-offset: 0;
 }
 
-.sub input, .sub select, .sub option
+.sub input, .sub textarea, .sub select, .sub option
 {
 	color: inherit;
 	font: inherit;
@@ -48,17 +48,24 @@
 	height: auto;
 }
 
-.sub input, .sub select, .sub option, .toggle, .button
+.sub textarea
+{
+	resize: vertical;
+	min-height: 26px;
+	padding: 4px;
+}
+
+.sub input, .sub textarea, .sub select, .sub option, .toggle, .button
 {
 	height: 26px;
 }
 
-.sub input, .toggle
+.sub input, .sub textarea, .toggle
 {
 	width: 100%;
 }
 
-.sub input, .sub select, .sub option, .inner
+.sub input, .sub textarea, .sub select, .sub option, .inner
 {
 	letter-spacing: 0.1em;
 }

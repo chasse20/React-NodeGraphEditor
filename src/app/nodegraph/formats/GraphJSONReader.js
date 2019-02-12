@@ -47,7 +47,7 @@ export default class GraphJSONReader // TODO: Clustering
 				}
 			}
 			
-			return this.createNode( tempType );
+			return this.createNode( tGraphModel, tempType );
 		}
 		
 		return null;
@@ -63,9 +63,9 @@ export default class GraphJSONReader // TODO: Clustering
 		return new TypeNode( tName, tModelClass, tViewClass );
 	}
 	
-	createNode( tType )
+	createNode( tGraphModel, tType )
 	{
-		return new tType._modelClass( tType );
+		return new tType._modelClass( tGraphModel, tType );
 	}
 	
 	readEdge( tGraphModel, tJSON, tNodeRefs, tTextField = "caption" )

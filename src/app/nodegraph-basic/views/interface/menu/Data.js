@@ -64,7 +64,7 @@ class Data extends React.Component
 						(
 							<React.Fragment key={ tKey }>
 								<span>{ tKey }</span>
-								<input type="text" value={ get( tempData, tKey ) } onChange={ ( tEvent ) => { set( tempData, tKey, tEvent.target.value); } }/>
+								<textarea onChange={ ( tEvent ) => { set( tempData, tKey, tEvent.target.value); } }>{ get( tempData, tKey ) }</textarea>
 								<button className={ tStyle.button } onClick={ () => { remove( tempData, tKey ); } }>
 									{ Icons.delete }
 								</button>

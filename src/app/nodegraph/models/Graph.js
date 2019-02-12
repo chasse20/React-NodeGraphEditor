@@ -7,6 +7,7 @@ export default class Graph
 	{
 		this._nodes = {};
 		this._selectedNodes = [];
+		this._selectedEdges = [];
 		this._nodeTypes = {};
 		this._edgeTypes = {};
 		this.position = new Vector2D();
@@ -81,6 +82,41 @@ export default class Graph
 		}
 		
 		this._selectedNodes.clear();
+	}
+	
+	addSelectedEdge( tEdge )
+	{
+		if ( tEdge != null && this._selectedEdges.indexOf( tEdge ) === -1 )
+		{
+			this._selectedEdges.push( tEdge );
+			tEdge._isSelected = true;
+			
+			return true;
+		}
+		
+		return false;
+	}
+	
+	removeSelectedEdge( tEdge )
+	{
+		if ( tEdge != null && this._selectedEdges.remove( tEdge ) )
+		{
+			tEdge._isSelected = false;
+
+			return true;
+		}
+		
+		return false;
+	}
+	
+	clearSelectedEdges()
+	{
+		for ( let i = ( this._selectedEdges.length - 1 ); i >= 0; --i )
+		{
+			this._selectedEdges[i]._isSelected = false;
+		}
+		
+		this._selectedEdges.clear();
 	}
 	
 	setNodeType( tType )

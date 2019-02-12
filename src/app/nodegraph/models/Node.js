@@ -5,9 +5,10 @@ import Pin from "./Pin";
 
 export default class Node
 {
-	constructor( tType )
+	constructor( tGraph, tType )
 	{
 		this._id = GUID.ID;
+		this._graph = tGraph;
 		this._type = tType;
 		this._pins =
 		{

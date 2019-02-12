@@ -51,6 +51,7 @@ export default class Pin
 			const tempKey = tEdge.id;
 			if ( tEdge === get( this._links, tempKey ) )
 			{
+				this._node._graph.removeSelectedEdge( tEdge );
 				remove( this._links, tempKey );
 				
 				if ( this._isOut )

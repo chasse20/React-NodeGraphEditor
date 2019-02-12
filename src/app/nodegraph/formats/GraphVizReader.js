@@ -138,7 +138,7 @@ export default class GraphVizReader
 				}
 			}
 			
-			const tempNode = this.createNode( tempType );
+			const tempNode = this.createNode( tGraphModel, tempType );
 			
 			// Position
 			this.readVector( tempNode.position, tJSON.position );
@@ -149,9 +149,9 @@ export default class GraphVizReader
 		return null;
 	}
 	
-	createNode( tType )
+	createNode( tGraphModel, tType )
 	{
-		return new tType._modelClass( tType );
+		return new tType._modelClass( tGraphModel, tType );
 	}
 	
 	readNodePost( tGraphModel, tNodeModel, tJSON, tNodeRefs )

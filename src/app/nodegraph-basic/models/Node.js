@@ -3,9 +3,9 @@ import NodeBase from "../../nodegraph/models/Node";
 
 export default class Node extends NodeBase
 {
-	constructor( tType, tText = "", tData = {} )
+	constructor( tGraph, tType, tText = "", tData = {} )
 	{
-		super( tType );
+		super( tGraph, tType );
 		
 		this.text = tText;
 		this.data = tData;
