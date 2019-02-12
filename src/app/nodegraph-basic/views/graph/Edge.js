@@ -83,7 +83,9 @@ class Edge extends EdgeBase
 			{
 				tempSegment.scale( ( tempScale - tempRadius ) / tempScale ).add( tStart );
 				this._element.setAttribute( "x2", tempSegment.x );
+				this._selectionElement.setAttribute( "x2", tempSegment.x );
 				this._element.setAttribute( "y2", tempSegment.y );
+				this._selectionElement.setAttribute( "y2", tempSegment.y );
 				
 				return;
 			}
@@ -113,7 +115,8 @@ class Edge extends EdgeBase
 		// Render
 		return (
 			<g className={ tempClass }>
-				<line ref={ this._onElement } stroke={ tempStroke } strokeOpacity="0.6" markerEnd={ "url(#arrow-" + tempType._name + ")" }/>
+				<line className={ tStyle.selection } ref={ this._onSelectionElement } onMouseDown={ this._onMouseDown }/>
+				<line className={ tStyle.line } ref={ this._onElement } stroke={ tempStroke } markerEnd={ "url(#arrow-" + tempType._name + ")" }/>
 				{
 					tempText != null &&
 						<text ref={ this._onTextElement } alignmentBaseline="middle" textAnchor="middle" fill={ tempStroke }>

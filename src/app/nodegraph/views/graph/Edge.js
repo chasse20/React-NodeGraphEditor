@@ -14,11 +14,13 @@ class Edge extends React.Component // TODO: Selectable
 
 		// Variables
 		this._element = null;
+		this._selectionElement = null;
 
 		// Events
 		this._onSourceMove = observe( tProps.model._source, "position", ( tChange ) => { this.sourcePosition = this.props.model._source.position; } );
 		this._onTargetMove = observe( tProps.model._target, "position", ( tChange ) => { this.targetPosition = this.props.model._target.position; } );
 		this._onElement = ( tElement ) => { this._element = tElement; };
+		this._onSelectionElement = ( tElement ) => { this._selectionElement = tElement; };
 		this._onMouseDown = ( tEvent ) => { this.onMouseDown( tEvent ); };
 	}
 
@@ -38,22 +40,34 @@ class Edge extends React.Component // TODO: Selectable
 	
 	onMouseDown( tEvent )
 	{
-		// Select
 		tEvent.stopPropagation();
 		
-		console.log( "DOWN" );
+		// Select
+		const tempModel = this.props.model;
+		if ( tempModel._isSelected )
+		{
+			tempModel._source._node._graph.removeSelectedEdge( tempModel );
+		}
+		else
+		{
+			tempModel._source._node._graph.addSelectedEdge( tempModel );
+		}
 	}
 	
 	set sourcePosition( tVector )
 	{
 		this._element.setAttribute( "x1", tVector.x );
+		this._selectionElement.setAttribute( "x1", tVector.x );
 		this._element.setAttribute( "y1", tVector.y );
+		this._selectionElement.setAttribute( "y1", tVector.y );
 	}
 	
 	set targetPosition( tVector )
 	{
 		this._element.setAttribute( "x2", tVector.x );
+		this._selectionElement.setAttribute( "x2", tVector.x );
 		this._element.setAttribute( "y2", tVector.y );
+		this._selectionElement.setAttribute( "y2", tVector.y );
 	}
 	
 	render( tStyle = Style )
@@ -68,7 +82,8 @@ class Edge extends React.Component // TODO: Selectable
 		// Render
 		return (
 			<g className={ tempClass }>
-				<line ref={ this._onElement } onMouseDown={ this._onMouseDown } stroke="#000000" strokeOpacity="0.6" markerEnd={ "url(#arrow-" + this.props.model._type._name + ")" }/>
+				<line className={ tStyle.selection } ref={ this._onSelectionElement } onMouseDown={ this._onMouseDown }/>
+				<line className={ tStyle.line } ref={ this._onElement } stroke="#000000" markerEnd={ "url(#arrow-" + this.props.model._type._name + ")" }/>
 			</g>
 		);
 	}

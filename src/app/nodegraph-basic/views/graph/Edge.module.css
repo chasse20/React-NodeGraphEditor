@@ -16,3 +16,18 @@
 	user-select: none;
 	pointer-events: none;
 }
+
+.selected
+{
+	composes: selected from edgebase;
+}
+
+.selection
+{
+	composes: selection from edgebase;
+}
+
+.line
+{
+	composes: line from edgebase;
+}
