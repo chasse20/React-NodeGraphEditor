@@ -19,6 +19,7 @@ class Edge extends React.Component // TODO: Selectable
 		this._onSourceMove = observe( tProps.model._source, "position", ( tChange ) => { this.sourcePosition = this.props.model._source.position; } );
 		this._onTargetMove = observe( tProps.model._target, "position", ( tChange ) => { this.targetPosition = this.props.model._target.position; } );
 		this._onElement = ( tElement ) => { this._element = tElement; };
+		this._onMouseDown = ( tEvent ) => { this.onMouseDown( tEvent ); };
 	}
 
 	componentDidMount()
@@ -33,6 +34,14 @@ class Edge extends React.Component // TODO: Selectable
 		this._onSourceMove = null;
 		this._onTargetMove();
 		this._onTargetMove = null;
+	}
+	
+	onMouseDown( tEvent )
+	{
+		// Select
+		tEvent.stopPropagation();
+		
+		console.log( "DOWN" );
 	}
 	
 	set sourcePosition( tVector )
@@ -59,7 +68,7 @@ class Edge extends React.Component // TODO: Selectable
 		// Render
 		return (
 			<g className={ tempClass }>
-				<line ref={ this._onElement } stroke="#000000" strokeOpacity="0.6" markerEnd={ "url(#arrow-" + this.props.model._type._name + ")" }/>
+				<line ref={ this._onElement } onMouseDown={ this._onMouseDown } stroke="#000000" strokeOpacity="0.6" markerEnd={ "url(#arrow-" + this.props.model._type._name + ")" }/>
 			</g>
 		);
 	}
