@@ -169,7 +169,7 @@ class Graph extends React.Component
 		}
 	}
 	
-	tryZoom( tMouse, tVelocity ) // TODO: offset zooming from mouse position
+	tryZoom( tEvent, tVelocity )
 	{
 		// Calculate
 		const tempModel = this.props.model;
@@ -186,10 +186,15 @@ class Graph extends React.Component
 			tempAmount = tempModel.maxZoom;
 		}
 
-		// Apply
+		// Apply zoom and offset
 		if ( tempAmount !== tempModel.zoom )
 		{
+			const tempWorldOffsetStart = new Vector2D( tEvent.clientX, tEvent.clientY ).scale( 1 / tempModel.zoom );
+			const tempWorldOffsetEnd = new Vector2D( tEvent.clientX, tEvent.clientY ).scale( 1 / tempAmount );
+			
+			tempModel.position = tempWorldOffsetEnd.subtract( tempWorldOffsetStart ).add( tempModel.position );
 			tempModel.zoom = tempAmount;
+			
 			return true;
 		}
 		

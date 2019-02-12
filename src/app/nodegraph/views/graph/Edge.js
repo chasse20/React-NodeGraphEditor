@@ -43,14 +43,17 @@ class Edge extends React.Component // TODO: Selectable
 		tEvent.stopPropagation();
 		
 		// Select
-		const tempModel = this.props.model;
-		if ( tempModel._isSelected )
+		if ( tEvent.button !== 1 ) // middle-mouse is reserved
 		{
-			tempModel._source._node._graph.removeSelectedEdge( tempModel );
-		}
-		else
-		{
-			tempModel._source._node._graph.addSelectedEdge( tempModel );
+			const tempModel = this.props.model;
+			if ( tempModel._isSelected )
+			{
+				tempModel._source._node._graph.removeSelectedEdge( tempModel );
+			}
+			else
+			{
+				tempModel._source._node._graph.addSelectedEdge( tempModel );
+			}
 		}
 	}
 	
