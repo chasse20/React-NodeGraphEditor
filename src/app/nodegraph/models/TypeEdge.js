@@ -1,6 +1,6 @@
 import Type from "./Type";
 import Edge from "./Edge";
-import EdgeView from "../views/graph/Edge";
+import EdgeView from "../views/graph/edges/Edge";
 
 export default class TypeEdge extends Type
 {

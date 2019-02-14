@@ -1,8 +1,8 @@
 import React from "react";
 import { observer } from "mobx-react";
 import { observe } from "mobx";
-import Vector2D from "../../../core/Vector2D";
-import EdgeBase from "../../../nodegraph/views/graph/Edge";
+import Vector2D from "../../../../core/Vector2D";
+import EdgeBase from "../../../../nodegraph/views/graph/edges/Edge";
 import Style from "./Edge.module.css";
 
 class Edge extends EdgeBase

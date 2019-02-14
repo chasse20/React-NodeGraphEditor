@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { observer } from "mobx-react";
-import NodeModel from "../../models/Node";
+import NodeModel from "../../../models/Node";
 import Style from "./NodeMenu.module.css";
 
 class NodeMenu extends React.Component

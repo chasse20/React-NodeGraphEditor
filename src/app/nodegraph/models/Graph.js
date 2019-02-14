@@ -22,6 +22,7 @@ export default class Graph
 		this.gridSnapIncrement = 5;
 		this.isGridVisible = true;
 		this.isGridSnap = false;
+		this.linkingPin = null;
 	}
 	
 	setNode( tNode )
@@ -200,6 +201,7 @@ decorate( Graph,
 		gridSize: observable,
 		isGridVisible: observable,
 		isGridSnap: observable,
+		linkingPin: observable.ref,
 		setNode: action,
 		removeNode: action,
 		setNodeType: action,

@@ -1,4 +1,4 @@
-@value colors: "../Colors.css";
+@value colors: "../../Colors.css";
 @value blue from colors;
 
 .edge

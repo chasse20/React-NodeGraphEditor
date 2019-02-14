@@ -1,5 +1,5 @@
-import EdgeView from "../views/graph/Edge";
-import NodeView from "../views/graph/Node";
+import EdgeView from "../views/graph/edges/Edge";
+import NodeView from "../views/graph/nodes/Node";
 
 export default class GraphVizWriter
 {

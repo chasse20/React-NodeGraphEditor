@@ -1,4 +1,4 @@
-@value edgebase: "../../../nodegraph/views/graph/Edge.module.css";
+@value edgebase: "../../../../nodegraph/views/graph/edges/Edge.module.css";
 
 .edge
 {

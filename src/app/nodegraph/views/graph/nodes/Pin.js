@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { observe } from "mobx";
-import PinModel from "../../models/Pin";
+import PinModel from "../../../models/Pin";
 
 export default class Pin extends React.PureComponent
 {

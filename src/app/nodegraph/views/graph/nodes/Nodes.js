@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { observe } from "mobx";
-import GraphModel from "../../models/Graph";
-import Vector2D from "../../../core/Vector2D";
+import GraphModel from "../../../models/Graph";
+import Vector2D from "../../../../core/Vector2D";
 import Style from "./Nodes.module.css";
 
 export default class Nodes extends React.PureComponent

@@ -2,10 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 import { observer } from "mobx-react";
 import { observe } from "mobx";
-import NodeBase from "../../../nodegraph/views/graph/Node";
-import NodeMenu from "../../../nodegraph/views/graph/NodeMenu";
-import NodeModel from "../../models/Node";
-import Pin from "../../../nodegraph/views/graph/Pin";
+import NodeBase from "../../../../nodegraph/views/graph/nodes/Node";
+import NodeMenu from "../../../../nodegraph/views/graph/overlays/NodeMenu";
+import NodeModel from "../../../models/Node";
+import Pin from "../../../../nodegraph/views/graph/nodes/Pin";
 import Style from "./Node.module.css";
 
 class Node extends NodeBase

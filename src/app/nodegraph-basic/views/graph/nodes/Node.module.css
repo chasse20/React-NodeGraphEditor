@@ -1,4 +1,4 @@
-@value nodebase: "../../../nodegraph/views/graph/Node.module.css";
+@value nodebase: "../../../../nodegraph/views/graph/nodes/Node.module.css";
 
 .node
 {

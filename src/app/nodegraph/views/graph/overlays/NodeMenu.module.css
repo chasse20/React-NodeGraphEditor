@@ -1,4 +1,4 @@
-@value colors: "../Colors.css";
+@value colors: "../../Colors.css";
 @value white, gray, blue, light-gray from colors;
 
 .menu
