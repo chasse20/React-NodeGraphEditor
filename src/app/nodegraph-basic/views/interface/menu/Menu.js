@@ -7,6 +7,7 @@ import SubExport from "./SubExport";
 import SubTypesNode from "./SubTypesNode";
 import SubTypesEdge from "./SubTypesEdge";
 import SubDataNode from "./SubDataNode";
+import SubDataEdge from "./SubDataEdge";
 
 export default class Menu extends MenuBase
 {
@@ -44,7 +45,10 @@ export default class Menu extends MenuBase
 				);
 			case 2: // Data
 				return (
-					<SubDataNode graph={ this.props.graph }/>
+					<React.Fragment>
+						<SubDataNode graph={ this.props.graph }/>
+						<SubDataEdge graph={ this.props.graph }/>
+					</React.Fragment>
 				);
 			default:
 				break;

@@ -1,6 +1,6 @@
 import GraphVizReaderBase from "../../nodegraph/formats/GraphVizReader";
 import Node from "../models/Node";
-import Edge from "../../nodegraph/models/Edge";
+import Edge from "../models/Edge";
 import TypeNode from "../models/TypeNode";
 import TypeEdge from "../models/TypeEdge";
 import EdgeView from "../views/graph/edges/Edge";

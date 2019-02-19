@@ -1,13 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { observer } from "mobx-react";
-import NodeModel from "../../../models/Node";
+import EdgeModel from "../../../models/Edge";
 import Item from "../../../../nodegraph/views/interface/menu/Item";
 import Data from "./Data";
 import IconsBase from "../../../../nodegraph/views/Icons";
 import Style from "./ItemNode.module.css";
 
-class ItemNode extends Item
+class ItemEdge extends Item
 {
 	constructor( tProps )
 	{
@@ -15,7 +15,7 @@ class ItemNode extends Item
 		super( tProps );
 		
 		// Events
-		this._onText = ( tEvent ) => { this.props.model.text = tEvent.target.value; };
+		this._onWeight = ( tEvent ) => { this.props.model.weight = tEvent.target.value; };
 	}
 	
 	render( tStyle = Style )
@@ -25,10 +25,12 @@ class ItemNode extends Item
 	
 	renderBar( tStyle = Style )
 	{
+		const tempModel = this.props.model;
+		
 		return (
 			<button className={ tStyle.toggle } onClick={ this._onOpen }>
 				{ IconsBase.arrow }
-				<span>{ this.props.model._id + " : " + this.props.model.text }</span>
+				<span>{ tempModel._type.text + ": " + tempModel._source._node._id + " to " + tempModel._target._node._id }</span>
 			</button>
 		);
 	}
@@ -40,8 +42,8 @@ class ItemNode extends Item
 		return (
 			<React.Fragment>
 				<div className={ tStyle.kvp }>
-					<span>Text</span>
-					<textarea value={ tempModel.text } onChange={ this._onText }/>
+					<span>Weight</span>
+					<input type="number" value={ tempModel.weight } onChange={ this._onWeight }/>
 				</div>
 				<Data data={ tempModel.data }/>
 			</React.Fragment>
@@ -49,9 +51,9 @@ class ItemNode extends Item
 	}
 }
 
-ItemNode.propTypes =
+ItemEdge.propTypes =
 {
-	model: PropTypes.instanceOf( NodeModel ).isRequired
+	model: PropTypes.instanceOf( EdgeModel ).isRequired
 };
 
-export default observer( ItemNode );
+export default observer( ItemEdge );

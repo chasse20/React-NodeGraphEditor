@@ -3,22 +3,22 @@ import PropTypes from "prop-types";
 import { observer } from "mobx-react";
 import GraphModel from "../../../models/Graph";
 import SubData from "./SubData";
-import ItemNode from "./ItemNode";
+import ItemEdge from "./ItemEdge";
 
-class SubDataNode extends SubData
+class SubDataEdge extends SubData
 {	
 	renderItems()
 	{
-		const tempNodes = this.props.graph._selectedNodes;
-		if ( tempNodes.length > 0 )
+		const tempEdges = this.props.graph._selectedEdges;
+		if ( tempEdges.length > 0 )
 		{
 			return (
 				<React.Fragment>
 					{
-						tempNodes.map(
-							( tNode ) =>
+						tempEdges.map(
+							( tEdge ) =>
 							(
-								<ItemNode key={ tNode._id } model={ tNode }/>
+								<ItemEdge key={ tEdge.id } model={ tEdge }/>
 							)
 						)
 					}
@@ -30,16 +30,16 @@ class SubDataNode extends SubData
 	}
 }
 
-SubDataNode.propTypes = Object.assign(
+SubDataEdge.propTypes = Object.assign(
 	{
 		graph: PropTypes.instanceOf( GraphModel ).isRequired
 	},
 	SubData.propTypes
 );
 
-SubDataNode.defaultProps =
+SubDataEdge.defaultProps =
 {
-	title: "selected nodes"
+	title: "selected edges"
 };
 
-export default observer( SubDataNode );
+export default observer( SubDataEdge );

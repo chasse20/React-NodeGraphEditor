@@ -1,6 +1,6 @@
 import { observable, decorate } from "mobx";
 import TypeEdgeBase from "../../nodegraph/models/TypeEdge";
-import Edge from "../../nodegraph/models/Edge";
+import Edge from "./Edge";
 import EdgeView from "../views/graph/edges/Edge";
 
 export default class TypeEdge extends TypeEdgeBase
