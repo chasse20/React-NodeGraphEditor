@@ -127,7 +127,7 @@ class Node extends React.Component
 				</g>
 				{
 					tempModel._isSelected &&
-						<NodeMenu node={ tempModel } onLinking={ this.props.onLinking }/>
+						<NodeMenu node={ tempModel }/>
 				}
 			</g>
 		);

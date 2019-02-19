@@ -36,7 +36,7 @@ export default class ItemNodeType extends Item
 	onAdd()
 	{
 		const tempGraph = this.props.graph;
-		const tempNode = new this.props.model._modelClass( this.props.model );
+		const tempNode = new this.props.model._modelClass( tempGraph, this.props.model );
 		tempNode.position = new Vector2D( window.screen.width * 0.5, window.screen.height * 0.5 ).scale( 1 / tempGraph.zoom ).subtract( tempGraph.position )
 		tempGraph.setNode( tempNode );
 		
