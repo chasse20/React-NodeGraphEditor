@@ -84,7 +84,8 @@ class NodeMenu extends React.Component
 		// Linking
 		if ( this._isInput )
 		{
-			//this.props.onLinking();
+			const tempNode = this.props.node;
+			tempNode._graph.linkingPin = tempNode._pins.out;
 		}
 	}
 	
@@ -106,9 +107,16 @@ class NodeMenu extends React.Component
 		
 		// Class
 		var tempClass = `${ tStyle.menu }`;
-		if ( !this.props.node._graph.isMarqueeing )
+		
+		const tempGraph = this.props.node._graph;
+		if ( !tempGraph.isMarqueeing )
 		{
-			tempClass += ` ${ tStyle.active }`
+			tempClass += ` ${ tStyle.active }`;
+		}
+		
+		if ( tempGraph.linkingPin != null )
+		{
+			tempClass += ` ${ tStyle.linking }`;
 		}
 		
 		// Render

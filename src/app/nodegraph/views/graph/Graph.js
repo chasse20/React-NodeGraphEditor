@@ -67,11 +67,13 @@ class Graph extends React.Component
 	onMouseDown( tEvent )
 	{
 		// Enable pan
+		const tempModel = this.props.model;
+		
 		this._isPanHeld = tEvent.button === 1; // middle mouse pans!		
-		if ( this._isPanHeld || this.props.model.isPanMode )
+		if ( this._isPanHeld || tempModel.isPanMode )
 		{
-			this.props.model.isPanning = true;
-			this._panOffset = Vector2D.Subtract( this.props.model.position, new Vector2D( tEvent.clientX, tEvent.clientY ).scale( 1 / this.props.model.zoom ) ); // originally used a transform/matrix class, but this is more efficient
+			tempModel.isPanning = true;
+			this._panOffset = Vector2D.Subtract( tempModel.position, new Vector2D( tEvent.clientX, tEvent.clientY ).scale( 1 / tempModel.zoom ) ); // originally used a transform/matrix class, but this is more efficient
 
 			document.addEventListener( "mousemove", this._onPanMove );
 			document.addEventListener( "mouseup", this._onPanUp );
@@ -79,10 +81,11 @@ class Graph extends React.Component
 		// Enable marquee
 		else
 		{
-			this.props.model.isMarqueeing = true;
-			this.props.model.clearSelectedNodes();
-			this.props.model.clearSelectedEdges();
-			this._marqueeOffset = new Vector2D( tEvent.clientX, tEvent.clientY ).scale( 1 / this.props.model.zoom ).subtract( this.props.model.position );
+			tempModel.isMarqueeing = true;
+			tempModel.linkingPin = null;
+			tempModel.clearSelectedNodes();
+			tempModel.clearSelectedEdges();
+			this._marqueeOffset = new Vector2D( tEvent.clientX, tEvent.clientY ).scale( 1 / tempModel.zoom ).subtract( tempModel.position );
 			
 			document.addEventListener( "mousemove", this._onMarqueeMove );
 			document.addEventListener( "mouseup", this._onMarqueeUp );

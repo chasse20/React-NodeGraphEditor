@@ -10,11 +10,6 @@
 	transition-delay: openTime;
 }
 
-.menu.active:hover
-{
-	opacity: 1;
-}
-
 .menu circle
 {
 	fill: none;
@@ -22,6 +17,11 @@
 	stroke: gray;
 	transition: 0.2s stroke ease;
 	transition-property: stroke;
+}
+
+.active:hover:not(.linking)
+{
+	opacity: 1;
 }
 
 .active > *:hover circle
@@ -32,6 +32,12 @@
 .active > *:hover .icon
 {
 	fill: white;
+}
+
+.linking, .icon
+{
+	user-select: none;
+	pointer-events: none;
 }
 
 .link
@@ -48,6 +54,4 @@
 {
 	display: block;
 	fill: light-gray;
-	user-select: none;
-	pointer-events: none;
 }

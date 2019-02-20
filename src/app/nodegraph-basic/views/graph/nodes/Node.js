@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { observer } from "mobx-react";
 import { observe } from "mobx";
 import NodeBase from "../../../../nodegraph/views/graph/nodes/Node";
-import NodeMenu from "../../../../nodegraph/views/graph/overlays/NodeMenu";
 import NodeModel from "../../../models/Node";
 import Pin from "../../../../nodegraph/views/graph/nodes/Pin";
 import Style from "./Node.module.css";
@@ -124,10 +123,6 @@ class Node extends NodeBase
 								<p>{ tempText }</p>
 							</div>
 						</foreignObject>
-				}
-				{
-					tempModel._isSelected &&
-						<NodeMenu node={ tempModel } radius={ tempRadius + 40 } onLinking={ this.props.onLinking }/>
 				}
 			</g>
 		);
