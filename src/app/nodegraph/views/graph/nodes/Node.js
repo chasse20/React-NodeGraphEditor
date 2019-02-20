@@ -119,7 +119,7 @@ class Node extends React.Component
 						Object.values( tempModel._pins ).map(
 							( tPin ) =>
 							(
-								<Pin model={ tPin } key={ tPin.id } onLink={ this.props.onLink }/>
+								<Pin model={ tPin } key={ tPin.id } onLink={ this.props.onLink } radius={ tempRadius }/>
 							)
 						)
 					}
