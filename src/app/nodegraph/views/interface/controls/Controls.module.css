@@ -22,7 +22,7 @@
 	composes: button from interface;
 	height: 36px;
 	width: 36px;
-	transition: 0.5s fill ease, 0.5s background-color ease;
+	transition: 0.2s fill ease, 0.2s background-color ease;
 	transition-property: fill, background-color;
 	background-color: blue;
 	padding: 8px;

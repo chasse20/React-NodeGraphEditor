@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { observer } from "mobx-react";
+import { observe } from "mobx";
 import NodeModel from "../../../models/Node";
 import Style from "./NodeMenu.module.css";
 
@@ -12,17 +13,36 @@ class NodeMenu extends React.Component
 		super( tProps );
 		
 		// Variables
+		this._element = null;
 		this._inputTimeout = null;
 		this._isInput = false;
 		
 		// Events
+		this._onPositionDispose = observe( tProps.node, "position", ( tChange ) => { this.position = tChange.newValue; } );
+		this._onElement = ( tElement ) => { this._element = tElement; };
 		this._onMouseEnter = ( tEvent ) => { this.onMouseEnter( tEvent ); };
 		this._onMouseLeave = ( tEvent ) => { this.onMouseLeave( tEvent ); };
 		this._onRemove = ( tEvent ) => { this.onRemove( tEvent ); };
 		this._onLinking = ( tEvent ) => { this.onLinking( tEvent ); };
 	}
 	
-	onMouseEnter( tEvent )
+	componentDidMount()
+	{
+		this.position = this.props.node.position;
+	}
+	
+	componentWillUnmount()
+	{
+		this._onPositionDispose();
+		this._onPositionDispose = null;
+		
+		if ( this._inputTimeout !== null )
+		{
+			clearTimeout( this._inputTimeout );
+		}
+	}
+	
+	onMouseEnter( tEvent, tStyle = Style )
 	{
 		tEvent.stopPropagation();
 		
@@ -32,7 +52,7 @@ class NodeMenu extends React.Component
 			{
 				this._isInput = true; 
 			},
-			500
+			parseFloat( tStyle.openTime ) * 2000
 		);
 	}
 	
@@ -68,6 +88,11 @@ class NodeMenu extends React.Component
 		}
 	}
 	
+	set position( tPosition )
+	{
+		this._element.setAttribute( "transform", "translate(" + tPosition.x + "," + tPosition.y + ")" );
+	}
+	
 	render( tStyle = Style )
 	{
 		// Variables
@@ -82,7 +107,7 @@ class NodeMenu extends React.Component
 		
 		// Render
 		return (
-			<g className={ tempClass } onMouseEnter={ this._onMouseEnter } onMouseLeave={ this._onMouseLeave }>
+			<g className={ tempClass } ref={ this._onElement } onMouseEnter={ this._onMouseEnter } onMouseLeave={ this._onMouseLeave }>
 				<g>
 					<circle className={ tStyle.delete } strokeWidth={ this.props.thickness } strokeDasharray={ tempCircumference * 0.5 } cx="0" cy="0" r={ this.props.radius } onMouseDown={ this._onRemove }/>
 					<g className={ tStyle.icon } viewBox="0 0 14 18" transform={ "translate(-" + ( this.props.radius + 8 ) + " -12) scale(1.2)" }>

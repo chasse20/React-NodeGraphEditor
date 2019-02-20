@@ -5,10 +5,11 @@ import { observer } from "mobx-react";
 import Bounds from "../../../core/Bounds";
 import Vector2D from "../../../core/Vector2D";
 import GraphModel from "../../models/Graph";
+import NodeMenus from "./overlays/NodeMenus";
 import Nodes from "./nodes/Nodes";
 import Edges from "./edges/Edges";
 import Grid from "./Grid";
-import Arrows from "./Arrows";
+import Arrows from "./edges/Arrows";
 import Style from "./Graph.module.css";
 
 class Graph extends React.Component
@@ -235,6 +236,7 @@ class Graph extends React.Component
 					<g ref={ this._onContainerElement }>
 						<Edges ref={ this._onEdges } graph={ tempModel }/>
 						<Nodes graph={ tempModel } onLink={ this._onLink }/>
+						<NodeMenus graph={ tempModel }/>
 					</g>
 				</g>
 				<rect ref={ this._onMarqueeElement } className={ tStyle.marquee }/>

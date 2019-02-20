@@ -125,10 +125,6 @@ class Node extends React.Component
 						)
 					}
 				</g>
-				{
-					tempModel._isSelected &&
-						<NodeMenu node={ tempModel }/>
-				}
 			</g>
 		);
 	}

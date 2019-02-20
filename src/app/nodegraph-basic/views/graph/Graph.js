@@ -6,7 +6,7 @@ import GraphModel from "../../models/Graph";
 import Edges from "../../../nodegraph/views/graph/edges/Edges";
 import Nodes from "../../../nodegraph/views/graph/nodes/Nodes";
 import Grid from "../../../nodegraph/views/graph/Grid";
-import Arrows from "./Arrows";
+import Arrows from "./edges/Arrows";
 import Style from "../../../nodegraph/views/graph/Graph.module.css";
 
 class Graph extends GraphBase
