@@ -79,7 +79,7 @@ class Node extends NodeBase
 		super.position = tPosition;
 	}*/
 	
-	render( tStyle = Style )
+	render( tStyle = Style ) // TODO: reduse code repeat
 	{
 		// Variables
 		const tempModel = this.props.model;
