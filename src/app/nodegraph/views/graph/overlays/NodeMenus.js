@@ -2,12 +2,18 @@ import React from "react";
 import PropTypes from "prop-types";
 import { observer } from "mobx-react";
 import GraphModel from "../../../models/Graph";
-import Node from "../nodes/Node";
 import NodeMenu from "./NodeMenu";
 import Style from "./NodeMenus.module.css";
 
 class NodeMenus extends React.Component
-{	
+{
+	renderNodeMenu( tNode )
+	{
+		return (
+			<NodeMenu key={ tNode._id } node={ tNode }/>
+		);
+	}
+	
 	render( tStyle = Style )
 	{
 		const tempNodes = this.props.graph._selectedNodes;
@@ -16,12 +22,7 @@ class NodeMenus extends React.Component
 			return (
 				<g className={ tStyle.menus }>
 					{
-						tempNodes.map(
-							( tNode ) =>
-							(
-								<NodeMenu key={ tNode._id } node={ tNode }/>
-							)
-						)
+						tempNodes.map( ( tNode ) => { return this.renderNodeMenu( tNode ); } )
 					}
 				</g>
 			);

@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { observer } from "mobx-react";
 import GraphBase from "../../../nodegraph/views/graph/Graph";
 import GraphModel from "../../models/Graph";
+import NodeMenus from "./overlays/NodeMenus";
 import Edges from "../../../nodegraph/views/graph/edges/Edges";
 import Nodes from "../../../nodegraph/views/graph/nodes/Nodes";
 import Grid from "../../../nodegraph/views/graph/Grid";
@@ -11,7 +12,7 @@ import Style from "../../../nodegraph/views/graph/Graph.module.css";
 
 class Graph extends GraphBase
 {	
-	render( tStyle = Style )
+	render( tStyle = Style ) // TODO: Reduce repeated code
 	{
 		// Class
 		const tempModel = this.props.model;
@@ -35,6 +36,7 @@ class Graph extends GraphBase
 					<g ref={ this._onContainerElement }>
 						<Edges ref={ this._onEdges } graph={ tempModel }/>
 						<Nodes graph={ tempModel } onLink={ this._onLink }/>
+						<NodeMenus graph={ tempModel }/>
 					</g>
 				</g>
 				<rect ref={ this._onMarqueeElement } className={ tStyle.marquee }/>

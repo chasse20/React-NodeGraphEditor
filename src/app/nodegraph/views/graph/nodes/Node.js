@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { observer } from "mobx-react";
 import { observe } from "mobx";
 import NodeModel from "../../../models/Node";
-import NodeMenu from "./../overlays/NodeMenu";
 import Pin from "./Pin";
 import Style from "./Node.module.css";
 

@@ -18,6 +18,7 @@
 .menu circle
 {
 	fill: none;
+	stroke-width: 50px;
 	stroke: gray;
 	transition: 0.2s stroke ease;
 	transition-property: stroke;

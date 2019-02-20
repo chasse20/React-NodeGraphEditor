@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { observer } from "mobx-react";
 import GraphModel from "../../../models/Graph";
-import ArrowsBase from "../../../../nodegraph/views/graph/Arrows";
+import ArrowsBase from "../../../../nodegraph/views/graph/edges/Arrows";
 
 class Arrows extends ArrowsBase
 {
