@@ -52,7 +52,7 @@ class NodeMenu extends React.Component
 			{
 				this._isInput = true; 
 			},
-			parseFloat( tStyle.openTime ) * 2000
+			parseFloat( tStyle.openTime ) * 1000
 		);
 	}
 	
