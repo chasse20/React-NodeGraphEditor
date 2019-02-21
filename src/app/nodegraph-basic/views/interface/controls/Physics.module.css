@@ -1,5 +1,5 @@
-@value controls: "../../../../nodegraph/views/interface/controls/Controls.module.css";
-@value colors: "../../../../nodegraph/views/Colors.css";
+@value controls: "./Controls.module.css";
+@value colors: "../../Colors.css";
 @value gray, light-gray from colors;
 
 .button
@@ -7,12 +7,12 @@
 	composes: button from controls;
 }
 
-.button.deselected
+.deselected
 {
 	background-color: gray;
 }
 
-.button.deselected svg
+.deselected svg
 {
 	fill: light-gray;
 }

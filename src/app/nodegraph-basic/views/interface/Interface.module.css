@@ -14,12 +14,12 @@
 	transition: transform 0.3s;
 }
 
-.interface.open
+.open
 {
 	transform: translateX( 0 );
 }
 
-.button
+/*.button
 {
 	border: none;
 	outline: none;
@@ -29,4 +29,4 @@
 .button:disabled
 {
 	cursor: initial;
-}
+}*/

@@ -9,12 +9,12 @@
 	border-bottom-right-radius: 0;
 }
 
-.button.deselected
+.deselected
 {
 	background-color: gray;
 }
 
-.button.deselected svg
+.deselected svg
 {
 	fill: light-gray;
 }

@@ -7,7 +7,6 @@
 	pointer-events: auto;
 	box-sizing: border-box;
 	padding: 10px;
-	
 }
 
 .controls > *:not(:first-child)

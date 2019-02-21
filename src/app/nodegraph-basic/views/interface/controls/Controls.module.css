@@ -1,47 +1,21 @@
+@value controlsbase: "../../../../nodegraph/views/controls/Controls.module.css";
 @value interface: "../Interface.module.css";
 @value menu-width, spacing-small, button-radius from interface;
-@value colors: "../../Colors.css";
-@value white, gray, blue, light-gray from colors;
 
 .controls
 {
-	position: absolute;
+	composes: controls from controlsbase;
 	left: menu-width;
-	pointer-events: auto;
-	box-sizing: border-box;
 	padding: spacing-small;
 }
 
-.controls > *:not(:first-child), .buttons > *:not(:first-child)
+.controls > *:not(:first-child)
 {
 	margin-top: spacing-small;
 }
 
 .button
 {
-	composes: button from interface;
-	height: 36px;
-	width: 36px;
-	transition: 0.2s fill ease, 0.2s background-color ease;
-	transition-property: fill, background-color;
-	background-color: blue;
-	padding: 8px;
+	composes: button from controlsbase;
 	border-radius: button-radius;
-}
-
-.button svg
-{
-	width: 100%;
-	height: 100%;
-	fill: white;
-}
-
-.button:disabled
-{
-	background-color: gray;
-}
-
-.button:disabled svg
-{
-	fill: light-gray;
 }

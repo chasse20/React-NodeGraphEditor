@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Switch, Route } from "react-router";
 import { observer } from "mobx-react";
-import Controls from "./nodegraph/views/controls/Controls";
+import Interface from "./nodegraph-basic/views/interface/Interface";
 import Graph from "./nodegraph-basic/views/graph/Graph";
 import GraphVizReader from "./nodegraph-basic/formats/GraphVizReader";
 import GraphJSONReader from "./nodegraph-basic/formats/GraphJSONReader";
@@ -28,7 +28,7 @@ class App extends Component
 		return (
 			<div className={ tStyle.app }>
 				<Graph model={ this._graph }/>
-				<Controls graph={ this._graph }/>
+				<Interface graph={ this._graph }/>
 			</div>
 		);
 	}

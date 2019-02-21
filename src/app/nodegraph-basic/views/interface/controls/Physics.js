@@ -13,21 +13,21 @@ class Physics extends React.Component
 		super( tProps );
 		
 		// Events
-		//this._onPhysics = () => { this.props.graph.isPhysics = !this.props.graph.isPhysics; };
+		this._onToggle = () => { this.props.graph.isPhysics = !this.props.graph.isPhysics; };
 	}
 	
 	render( tStyle = Style )
 	{
 		// Class
 		var tempClass = `${ tStyle.button }`;
-		//if ( !this.props.graph.isGridVisible )
-		//{
-		//	tempClass += ` ${ tStyle.deselected }`;
-		//}
+		if ( !this.props.graph.isPhysics )
+		{
+			tempClass += ` ${ tStyle.deselected }`;
+		}
 		
 		// Render
 		return (
-			<button className={ tempClass }>
+			<button className={ tempClass } onMouseDown={ this._onToggle }>
 				{ Icons.physics }
 			</button>
 		);
