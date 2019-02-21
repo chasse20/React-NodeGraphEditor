@@ -4,7 +4,7 @@ import { observer } from "mobx-react";
 import { observe } from "mobx";
 import NodeBase from "../../../../nodegraph/views/graph/nodes/Node";
 import NodeModel from "../../../models/Node";
-import Pin from "../../../../nodegraph/views/graph/nodes/Pin";
+import Pin from "./Pin";
 import Style from "./Node.module.css";
 
 class Node extends NodeBase

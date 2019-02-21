@@ -7,12 +7,16 @@ export default class Graph extends GraphBase
 	{
 		super();
 		
+		this._selectedEdges = [];
+		this.linkingPin = null;
 		this.isPhysics = false;
 	}
 }
 
 decorate( Graph,
 	{
+		_selectedEdges: observable.shallow,
+		linkingPin: observable.ref,
 		isPhysics: observable
 	}
 );

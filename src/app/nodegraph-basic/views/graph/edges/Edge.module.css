@@ -17,17 +17,19 @@
 	pointer-events: none;
 }
 
-.selected
+.line
 {
-	composes: selected from edgebase;
+	composes: line from edgebase;
+}
+
+.selected .selection
+{
+	stroke-opacity: 0.15;
 }
 
 .selection
 {
-	composes: selection from edgebase;
-}
-
-.line
-{
-	composes: line from edgebase;
+	stroke: blue;
+	stroke-opacity: 0;
+	stroke-width: 16;
 }

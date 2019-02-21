@@ -1,5 +1,5 @@
 @value controls: "./Controls.module.css";
-@value colors: "../../Colors.css";
+@value colors: "../Colors.css";
 @value gray, light-gray from colors;
 
 .button

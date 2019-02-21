@@ -7,7 +7,6 @@ export default class Graph
 	{
 		this._nodes = {};
 		this._selectedNodes = [];
-		this._selectedEdges = [];
 		this._nodeTypes = {};
 		this._edgeTypes = {};
 		this.position = new Vector2D();
@@ -22,7 +21,6 @@ export default class Graph
 		this.gridSnapIncrement = 5;
 		this.isGridVisible = true;
 		this.isGridSnap = false;
-		this.linkingPin = null;
 	}
 	
 	setNode( tNode )
@@ -190,7 +188,6 @@ decorate( Graph,
 	{
 		_nodes: observable.shallow,
 		_selectedNodes: observable.shallow,
-		_selectedEdges: observable.shallow,
 		_nodeTypes: observable.shallow,
 		_edgeTypes: observable.shallow,
 		position: observable,
@@ -201,7 +198,6 @@ decorate( Graph,
 		gridSize: observable,
 		isGridVisible: observable,
 		isGridSnap: observable,
-		linkingPin: observable.ref,
 		setNode: action,
 		removeNode: action,
 		setNodeType: action,

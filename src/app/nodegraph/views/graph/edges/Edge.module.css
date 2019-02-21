@@ -1,6 +1,3 @@
-@value colors: "../../Colors.css";
-@value blue from colors;
-
 .edge
 {
 	position: absolute;
@@ -10,16 +7,4 @@
 {
 	stroke-width: 1;
 	pointer-events: none;
-}
-
-.edge.selected .selection
-{
-	stroke-opacity: 0.15;
-}
-
-.selection
-{
-	stroke: blue;
-	stroke-opacity: 0;
-	stroke-width: 16;
 }

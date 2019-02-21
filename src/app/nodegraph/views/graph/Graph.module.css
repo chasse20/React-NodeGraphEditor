@@ -17,11 +17,6 @@
 	cursor: move;
 }
 
-.linking:not(.panning):not(.marqueeing)
-{
-	cursor: alias;
-}
-
 .marqueeing:not(.panning)
 {
 	cursor: crosshair;

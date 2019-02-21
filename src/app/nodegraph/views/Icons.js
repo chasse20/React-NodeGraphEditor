@@ -4,24 +4,6 @@ export default class Icons
 {
 };
 
-Icons.delete = (
-	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 18">
-		<path d="M1,16c0,1.1,0.9,2,2,2h8c1.1,0,2-0.9,2-2V4H1V16z M3.5,8.9l1.4-1.4L7,9.6l2.1-2.1l1.4,1.4L8.4,11l2.1,2.1 l-1.4,1.4L7,12.4l-2.1,2.1l-1.4-1.4L5.6,11L3.5,8.9z M10.5,1l-1-1h-5l-1,1H0v2h14V1H10.5z"/>
-	</svg>
-);
-
-Icons.addNode = (
-	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18">
-		<path d="M9.9,4.5H8.1v3.6H4.5v1.8h3.6v3.6h1.8V9.9h3.6V8.1H9.9V4.5z M9,0c-4.9,0-9,4-9,9s4,9,9,9s9-4,9-9S13.9,0,9,0z M9,16.2 C5,16.2,1.8,12.9,1.8,9S5,1.8,9,1.8S16.2,5,16.2,9S12.9,16.2,9,16.2z"/>
-	</svg>
-);
-
-Icons.select = (
-	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18">
-		<path d="M0,2h2V0C0.9,0,0,0.9,0,2z M0,10h2V8H0V10z M4,18h2v-2H4V18z M0,6h2V4H0V6z M10,0H8v2h2V0z M16,0v2h2 C18,0.9,17.1,0,16,0z M2,18v-2H0C0,17.1,0.9,18,2,18z M0,14h2v-2H0V14z M6,0H4v2h2V0z M8,18h2v-2H8V18z M16,10h2V8h-2V10z M16,18 c1.1,0,2-0.9,2-2h-2V18z M16,6h2V4h-2V6z M16,14h2v-2h-2V14z M12,18h2v-2h-2V18z M12,2h2V0h-2V2z M4,14h10V4H4V14z M6,6h6v6H6V6z"/>
-	</svg>
-);
-
 Icons.grid = (
 	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
 		<path d="M21.6,0H2.4C1.1,0,0,1.1,0,2.4v19.2C0,22.9,1.1,24,2.4,24h19.2c1.3,0,2.4-1.1,2.4-2.4V2.4C24,1.1,22.9,0,21.6,0z M8,22H2v-6 h6V22z M8,15H2V9h6V15z M8,8H2V2h6V8z M15,22H9v-6h6V22z M15,15H9V9h6V15z M15,8H9V2h6V8z M22,22h-6v-6h6V22z M22,15h-6V9h6V15z M22,8h-6V2h6V8z"/>
@@ -46,14 +28,6 @@ Icons.gridSnap = (
 Icons.marquee = (
 	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
 		<path d="M24,0h-4v2h2v4h2V0L24,0z M18,0h-4v2h4V0L18,0z M12,0H8v2h4V0L12,0z M6,0H0v4h2V2h4V0L6,0z M2,6H0v4h2V6L2,6z M2,12H0v4h2 V12L2,12z M2,18H0v4l0,0v2h4v-2H2V18L2,18z M10,22H6v2h4V22L10,22z M16,22h-4v2h4V22L16,22z M22,22h-4v2h4V22L22,22z M24,20h-2v4h2 V20L24,20z M24,14h-2v4h2V14L24,14z M24,8h-2v4h2V8L24,8z"/>
-	</svg>
-);
-
-Icons.menu = (
-	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 14">
-		<rect y="12" width="24" height="2"/>
-		<rect y="6" width="24" height="2"/>
-		<rect width="24" height="2"/>
 	</svg>
 );
 

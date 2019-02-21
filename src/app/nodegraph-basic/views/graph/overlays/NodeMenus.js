@@ -1,18 +1,38 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { observer } from "mobx-react";
-import NodeMenusBase from "../../../../nodegraph/views/graph/overlays/NodeMenus";
+import GraphModel from "../../../models/Graph";
 import NodeMenu from "./NodeMenu";
+import Style from "./NodeMenus.module.css";
 
-class NodeMenus extends NodeMenusBase
+class NodeMenus extends React.Component
 {
-	renderNodeMenu( tNode )
+	render( tStyle = Style )
 	{
-		return (
-			<NodeMenu key={ tNode._id } node={ tNode }/>
-		);
+		const tempNodes = this.props.graph._selectedNodes;
+		if ( tempNodes.length > 0 )
+		{
+			return (
+				<g className={ tStyle.menus }>
+					{
+						tempNodes.map(
+							( tNode ) =>
+							(
+								<NodeMenu key={ tNode._id } node={ tNode }/>
+							)
+						)
+					}
+				</g>
+			);
+		}
+		
+		return null;
 	}
 }
 
-NodeMenus.propTypes = Object.assign( {}, NodeMenusBase.propTypes );
+NodeMenus.propTypes =
+{
+	graph: PropTypes.instanceOf( GraphModel ).isRequired
+};
 
 export default observer( NodeMenus );

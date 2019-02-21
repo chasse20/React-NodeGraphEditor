@@ -5,7 +5,6 @@ import { observer } from "mobx-react";
 import Bounds from "../../../core/Bounds";
 import Vector2D from "../../../core/Vector2D";
 import GraphModel from "../../models/Graph";
-import NodeMenus from "./overlays/NodeMenus";
 import Nodes from "./nodes/Nodes";
 import Edges from "./edges/Edges";
 import Grid from "./Grid";
@@ -68,8 +67,6 @@ class Graph extends React.Component
 	{
 		// Enable pan, remove link
 		const tempModel = this.props.model;
-		tempModel.linkingPin = null;
-		
 		this._isPanHeld = tEvent.button === 1; // middle mouse pans!		
 		if ( this._isPanHeld || tempModel.isPanMode )
 		{
@@ -230,11 +227,6 @@ class Graph extends React.Component
 			tempClass += ` ${ tStyle.marqueeing }`;
 		}
 		
-		if ( tempModel.linkingPin != null )
-		{
-			tempClass += ` ${ tStyle.linking }`;
-		}
-		
 		// Render
 		return (
 			<svg className={ tempClass } onWheel={ this._onMouseWheel } onMouseDown={ this._onMouseDown }>
@@ -244,7 +236,6 @@ class Graph extends React.Component
 					<g ref={ this._onContainerElement }>
 						<Edges ref={ this._onEdges } graph={ tempModel }/>
 						<Nodes graph={ tempModel } onLink={ this._onLink }/>
-						<NodeMenus graph={ tempModel }/>
 					</g>
 				</g>
 				<rect ref={ this._onMarqueeElement } className={ tStyle.marquee }/>

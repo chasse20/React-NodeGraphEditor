@@ -1,11 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { observer } from "mobx-react";
 import { observe } from "mobx";
 import PinModel from "../../../models/Pin";
-import Style from "./Pin.module.css";
 
-class Pin extends React.Component
+export default class Pin extends React.Component
 {
 	constructor( tProps )
 	{
@@ -14,27 +12,9 @@ class Pin extends React.Component
 		
 		// Events
 		this._onLinksDispose = null;
-		this._onMouseDown = null;
 		if ( tProps.model._isOut )
 		{
 			this._onLinksDispose = observe( tProps.model._links, ( tChange ) => { this.onLinks( tChange ); } );
-		}
-		else
-		{
-			this._onMouseDown = () =>
-			{
-				const tempGraph = tProps.model._node._graph;
-				const tempEdgeTypes = tempGraph._edgeTypes;
-				for ( let tempKey in tempEdgeTypes )
-				{
-					let tempType = tempEdgeTypes[ tempKey ];
-					let tempEdge = new tempType._modelClass( tempType, tempGraph.linkingPin, this.props.model );
-					tempGraph.linkingPin.setLink( tempEdge );
-					tempGraph.linkingPin = null;
-					
-					break;
-				}
-			};
 		}
 	}
 	
@@ -78,20 +58,8 @@ class Pin extends React.Component
 		}
 	}
 
-	render( tStyle = Style )
+	render()
 	{
-		const tempModel = this.props.model;
-		if ( !tempModel._isOut )
-		{
-			const tempLinkingPin = tempModel._node._graph.linkingPin;
-			if ( tempLinkingPin != null && tempLinkingPin._node !== tempModel._node )
-			{
-				return (
-					<circle className={ tStyle.pin } cx="0" cy="0" r={ this.props.radius } onMouseDown={ this._onMouseDown }/>
-				);
-			}
-		}
-		
 		return null;
 	}
 }
@@ -107,5 +75,3 @@ Pin.defaultProps =
 {
 	radius: 50
 };
-
-export default observer( Pin );
