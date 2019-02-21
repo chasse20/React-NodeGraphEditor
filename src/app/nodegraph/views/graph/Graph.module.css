@@ -12,17 +12,22 @@
 	overflow: hidden;
 }
 
-.graph.panning
+.panning
 {
 	cursor: move;
 }
 
-.graph.marqueeing:not(.panning)
+.linking:not(.panning):not(.marqueeing)
+{
+	cursor: alias;
+}
+
+.marqueeing:not(.panning)
 {
 	cursor: crosshair;
 }
 
-.graph.marqueeing .marquee
+.marqueeing .marquee
 {
 	opacity: 1;
 }

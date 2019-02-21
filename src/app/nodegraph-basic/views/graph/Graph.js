@@ -27,6 +27,11 @@ class Graph extends GraphBase
 			tempClass += ` ${ tStyle.marqueeing }`;
 		}
 		
+		if ( tempModel.linkingPin != null )
+		{
+			tempClass += ` ${ tStyle.linking }`;
+		}
+		
 		// Render
 		return (
 			<svg className={ tempClass } onWheel={ this._onMouseWheel } onMouseDown={ this._onMouseDown }>

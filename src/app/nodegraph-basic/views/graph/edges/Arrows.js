@@ -6,7 +6,7 @@ import ArrowsBase from "../../../../nodegraph/views/graph/edges/Arrows";
 
 class Arrows extends ArrowsBase
 {
-	render() // TODO: dynamic marker size
+	render() // TODO: clean repeated code
 	{
 		const tempTypes = this.props.graph._edgeTypes;
 		

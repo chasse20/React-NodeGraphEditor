@@ -66,8 +66,9 @@ class Graph extends React.Component
 	
 	onMouseDown( tEvent )
 	{
-		// Enable pan
+		// Enable pan, remove link
 		const tempModel = this.props.model;
+		tempModel.linkingPin = null;
 		
 		this._isPanHeld = tEvent.button === 1; // middle mouse pans!		
 		if ( this._isPanHeld || tempModel.isPanMode )
@@ -82,7 +83,6 @@ class Graph extends React.Component
 		else
 		{
 			tempModel.isMarqueeing = true;
-			tempModel.linkingPin = null;
 			tempModel.clearSelectedNodes();
 			tempModel.clearSelectedEdges();
 			this._marqueeOffset = new Vector2D( tEvent.clientX, tEvent.clientY ).scale( 1 / tempModel.zoom ).subtract( tempModel.position );
@@ -228,6 +228,11 @@ class Graph extends React.Component
 		if ( tempModel.isMarqueeing )
 		{
 			tempClass += ` ${ tStyle.marqueeing }`;
+		}
+		
+		if ( tempModel.linkingPin != null )
+		{
+			tempClass += ` ${ tStyle.linking }`;
 		}
 		
 		// Render
