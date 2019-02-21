@@ -1,4 +1,3 @@
-import React from "react";
 import { observe } from "mobx";
 import EdgesBase from "../../../../nodegraph/views/graph/edges/Edges";
 
