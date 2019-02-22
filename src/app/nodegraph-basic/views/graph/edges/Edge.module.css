@@ -1,4 +1,6 @@
 @value edgebase: "../../../../nodegraph/views/graph/edges/Edge.module.css";
+@value colors: "../../Colors.css";
+@value blue from colors;
 
 .edge
 {
@@ -22,14 +24,14 @@
 	composes: line from edgebase;
 }
 
-.selected .selection
-{
-	stroke-opacity: 0.15;
-}
-
 .selection
 {
 	stroke: blue;
 	stroke-opacity: 0;
 	stroke-width: 16;
+}
+
+.selected .selection
+{
+	stroke-opacity: 0.15;
 }

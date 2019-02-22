@@ -1,5 +1,7 @@
+@value edge: "../edges/Edge.module.css";
+@value blue from edge;
 @value colors: "../../Colors.css";
-@value gray, blue, light-blue, light-gray, dark-gray from colors;
+@value light-blue, light-gray, gray, dark-gray from colors;
 
 .menu, .line
 {
@@ -24,9 +26,8 @@
 
 .line
 {
-	stroke: blue;
+	composes: selection from edge;
 	stroke-opacity: 0.15;
-	stroke-width: 16;
 }
 
 .inner
