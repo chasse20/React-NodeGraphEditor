@@ -1,0 +1,77 @@
+@value colors: "../../Colors.css";
+@value gray, blue, light-blue, light-gray, dark-gray from colors;
+
+.menu
+{
+	position: absolute;
+	opacity: 0;
+	transition-property: opacity;
+	transition: 0.2s opacity;
+}
+
+.open
+{
+	opacity: 1;
+	width: 400px;
+	height: 44px;
+}
+
+.inner
+{
+	width: inherit;
+	height: inherit;
+	display: flex;
+	background-color: gray;
+	padding: 10px;
+	font-size: 11pt;
+}
+
+.inner, .create
+{
+	box-sizing: border-box;
+}
+
+.inner > *:not(:first-child)
+{
+	margin-left: 10px;
+}
+
+.inner select
+{
+	flex-grow: 1;
+	color: light-gray;
+	font-weight: 300;
+}
+
+.inner select:focus
+{
+	outline: 1px solid light-blue;
+	outline-offset: 0;
+}
+
+.inner select, .create
+{
+	font: inherit;
+	letter-spacing: 0.1em;
+	border: none;
+}
+
+.inner select, .create, .create:focus
+{
+	outline: none;
+}
+
+.inner select, .create:active
+{
+	background-color: dark-gray;
+}
+
+.create
+{
+	cursor: pointer;
+	border-radius: 4px;
+	background-color: blue;
+	color: #fff;
+	height: 100%;
+	text-transform: uppercase;
+}

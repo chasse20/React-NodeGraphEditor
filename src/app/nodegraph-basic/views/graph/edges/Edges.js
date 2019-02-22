@@ -1,4 +1,6 @@
+import PropTypes from "prop-types";
 import { observe } from "mobx";
+import GraphModel from "../../../models/Graph";
 import EdgesBase from "../../../../nodegraph/views/graph/edges/Edges";
 
 export default class Edges extends EdgesBase
@@ -57,3 +59,11 @@ export default class Edges extends EdgesBase
 		}
 	}
 }
+
+Edges.propTypes = Object.assign(
+	{},
+	EdgesBase.propTypes,
+	{
+		graph: PropTypes.instanceOf( GraphModel ).isRequired
+	}
+);

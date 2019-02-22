@@ -43,7 +43,6 @@ class Node extends React.Component
 	onMouseDown( tEvent )
 	{
 		// Select
-		tEvent.stopPropagation();
 		if ( tEvent.button !== 1 ) // middle-mouse is reserved
 		{
 			// Check for selection toggle click if node is already selected
@@ -72,7 +71,6 @@ class Node extends React.Component
 	onMouseUp( tEvent )
 	{
 		// Toggle node selection if within simulated click time
-		tEvent.stopPropagation();
 		if ( tEvent.button !== 1 && this._clickTimeout !== null ) // middle-mouse is reserved
 		{
 			clearTimeout( this._clickTimeout );

@@ -111,7 +111,7 @@ class Node extends NodeBase
 						Object.values( tempModel._pins ).map(
 							( tPin ) =>
 							(
-								<Pin model={ tPin } key={ tPin.id } onLink={ this.props.onLink } radius={ tempRadius }/>
+								<Pin model={ tPin } key={ tPin.id } onLink={ this.props.onLink } radius={ tempRadius } onTarget={ this.props.onTargetPin }/>
 							)
 						)
 					}
@@ -130,7 +130,9 @@ class Node extends NodeBase
 }
 
 Node.propTypes = Object.assign(
-	{},
+	{
+		onTargetPin: PropTypes.func.isRequired
+	},
 	NodeBase.propTypes,
 	{
 		model: PropTypes.instanceOf( NodeModel ).isRequired

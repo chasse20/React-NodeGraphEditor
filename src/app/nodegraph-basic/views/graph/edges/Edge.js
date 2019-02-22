@@ -1,7 +1,9 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { observer } from "mobx-react";
 import { observe } from "mobx";
 import Vector2D from "../../../../core/Vector2D";
+import EdgeModel from "../../../models/Edge";
 import EdgeBase from "../../../../nodegraph/views/graph/edges/Edge";
 import Style from "./Edge.module.css";
 
@@ -57,8 +59,6 @@ class Edge extends EdgeBase
 	
 	onMouseDown( tEvent )
 	{
-		tEvent.stopPropagation();
-		
 		// Select
 		if ( tEvent.button !== 1 ) // middle-mouse is reserved
 		{
@@ -161,6 +161,12 @@ class Edge extends EdgeBase
 	}
 }
 
-Edge.propTypes = Object.assign( {}, EdgeBase.propTypes );
+Edge.propTypes = Object.assign(
+	{},
+	EdgeBase.propTypes,
+	{
+		model: PropTypes.instanceOf( EdgeModel ).isRequired
+	}
+);
 
 export default observer( Edge );

@@ -4,21 +4,39 @@ import { observer } from "mobx-react";
 import GraphBase from "../../../nodegraph/views/graph/Graph";
 import GraphModel from "../../models/Graph";
 import NodeMenus from "./overlays/NodeMenus";
+import EdgeTypeMenu from "./overlays/EdgeTypeMenu";
 import Edges from "./edges/Edges";
-import Nodes from "../../../nodegraph/views/graph/nodes/Nodes";
+import Nodes from "./nodes/Nodes";
 import Grid from "../../../nodegraph/views/graph/Grid";
 import Arrows from "./edges/Arrows";
 import Style from "./Graph.module.css";
 
 class Graph extends GraphBase
 {
+	constructor( tProps )
+	{
+		// Inheritance
+		super( tProps );
+		
+		// Variables
+		this._edgeTypeMenu = null;
+		
+		// Events
+		this._onEdgeTypeMenu = ( tComponent ) => { this._edgeTypeMenu = tComponent; };
+		this._onTargetPin = ( tModel, tPosition ) => { this._edgeTypeMenu.onTargetPin( tModel, tPosition ); };
+	}
+	
 	onMouseDown( tEvent )
 	{
 		// Inheritance
 		super.onMouseDown( tEvent );
 		
 		// Clear pin
-		this.props.model.linkingPin = null;
+		const tempModel = this.props.model;
+		if ( !tempModel.isPanning )
+		{
+			tempModel.linkingPin = null;
+		}
 	}
 	
 	render( tStyle = Style ) // TODO: Reduce repeated code
@@ -43,13 +61,15 @@ class Graph extends GraphBase
 		
 		// Render
 		return (
-			<svg className={ tempClass } onWheel={ this._onMouseWheel } onMouseDown={ this._onMouseDown }>
+			<svg className={ tempClass } onWheel={ this._onMouseWheel }>
 				<Arrows graph={ tempModel }/>
 				<Grid graph={ tempModel }/>
+				<rect width="100%" height="100%" fillOpacity="0" onMouseDown={ this._onMouseDown }/>
 				<g ref={ this._onViewElement }>
 					<g ref={ this._onContainerElement }>
 						<Edges ref={ this._onEdges } graph={ tempModel }/>
-						<Nodes graph={ tempModel } onLink={ this._onLink }/>
+						<Nodes graph={ tempModel } onLink={ this._onLink } onTargetPin={ this._onTargetPin }/>
+						<EdgeTypeMenu ref={ this._onEdgeTypeMenu } graph={ tempModel }/>
 						<NodeMenus graph={ tempModel }/>
 					</g>
 				</g>

@@ -229,9 +229,10 @@ class Graph extends React.Component
 		
 		// Render
 		return (
-			<svg className={ tempClass } onWheel={ this._onMouseWheel } onMouseDown={ this._onMouseDown }>
+			<svg className={ tempClass } onWheel={ this._onMouseWheel }>
 				<Arrows graph={ tempModel }/>
 				<Grid graph={ tempModel }/>
+				<rect width="100%" height="100%" fillOpacity="0" onMouseDown={ this._onMouseDown }/>
 				<g ref={ this._onViewElement }>
 					<g ref={ this._onContainerElement }>
 						<Edges ref={ this._onEdges } graph={ tempModel }/>

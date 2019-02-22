@@ -44,8 +44,6 @@ class NodeMenu extends React.Component
 	
 	onMouseEnter( tEvent, tStyle = Style )
 	{
-		tEvent.stopPropagation();
-		
 		// Delay input
 		this._inputTimeout = setTimeout(
 			() =>
@@ -58,9 +56,6 @@ class NodeMenu extends React.Component
 	
 	onMouseLeave( tEvent )
 	{
-		tEvent.stopPropagation();
-		
-		// Clear input
 		clearInterval( this._inputTimeout );
 		this._inputTimeout = null;
 		this._isInput = false;
@@ -68,9 +63,6 @@ class NodeMenu extends React.Component
 	
 	onRemove( tEvent )
 	{
-		tEvent.stopPropagation();
-		
-		// Remove
 		if ( this._isInput )
 		{
 			this.props.node._graph.removeNode( this.props.node );
@@ -79,9 +71,6 @@ class NodeMenu extends React.Component
 	
 	onLinking( tEvent )
 	{
-		tEvent.stopPropagation();
-		
-		// Linking
 		if ( this._isInput )
 		{
 			const tempNode = this.props.node;
