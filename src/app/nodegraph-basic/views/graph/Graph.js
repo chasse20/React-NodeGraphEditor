@@ -23,7 +23,7 @@ class Graph extends GraphBase
 		
 		// Events
 		this._onEdgeTypeMenu = ( tComponent ) => { this._edgeTypeMenu = tComponent; };
-		this._onTargetPin = ( tModel, tPosition ) => { this._edgeTypeMenu.onTargetPin( tModel, tPosition ); };
+		this._onTargetPin = ( tModel ) => { this._edgeTypeMenu.targetPin = tModel; };
 	}
 	
 	onMouseDown( tEvent )

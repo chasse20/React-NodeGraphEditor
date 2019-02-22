@@ -21,51 +21,44 @@ class EdgeTypeMenu extends React.Component
 		};
 		
 		// Variables
-		this._element = null;
-		this._endPosition = null;
-		this._type = "default";
+		this._lineElement = null;
+		this._menuElement = null;
+		this._type = null;
 		
 		// Events
-		this._onLinkingPinDispose = observe( tProps.graph, "linkingPin", ( tChange ) => { this.onLinkingPin( tChange ); } );
-		this._onElement = ( tElement ) => { this._element = tElement; };
+		this._onLinkingPin = observe( tProps.graph, "linkingPin", ( tChange ) => { this.sourcePin = tChange.newValue; } );
+		this._onSourceMove = null;
+		this._onLineElement = ( tElement ) => { this._lineElement = tElement; };
+		this._onMenuElement = ( tElement ) => { this._menuElement = tElement; };
 		this._onType = ( tEvent ) => { this._type = tEvent.target.value; };
-		this._onSet = ( tEvent ) => { this.onSet( tEvent ); };
-		
+		this._onSet = () => { this.onSet(); };
+		this._onMouseMove = ( tEvent ) => { this.onMouseMove( tEvent ); };		
+	}
+	
+	componentDidMount()
+	{
+		this.sourcePin = this.props.graph.linkingPin;
 	}
 	
 	componentWillUnmount()
 	{
-		this._onLinkingPinDispose();
-		this._onLinkingPinDispose = null;
-	}
-	
-	onLinkingPin( tChange )
-	{
-		if ( tChange.newValue == null )
+		if ( this._onSourceMove !== null )
 		{
-			this.setState( { target: null } );
+			this._onSourceMove();
+			this._onSourceMove = null;
 		}
-	}
-	
-	onTargetPin( tPinModel, tEvent )
-	{
-		if ( this.state.target === null )
-		{
-			// Position
-			this._endPosition = new Vector2D( tEvent.clientX, tEvent.clientY ).scale( 1 / this.props.graph.zoom ).subtract( this.props.graph.position ); // this will be mouse move
-			this._element.setAttribute( "x", this._endPosition.x );
-			this._element.setAttribute( "y", this._endPosition.y );
-			
-			// Open
-			this.setState( { target: tPinModel } );
-		}
+		
+		this._onLinkingPin();
+		this._onLinkingPin = null;
+		
+		document.removeEventListener( "mousemove", this._onMouseMove );
 	}
 
-	onSet( tEvent )
+	onSet()
 	{
 		// Get type
 		const tempGraph = this.props.graph;		
-		var tempType = tempGraph._edgeTypes[ this._type ];
+		var tempType = this._type == null ? tempGraph._edgeTypes[ "default" ] : tempGraph._edgeTypes[ this._type ];
 		if ( tempType == null )
 		{
 			tempType = new TypeModel();
@@ -78,40 +71,105 @@ class EdgeTypeMenu extends React.Component
 		tempGraph.linkingPin = null;
 	}
 	
+	onMouseMove( tEvent )
+	{
+		const tempGraph = this.props.graph;
+		this.targetPosition = new Vector2D( tEvent.clientX, tEvent.clientY ).scale( 1 / tempGraph.zoom ).subtract( tempGraph.position );
+	}
+	
+	set sourcePin( tPinModel )
+	{
+		if ( tPinModel == null )
+		{
+			if ( this._onSourceMove !== null )
+			{
+				this._onSourceMove();
+				this._onSourceMove = null;
+			}
+			
+			this.targetPin = null;
+		}
+		else
+		{
+			this._onSourceMove = observe( tPinModel, "position", ( tChange ) => { this.sourcePosition = tChange.newValue; } );
+			this.sourcePosition = tPinModel.position;
+			
+			document.addEventListener( "mousemove", this._onMouseMove );
+		}
+	}
+	
+	set targetPin( tPinModel )
+	{
+		if ( tPinModel != null )
+		{
+			// Position
+			const tempPosition = tPinModel.position;
+			this.targetPosition = tempPosition;
+			this._menuElement.setAttribute( "x", tempPosition.x );
+			this._menuElement.setAttribute( "y", tempPosition.y );
+			
+			// Remove event
+			document.removeEventListener( "mousemove", this._onMouseMove );
+		}
+		
+		this.setState( { target: tPinModel } );
+	}
+	
+	set sourcePosition( tVector )
+	{
+		this._lineElement.setAttribute( "x1", tVector.x );
+		this._lineElement.setAttribute( "y1", tVector.y );
+	}
+	
+	set targetPosition( tVector )
+	{
+		this._lineElement.setAttribute( "x2", tVector.x );
+		this._lineElement.setAttribute( "y2", tVector.y );
+	}
+	
 	render( tStyle = Style )
 	{
 		// Class
-		var tempClass = `${ tStyle.menu }`;
+		var tempLineClass = `${ tStyle.line }`;
+		if ( this.props.graph.linkingPin != null )
+		{
+			tempLineClass += ` ${ tStyle.lineVisible }`;
+		}
+		
+		var tempMenuClass = `${ tStyle.menu }`;
 		if ( this.state.target != null )
 		{
-			tempClass += ` ${ tStyle.open }`;
+			tempMenuClass += ` ${ tStyle.menuOpen }`;
 		}
 		
 		// Render
 		return (
-			<foreignObject ref={ this._onElement } className={ tempClass }>
-				<div className={ tStyle.inner }>
-					<select onChange={ this._onType }>
-						<option key="default" value="default">default</option>
-						{
-							Object.keys( this.props.graph._edgeTypes ).map(
-								( tKey ) =>
-								{
-									if ( tKey === "default" )
+			<g>
+				<line ref={ this._onLineElement } className={ tempLineClass }/>
+				<foreignObject ref={ this._onMenuElement } className={ tempMenuClass } width="400" height="44">
+					<div className={ tStyle.inner }>
+						<select onChange={ this._onType }>
+							<option key="default" value={ null }>default</option>
+							{
+								Object.keys( this.props.graph._edgeTypes ).map(
+									( tKey ) =>
 									{
-										return null;
+										if ( tKey === "default" )
+										{
+											return null;
+										}
+										
+										return (
+											<option key={ tKey } value={ tKey }>{ tKey }</option>
+										);
 									}
-									
-									return (
-										<option key={ tKey } value={ tKey }>{ tKey }</option>
-									);
-								}
-							)
-						}
-					</select>
-					<button className={ tStyle.create } onClick={ this._onSet }>create edge</button>
-				</div>
-			</foreignObject>
+								)
+							}
+						</select>
+						<button className={ tStyle.create } onClick={ this._onSet }>create edge</button>
+					</div>
+				</foreignObject>
+			</g>
 		);
 	}
 }

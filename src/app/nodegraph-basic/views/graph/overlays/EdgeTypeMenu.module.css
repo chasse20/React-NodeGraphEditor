@@ -7,23 +7,47 @@
 	opacity: 0;
 	transition-property: opacity;
 	transition: 0.2s opacity;
+	user-select: none;
+	pointer-events: none;
 }
 
-.open
+.menuOpen
 {
 	opacity: 1;
-	width: 400px;
-	height: 44px;
+	user-select: auto;
+	pointer-events: auto;
+}
+
+.line
+{
+	position: absolute;
+	opacity: 0;
+	transition-property: opacity;
+	transition: 0.2s opacity;
+	stroke: blue;
+	stroke-opacity: 0.15;
+	stroke-width: 16;
+	pointer-events: none;
+	user-select: none;
+}
+
+.lineVisible
+{
+	opacity: 1;
 }
 
 .inner
 {
-	width: inherit;
-	height: inherit;
+	width: 100%;
 	display: flex;
 	background-color: gray;
 	padding: 10px;
 	font-size: 11pt;
+}
+
+.inner, .inner select, .create
+{
+	height: 100%;
 }
 
 .inner, .create
@@ -72,6 +96,5 @@
 	border-radius: 4px;
 	background-color: blue;
 	color: #fff;
-	height: 100%;
 	text-transform: uppercase;
 }

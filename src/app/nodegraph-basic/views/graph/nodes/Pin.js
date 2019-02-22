@@ -15,7 +15,7 @@ class Pin extends PinBase
 		this._onMouseDown = null;
 		if ( !tProps.model._isOut )
 		{
-			this._onMouseDown = ( tEvent ) => { this.props.onTarget( this.props.model, tEvent ); };
+			this._onMouseDown = () => { this.props.onTarget( this.props.model ); };
 		}
 	}
 	

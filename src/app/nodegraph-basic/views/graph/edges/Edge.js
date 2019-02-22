@@ -21,7 +21,6 @@ class Edge extends EdgeBase
 
 		// Events
 		this._onTextElement = ( tElement ) => { this._textElement = tElement; };
-		this._onSourceRadius = observe( tProps.model._source._node._type, "radius", ( tChange ) => { this.sourcePosition = this.props.model._source.position; } );
 		this._onTargetRadius = observe( tProps.model._target._node._type, "radius", ( tChange ) => { this.targetPosition = this.props.model._target.position; } );
 		this._onSelectionElement = ( tElement ) => { this._selectionElement = tElement; };
 		this._onMouseDown = ( tEvent ) => { this.onMouseDown( tEvent ); };
@@ -40,8 +39,6 @@ class Edge extends EdgeBase
 		super.componentWillUnmount();
 		
 		// Events
-		this._onSourceRadius();
-		this._onSourceRadius = null;
 		this._onTargetRadius();
 		this._onTargetRadius = null;
 		//this.props.onPhysics( this._physicsBody, false );
