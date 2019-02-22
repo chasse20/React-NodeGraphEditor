@@ -1,7 +1,7 @@
 @value colors: "../../Colors.css";
 @value gray, blue, light-blue, light-gray, dark-gray from colors;
 
-.menu
+.menu, .line
 {
 	position: absolute;
 	opacity: 0;
@@ -13,27 +13,20 @@
 
 .menuOpen
 {
-	opacity: 1;
 	user-select: auto;
 	pointer-events: auto;
 }
 
+.menuOpen, .lineVisible
+{
+	opacity: 1;
+}
+
 .line
 {
-	position: absolute;
-	opacity: 0;
-	transition-property: opacity;
-	transition: 0.2s opacity;
 	stroke: blue;
 	stroke-opacity: 0.15;
 	stroke-width: 16;
-	pointer-events: none;
-	user-select: none;
-}
-
-.lineVisible
-{
-	opacity: 1;
 }
 
 .inner
