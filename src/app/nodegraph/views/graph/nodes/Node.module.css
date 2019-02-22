@@ -1,27 +1,59 @@
+@value nodebase: "../../../../nodegraph-base/views/graph/nodes/Node.module.css";
+
 .node
 {
-	position: absolute;
+	composes: node from nodebase;
+	display: none;
 }
 
-.graphic
-{ 
-	stroke-width: 2;
-	cursor: pointer;
+.node.visible
+{
+	display: initial;
+}
+
+.text
+{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 20px;
+	box-sizing: border-box;
+}
+
+.node foreignObject, .text
+{
+	user-select: none;
+	pointer-events: none;
+}
+
+.node p
+{
+	color: #ffffff;
+	font-weight: 300;
+	max-height: 100%;
+	overflow: hidden;
+	text-align: center;
+	margin: 0;
+	word-break: break-all;
+}
+
+.node.selected p
+{
+	text-shadow: 2px 2px 6px #000;
+	overflow: visible;
 }
 
 .outline
 {
-	user-select: none;
-	pointer-events: none;
-	stroke-linecap: square;
-	stroke-width: 2;
-	fill: none;
-	opacity: 0;
-	transition: 0.2s opacity ease;
+	composes: outline from nodebase;
 }
 
-.node.selected .outline
+.graphic
 {
-	opacity: 1;
-	transition: 0.2s opacity ease;
+	composes: graphic from nodebase;
+}
+
+.selected
+{
+	composes: selected from nodebase;
 }

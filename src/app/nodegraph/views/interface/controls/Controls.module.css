@@ -1,0 +1,21 @@
+@value controlsbase: "../../../../nodegraph-base/views/controls/Controls.module.css";
+@value interface: "../Interface.module.css";
+@value menu-width, spacing-small, button-radius from interface;
+
+.controls
+{
+	composes: controls from controlsbase;
+	left: menu-width;
+	padding: spacing-small;
+}
+
+.controls > *:not(:first-child)
+{
+	margin-top: spacing-small;
+}
+
+.button
+{
+	composes: button from controlsbase;
+	border-radius: button-radius;
+}

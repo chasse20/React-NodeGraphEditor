@@ -1,10 +1,37 @@
+@value edgebase: "../../../../nodegraph-base/views/graph/edges/Edge.module.css";
+@value colors: "../../Colors.css";
+@value blue from colors;
+
 .edge
 {
-	position: absolute;
+	composes: edge from edgebase;
+	display: none;
+}
+
+.edge.visible
+{
+	display: initial;
+}
+
+.edge text
+{
+	user-select: none;
+	pointer-events: none;
 }
 
 .line
 {
-	stroke-width: 1;
-	pointer-events: none;
+	composes: line from edgebase;
+}
+
+.selection
+{
+	stroke: blue;
+	stroke-opacity: 0;
+	stroke-width: 16;
+}
+
+.selected .selection
+{
+	stroke-opacity: 0.15;
 }

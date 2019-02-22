@@ -1,23 +1,20 @@
 import { observable, decorate } from "mobx";
+import EdgeBase from "../../nodegraph-base/models/Edge";
 
-export default class Edge
+export default class Edge extends EdgeBase
 {
-	constructor( tType, tSource, tTarget )
+	constructor( tType, tSource, tTarget, tWeight = 1.0, tData = {} )
 	{
-		this._type = tType;
-		this._source = tSource;
-		this._target = tTarget;
-		this._isSelected = false;
-	}
-	
-	get id()
-	{
-		return this._source.id + this._target.id;
+		super( tType, tSource, tTarget );
+		
+		this.weight = tWeight;
+		this.data = tData;
 	}
 }
 
 decorate( Edge,
 	{
-		_isSelected: observable
+		weight: observable,
+		data: observable
 	}
 );

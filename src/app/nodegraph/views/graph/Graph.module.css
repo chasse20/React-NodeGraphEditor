@@ -1,36 +1,26 @@
-@value colors: "../Colors.css";
-@value graph-bg, marquee-bg, marquee-stroke from colors;
+@value graphbase: "../../../nodegraph-base/views/graph/Graph.module.css";
 
 .graph
 {
-	background-color: graph-bg;
-	position: absolute;
-	top: 0;
-	left: 0;
-	height: 100%;
-	width: 100%;
-	overflow: hidden;
+	composes: graph from graphbase;
 }
 
 .panning
 {
-	cursor: move;
+	composes: panning from graphbase;
 }
 
-.marqueeing:not(.panning)
+.marqueeing
 {
-	cursor: crosshair;
-}
-
-.marqueeing .marquee
-{
-	opacity: 1;
+	composes: marqueeing from graphbase;
 }
 
 .marquee
 {
-	opacity: 0;
-	fill: marquee-bg;
-	stroke-width: 1px;
-	stroke: marquee-stroke;
+	composes: marquee from graphbase;
+}
+
+.linking:not(.panning):not(.marqueeing)
+{
+	cursor: alias;
 }

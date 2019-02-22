@@ -2,18 +2,21 @@ import React from "react";
 import PropTypes from "prop-types";
 import { observer } from "mobx-react";
 import GraphModel from "../../../models/Graph";
+import ArrowsBase from "../../../../nodegraph-base/views/graph/edges/Arrows";
 
-class Arrows extends React.Component
+class Arrows extends ArrowsBase
 {
-	render()
+	render() // TODO: clean repeated code
 	{
+		const tempTypes = this.props.graph._edgeTypes;
+		
 		return (
 			<defs>
 				{
-					Object.keys( this.props.graph._edgeTypes ).map(
+					Object.keys( tempTypes ).map(
 						( tKey ) =>
 						(
-							<marker key={ tKey } id={ "arrow-" + tKey } markerWidth="12" markerHeight="12" viewBox="-10 -5 10 10" orient="auto">
+							<marker key={ tKey } id={ "arrow-" + tKey } markerWidth="12" markerHeight="12" viewBox="-10 -5 10 10" orient="auto" fill={ tempTypes[ tKey ].stroke }>
 								<path d="M 0 0 L -10 5 L -10 -5 z"/>
 							</marker>
 						)
@@ -26,7 +29,10 @@ class Arrows extends React.Component
 
 export default observer( Arrows );
 
-Arrows.propTypes =
-{
-	graph: PropTypes.instanceOf( GraphModel ).isRequired
-};
+Arrows.propTypes = Object.assign(
+	{},
+	ArrowsBase.propTypes,
+	{
+		graph: PropTypes.instanceOf( GraphModel ).isRequired
+	}
+);

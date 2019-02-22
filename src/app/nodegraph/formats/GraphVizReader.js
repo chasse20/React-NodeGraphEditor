@@ -1,102 +1,39 @@
+import GraphVizReaderBase from "../../nodegraph-base/formats/GraphVizReader";
+import Node from "../models/Node";
+import Edge from "../models/Edge";
 import TypeNode from "../models/TypeNode";
 import TypeEdge from "../models/TypeEdge";
-import Edge from "../models/Edge";
-import Node from "../models/Node";
 import EdgeView from "../views/graph/edges/Edge";
 import NodeView from "../views/graph/nodes/Node";
 
-export default class GraphVizReader
+export default class GraphVizReader extends GraphVizReaderBase
 {
-	read( tGraphModel, tJSON )
-	{
-		if ( tGraphModel != null && tJSON != null )
-		{
-			// Position
-			this.readVector( tGraphModel.position, tJSON.position );
-			
-			// Zoom
-			if ( tJSON.zoom != null )
-			{
-				tGraphModel.zoom = tJSON.zoom;
-			}
-			
-			// Node Types
-			if ( tJSON.nodeTypes != null )
-			{
-				const tempListLength = tJSON.nodeTypes.length;
-				for ( let i = 0; i < tempListLength; ++i )
-				{
-					tGraphModel.setNodeType( this.readNodeType( tJSON.nodeTypes[i] ) );
-				}
-			}
-			
-			// Edge Types
-			if ( tJSON.edgeTypes != null )
-			{
-				const tempListLength = tJSON.edgeTypes.length;
-				for ( let i = 0; i < tempListLength; ++i )
-				{
-					tGraphModel.setEdgeType( this.readEdgeType( tJSON.edgeTypes[i] ) );
-				}
-			}
-			
-			// Nodes
-			if ( tJSON.nodes != null )
-			{
-				// Pre
-				const tempNodeJSONs = {};
-				const tempNodeRefs = {};
-				const tempListLength = tJSON.nodes.length;
-				for ( let i = 0; i < tempListLength; ++i )
-				{
-					let tempNodeJSON = tJSON.nodes[i];
-					let tempNode = this.readNode( tGraphModel, tempNodeJSON );
-					if ( tGraphModel.setNode( tempNode ) )
-					{
-						tempNodeJSONs[ tempNode._id ] = tempNodeJSON;
-						tempNodeRefs[ tempNodeJSON.id ] = tempNode;
-					}
-				}
-				
-				// Post with references
-				for ( let tempID in tempNodeRefs )
-				{
-					this.readNodePost( tGraphModel, tempNodeRefs[ tempID ], tempNodeJSONs[ tempNodeRefs[ tempID ]._id ], tempNodeRefs );
-				}
-			}
-		}
-	}
-	
-	readVector( tVectorModel, tJSON )
-	{
-		if ( tJSON != null )
-		{
-			// X
-			if ( tJSON.x != null )
-			{
-				tVectorModel.x = tJSON.x;
-			}
-			
-			// Y
-			if ( tJSON.y != null )
-			{
-				tVectorModel.y = tJSON.y;
-			}
-		}
-	}
-	
 	readNodeType( tJSON, tSerializableModels = { "Node": Node }, tSerializableViews = { "Node": NodeView } )
 	{
-		if ( tJSON != null && tJSON.name != null )
+		const tempType = super.readNodeType( tJSON, tSerializableModels, tSerializableViews );
+		
+		if ( tempType != null )
 		{
-			// Classes
-			const tempModelClass = tJSON.modelClass == null ? undefined : tSerializableModels[ tJSON.modelClass ];
-			const tempViewClass = tJSON.viewClass == null ? undefined : tSerializableViews[ tJSON.viewClass ];
+			// Radius
+			if ( tJSON.radius != null )
+			{
+				tempType.radius = tJSON.radius;
+			}
 			
-			return this.createNodeType( tJSON.name, tempModelClass, tempViewClass );
+			// Stroke
+			if ( tJSON.stroke != null )
+			{
+				tempType.stroke = tJSON.stroke;
+			}
+			
+			// Fill
+			if ( tJSON.fill != null )
+			{
+				tempType.fill = tJSON.fill;
+			}
 		}
 		
-		return null;
+		return tempType;
 	}
 	
 	createNodeType( tName, tModelClass, tViewClass )
@@ -106,16 +43,24 @@ export default class GraphVizReader
 	
 	readEdgeType( tJSON, tSerializableModels = { "Edge": Edge }, tSerializableViews = { "Edge": EdgeView } )
 	{
-		if ( tJSON != null && tJSON.name != null )
+		const tempType = super.readEdgeType( tJSON, tSerializableModels, tSerializableViews );
+		
+		if ( tempType != null )
 		{
-			// Classes
-			const tempModelClass = tJSON.modelClass == null ? undefined : tSerializableModels[ tJSON.modelClass ];
-			const tempViewClass = tJSON.viewClass == null ? undefined : tSerializableViews[ tJSON.viewClass ];
+			// Stroke
+			if ( tJSON.stroke != null )
+			{
+				tempType.stroke = tJSON.stroke;
+			}
 			
-			return this.createEdgeType( tJSON.name, tempModelClass, tempViewClass );
+			// Text
+			if ( tJSON.text != null )
+			{
+				tempType.text = tJSON.text;
+			}
 		}
 		
-		return null;
+		return tempType;
 	}
 	
 	createEdgeType( tName, tModelClass, tViewClass )
@@ -125,94 +70,23 @@ export default class GraphVizReader
 	
 	readNode( tGraphModel, tJSON )
 	{
-		if ( tJSON != null )
-		{
-			// Node type
-			var tempType = tJSON.type == null ? tGraphModel._nodeTypes[ "default" ] : tGraphModel._nodeTypes[ tJSON.type ];
-			if ( tempType == null )
-			{
-				tempType = this.createNodeType();
-				if ( !tGraphModel.setNodeType( tempType ) )
-				{
-					return null;
-				}
-			}
-			
-			const tempNode = this.createNode( tGraphModel, tempType );
-			
-			// Position
-			this.readVector( tempNode.position, tJSON.position );
-			
-			return tempNode;
-		}
+		const tempNode = super.readNode( tGraphModel, tJSON );
 		
-		return null;
-	}
-	
-	createNode( tGraphModel, tType )
-	{
-		return new tType._modelClass( tGraphModel, tType );
-	}
-	
-	readNodePost( tGraphModel, tNodeModel, tJSON, tNodeRefs )
-	{
-		if ( tJSON.pins != null )
+		if ( tempNode != null )
 		{
-			// Pins
-			for ( let tempName in tJSON.pins )
+			// Text
+			if ( tJSON.text != null )
 			{
-				let tempPin = tNodeModel._pins[ tempName ];
-				if ( tempPin != null )
-				{
-					this.readPinPost( tGraphModel, tempPin, tJSON.pins[ tempName ], tNodeRefs );
-				}
+				tempNode.text = tJSON.text;
 			}
-		}
-	}
-	
-	readPinPost( tGraphModel, tPinModel, tJSON, tNodeRefs )
-	{
-		if ( tPinModel._isOut && tJSON != null && tJSON.links != null )
-		{
-			for ( let i = ( tJSON.links.length - 1 ); i >= 0; --i )
+			
+			// Data
+			if ( tJSON.data != null )
 			{
-				tPinModel.setLink( this.readEdge( tGraphModel, tJSON.links[i], tPinModel, tNodeRefs ) );
-			}
-		}
-	}
-	
-	readEdge( tGraphModel, tJSON, tSourcePin, tNodeRefs )
-	{
-		if ( tJSON != null && tJSON.node != null && tJSON.pin != null && tSourcePin != null && tNodeRefs != null )
-		{
-			// Target node and pin
-			const tempTargetNode = tNodeRefs[ tJSON.node ];
-			if ( tempTargetNode != null )
-			{
-				const tempTargetPin = tempTargetNode._pins[ tJSON.pin ];
-				if ( tempTargetPin != null )
-				{
-					// Edge type
-					var tempType = tJSON.type == null ? tGraphModel._edgeTypes[ "default" ] : tGraphModel._edgeTypes[ tJSON.type ];
-					if ( tempType == null )
-					{
-						tempType = this.createEdgeType();
-						if ( !tGraphModel.setEdgeType( tempType ) )
-						{
-							return null;
-						}
-					}
-
-					return this.createEdge( tempType, tSourcePin, tempTargetPin );
-				}
+				tempNode.data = Object.assign( tempNode.data, tJSON.data ); // merge/overwrite!
 			}
 		}
 		
-		return null;
-	}
-	
-	createEdge( tType, tSourcePin, tTargetPin )
-	{
-		return new tType._modelClass( tType, tSourcePin, tTargetPin );
+		return tempNode;
 	}
 }

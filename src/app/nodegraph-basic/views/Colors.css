@@ -1,7 +1,0 @@
-@value colorsbase: "../../nodegraph/views/Colors.css";
-@value white, blue, gray, light-gray, graph-bg, grid-stroke, marquee-bg, marquee-stroke from colorsbase;
-
-@value red: #af3737;
-@value light-blue: #3089dd;
-@value medium-gray: #525252;
-@value dark-gray: #2b2b2b;

@@ -1,9 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { observe } from "mobx";
-import PinModel from "../../../models/Pin";
+import { observer } from "mobx-react";
+import PinBase from "../../../../nodegraph-base/views/graph/nodes/Pin";
+import Style from "./Pin.module.css";
 
-export default class Pin extends React.Component
+class Pin extends PinBase
 {
 	constructor( tProps )
 	{
@@ -11,67 +12,38 @@ export default class Pin extends React.Component
 		super( tProps );
 		
 		// Events
-		this._onLinksDispose = null;
-		if ( tProps.model._isOut )
+		this._onMouseDown = null;
+		if ( !tProps.model._isOut )
 		{
-			this._onLinksDispose = observe( tProps.model._links, ( tChange ) => { this.onLinks( tChange ); } );
+			this._onMouseDown = () => { this.props.onTarget( this.props.model ); };
 		}
 	}
 	
-	componentDidMount()
+	render( tStyle = Style )
 	{
 		const tempModel = this.props.model;
-		if ( tempModel._isOut )
+		if ( !tempModel._isOut )
 		{
-			const tempPins = tempModel._links;
-			for ( let tempKey in tempPins )
+			const tempLinkingPin = tempModel._node._graph.linkingPin;
+			if ( tempLinkingPin != null && tempLinkingPin._node !== tempModel._node )
 			{
-				this.props.onLink( tempPins[ tempKey ], true );
+				return (
+					<circle className={ tStyle.pin } cx="0" cy="0" r={ this.props.radius } onMouseDown={ this._onMouseDown }/>
+				);
 			}
 		}
-	}
-	
-	componentWillUnmount()
-	{
-		if ( this._onLinksDispose != null )
-		{
-			this._onLinksDispose();
-			this._onLinksDispose = null;
-		}
 		
-		const tempPins = this.props.model._links;
-		for ( let tempKey in tempPins )
-		{
-			this.props.onLink( tempPins[ tempKey ] );
-		}
-	}
-	
-	onLinks( tChange )
-	{
-		if ( tChange.type === "add" )
-		{
-			this.props.onLink( tChange.newValue, true );
-		}
-		else if ( tChange.type === "remove" )
-		{
-			this.props.onLink( tChange.oldValue );
-		}
-	}
-
-	render()
-	{
 		return null;
 	}
 }
 
-Pin.propTypes =
-{
-	model: PropTypes.instanceOf( PinModel ).isRequired,
-	onLink: PropTypes.func.isRequired,
-	radius: PropTypes.number
-};
+Pin.propTypes = Object.assign(
+	{
+		onTarget: PropTypes.func.isRequired
+	},
+	PinBase.propTypes
+);
 
-Pin.defaultProps =
-{
-	radius: 50
-};
+Pin.defaultProps = PinBase.defaultProps;
+
+export default observer( Pin );
