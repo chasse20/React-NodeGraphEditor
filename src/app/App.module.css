@@ -1,3 +1,19 @@
+@font-face
+{
+	font-family: "Roboto";
+	font-style: normal;
+	font-weight: 300;
+	src: url( "./fonts/roboto-light.ttf" ) format( "truetype" );
+}
+
+@font-face
+{
+	font-family: "Roboto";
+	font-style: normal;
+	font-weight: 500;
+	src: url( "./fonts/roboto-medium.ttf" ) format( "truetype" );
+}
+
 .app
 {
 	font-family: "Roboto", sans-serif;
