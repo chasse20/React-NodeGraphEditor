@@ -17,7 +17,7 @@ export default class Graph
 		this.isPanning = false;
 		this.isMarqueeing = false;
 		this.isPanMode = false;
-		this.gridSize = 80;
+		this.gridSize = 100;
 		this.gridSnapIncrement = 5;
 		this.isGridVisible = true;
 		this.isGridSnap = false;
