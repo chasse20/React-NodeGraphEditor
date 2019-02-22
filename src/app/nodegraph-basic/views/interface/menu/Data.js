@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { set, remove, get, has } from "mobx";
 import { observer } from "mobx-react";
-import Icons from "../../../../nodegraph/views/Icons";
+import Icons from "../../Icons";
 import Style from "./Data.module.css";
 
 class Data extends React.Component

@@ -3,11 +3,20 @@ import PropTypes from "prop-types";
 import { observer } from "mobx-react";
 import GraphModel from "../../../models/Graph";
 import TypeModel from "../../../models/TypeEdge";
-import SubTypesEdgeBase from "../../../../nodegraph/views/interface/menu/SubTypesEdge";
+import SubTypes from "./SubTypes";
 import ItemEdgeType from "./ItemEdgeType";
 
-class SubTypesEdge extends SubTypesEdgeBase
+class SubTypesEdge extends SubTypes
 {
+	onNew()
+	{
+		if ( this.state.newKey !== "" && this.props.graph._edgeTypes[ this.state.newKey ] === undefined )
+		{
+			this.props.graph.setEdgeType( this.createType( this.state.newKey ) );
+			this.setState( { newKey: "" } );
+		}
+	}
+	
 	createType( tName )
 	{
 		return new TypeModel( tName );
@@ -31,11 +40,15 @@ class SubTypesEdge extends SubTypesEdgeBase
 }
 
 SubTypesEdge.propTypes = Object.assign(
-	{},
-	SubTypesEdgeBase.propTypes,
 	{
 		graph: PropTypes.instanceOf( GraphModel ).isRequired
-	}
+	},
+	SubTypes.propTypes
 );
+
+SubTypesEdge.defaultProps =
+{
+	title: "edge types"
+};
 
 export default observer( SubTypesEdge );

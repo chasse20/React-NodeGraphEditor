@@ -29,10 +29,17 @@
 
 .button
 {
-	composes: button from interface;
+	border: none;
+	outline: none;
+	cursor: pointer;
 	padding: spacing-tiny;
 	background-color: transparent;
 	display: inline-flex;
+}
+
+.button:disabled
+{
+	cursor: initial;
 }
 
 .button svg

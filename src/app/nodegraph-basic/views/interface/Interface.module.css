@@ -18,15 +18,3 @@
 {
 	transform: translateX( 0 );
 }
-
-/*.button
-{
-	border: none;
-	outline: none;
-	cursor: pointer;
-}
-
-.button:disabled
-{
-	cursor: initial;
-}*/

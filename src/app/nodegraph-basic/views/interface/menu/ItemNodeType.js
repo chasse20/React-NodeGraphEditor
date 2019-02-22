@@ -1,13 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { observer } from "mobx-react";
+import Vector2D from "../../../../core/Vector2D";
+import GraphModel from "../../../models/Graph";
 import TypeModel from "../../../models/TypeNode";
-import ItemNodeTypeBase from "../../../../nodegraph/views/interface/menu/ItemNodeType";
+import Item from "./Item";
 import IconsBase from "../../../../nodegraph/views/Icons";
 import Icons from "../../Icons";
 import Style from "./ItemNodeType.module.css";
 
-class ItemNodeType extends ItemNodeTypeBase
+class ItemNodeType extends Item
 {
 	constructor( tProps )
 	{
@@ -15,15 +17,41 @@ class ItemNodeType extends ItemNodeTypeBase
 		super( tProps );
 		
 		// Events
+		this._onSelect = () => { this.onSelect(); };
+		this._onAdd = () => { this.onAdd(); };
+		this._onDelete = () => { this.onDelete(); };
 		this._onVisible = () => { this.props.model.isVisible = !this.props.model.isVisible; };
 		this._onRadius = ( tEvent ) => { this.props.model.radius = parseInt( tEvent.target.value ); };
 		this._onFill = ( tEvent ) => { this.props.model.fill = tEvent.target.value; };
 		this._onStroke = ( tEvent ) => { this.props.model.stroke = tEvent.target.value; };
 	}
 	
-	render( tStyle = Style )
+	onSelect()
 	{
-		return super.render( tStyle );
+		const tempGraph = this.props.graph;
+		for ( let tempID in tempGraph._nodes )
+		{
+			let tempNode = tempGraph._nodes[ tempID ];
+			if ( tempNode._type === this.props.model )
+			{
+				tempGraph.addSelectedNode( tempGraph._nodes[ tempID ] );
+			}
+		}
+	}
+	
+	onAdd()
+	{
+		const tempGraph = this.props.graph;
+		const tempNode = new this.props.model._modelClass( tempGraph, this.props.model );
+		tempNode.position = new Vector2D( window.screen.width * 0.5, window.screen.height * 0.5 ).scale( 1 / tempGraph.zoom ).subtract( tempGraph.position )
+		tempGraph.setNode( tempNode );
+		
+		return tempNode;
+	}
+	
+	onDelete()
+	{
+		this.props.graph.removeNodeType( this.props.model );
 	}
 	
 	renderBar( tStyle = Style )
@@ -50,13 +78,13 @@ class ItemNodeType extends ItemNodeTypeBase
 						{ Icons.visible }
 					</button>
 					<button className={ tStyle.button } onClick={ this._onSelect }>
-						{ IconsBase.select }
+						{ Icons.select }
 					</button>
 					<button className={ tStyle.button } onClick={ this._onAdd }>
-						{ IconsBase.addNode }
+						{ Icons.addNode }
 					</button>
 					<button className={ tStyle.button } onClick={ this._onDelete }>
-						{ IconsBase.delete }
+						{ Icons.delete }
 					</button>
 				</div>
 			</React.Fragment>
@@ -80,12 +108,10 @@ class ItemNodeType extends ItemNodeTypeBase
 	}
 }
 
-ItemNodeType.propTypes = Object.assign(
-	{},
-	ItemNodeTypeBase.propTypes,
-	{
-		model: PropTypes.instanceOf( TypeModel ).isRequired
-	}
-);
+ItemNodeType.propTypes =
+{
+	model: PropTypes.instanceOf( TypeModel ).isRequired,
+	graph: PropTypes.instanceOf( GraphModel ).isRequired
+};
 
 export default observer( ItemNodeType );

@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { observer } from "mobx-react";
 import NodeModel from "../../../models/Node";
-import Item from "../../../../nodegraph/views/interface/menu/Item";
+import Item from "./Item";
 import Data from "./Data";
 import IconsBase from "../../../../nodegraph/views/Icons";
 import Style from "./ItemNode.module.css";

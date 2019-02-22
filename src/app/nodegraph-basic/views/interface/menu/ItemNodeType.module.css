@@ -1,27 +1,7 @@
-@value itembase: "../../../../nodegraph/views/interface/menu/Item.module.css";
-@value sub: "../../../../nodegraph/views/interface/menu/Sub.module.css";
-@value colors: "../../../../nodegraph/views/Colors.css";
+@value itembase: "./Item.module.css";
+@value sub: "./Sub.module.css";
+@value colors: "../../Colors.css";
 @value medium-gray from colors;
-
-.item
-{
-	composes: item from itembase;
-}
-
-.open
-{
-	composes: open from itembase;
-}
-
-.bar
-{
-	composes: bar from itembase;
-}
-
-.content
-{
-	composes: content from itembase;
-}
 
 .toggle
 {

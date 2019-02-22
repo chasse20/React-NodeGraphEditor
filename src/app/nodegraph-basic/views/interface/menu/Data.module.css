@@ -1,8 +1,7 @@
-@value colors: "../../../../nodegraph/views/Colors.css";
+@value colors: "../../Colors.css";
 @value white, light-blue, blue from colors;
-@value sub: "../../../../nodegraph/views/interface/menu/Sub.module.css";
+@value sub: "./Sub.module.css";
 @value spacing-tiny, spacing-small from sub;
-@value interface: "../../../../nodegraph/views/interface/Interface.module.css";
 
 .data > *:not(:first-child)
 {
@@ -30,10 +29,17 @@
 
 .button
 {
-	composes: button from interface;
+	border: none;
+	outline: none;
+	cursor: pointer;
 	padding: 0;
 	background-color: transparent;
 	display: inline-flex;
+}
+
+.button:disabled
+{
+	cursor: initial;
 }
 
 .button svg

@@ -1,5 +1,5 @@
 import React from "react";
-import Sub from "../../../../nodegraph/views/interface/menu/Sub";
+import Sub from "./Sub";
 import Style from "./SubData.module.css";
 
 export default class SubData extends Sub

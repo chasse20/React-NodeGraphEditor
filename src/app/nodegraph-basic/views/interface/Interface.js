@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import GraphModel from "../../models/Graph";
 import Controls from "./controls/Controls";
-//import Menu from "./menu/Menu";
+import Menu from "./menu/Menu";
 import Style from "./Interface.module.css";
 
 export default class Interface extends React.PureComponent
@@ -31,13 +31,10 @@ export default class Interface extends React.PureComponent
 			tempClass += ` ${ tStyle.open }`;
 		}
 		
-		/*
-		<Menu graph={ this.props.graph }/>
-		*/
-		
 		// Render
 		return (
 			<div className={ tempClass }>
+				<Menu graph={ this.props.graph }/>
 				<Controls graph={ this.props.graph } onMenuToggle={ this._onMenuToggle } isMenuOpen={ this.state.isOpen }/>
 			</div>
 		);

@@ -1,13 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { observer } from "mobx-react";
+import GraphModel from "../../../models/Graph";
 import TypeModel from "../../../models/TypeEdge";
-import ItemEdgeTypeBase from "../../../../nodegraph/views/interface/menu/ItemEdgeType";
+import Item from "./Item";
 import IconsBase from "../../../../nodegraph/views/Icons";
 import Icons from "../../Icons";
 import Style from "./ItemNodeType.module.css";
 
-class ItemEdgeType extends ItemEdgeTypeBase
+class ItemEdgeType extends Item
 {
 	constructor( tProps )
 	{
@@ -15,14 +16,15 @@ class ItemEdgeType extends ItemEdgeTypeBase
 		super( tProps );
 		
 		// Events
+		this._onDelete = () => { this.onDelete(); };
 		this._onVisible = () => { this.props.model.isVisible = !this.props.model.isVisible; };
 		this._onStroke = ( tEvent ) => { this.props.model.stroke = tEvent.target.value; };
 		this._onText = ( tEvent ) => { this.props.model.text = tEvent.target.value; };
 	}
 	
-	render( tStyle = Style )
+	onDelete()
 	{
-		return super.render( tStyle );
+		this.props.graph.removeEdgeType( this.props.model );
 	}
 	
 	renderBar( tStyle = Style )
@@ -49,7 +51,7 @@ class ItemEdgeType extends ItemEdgeTypeBase
 						{ Icons.visible }
 					</button>
 					<button className={ tStyle.button } onClick={ this._onDelete }>
-						{ IconsBase.delete }
+						{ Icons.delete }
 					</button>
 				</div>
 			</React.Fragment>
@@ -71,12 +73,10 @@ class ItemEdgeType extends ItemEdgeTypeBase
 	}
 }
 
-ItemEdgeType.propTypes = Object.assign(
-	{},
-	ItemEdgeTypeBase.propTypes,
-	{
-		model: PropTypes.instanceOf( TypeModel ).isRequired
-	}
-);
+ItemEdgeType.propTypes =
+{
+	graph: PropTypes.instanceOf( GraphModel ).isRequired,
+	model: PropTypes.instanceOf( TypeModel ).isRequired
+};
 
 export default observer( ItemEdgeType );

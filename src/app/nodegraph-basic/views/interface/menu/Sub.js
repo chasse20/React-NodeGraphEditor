@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Icons from "../../Icons";
+import Icons from "../../../../nodegraph/views/Icons";
 import Style from "./Sub.module.css";
 
 export default class Sub extends React.Component

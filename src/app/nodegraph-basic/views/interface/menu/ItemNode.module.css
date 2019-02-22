@@ -1,5 +1,5 @@
-@value itembase: "../../../../nodegraph/views/interface/menu/Item.module.css";
-@value sub: "../../../../nodegraph/views/interface/menu/Sub.module.css";
+@value itembase: "./Item.module.css";
+@value sub: "./Sub.module.css";
 @value spacing-small from itembase;
 
 .item

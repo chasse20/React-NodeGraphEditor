@@ -1,21 +1,27 @@
 import React from "react";
 import PropTypes from "prop-types";
 import GraphModel from "../../../models/Graph";
-import MenuBase from "../../../../nodegraph/views/interface/menu/Menu";
 import SubImport from "./SubImport";
 import SubExport from "./SubExport";
 import SubTypesNode from "./SubTypesNode";
 import SubTypesEdge from "./SubTypesEdge";
 import SubDataNode from "./SubDataNode";
 import SubDataEdge from "./SubDataEdge";
+import Style from "./Menu.module.css";
 
-export default class Menu extends MenuBase
+export default class Menu extends React.PureComponent
 {
 	constructor( tProps )
 	{
 		// Inheritance
 		super( tProps );
 
+		// State
+		this.state =
+		{
+			tab: 0
+		};
+		
 		// Variables
 		this._tabs =
 		[
@@ -23,6 +29,29 @@ export default class Menu extends MenuBase
 			"graph",
 			"data"
 		];
+	}
+	
+	render( tStyle = Style )
+	{
+		return (
+			<div className={ tStyle.menu }>
+				<div className={ tStyle.inner }>
+					<div className={ tStyle.tabs }>
+						{
+							this._tabs.map(
+								( tTitle, tIndex ) =>
+								(
+									<button className={ tStyle.tab } key={ tTitle } disabled={ tIndex === this.state.tab } style={ { width: ( 100 / this._tabs.length ) + "%" } } onMouseDown={ () => { this.setState( { tab: tIndex } ); } }>{ tTitle }</button>
+								)
+							)
+						}
+					</div>
+					<div className={ tStyle.content }>
+						{ this.renderContent() }
+					</div>
+				</div>
+			</div>
+		);
 	}
 	
 	renderContent()
@@ -58,10 +87,7 @@ export default class Menu extends MenuBase
 	}
 }
 
-Menu.propTypes = Object.assign(
-	{},
-	MenuBase.propTypes,
-	{
-		graph: PropTypes.instanceOf( GraphModel ).isRequired
-	}
-);
+Menu.propTypes =
+{
+	graph: PropTypes.instanceOf( GraphModel ).isRequired
+};
