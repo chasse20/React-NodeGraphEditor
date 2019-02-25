@@ -2,7 +2,6 @@
 	"name": "graphviz",
 	"version": "0.9.0",
 	"description": "React GraphViz Editor",
-	"main": "src/main.js",
 	"private": true,
 	"dependencies": {
 		"ajv": "^6.6.1",
@@ -15,12 +14,16 @@
 		"react": "^16.6.3",
 		"react-dom": "^16.6.3",
 		"react-router-dom": "^4.3.1",
-		"react-scripts": "^2.1.2",
-		"common-components": "file:../common-components"
+		"react-scripts": "^2.1.2"
+	},
+	"peerDependencies": {
+		"react": "^16.6.3",
+		"react-dom": "^16.6.3"
 	},
 	"scripts": {
 		"start": "react-scripts start",
 		"build": "react-scripts build",
+		"build:node": "babel src --out-dir lib --copy-files",
 		"test": "react-scripts test --env=jsdom",
 		"eject": "react-scripts eject"
 	},
@@ -30,11 +33,21 @@
 		"not ie <= 11",
 		"not op_mini all"
 	],
-	"rnpm":
-	{
-		"assets":
-		[
+	"rnpm": {
+		"assets": [
 			"src/fonts"
+		]
+	},
+	"devDependencies": {
+		"babel-cli": "^6.26.0",
+		"babel-core": "^6.26.3",
+		"babel-preset-env": "^1.7.0",
+		"babel-preset-react": "^6.24.1"
+	},
+	"babel": {
+		"presets": [
+			"env",
+			"react"
 		]
 	}
 }
