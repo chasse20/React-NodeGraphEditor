@@ -26,7 +26,7 @@ export default class GraphJSONWriter // TODO: Clustering
 			}
 			
 			// Edges
-			if ( tempEdges.length > 0 )
+			if ( tempJSON != null && tempEdges.length > 0 )
 			{
 				tempJSON.edges = tempEdges;
 			}
@@ -68,7 +68,7 @@ export default class GraphJSONWriter // TODO: Clustering
 		{
 			for ( let tempKey in tPinModel._links )
 			{
-				let tempEdge = this.writeEdge( tPinModel._links[ tempKey ], tEdges, tEdgeTextField );
+				let tempEdge = this.writeEdge( tPinModel._links[ tempKey ], tEdgeTextField );
 				if ( tempEdge != null )
 				{
 					tEdges.push( tempEdge );
