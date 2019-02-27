@@ -1,4 +1,4 @@
-import { observable, decorate, computed, action } from "mobx";
+import { observable, decorate, computed } from "mobx";
 import Matrix2D from "./Matrix2D";
 import Vector2D from "./Vector2D";
 import { DEGREES_TO_RADIANS, RADIANS_TO_DEGREES } from "./Utility";

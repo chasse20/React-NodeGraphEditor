@@ -1,46 +1,46 @@
 {
-	"hits" :
-	[
-		{
-			"entityKey" : "ec7b1622-525b-4572-8229-16cd109bcc8d",
-			"values" : [ "oodaloop.com", "thailand", null, "shinawatra,chulanont,thaksin,surayud", "New Thai PM builds cabinet as Thaksin party crumbles" ]
-		},
-		{
-			"entityKey" : "98a002eb-24ae-4128-affd-ec5bcdd2ec3e",
-			"values" : [ "oodaloop.com", "u.s.,lima,peru", "peruvian,congress,microsoft", "john,hamilton", "Microsoft`s Big Stick in Peru" ]
-		},
-		{
-			"entityKey" : "f0cb916c-22b6-413e-816d-a93fd8510af3",
-			"values" : [ "oodaloop.com", null, "security,government,tsa,congress,administration,office,accountability,transportation", "berrick,cathleen", "Secure Flight program may finally take off" ]
-		},
-		{
-			"entityKey" : "52482f76-344c-422a-8067-6f3bb72a9a48",
-			"values" : [ "brookings.edu", "u.s.,saban,middle,egypt,united,iran,emirates,arabian,saudi,states,america,forum,arabia,peninsula,yemen,east,jerusalem,israel,of,jordan,tehran,washington,arab", "forum,hamas,saban,israeli,service,qaeda,state,al,party,labor,foreign", "joe,herzog,netanyahu,saban,isaac,obama,clinton,indyk,kerry,haim,biden,benjamin,barack,luke,martin,somers,john,naftali,hillary,bennett", "In a Speech to the 2014 Saban Forum, Vice President Joe Biden Plays the Mensch and Tries to Dispel &#8220;Malarkey&#8221;" ]
-		}, 
-		{
-			"entityKey" : "c9ea07a8-31ce-475c-b96c-d8418c523501",
-			"values" : [ "oodaloop.com", "chakudi,sayyedwadi,vatva,gujarat,maninagar,ahmedabad", null, "narendra,modi,jagannath,rath", "Blasts Rock Gujarat on Eve of Rath Yatra" ]
-		},
-		{
-			"entityKey" : "0e8a07af-52bd-4705-a774-96cc34ec8d12",
-			"values" : [ "oodaloop.com", "moscow,madrid", null, "vladimir,putin", "Russia, Spain concerned over intl terrorist activity" ]
-		},
-		{
-			"entityKey" : "1a8a2686-8c63-46cb-82a9-a2b8d0a708cf",
-			"values" : [ "oodaloop.com", null, "defense", "donald,rumsfeld,hussein,bush,saddam", "Bush: No Evidence Saddam Involved in 9/11" ]
-		},
-		{
-			"entityKey" : "a43b66aa-b7fc-4bd9-943e-cf4a5efb37e2",
-			"values" : [ "oodaloop.com", "algeria", null, "sahraoui,abdelkader", "Algeria says to free 2,000 Islamist ex-fighters" ]
-		},
-		{
-			"entityKey" : "3fbb79ca-f7c7-434e-bf29-ce4d2381b302",
-			"values" : [ "oodaloop.com", "kandahar,us", null, "asadullah,khalid", "Four killed in Afghan bomb attack" ]
-		},
-		{
-			"entityKey" : "4857d4ec-28ce-4835-bdee-9e414addfd86",
-			"values" : [ "oodaloop.com", "central,honduras,america", "interpol", "saul,shukrijumah,el,gushair,hernandez,adnan", "Central America Terror Reports Downplayed" ]
-		} 
-	],
-	"total" : 10
+ "hits" :
+ [
+  {
+   "entityKey" : "ec7b1622-525b-4572-8229-16cd109bcc8d",
+   "values" : [ "oodaloop.com", "thailand", null, "shinawatra,chulanont,thaksin,surayud", "New Thai PM builds cabinet as Thaksin party crumbles" ]
+  },
+  {
+   "entityKey" : "98a002eb-24ae-4128-affd-ec5bcdd2ec3e",
+   "values" : [ "oodaloop.com", "u.s.,lima,peru", "peruvian,congress,microsoft", "john,hamilton", "Microsoft`s Big Stick in Peru" ]
+  },
+  {
+   "entityKey" : "f0cb916c-22b6-413e-816d-a93fd8510af3",
+   "values" : [ "oodaloop.com", null, "security,government,tsa,congress,administration,office,accountability,transportation", "berrick,cathleen", "Secure Flight program may finally take off" ]
+  },
+  {
+   "entityKey" : "52482f76-344c-422a-8067-6f3bb72a9a48",
+   "values" : [ "brookings.edu", "u.s.,saban,middle,egypt,united,iran,emirates,arabian,saudi,states,america,forum,arabia,peninsula,yemen,east,jerusalem,israel,of,jordan,tehran,washington,arab", "forum,hamas,saban,israeli,service,qaeda,state,al,party,labor,foreign", "joe,herzog,netanyahu,saban,isaac,obama,clinton,indyk,kerry,haim,biden,benjamin,barack,luke,martin,somers,john,naftali,hillary,bennett", "In a Speech to the 2014 Saban Forum, Vice President Joe Biden Plays the Mensch and Tries to Dispel &#8220;Malarkey&#8221;" ]
+  }, 
+  {
+   "entityKey" : "c9ea07a8-31ce-475c-b96c-d8418c523501",
+   "values" : [ "oodaloop.com", "chakudi,sayyedwadi,vatva,gujarat,maninagar,ahmedabad", null, "narendra,modi,jagannath,rath", "Blasts Rock Gujarat on Eve of Rath Yatra" ]
+  },
+  {
+   "entityKey" : "0e8a07af-52bd-4705-a774-96cc34ec8d12",
+   "values" : [ "oodaloop.com", "moscow,madrid", null, "vladimir,putin", "Russia, Spain concerned over intl terrorist activity" ]
+  },
+  {
+   "entityKey" : "1a8a2686-8c63-46cb-82a9-a2b8d0a708cf",
+   "values" : [ "oodaloop.com", null, "defense", "donald,rumsfeld,hussein,bush,saddam", "Bush: No Evidence Saddam Involved in 9/11" ]
+  },
+  {
+   "entityKey" : "a43b66aa-b7fc-4bd9-943e-cf4a5efb37e2",
+   "values" : [ "oodaloop.com", "algeria", null, "sahraoui,abdelkader", "Algeria says to free 2,000 Islamist ex-fighters" ]
+  },
+  {
+   "entityKey" : "3fbb79ca-f7c7-434e-bf29-ce4d2381b302",
+   "values" : [ "oodaloop.com", "kandahar,us", null, "asadullah,khalid", "Four killed in Afghan bomb attack" ]
+  },
+  {
+   "entityKey" : "4857d4ec-28ce-4835-bdee-9e414addfd86",
+   "values" : [ "oodaloop.com", "central,honduras,america", "interpol", "saul,shukrijumah,el,gushair,hernandez,adnan", "Central America Terror Reports Downplayed" ]
+  } 
+ ],
+ "total" : 10
 }

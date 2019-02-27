@@ -2,6 +2,7 @@
 	"name": "graphviz",
 	"version": "0.9.0",
 	"description": "React GraphViz Editor",
+	"homepage": "/graphviz",
 	"private": true,
 	"dependencies": {
 		"ajv": "^6.6.1",
