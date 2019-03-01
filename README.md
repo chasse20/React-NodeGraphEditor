@@ -1,4 +1,4 @@
 # React-NodeGraphEditor
 Custom Node Graph Editor
 
-Built from the ground up in React, using MobX and Planck.js (no D3).
+Built from the ground up in React, using MobX, CSS Modules and D3 Force Layout.
