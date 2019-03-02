@@ -19,7 +19,7 @@ export default class Graph
 		this.isPanMode = false;
 		this.gridSize = 100;
 		this.gridSnapIncrement = 5;
-		this.isGridVisible = true;
+		this.isGridVisible = false;
 		this.isGridSnap = false;
 	}
 	

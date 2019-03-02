@@ -105,7 +105,7 @@ class Node extends NodeBase
 		return (
 			<g className={ tempClass } guid={ tempModel._id } ref={ this._onElement }>
 				<rect className={ tStyle.outline } stroke={ tempFill } height={ tempOutlineDiameter } width={ tempOutlineDiameter } x={ -tempOutlineDiameter * 0.5 } y={ -tempOutlineDiameter * 0.5 } strokeDasharray={ tempOutlineDiameter * 0.125 + " " + tempOutlineDiameter * 0.75 + " " + tempOutlineDiameter * 0.125 + " 0" }/>
-				<circle className={ tStyle.graphic } cx="0" cy="0" r={ tempRadius } fill={ tempFill } stroke={ tempType.stroke } onMouseDown={ this._onMouseDown } onMouseUp={ this._onMouseUp }/>
+				<circle className={ tStyle.graphic } cx="0" cy="0" r={ tempRadius } fill={ tempFill } onMouseDown={ this._onMouseDown } onMouseUp={ this._onMouseUp }/>
 				<g className={ tStyle.pins }>
 					{
 						Object.values( tempModel._pins ).map(

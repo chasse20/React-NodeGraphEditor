@@ -5,7 +5,7 @@
 
 .graphic
 { 
-	stroke-width: 2;
+	stroke: none;
 	cursor: pointer;
 }
 

@@ -6,7 +6,7 @@ import TypeModel from "../../../models/TypeEdge";
 import Item from "./Item";
 import IconsBase from "../../../../nodegraph-base/views/Icons";
 import Icons from "../../Icons";
-import Style from "./ItemNodeType.module.css";
+import Style from "./ItemEdgeType.module.css";
 
 class ItemEdgeType extends Item
 {

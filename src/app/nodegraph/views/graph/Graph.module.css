@@ -3,6 +3,7 @@
 .graph
 {
 	composes: graph from graphbase;
+	font-size: 11pt;
 }
 
 .panning

@@ -9,7 +9,7 @@ export default class Graph extends GraphBase
 		
 		this._selectedEdges = [];
 		this.linkingPin = null;
-		this.isPhysics = true;
+		this.isPhysics = false;
 	}
 }
 

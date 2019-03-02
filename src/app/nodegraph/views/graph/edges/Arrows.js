@@ -16,7 +16,7 @@ class Arrows extends ArrowsBase
 					Object.keys( tempTypes ).map(
 						( tKey ) =>
 						(
-							<marker key={ tKey } id={ "arrow-" + tKey } markerWidth="12" markerHeight="12" viewBox="-10 -5 10 10" orient="auto" fill={ tempTypes[ tKey ].stroke }>
+							<marker key={ tKey } id={ "arrow-" + tKey } markerWidth="10" markerHeight="10" viewBox="-10 -5 10 10" orient="auto" fill={ tempTypes[ tKey ].stroke }>
 								<path d="M 0 0 L -10 5 L -10 -5 z"/>
 							</marker>
 						)

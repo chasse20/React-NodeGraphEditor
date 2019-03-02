@@ -23,7 +23,6 @@ class ItemNodeType extends Item
 		this._onVisible = () => { this.props.model.isVisible = !this.props.model.isVisible; };
 		this._onRadius = ( tEvent ) => { this.props.model.radius = parseInt( tEvent.target.value ); };
 		this._onFill = ( tEvent ) => { this.props.model.fill = tEvent.target.value; };
-		this._onStroke = ( tEvent ) => { this.props.model.stroke = tEvent.target.value; };
 	}
 	
 	onSelect()
@@ -70,7 +69,7 @@ class ItemNodeType extends Item
 			<React.Fragment>
 				<button className={ tStyle.toggle } onClick={ this._onOpen }>
 					{ IconsBase.arrow }
-					<div className={ tStyle.circle } style={ { backgroundColor: tempModel.fill, borderColor: tempModel.stroke } }/>
+					<div className={ tStyle.circle } style={ { backgroundColor: tempModel.fill } }/>
 					<span>{ tempModel._name }</span>
 				</button>
 				<div>
@@ -99,8 +98,6 @@ class ItemNodeType extends Item
 			<div className={ tStyle.kvp }>
 				<span>Radius</span>
 				<input type="number" value={ tempModel.radius } onChange={ this._onRadius }/>
-				<span>Stroke</span>
-				<input type="color" value={ tempModel.stroke } onChange={ this._onStroke }/>
 				<span>Fill</span>
 				<input type="color" value={ tempModel.fill } onChange={ this._onFill }/>
 			</div>
