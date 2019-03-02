@@ -20,12 +20,6 @@ export default class GraphVizReader extends GraphVizReaderBase
 				tempType.radius = tJSON.radius;
 			}
 			
-			// Stroke
-			if ( tJSON.stroke != null )
-			{
-				tempType.stroke = tJSON.stroke;
-			}
-			
 			// Fill
 			if ( tJSON.fill != null )
 			{

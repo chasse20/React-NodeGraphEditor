@@ -8,3 +8,15 @@
 	stroke-width: 1;
 	pointer-events: none;
 }
+
+.selection
+{
+	stroke: blue;
+	stroke-opacity: 0;
+	stroke-width: 16;
+}
+
+.selected .selection
+{
+	stroke-opacity: 0.15;
+}

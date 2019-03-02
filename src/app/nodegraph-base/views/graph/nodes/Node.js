@@ -60,7 +60,7 @@ class Node extends React.Component
 			}
 			else
 			{
-				tempModel._graph.addSelectedNode( tempModel );
+				tempModel._graph.setSelectedNode( tempModel );
 			}
 			
 			// Set
@@ -83,7 +83,7 @@ class Node extends React.Component
 			}
 			else
 			{
-				tempModel._graph.addSelectedNode( tempModel );
+				tempModel._graph.setSelectedNode( tempModel );
 			}
 		}
 	}

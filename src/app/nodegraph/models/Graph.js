@@ -7,7 +7,6 @@ export default class Graph extends GraphBase
 	{
 		super();
 		
-		this._selectedEdges = [];
 		this.linkingPin = null;
 		this.isPhysics = false;
 	}
@@ -15,7 +14,6 @@ export default class Graph extends GraphBase
 
 decorate( Graph,
 	{
-		_selectedEdges: observable.shallow,
 		linkingPin: observable.ref,
 		isPhysics: observable
 	}

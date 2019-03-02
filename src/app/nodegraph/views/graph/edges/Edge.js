@@ -16,14 +16,11 @@ class Edge extends EdgeBase
 
 		// Variables
 		this._textElement = null;
-		this._selectionElement = null;
 		//this._physicsBody = this.createPhysics();
 
 		// Events
 		this._onTextElement = ( tElement ) => { this._textElement = tElement; };
 		this._onTargetRadius = observe( tProps.model._target._node._type, "radius", ( tChange ) => { this.targetPosition = this.props.model._target.position; } );
-		this._onSelectionElement = ( tElement ) => { this._selectionElement = tElement; };
-		this._onMouseDown = ( tEvent ) => { this.onMouseDown( tEvent ); };
 	}
 	
 	componentDidMount()
@@ -52,23 +49,6 @@ class Edge extends EdgeBase
 			source: tempModel._source._node._id,
 			target: tempModel._target._node._id
 		};
-	}
-	
-	onMouseDown( tEvent )
-	{
-		// Select
-		if ( tEvent.button !== 1 ) // middle-mouse is reserved
-		{
-			const tempModel = this.props.model;
-			if ( tempModel._isSelected )
-			{
-				tempModel._source._node._graph.removeSelectedEdge( tempModel );
-			}
-			else
-			{
-				tempModel._source._node._graph.addSelectedEdge( tempModel );
-			}
-		}
 	}
 	
 	set sourcePosition( tVector )

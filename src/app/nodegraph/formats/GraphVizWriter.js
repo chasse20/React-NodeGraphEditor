@@ -16,12 +16,6 @@ export default class GraphVizWriter extends GraphVizWriterBase
 				tempJSON.radius = tTypeModel.radius;
 			}
 			
-			// Stroke
-			if ( tTypeModel.stroke !== "#808080" )
-			{
-				tempJSON.stroke = tTypeModel.stroke;
-			}
-			
 			// Fill
 			if ( tTypeModel.fill !== "#a9a9a9" )
 			{

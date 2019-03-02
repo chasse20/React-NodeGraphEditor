@@ -135,7 +135,7 @@ class Graph extends React.Component
 			{
 				if ( !tempNode._isSelected )
 				{
-					tempModel.addSelectedNode( tempNode );
+					tempModel.setSelectedNode( tempNode );
 				}
 			}
 			else if ( tempNode._isSelected )

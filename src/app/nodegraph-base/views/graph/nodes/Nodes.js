@@ -12,24 +12,15 @@ export default class Nodes extends React.PureComponent
 		// Inheritance
 		super( tProps );
 		
-		// State
-		this.state =
-		{
-			nodes: null
-		};
-		
 		// Variables
-		this._nodes = null;
-		this._nodesCount = 0;
+		this._nodes = {};
 		this._dragOffsets = null;
 		
 		// Events
-		this._onNodesDispose = observe( tProps.graph._nodes, ( tChange ) => { this.onNodes( tChange ) } );
-		this._onSelectedDispose = observe( tProps.graph._selectedNodes, ( tChange ) => { this.onSelected( tChange ) } );
+		this._onNodesDispose = observe( tProps.graph._nodes, ( tChange ) => { this.onNodes( tChange ); } );
 		this._onDragStart = ( tEvent ) => { this.onDragStart( tEvent ); };
 		this._onDragMove = ( tEvent ) => { this.onDragMove( tEvent ); };
 		this._onDragUp = ( tEvent ) => { this.onDragUp( tEvent ); };
-		this._onKeyDown = ( tEvent ) => { this.onKeyDown( tEvent ); };
 	}
 	
 	componentDidMount()
@@ -41,12 +32,6 @@ export default class Nodes extends React.PureComponent
 		{
 			this.setNode( this.createElement( tempNodes[ tempID ] ) );
 		}
-		
-		// Selected state
-		if ( tempGraph._selectedNodes.length > 0 )
-		{
-			document.addEventListener( "keydown", this._onKeyDown );
-		}
 	}
 	
 	componentWillUnmount()
@@ -54,12 +39,9 @@ export default class Nodes extends React.PureComponent
 		// Clear events
 		this._onNodesDispose();
 		this._onNodesDispose = null;
-		this._onSelectedDispose();
-		this._onSelectedDispose = null;
 		
 		document.removeEventListener( "mousemove", this._onDragMove );
 		document.removeEventListener( "mouseup", this._onDragUp );
-		document.removeEventListener( "keydown", this._onKeyDown );
 	}
 	
 	createElement( tModel )
@@ -88,20 +70,11 @@ export default class Nodes extends React.PureComponent
 	
 	setNode( tNodeView )
 	{
-		if ( tNodeView != null )
+		if ( tNodeView != null && this._nodes[ tNodeView.key ] === undefined )
 		{
-			if ( this._nodesCount <= 0 )
-			{
-				this._nodes = {};
-				this._nodesCount = 1;
-			}
-			else if ( this._nodes[ tNodeView.key ] === undefined )
-			{
-				++this._nodesCount;
-			}
-			
 			this._nodes[ tNodeView.key ] = tNodeView;
-			this.updateElements();
+			
+			this.forceUpdate();
 			
 			return true;
 		}
@@ -114,15 +87,8 @@ export default class Nodes extends React.PureComponent
 		if ( this._nodesCount > 0 && this._nodes[ tID ] !== undefined )
 		{
 			delete this._nodes[ tID ];
-			--this._nodesCount;
 			
-			if ( this._nodesCount <= 0 )
-			{
-				this._nodes = null;
-				this._nodesCount = 0;
-			}
-			
-			this.updateElements();
+			this.forceUpdate();
 			
 			return true;
 		}
@@ -130,78 +96,18 @@ export default class Nodes extends React.PureComponent
 		return false;
 	}
 	
-	onSelected( tChange )
-	{
-		if ( tChange.addedCount > 0 && tChange.object.length === 1 )
-		{
-			document.addEventListener( "keydown", this._onKeyDown );
-		}
-		else if ( tChange.removedCount > 0 && tChange.object.length === 0 )
-		{
-			document.removeEventListener( "keydown", this._onKeyDown );
-		}
-
-		this.updateElements();
-	}
-	
-	updateElements()
-	{
-		var tempElements = null;
-		if ( this._nodesCount > 0 )
-		{
-			tempElements = [];
-			
-			const tempSelected = this.props.graph._selectedNodes;
-			const tempLength = tempSelected.length;
-			if ( tempLength === 0 )
-			{
-				for ( let tempID in this._nodes )
-				{				
-					tempElements.push( this._nodes[ tempID ] );
-				}
-			}
-			else
-			{
-				// Selected nodes
-				const tempAlreadySelected = {};
-				const tempOffset = this._nodesCount - tempLength;
-				tempElements.length = this._nodesCount;
-				for ( let i = ( tempLength - 1 ); i >= 0; --i )
-				{
-					let tempID = tempSelected[i]._id;
-					tempAlreadySelected[ tempID ] = true;
-					tempElements[ tempOffset + i ] = this._nodes[ tempID ];
-				}
-				
-				// Unselected
-				var tempIndex = 0;
-				for ( let tempID in this._nodes )
-				{
-					if ( tempAlreadySelected[ tempID ] === undefined )
-					{
-						tempElements[ tempIndex ] = this._nodes[ tempID ];
-						++tempIndex;
-					}
-				}
-			}
-		}
-		
-		this.setState( { nodes: tempElements } );
-	}
-	
 	onDragStart( tEvent )
 	{
 		const tempGraph = this.props.graph;
-		const tempListLength = tempGraph._selectedNodes.length;
-		if ( tempListLength > 0 )
+		if ( tempGraph._selectedNodesCount > 0 )
 		{
+			const tempSelected = tempGraph._selectedNodes;
 			const tempLocalStart = new Vector2D( tEvent.clientX, tEvent.clientY ).scale( 1 / tempGraph.zoom ).subtract( tempGraph.position );
 			
-			this._dragOffsets = [];
-			
-			for ( let i = 0; i < tempListLength; ++i )
+			this._dragOffsets = {};
+			for ( let tempID in tempSelected )
 			{
-				this._dragOffsets.push( Vector2D.Subtract( tempLocalStart, tempGraph._selectedNodes[i].position ) );
+				this._dragOffsets[ tempID ] = Vector2D.Subtract( tempLocalStart, tempSelected[ tempID ].position );
 			}
 		
 			document.addEventListener( "mousemove", this._onDragMove );
@@ -212,25 +118,26 @@ export default class Nodes extends React.PureComponent
 	onDragMove( tEvent )
 	{
 		const tempGraph = this.props.graph;
+		const tempSelected = tempGraph._selectedNodes;
 		const tempLocalEnd = new Vector2D( tEvent.clientX, tEvent.clientY ).scale( 1 / tempGraph.zoom ).subtract( tempGraph.position );
 		
 		// Grid snap
-		const tempSelected = tempGraph._selectedNodes;
 		if ( tempGraph.isGridSnap )
 		{
 			const tempGridSnap = tempGraph.gridSize / tempGraph.gridSnapIncrement;
-			for ( let i = ( tempSelected.length - 1 ); i >= 0; --i )
+			
+			for ( let tempID in tempSelected )
 			{
-				let tempOffset = this._dragOffsets[i];
-				tempSelected[i].position = new Vector2D( Math.round( ( tempLocalEnd.x - tempOffset.x ) / tempGridSnap ) * tempGridSnap, Math.round( ( tempLocalEnd.y - tempOffset.y ) / tempGridSnap ) * tempGridSnap );
+				let tempOffset = this._dragOffsets[ tempID ];
+				tempSelected[ tempID ].position = new Vector2D( Math.round( ( tempLocalEnd.x - tempOffset.x ) / tempGridSnap ) * tempGridSnap, Math.round( ( tempLocalEnd.y - tempOffset.y ) / tempGridSnap ) * tempGridSnap );
 			}
 		}
 		// No snap
 		else
 		{
-			for ( let i = ( tempSelected.length - 1 ); i >= 0; --i )
+			for ( let tempID in tempSelected )
 			{
-				tempSelected[i].position = Vector2D.Subtract( tempLocalEnd, this._dragOffsets[i] );
+				tempSelected[ tempID ].position = Vector2D.Subtract( tempLocalEnd, this._dragOffsets[ tempID ] );
 			}
 		}
 	}
@@ -242,25 +149,49 @@ export default class Nodes extends React.PureComponent
 		document.removeEventListener( "mousemove", this._onDragMove );
 		document.removeEventListener( "mouseup", this._onDragUp );
 	}
-	
-	onKeyDown( tEvent )
-	{
-		if ( tEvent.keyCode === 46 ) // delete
-		{
-			const tempGraph = this.props.graph;
-			const tempSelected = tempGraph._selectedNodes;
-			for ( let i = ( tempSelected.length - 1 ); i >= 0; --i )
-			{
-				tempGraph.removeNode( tempSelected[i] );
-			}
-		}
-	}
 
 	render( tStyle = Style )
 	{
+		// Elements
+		var tempElements = null;
+		const tempGraph = this.props.graph;
+		if ( tempGraph._selectedNodesCount > 0 ) // selected nodes get rendered last
+		{
+			if ( tempElements === null )
+			{
+				tempElements = [];
+			}
+			
+			for ( let tempID in this._nodes )
+			{
+				if ( tempGraph._selectedNodes[ tempID ] === undefined )
+				{
+					tempElements.push( this._nodes[ tempID ] );
+				}
+			}
+			
+			for ( let tempID in tempGraph._selectedNodes )
+			{
+				tempElements.push( this._nodes[ tempID ] );
+			}
+		}
+		else // render normally
+		{
+			for ( let tempID in this._nodes )
+			{
+				if ( tempElements === null )
+				{
+					tempElements = [];
+				}
+				
+				tempElements.push( this._nodes[ tempID ] );
+			}
+		}
+		
+		// Render
 		return (
 			<g className={ tStyle.nodes }>
-				{ this.state.nodes }
+				{ tempElements }
 			</g>
 		);
 	}

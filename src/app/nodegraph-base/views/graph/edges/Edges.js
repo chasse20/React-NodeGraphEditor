@@ -8,15 +8,8 @@ export default class Edges extends React.Component
 		// Inheritance
 		super( tProps );
 
-		// State
-		this.state =
-		{
-			edges: null
-		};
-		
 		// Variables
-		this._edges = null;
-		this._edgesCount = 0;
+		this._edges = {};
 	}
 
 	onLink( tModel, tIsSet )
@@ -38,27 +31,13 @@ export default class Edges extends React.Component
 	
 	setEdge( tEdgeView )
 	{
-		if ( tEdgeView != null )
+		if ( tEdgeView != null && this._edges[ tEdgeView.key ] === undefined )
 		{
-			if ( this._edgesCount <= 0 )
-			{
-				this._edgesCount = 1;
-				this._edges = {};
-				this._edges[ tEdgeView.key ] = tEdgeView;
-				
-				this.setState( { edges: Object.values( this._edges ) } );
-				
-				return true;
-			}
-			else if ( this._edges[ tEdgeView.key ] === undefined )
-			{
-				this._edges[ tEdgeView.key ] = tEdgeView;
-				++this._edgesCount;
-				
-				this.setState( { edges: Object.values( this._edges ) } );
-				
-				return true;
-			}
+			this._edges[ tEdgeView.key ] = tEdgeView;
+			
+			this.forceUpdate();
+			
+			return true;
 		}
 		
 		return false;
@@ -70,18 +49,7 @@ export default class Edges extends React.Component
 		{
 			delete this._edges[ tID ];
 			
-			--this._edgesCount;
-			if ( this._edgesCount <= 0 )
-			{
-				this._edgesCount = 0;
-				this._edges = null;
-				
-				this.setState( { edges: null } );
-			}
-			else
-			{
-				this.setState( { edges: Object.values( this._edges ) } );
-			}
+			this.forceUpdate();
 			
 			return true;
 		}
@@ -93,7 +61,7 @@ export default class Edges extends React.Component
 	{
 		return (
 			<g className={ tStyle.edges }>
-				{ this.state.edges }
+				{ Object.values( this._edges ) }
 			</g>
 		);
 	}

@@ -6,7 +6,11 @@ export default class Graph
 	constructor()
 	{
 		this._nodes = {};
-		this._selectedNodes = [];
+		this._nodesCount = 0;
+		this._selectedNodes = {};
+		this._selectedNodesCount = 0;
+		this._selectedEdges = {};
+		this._selectedEdgesCount = 0;
 		this._nodeTypes = {};
 		this._edgeTypes = {};
 		this.position = new Vector2D();
@@ -48,11 +52,13 @@ export default class Graph
 		return false;
 	}
 	
-	addSelectedNode( tNode )
+	setSelectedNode( tNode )
 	{
-		if ( tNode != null && this._selectedNodes.indexOf( tNode ) === -1 )
+		if ( tNode != null && !has( this._selectedNodes, tNode._id ) )
 		{
-			this._selectedNodes.push( tNode );
+			set( this._selectedNodes, tNode._id, tNode );
+			++this._selectedNodesCount;
+			
 			tNode._isSelected = true;
 			
 			return true;
@@ -63,8 +69,11 @@ export default class Graph
 	
 	removeSelectedNode( tNode )
 	{
-		if ( tNode != null && this._selectedNodes.remove( tNode ) )
+		if ( tNode != null && tNode === get( this._selectedNodes, tNode._id ) )
 		{
+			remove( this._selectedNodes, tNode._id );
+			--this._selectedNodesCount;
+			
 			tNode._isSelected = false;
 
 			return true;
@@ -75,22 +84,29 @@ export default class Graph
 	
 	clearSelectedNodes()
 	{
-		for ( let i = ( this._selectedNodes.length - 1 ); i >= 0; --i )
+		const tempNodes = values( this._selectedNodes );
+		for ( let i = ( tempNodes.length - 1 ); i >= 0; --i )
 		{
-			this._selectedNodes[i]._isSelected = false;
+			let tempNode = tempNodes[i];
+			tempNode._isSelected = false;
+			remove( this._selectedNodes, tempNode._id );
 		}
-		
-		this._selectedNodes.clear();
 	}
 	
-	addSelectedEdge( tEdge )
+	setSelectedEdge( tEdge )
 	{
-		if ( tEdge != null && this._selectedEdges.indexOf( tEdge ) === -1 )
+		if ( tEdge != null )
 		{
-			this._selectedEdges.push( tEdge );
-			tEdge._isSelected = true;
-			
-			return true;
+			const tempID = tEdge.id;
+			if ( !has( this._selectedEdges, tempID ) )
+			{
+				set( this._selectedEdges, tempID, tEdge );
+				++this._selectedEdgesCount;
+				
+				tEdge._isSelected = true;
+				
+				return true;
+			}
 		}
 		
 		return false;
@@ -98,11 +114,18 @@ export default class Graph
 	
 	removeSelectedEdge( tEdge )
 	{
-		if ( tEdge != null && this._selectedEdges.remove( tEdge ) )
+		if ( tEdge != null )
 		{
-			tEdge._isSelected = false;
+			const tempID = tEdge.id;
+			if ( tEdge === get( this._selectedEdges, tempID ) )
+			{			
+				remove( this._selectedEdges, tempID );
+				--this._selectedEdgesCount;
+				
+				tEdge._isSelected = false;
 
-			return true;
+				return true;
+			}
 		}
 		
 		return false;
@@ -110,12 +133,13 @@ export default class Graph
 	
 	clearSelectedEdges()
 	{
-		for ( let i = ( this._selectedEdges.length - 1 ); i >= 0; --i )
+		const tempEdges = values( this._selectedEdges );
+		for ( let i = ( tempEdges.length - 1 ); i >= 0; --i )
 		{
-			this._selectedEdges[i]._isSelected = false;
+			let tempEdge = tempEdges[i];
+			tempEdge._isSelected = false;
+			remove( this._selectedEdges, tempEdge.id );
 		}
-		
-		this._selectedEdges.clear();
 	}
 	
 	setNodeType( tType )
@@ -188,6 +212,9 @@ decorate( Graph,
 	{
 		_nodes: observable.shallow,
 		_selectedNodes: observable.shallow,
+		_selectedNodesCount: observable,
+		_selectedEdges: observable.shallow,
+		_selectedEdgesCount: observable,
 		_nodeTypes: observable.shallow,
 		_edgeTypes: observable.shallow,
 		position: observable,
@@ -200,6 +227,12 @@ decorate( Graph,
 		isGridSnap: observable,
 		setNode: action,
 		removeNode: action,
+		setSelectedNode: action,
+		removeSelectedNode: action,
+		clearSelectedNodes: action,
+		setSelectedEdge: action,
+		removeSelectedEdge: action,
+		clearSelectedEdges: action,
 		setNodeType: action,
 		removeNodeType: action,
 		setEdgeType: action,
