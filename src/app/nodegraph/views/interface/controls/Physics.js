@@ -13,14 +13,14 @@ class Physics extends React.Component
 		super( tProps );
 		
 		// Events
-		this._onToggle = () => { this.props.graph.isPhysics = !this.props.graph.isPhysics; };
+		this._onToggle = () => { this.props.graph._physics.isEnabled = !this.props.graph._physics._isEnabled; };
 	}
 	
 	render( tStyle = Style )
 	{
 		// Class
 		var tempClass = `${ tStyle.button }`;
-		if ( !this.props.graph.isPhysics )
+		if ( !this.props.graph._physics._isEnabled )
 		{
 			tempClass += ` ${ tStyle.deselected }`;
 		}

@@ -9,75 +9,22 @@ import Style from "./Node.module.css";
 
 class Node extends NodeBase
 {
-	constructor( tProps )
-	{
-		// Inheritance
-		super( tProps );
-		
-		// Variables
-		//this._physicsBody = this.createPhysics();
-		
-		// Events
-		this._onSelectedDispose = observe( tProps.model, "_isSelected", ( tChange ) => { this.isSelected = tChange.newValue; } );
-	}
-	
-	componentDidMount()
-	{
-		super.componentDidMount();
-		
-		this.isSelected = this.props.model._isSelected;
-		//this.props.onPhysics( this._physicsBody, true );
-	}
-	
-	componentWillUnmount()
-	{
-		super.componentWillUnmount();
-		
-		//this.props.onPhysics( this._physicsBody, false );
-	}
-	
-	/*createPhysics()
-	{
-		const tempModel = this.props.model;
-		
-		return {
-			id: tempModel._id,
-			x: tempModel.position.x,
-			y: tempModel.position.y,
-			model: tempModel
-		};
-	}
-	
-	set isSelected( tIsSelected )
-	{
-		// Physics
-		if ( tIsSelected )
-		{
-			this._physicsBody.fx = this.props.model.position.x;
-			this._physicsBody.fy = this.props.model.position.y;
-		}
-		else
-		{
-			delete this._physicsBody.fx;
-			delete this._physicsBody.fy;
-		}
-	}
-
 	set position( tPosition )
 	{
 		// Physics
 		if ( this.props.model._isSelected )
 		{
-			this._physicsBody.fx = tPosition.x;
-			this._physicsBody.fy = tPosition.y;
+			const tempBody = this.props.model._graph._physics.getNodeBody( this.props.model );
+			if ( tempBody != null )
+			{
+				tempBody.fx = tPosition.x;
+				tempBody.fy = tPosition.y;
+			}
 		}
-		
-		this._physicsBody.x = tPosition.x;
-		this._physicsBody.y = tPosition.y;
 		
 		// Inheritance
 		super.position = tPosition;
-	}*/
+	}
 	
 	render( tStyle = Style ) // TODO: reduse code repeat
 	{

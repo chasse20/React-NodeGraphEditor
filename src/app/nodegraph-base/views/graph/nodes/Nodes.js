@@ -101,6 +101,8 @@ export default class Nodes extends React.PureComponent
 		const tempGraph = this.props.graph;
 		if ( tempGraph._selectedNodesCount > 0 )
 		{
+			tempGraph._physics.restart();
+			
 			const tempSelected = tempGraph._selectedNodes;
 			const tempLocalStart = new Vector2D( tEvent.clientX, tEvent.clientY ).scale( 1 / tempGraph.zoom ).subtract( tempGraph.position );
 			

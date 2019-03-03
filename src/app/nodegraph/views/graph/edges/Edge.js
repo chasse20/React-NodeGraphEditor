@@ -16,18 +16,10 @@ class Edge extends EdgeBase
 
 		// Variables
 		this._textElement = null;
-		//this._physicsBody = this.createPhysics();
 
 		// Events
 		this._onTextElement = ( tElement ) => { this._textElement = tElement; };
 		this._onTargetRadius = observe( tProps.model._target._node._type, "radius", ( tChange ) => { this.targetPosition = this.props.model._target.position; } );
-	}
-	
-	componentDidMount()
-	{
-		super.componentDidMount();
-		
-		//this.props.onPhysics( this._physicsBody, true );
 	}
 	
 	componentWillUnmount()
@@ -38,17 +30,6 @@ class Edge extends EdgeBase
 		// Events
 		this._onTargetRadius();
 		this._onTargetRadius = null;
-		//this.props.onPhysics( this._physicsBody, false );
-	}
-	
-	createPhysics()
-	{
-		const tempModel = this.props.model;
-		
-		return {
-			source: tempModel._source._node._id,
-			target: tempModel._target._node._id
-		};
 	}
 	
 	set sourcePosition( tVector )
