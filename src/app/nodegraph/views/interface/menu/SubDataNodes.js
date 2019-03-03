@@ -5,17 +5,17 @@ import GraphModel from "../../../models/Graph";
 import SubData from "./SubData";
 import ItemNode from "./ItemNode";
 
-class SubDataNode extends SubData
+class SubDataNodes extends SubData
 {	
 	renderItems()
 	{
-		const tempNodes = this.props.graph._selectedNodes;
-		if ( tempNodes.length > 0 )
+		const tempGraph = this.props.graph;
+		if ( tempGraph._selectedNodesCount > 0 )
 		{
 			return (
 				<React.Fragment>
 					{
-						tempNodes.map(
+						Object.values( tempGraph._selectedNodes ).map(
 							( tNode ) =>
 							(
 								<ItemNode key={ tNode._id } model={ tNode }/>
@@ -30,16 +30,16 @@ class SubDataNode extends SubData
 	}
 }
 
-SubDataNode.propTypes = Object.assign(
+SubDataNodes.propTypes = Object.assign(
 	{
 		graph: PropTypes.instanceOf( GraphModel ).isRequired
 	},
 	SubData.propTypes
 );
 
-SubDataNode.defaultProps =
+SubDataNodes.defaultProps =
 {
 	title: "selected nodes"
 };
 
-export default observer( SubDataNode );
+export default observer( SubDataNodes );

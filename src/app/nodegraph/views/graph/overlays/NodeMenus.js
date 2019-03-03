@@ -9,13 +9,13 @@ class NodeMenus extends React.Component
 {
 	render( tStyle = Style )
 	{
-		const tempNodes = this.props.graph._selectedNodes;
-		if ( tempNodes.length > 0 )
+		const tempGraph = this.props.graph;
+		if ( tempGraph._selectedNodesCount > 0 )
 		{
 			return (
 				<g className={ tStyle.menus }>
 					{
-						tempNodes.map(
+						Object.values( tempGraph._selectedNodes ).map(
 							( tNode ) =>
 							(
 								<NodeMenu key={ tNode._id } node={ tNode }/>

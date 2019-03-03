@@ -84,7 +84,7 @@ export default class Nodes extends React.PureComponent
 	
 	removeNode( tID )
 	{
-		if ( this._nodesCount > 0 && this._nodes[ tID ] !== undefined )
+		if ( this._nodes[ tID ] !== undefined )
 		{
 			delete this._nodes[ tID ];
 			

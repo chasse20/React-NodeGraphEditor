@@ -5,17 +5,17 @@ import GraphModel from "../../../models/Graph";
 import SubData from "./SubData";
 import ItemEdge from "./ItemEdge";
 
-class SubDataEdge extends SubData
+class SubDataEdges extends SubData
 {	
 	renderItems()
 	{
-		const tempEdges = this.props.graph._selectedEdges;
-		if ( tempEdges.length > 0 )
+		const tempGraph = this.props.graph;
+		if ( tempGraph._selectedEdgesCount > 0 )
 		{
 			return (
 				<React.Fragment>
 					{
-						tempEdges.map(
+						Object.values( tempGraph._selectedEdges ).map(
 							( tEdge ) =>
 							(
 								<ItemEdge key={ tEdge.id } model={ tEdge }/>
@@ -30,16 +30,16 @@ class SubDataEdge extends SubData
 	}
 }
 
-SubDataEdge.propTypes = Object.assign(
+SubDataEdges.propTypes = Object.assign(
 	{
 		graph: PropTypes.instanceOf( GraphModel ).isRequired
 	},
 	SubData.propTypes
 );
 
-SubDataEdge.defaultProps =
+SubDataEdges.defaultProps =
 {
 	title: "selected edges"
 };
 
-export default observer( SubDataEdge );
+export default observer( SubDataEdges );

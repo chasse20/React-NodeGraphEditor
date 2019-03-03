@@ -24,6 +24,11 @@
 	composes: line from edgebase;
 }
 
+.selected
+{
+	composes: selected from edgebase;
+}
+
 .selection
 {
 	composes: selection from edgebase;

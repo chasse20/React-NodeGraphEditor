@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { observe } from "mobx";
 import GraphModel from "../../../models/Graph";
 import NodesBase from "../../../../nodegraph-base/views/graph/nodes/Nodes";
 
@@ -18,10 +19,10 @@ export default class Nodes extends NodesBase
 	componentDidMount()
 	{
 		// Inheritance
-		super.componentWillUnmount();
+		super.componentDidMount();
 		
 		// Selected state
-		if ( tempGraph._selectedNodesCount > 0 )
+		if ( this.props.graph._selectedNodesCount > 0 )
 		{
 			document.addEventListener( "keydown", this._onKeyDown );
 		}
@@ -54,15 +55,14 @@ export default class Nodes extends NodesBase
 	
 	onSelectedCount( tChange )
 	{
-		console.log( tChange );
-		/*if ( tChange.addedCount > 0 && tChange.object.length === 1 )
+		if ( tChange.newValue === 0 )
+		{
+			document.removeEventListener( "keydown", this._onKeyDown );
+		}
+		else if ( tChange.newValue === 1 )
 		{
 			document.addEventListener( "keydown", this._onKeyDown );
 		}
-		else if ( tChange.removedCount > 0 && tChange.object.length === 0 )
-		{
-			document.removeEventListener( "keydown", this._onKeyDown );
-		}*/
 	}
 	
 	onKeyDown( tEvent )
@@ -70,9 +70,10 @@ export default class Nodes extends NodesBase
 		if ( tEvent.keyCode === 46 ) // delete
 		{
 			const tempGraph = this.props.graph;
-			for ( let tempID in tempGraph._selectedNodes )
+			const tempSelected = tempGraph._selectedNodes;
+			for ( let tempID in tempSelected )
 			{
-				tempGraph.removeNode( tempGraph._selectedNodes[ tempID ] );
+				tempGraph.removeNode( tempSelected[ tempID ] );
 			}
 		}
 	}

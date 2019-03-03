@@ -91,6 +91,8 @@ export default class Graph
 			tempNode._isSelected = false;
 			remove( this._selectedNodes, tempNode._id );
 		}
+		
+		this._selectedNodesCount = 0;
 	}
 	
 	setSelectedEdge( tEdge )
@@ -140,6 +142,8 @@ export default class Graph
 			tempEdge._isSelected = false;
 			remove( this._selectedEdges, tempEdge.id );
 		}
+		
+		this._selectedEdgesCount = 0;
 	}
 	
 	setNodeType( tType )

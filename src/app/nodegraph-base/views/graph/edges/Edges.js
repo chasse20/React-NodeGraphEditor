@@ -45,7 +45,7 @@ export default class Edges extends React.Component
 	
 	removeEdge( tID )
 	{
-		if ( this._edgesCount > 0 && this._edges[ tID ] !== undefined )
+		if ( this._edges[ tID ] !== undefined )
 		{
 			delete this._edges[ tID ];
 			

@@ -5,8 +5,8 @@ import SubImport from "./SubImport";
 import SubExport from "./SubExport";
 import SubTypesNode from "./SubTypesNode";
 import SubTypesEdge from "./SubTypesEdge";
-import SubDataNode from "./SubDataNode";
-import SubDataEdge from "./SubDataEdge";
+import SubDataNodes from "./SubDataNodes";
+import SubDataEdges from "./SubDataEdges";
 import Style from "./Menu.module.css";
 
 export default class Menu extends React.PureComponent
@@ -75,8 +75,8 @@ export default class Menu extends React.PureComponent
 			case 2: // Data
 				return (
 					<React.Fragment>
-						<SubDataNode graph={ this.props.graph }/>
-						<SubDataEdge graph={ this.props.graph }/>
+						<SubDataNodes graph={ this.props.graph }/>
+						<SubDataEdges graph={ this.props.graph }/>
 					</React.Fragment>
 				);
 			default:
