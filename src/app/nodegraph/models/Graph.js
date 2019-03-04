@@ -11,6 +11,18 @@ export default class Graph extends GraphBase
 		this.linkingPin = null;
 		this._physics = new Physics( this );
 	}
+	
+	setNode( tNode )
+	{
+		if ( super.setNode( tNode ) )
+		{
+			this._physics.onSetNode( tNode );
+			
+			return true;
+		}
+		
+		return false;
+	}
 }
 
 decorate( Graph,

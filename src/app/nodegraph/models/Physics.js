@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { decorate, observable, values } from "mobx";
-import { forceSimulation, forceLink, forceManyBody, forceCenter } from "d3";
+import { forceSimulation, forceLink, forceManyBody, forceCenter, forceCollide } from "d3";
 import Vector2D from "../../core/Vector2D";
 import BodyNode from "./BodyNode";
 import BodyEdge from "./BodyEdge";
@@ -20,13 +20,14 @@ export default class Physics
 		
 		this._simulation = forceSimulation();
 		this._simulation.force( "charge", this.createChargeForce() );
+		this._simulation.force( "collide", this.createCollideForce() );
 		this._simulation.force( "link", this.createLinkForce() );
 		this._simulation.force( "center", this.createCenterForce() );
 		this._simulation.on( "tick", () => { this.onTick(); } );
-		this._simulation.stop();
 		
 		// Initialize
 		this.handleEnabled();
+		this.restart();
 	}
 	
 	destroy()
@@ -70,9 +71,27 @@ export default class Physics
 		}
 	}
 	
+	restart()
+	{
+		if ( this._isEnabled )
+		{
+			this._simulation.alpha( 1 ).alphaTarget( 0 ).restart();
+		}
+	}
+	
 	createChargeForce()
 	{
-		return forceManyBody().strength( -5000 ).distanceMax( 1500 );
+		return forceManyBody().strength( -100 ).distanceMax( 500 );
+	}
+	
+	createCollideForce()
+	{
+		return forceCollide(
+			( tNode ) =>
+			{
+				return tNode._model._type.radius * 1.5;
+			}
+		);
 	}
 	
 	createLinkForce()
@@ -142,10 +161,9 @@ export default class Physics
 						}
 					}
 				}
-				
-				this._simulation.force( "center", this.createCenterForce() );
-				this._simulation.alpha( 1 ).restart();
 			}
+			
+			this.restart();
 		}
 		else
 		{
