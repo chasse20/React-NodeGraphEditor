@@ -23,6 +23,18 @@ export default class Graph extends GraphBase
 		
 		return false;
 	}
+	
+	removeNode( tNode )
+	{
+		if ( super.removeNode( tNode ) )
+		{
+			this._physics.onRemoveNode( tNode );
+
+			return true;
+		}
+		
+		return false;
+	}
 }
 
 decorate( Graph,

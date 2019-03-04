@@ -19,6 +19,15 @@ export default class Node
 		this._isSelected = false;
 	}
 	
+	clearLinks()
+	{
+		const tempPins = values( this._pins );
+		for ( let i = ( tempPins.length - 1 ); i >= 0; --i )
+		{
+			tempPins[i].clearLinks();
+		}
+	}
+	
 	removeEdgesOfType( tType )
 	{
 		if ( tType != null )

@@ -70,6 +70,15 @@ export default class Pin
 		return false;
 	}
 	
+	clearLinks()
+	{
+		const tempLinks = values( this._links );
+		for ( let i = ( tempLinks.length - 1 ); i >= 0; --i )
+		{
+			this.removeLink( tempLinks[i] );
+		}
+	}
+	
 	removeEdgesOfType( tType )
 	{
 		if ( this._isOut && tType != null && ( this._edgeTypes == null || this._edgeTypes === tType ) )

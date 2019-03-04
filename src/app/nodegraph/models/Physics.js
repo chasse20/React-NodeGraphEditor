@@ -81,7 +81,7 @@ export default class Physics
 	
 	createChargeForce()
 	{
-		return forceManyBody().strength( -100 ).distanceMax( 500 );
+		return forceManyBody().strength( -80 ).distanceMax( 500 );
 	}
 	
 	createCollideForce()
@@ -104,15 +104,14 @@ export default class Physics
 		).distance(
 			( tLink ) =>
 			{
-				var tempWeight = 500; // min
 				if ( tLink._model.weight < 5 )
 				{
-					tempWeight += ( ( 1000 - tempWeight ) * tLink._model.weight ) * -0.2; // 5 is max weight which forces min... weight of 0 is 500
+					return ( ( 250 - 750 ) * 0.2 * tLink._model.weight ) + 400; // 5 is max length is min 250... length of 0 is max 750
 				}
 				
-				return tempWeight;
+				return 250; // min
 			}
-		).strength( 1 );
+		);
 	}
 	
 	createCenterForce()
@@ -139,7 +138,7 @@ export default class Physics
 			const tempNodes = values( this._graph._nodes );
 			for ( let i = ( tempNodes.length - 1 ); i >= 0; --i )
 			{
-				this.onSetNode( tempNodes[i], i === 0 );
+				this.onSetNode( tempNodes[i] );
 			}
 			
 			// Edges (oof expensive because d3 doesn't like dynamic data! might consider refactoring links hash in graph model and straight array of links in pin)
@@ -156,14 +155,14 @@ export default class Physics
 							let tempLinks = values( tempPin._links );
 							for ( let k = ( tempLinks.length - 1 ); k >= 0; --k )
 							{
-								this.onSetEdge( tempLinks[k], k === 0 );
+								this.onSetEdge( tempLinks[k] );
 							}
 						}
 					}
 				}
+				
+				this.restart();
 			}
-			
-			this.restart();
 		}
 		else
 		{
@@ -171,7 +170,7 @@ export default class Physics
 		}
 	}
 	
-	onSetNode( tNodeModel, tIsApplied = true )
+	onSetNode( tNodeModel )
 	{
 		if ( this._isEnabled )
 		{
@@ -187,15 +186,41 @@ export default class Physics
 				this._nodesHash[ tNodeModel._id ] = tempBody;
 				this._nodes.push( tempBody );
 				
-				if ( tIsApplied )
-				{
-					this._simulation.nodes( this._nodes );
-				}
+				this._simulation.nodes( this._nodes ); // has to reindex every time
 			}
 		}
 	}
 	
-	onSetEdge( tEdgeModel, tIsApplied = true )
+	onRemoveNode( tNodeModel )
+	{
+		if ( this._nodesHash !== null )
+		{
+			const tempBody = this._nodesHash[ tNodeModel._id ];
+			if ( tempBody !== undefined )
+			{
+				// Nodes
+				this._nodes.splice( tempBody.index, 1 );
+				if ( this._nodes.length === 0 )
+				{
+					this._nodes = null;
+					this._nodesHash = null;
+					
+					this._simulation.stop();
+					this._simulation.nodes( [] );
+				}
+				else
+				{
+					delete this._nodesHash[ tNodeModel._id ];
+					
+					this._simulation.nodes( this._nodes );
+				}
+				
+				return true;
+			}
+		}
+	}
+	
+	onSetEdge( tEdgeModel )
 	{
 		if ( this._isEnabled )
 		{
@@ -212,10 +237,35 @@ export default class Physics
 				this._edgesHash[ tempID ] = tempBody;
 				this._edges.push( tempBody );
 				
-				if ( tIsApplied )
+				this._simulation.force( "link" ).links( this._edges );
+			}
+		}
+	}
+	
+	onRemoveEdge( tEdgeModel )
+	{
+		if ( this._edgesHash !== null )
+		{
+			const tempID = tEdgeModel.id;
+			const tempBody = this._edgesHash[ tempID ];
+			if ( tempBody !== undefined )
+			{
+				this._edges.splice( tempBody.index, 1 );
+				if ( this._edges.length === 0 )
 				{
+					this._edges = null;
+					this._edgesHash = null;
+					
+					this._simulation.force( "link" ).links( [] );
+				}
+				else
+				{
+					delete this._edgesHash[ tempID ];
+
 					this._simulation.force( "link" ).links( this._edges );
 				}
+				
+				return true;
 			}
 		}
 	}

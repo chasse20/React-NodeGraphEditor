@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { observer } from "mobx-react";
+import PinModel from "../../../models/Pin";
 import PinBase from "../../../../nodegraph-base/views/graph/nodes/Pin";
 import Style from "./Pin.module.css";
 
@@ -41,7 +42,10 @@ Pin.propTypes = Object.assign(
 	{
 		onTarget: PropTypes.func.isRequired
 	},
-	PinBase.propTypes
+	PinBase.propTypes,
+	{
+		model: PropTypes.instanceOf( PinModel ).isRequired
+	}
 );
 
 Pin.defaultProps = PinBase.defaultProps;

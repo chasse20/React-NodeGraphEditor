@@ -43,6 +43,7 @@ export default class Graph
 	{
 		if ( tNode != null && tNode === get( this._nodes, tNode._id ) )
 		{
+			tNode.clearLinks();
 			this.removeSelectedNode( tNode );
 			remove( this._nodes, tNode._id );
 
