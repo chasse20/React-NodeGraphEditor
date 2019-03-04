@@ -18,7 +18,6 @@ export default class Physics
 		
 		this._simulation = forceSimulation();
 		this._simulation.velocityDecay( 0.5 );
-		this._simulation.force( "center", this.createCenterForce() );
 		this._simulation.force( "charge", this.createChargeForce() );
 		this._simulation.force( "collide", this.createCollideForce() );
 		this._simulation.force( "link", this.createLinkForce() );
