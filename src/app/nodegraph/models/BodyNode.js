@@ -31,8 +31,8 @@ export default class BodyNode
 		{
 			if ( tIsFrozen )
 			{
-				this.fx = this._model.position.x;
-				this.fy = this._model.position.y;
+				this.fx = this.x;
+				this.fy = this.y;
 				
 				// Mimic external changes to the model if frozen
 				this._onNodePositionDispose = observe( this._model, "position",
@@ -45,6 +45,8 @@ export default class BodyNode
 			}
 			else
 			{
+				this.x = this.fx;
+				this.y = this.fy;
 				this.fx = null;
 				this.fy = null;
 				

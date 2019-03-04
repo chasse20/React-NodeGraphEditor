@@ -1,5 +1,3 @@
-import React from "react";
-import PropTypes from "prop-types";
 import { decorate, observable, values } from "mobx";
 import { forceSimulation, forceLink, forceManyBody, forceCenter, forceCollide } from "d3";
 import Vector2D from "../../core/Vector2D";
@@ -19,15 +17,15 @@ export default class Physics
 		this._edgesHash = null;
 		
 		this._simulation = forceSimulation();
+		this._simulation.velocityDecay( 0.5 );
+		this._simulation.force( "center", this.createCenterForce() );
 		this._simulation.force( "charge", this.createChargeForce() );
 		this._simulation.force( "collide", this.createCollideForce() );
 		this._simulation.force( "link", this.createLinkForce() );
-		this._simulation.force( "center", this.createCenterForce() );
 		this._simulation.on( "tick", () => { this.onTick(); } );
 		
 		// Initialize
 		this.handleEnabled();
-		this.restart();
 	}
 	
 	destroy()
@@ -75,13 +73,13 @@ export default class Physics
 	{
 		if ( this._isEnabled )
 		{
-			this._simulation.alpha( 1 ).alphaTarget( 0 ).restart();
+			this._simulation.alpha( 1 ).restart();
 		}
 	}
 	
 	createChargeForce()
 	{
-		return forceManyBody().strength( -80 ).distanceMax( 500 );
+		return forceManyBody().strength( -70 ).distanceMax( 500 );
 	}
 	
 	createCollideForce()
@@ -111,7 +109,7 @@ export default class Physics
 				
 				return 250; // min
 			}
-		);
+		).strength( 0.5 );
 	}
 	
 	createCenterForce()
@@ -186,6 +184,8 @@ export default class Physics
 				this._nodesHash[ tNodeModel._id ] = tempBody;
 				this._nodes.push( tempBody );
 				
+				tempBody.isFrozen = tNodeModel._isSelected;
+				
 				this._simulation.nodes( this._nodes ); // has to reindex every time
 			}
 		}
@@ -214,8 +214,30 @@ export default class Physics
 					
 					this._simulation.nodes( this._nodes );
 				}
-				
-				return true;
+			}
+		}
+	}
+	
+	onSelectNode( tNodeModel )
+	{
+		if ( this._nodesHash !== null )
+		{
+			const tempBody = this._nodesHash[ tNodeModel._id ];
+			if ( tempBody !== undefined )
+			{
+				tempBody.isFrozen = true;
+			}
+		}
+	}
+	
+	onDeselectNode( tNodeModel )
+	{
+		if ( this._nodesHash !== null )
+		{
+			const tempBody = this._nodesHash[ tNodeModel._id ];
+			if ( tempBody !== undefined )
+			{
+				tempBody.isFrozen = false;
 			}
 		}
 	}
@@ -264,9 +286,23 @@ export default class Physics
 
 					this._simulation.force( "link" ).links( this._edges );
 				}
-				
-				return true;
 			}
+		}
+	}
+	
+	onDragStart()
+	{
+		if ( this._isEnabled )
+		{
+			this._simulation.alphaTarget( 0.3 ).restart();
+		}
+	}
+	
+	onDragEnd()
+	{
+		if ( this._isEnabled )
+		{
+			this._simulation.alphaTarget( 0 );
 		}
 	}
 }

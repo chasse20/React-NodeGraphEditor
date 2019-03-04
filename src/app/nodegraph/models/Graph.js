@@ -35,6 +35,30 @@ export default class Graph extends GraphBase
 		
 		return false;
 	}
+	
+	setSelectedNode( tNode )
+	{
+		if ( super.setSelectedNode( tNode ) )
+		{
+			this._physics.onSelectNode( tNode );
+			
+			return true;
+		}
+		
+		return false;
+	}
+	
+	removeSelectedNode( tNode )
+	{
+		if ( super.removeSelectedNode( tNode ) )
+		{
+			this._physics.onDeselectNode( tNode );
+
+			return true;
+		}
+		
+		return false;
+	}
 }
 
 decorate( Graph,

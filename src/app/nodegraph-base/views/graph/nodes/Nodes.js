@@ -20,7 +20,7 @@ export default class Nodes extends React.PureComponent
 		this._onNodesDispose = observe( tProps.graph._nodes, ( tChange ) => { this.onNodes( tChange ); } );
 		this._onDragStart = ( tEvent ) => { this.onDragStart( tEvent ); };
 		this._onDragMove = ( tEvent ) => { this.onDragMove( tEvent ); };
-		this._onDragUp = ( tEvent ) => { this.onDragUp( tEvent ); };
+		this._onDragEnd = ( tEvent ) => { this.onDragEnd( tEvent ); };
 	}
 	
 	componentDidMount()
@@ -41,7 +41,7 @@ export default class Nodes extends React.PureComponent
 		this._onNodesDispose = null;
 		
 		document.removeEventListener( "mousemove", this._onDragMove );
-		document.removeEventListener( "mouseup", this._onDragUp );
+		document.removeEventListener( "mouseup", this._onDragEnd );
 	}
 	
 	createElement( tModel )
@@ -111,7 +111,7 @@ export default class Nodes extends React.PureComponent
 			}
 		
 			document.addEventListener( "mousemove", this._onDragMove );
-			document.addEventListener( "mouseup", this._onDragUp );
+			document.addEventListener( "mouseup", this._onDragEnd );
 		}
 	}
 	
@@ -142,12 +142,12 @@ export default class Nodes extends React.PureComponent
 		}
 	}
 	
-	onDragUp( tEvent )
+	onDragEnd( tEvent )
 	{
 		this._dragOffsets = null;
 		
 		document.removeEventListener( "mousemove", this._onDragMove );
-		document.removeEventListener( "mouseup", this._onDragUp );
+		document.removeEventListener( "mouseup", this._onDragEnd );
 	}
 
 	render( tStyle = Style )

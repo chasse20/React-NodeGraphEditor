@@ -65,6 +65,24 @@ export default class Nodes extends NodesBase
 		}
 	}
 	
+	onDragStart( tEvent )
+	{
+		// Inheritance
+		super.onDragStart( tEvent );
+		
+		// Notify physics
+		this.props.graph._physics.onDragStart();
+	}
+	
+	onDragEnd( tEvent )
+	{
+		// Inheritance
+		super.onDragEnd( tEvent );
+		
+		// Notify physics
+		this.props.graph._physics.onDragEnd();
+	}
+	
 	onKeyDown( tEvent )
 	{
 		if ( tEvent.keyCode === 46 ) // delete

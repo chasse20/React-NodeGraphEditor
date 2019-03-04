@@ -7,7 +7,7 @@
 	opacity: 0;
 	transition-property: opacity;
 	transition: openTime opacity;
-	transition-delay: openTime;
+	transition-delay: calc( 2 * openTime );
 }
 
 .menu circle
