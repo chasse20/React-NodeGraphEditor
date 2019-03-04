@@ -157,10 +157,7 @@ export default class Nodes extends React.PureComponent
 		const tempGraph = this.props.graph;
 		if ( tempGraph._selectedNodesCount > 0 ) // selected nodes get rendered last
 		{
-			if ( tempElements === null )
-			{
-				tempElements = [];
-			}
+			tempElements = [];
 			
 			for ( let tempID in this._nodes )
 			{
