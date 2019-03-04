@@ -11,7 +11,6 @@
     "file-saver": "2.0.0",
     "mobx": "5.7.0",
     "mobx-react": "5.4.2",
-    "planck-js": "0.3.0-rc.2",
     "react": "16.6.3",
     "react-dom": "16.6.3",
     "react-router-dom": "4.3.1",
