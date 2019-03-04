@@ -26,6 +26,15 @@ class Graph extends GraphBase
 		this._onTargetPin = ( tModel ) => { this._edgeTypeMenu.targetPin = tModel; };
 	}
 	
+	componentWillUnmount()
+	{
+		// Inheritance
+		super.componentWillUnmount();
+		
+		// Clear physics
+		this.props.model._physics.destroy();
+	}
+	
 	onMouseDown( tEvent )
 	{
 		// Inheritance

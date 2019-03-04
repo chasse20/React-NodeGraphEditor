@@ -1,31 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { observer } from "mobx-react";
-import { observe } from "mobx";
 import NodeBase from "../../../../nodegraph-base/views/graph/nodes/Node";
 import NodeModel from "../../../models/Node";
 import Pin from "./Pin";
 import Style from "./Node.module.css";
 
 class Node extends NodeBase
-{
-	set position( tPosition )
-	{
-		// Physics
-		if ( this.props.model._isSelected )
-		{
-			const tempBody = this.props.model._graph._physics.getNodeBody( this.props.model );
-			if ( tempBody != null )
-			{
-				tempBody.fx = tPosition.x;
-				tempBody.fy = tPosition.y;
-			}
-		}
-		
-		// Inheritance
-		super.position = tPosition;
-	}
-	
+{	
 	render( tStyle = Style ) // TODO: reduse code repeat
 	{
 		// Variables

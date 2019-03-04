@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { decorate, observable } from "mobx";
-import { forceSimulation, forceLink, forceManyBody, forceX, forceY } from "d3";
+import { decorate, observable, values } from "mobx";
+import { forceSimulation, forceLink, forceManyBody, forceCenter } from "d3";
 import Vector2D from "../../core/Vector2D";
 import BodyNode from "./BodyNode";
 import BodyEdge from "./BodyEdge";
@@ -12,19 +12,67 @@ export default class Physics
 	{
 		// Variables
 		this._graph = tGraph;
-		this._isEnabled = false;
+		this._isEnabled = true;
 		this._nodes = null; // physics objects
 		this._nodesHash = null;
 		this._edges = null; // physics objects
 		this._edgesHash = null;
 		
 		this._simulation = forceSimulation();
-		this._simulation.force( "charge", forceManyBody() );
+		this._simulation.force( "charge", this.createChargeForce() );
 		this._simulation.force( "link", this.createLinkForce() );
-		this._simulation.force( "x", forceX() );
-		this._simulation.force( "y", forceY() );
+		this._simulation.force( "center", this.createCenterForce() );
 		this._simulation.on( "tick", () => { this.onTick(); } );
 		this._simulation.stop();
+		
+		// Initialize
+		this.handleEnabled();
+	}
+	
+	destroy()
+	{
+		this.clearBodies();
+	}
+	
+	clearBodies()
+	{
+		// Stop
+		this._simulation.stop();
+		
+		// Nodes
+		if ( this._nodes !== null )
+		{
+			for ( let i = ( this._nodes.length - 1 ); i >= 0; --i )
+			{
+				this._nodes[i].destroy();
+			}
+			
+			this._nodes = null;
+			this._nodesHash = null;
+			this._simulation.nodes( [] );
+		}
+		
+		// Edges
+		if ( this._edges !== null )
+		{
+			this._edges = null;
+			this._edgesHash = null;
+			this._simulation.force( "link" ).links( [] );
+		}
+	}
+	
+	onTick()
+	{
+		for ( let i = ( this._nodes.length - 1 ); i >= 0; --i )
+		{
+			let tempNode = this._nodes[i];
+			tempNode._model.position = new Vector2D( tempNode.x, tempNode.y );
+		}
+	}
+	
+	createChargeForce()
+	{
+		return forceManyBody().strength( -5000 ).distanceMax( 1500 );
 	}
 	
 	createLinkForce()
@@ -37,10 +85,10 @@ export default class Physics
 		).distance(
 			( tLink ) =>
 			{
-				var tempWeight = 250; // min
-				if ( tLink.model.weight < 5 )
+				var tempWeight = 500; // min
+				if ( tLink._model.weight < 5 )
 				{
-					tempWeight += ( ( 500 - tempWeight ) * tLink.model.weight ) * -0.2; // 5 is max weight which forces min... weight of 0 is 500
+					tempWeight += ( ( 1000 - tempWeight ) * tLink._model.weight ) * -0.2; // 5 is max weight which forces min... weight of 0 is 500
 				}
 				
 				return tempWeight;
@@ -48,7 +96,113 @@ export default class Physics
 		).strength( 1 );
 	}
 	
-	setNode( tNodeModel, tRestart = true )
+	createCenterForce()
+	{
+		return forceCenter( ( ( window.screen.width * 0.5 ) / this._graph.zoom ) - this._graph.position.x, ( ( window.screen.height * 0.5 ) / this._graph.zoom ) - this._graph.position.y );
+	}
+	
+	set isEnabled( tIsEnabled )
+	{
+		if ( tIsEnabled !== this._isEnabled )
+		{
+			this._isEnabled = tIsEnabled;
+			this.handleEnabled();
+		}
+	}
+	
+	handleEnabled()
+	{
+		if ( this._isEnabled )
+		{
+			this._simulation.stop();
+			
+			// Nodes
+			const tempNodes = values( this._graph._nodes );
+			for ( let i = ( tempNodes.length - 1 ); i >= 0; --i )
+			{
+				this.onSetNode( tempNodes[i], i === 0 );
+			}
+			
+			// Edges (oof expensive because d3 doesn't like dynamic data! might consider refactoring links hash in graph model and straight array of links in pin)
+			if ( this._nodes !== null )
+			{
+				for ( let i = ( this._nodes.length - 1 ); i >= 0; --i )
+				{
+					let tempPins = values( this._nodes[i]._model._pins );
+					for ( let j = ( tempPins.length - 1 ); j >= 0; --j )
+					{
+						let tempPin = tempPins[j];
+						if ( tempPin._isOut )
+						{
+							let tempLinks = values( tempPin._links );
+							for ( let k = ( tempLinks.length - 1 ); k >= 0; --k )
+							{
+								this.onSetEdge( tempLinks[k], k === 0 );
+							}
+						}
+					}
+				}
+				
+				this._simulation.force( "center", this.createCenterForce() );
+				this._simulation.alpha( 1 ).restart();
+			}
+		}
+		else
+		{
+			this.clearBodies();
+		}
+	}
+	
+	onSetNode( tNodeModel, tIsApplied = true )
+	{
+		if ( this._isEnabled )
+		{
+			if ( this._nodes === null )
+			{
+				this._nodes = [];
+				this._nodesHash = {};
+			}
+			
+			if ( this._nodesHash[ tNodeModel._id ] === undefined )
+			{
+				const tempBody = new BodyNode( tNodeModel );
+				this._nodesHash[ tNodeModel._id ] = tempBody;
+				this._nodes.push( tempBody );
+				
+				if ( tIsApplied )
+				{
+					this._simulation.nodes( this._nodes );
+				}
+			}
+		}
+	}
+	
+	onSetEdge( tEdgeModel, tIsApplied = true )
+	{
+		if ( this._isEnabled )
+		{
+			if ( this._edges === null )
+			{
+				this._edges = [];
+				this._edgesHash = {};
+			}
+			
+			const tempID = tEdgeModel.id;
+			if ( this._edgesHash[ tempID ] === undefined )
+			{
+				const tempBody = new BodyEdge( tEdgeModel );
+				this._edgesHash[ tempID ] = tempBody;
+				this._edges.push( tempBody );
+				
+				if ( tIsApplied )
+				{
+					this._simulation.force( "link" ).links( this._edges );
+				}
+			}
+		}
+	}
+	
+	/*setNode( tNodeModel, tRestart = true )
 	{
 		if ( this._isEnabled && tNodeModel != null )
 		{
@@ -231,39 +385,7 @@ export default class Physics
 		{
 			this._simulation.alphaTarget( 0.3 );
 		}
-	}	
-	
-	set isEnabled( tIsEnabled )
-	{
-		if ( this._isEnabled != tIsEnabled )
-		{
-			this._isEnabled = tIsEnabled;
-			if ( this._isEnabled )
-			{
-				for ( let tempID in this._graph._nodes )
-				{
-					this.setNode( this._graph._nodes[ tempID ] );
-				}
-				
-				this.restart();
-			}
-			else
-			{
-				this._nodes = null;
-				this._nodesHash = null;
-				this._simulation.stop();
-			}
-		}
-	}
-	
-	onTick()
-	{
-		for ( let i = ( this._nodes.length - 1 ); i >= 0; --i )
-		{
-			let tempNode = this._nodes[i];
-			tempNode._model.position = new Vector2D( tempNode.x, tempNode.y );
-		}
-	}
+	}*/
 }
 
 decorate( Physics,

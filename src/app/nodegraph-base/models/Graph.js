@@ -87,12 +87,8 @@ export default class Graph
 		const tempNodes = values( this._selectedNodes );
 		for ( let i = ( tempNodes.length - 1 ); i >= 0; --i )
 		{
-			let tempNode = tempNodes[i];
-			tempNode._isSelected = false;
-			remove( this._selectedNodes, tempNode._id );
+			this.removeSelectedNode( tempNodes[i] );
 		}
-		
-		this._selectedNodesCount = 0;
 	}
 	
 	setSelectedEdge( tEdge )
@@ -138,12 +134,8 @@ export default class Graph
 		const tempEdges = values( this._selectedEdges );
 		for ( let i = ( tempEdges.length - 1 ); i >= 0; --i )
 		{
-			let tempEdge = tempEdges[i];
-			tempEdge._isSelected = false;
-			remove( this._selectedEdges, tempEdge.id );
+			this.removeSelectedEdge( tempEdges[i] );
 		}
-		
-		this._selectedEdgesCount = 0;
 	}
 	
 	setNodeType( tType )
