@@ -38,7 +38,7 @@
       "text": "Programming"
     },
     {
-      "name": "Voice Acting",
+      "name": "Voice_Acting",
       "stroke": "#b99b26",
       "text": "Voice Acting"
     },
@@ -53,7 +53,7 @@
       "text": "Direction"
     },
     {
-      "name": "Sound Design",
+      "name": "Sound_Design",
       "stroke": "#e0801f",
       "text": "Sound Design"
     },
@@ -63,12 +63,12 @@
       "text": "Music"
     },
     {
-      "name": "Technical Support",
+      "name": "Tech_Support",
       "stroke": "#12a8b4",
-      "text": "Tech Support\n"
+      "text": "Tech Support"
     },
     {
-      "name": "Special Thanks",
+      "name": "Special_Thanks",
       "text": "Special Thanks"
     },
     {
@@ -164,7 +164,7 @@
             },
             {
               "node": 2,
-              "type": "Sound Design",
+              "type": "Sound_Design",
               "pin": "in"
             }
           ]
@@ -424,7 +424,7 @@
           "links": [
             {
               "node": 2,
-              "type": "Voice Acting",
+              "type": "Voice_Acting",
               "pin": "in"
             }
           ]
@@ -574,7 +574,7 @@
           "links": [
             {
               "node": 2,
-              "type": "Voice Acting",
+              "type": "Voice_Acting",
               "pin": "in"
             }
           ]
@@ -594,12 +594,12 @@
           "links": [
             {
               "node": 3,
-              "type": "Technical Support",
+              "type": "Tech_Support",
               "pin": "in"
             },
             {
               "node": 2,
-              "type": "Technical Support",
+              "type": "Tech_Support",
               "pin": "in"
             }
           ]
@@ -619,12 +619,12 @@
           "links": [
             {
               "node": 3,
-              "type": "Technical Support",
+              "type": "Tech_Support",
               "pin": "in"
             },
             {
               "node": 2,
-              "type": "Technical Support",
+              "type": "Tech_Support",
               "pin": "in"
             }
           ]
@@ -714,7 +714,7 @@
           "links": [
             {
               "node": 2,
-              "type": "Special Thanks",
+              "type": "Special_Thanks",
               "pin": "in"
             }
           ]
@@ -734,7 +734,7 @@
           "links": [
             {
               "node": 2,
-              "type": "Special Thanks",
+              "type": "Special_Thanks",
               "pin": "in"
             }
           ]
@@ -754,7 +754,7 @@
           "links": [
             {
               "node": 2,
-              "type": "Sound Design",
+              "type": "Sound_Design",
               "pin": "in"
             }
           ]
@@ -814,7 +814,7 @@
           "links": [
             {
               "node": 2,
-              "type": "Special Thanks",
+              "type": "Special_Thanks",
               "pin": "in"
             }
           ]
@@ -839,7 +839,7 @@
             },
             {
               "node": 2,
-              "type": "Special Thanks",
+              "type": "Special_Thanks",
               "pin": "in"
             }
           ]
@@ -864,7 +864,7 @@
             },
             {
               "node": 2,
-              "type": "Special Thanks",
+              "type": "Special_Thanks",
               "pin": "in"
             }
           ]
@@ -884,12 +884,12 @@
           "links": [
             {
               "node": 3,
-              "type": "Special Thanks",
+              "type": "Special_Thanks",
               "pin": "in"
             },
             {
               "node": 2,
-              "type": "Special Thanks",
+              "type": "Special_Thanks",
               "pin": "in"
             }
           ]
@@ -909,7 +909,7 @@
           "links": [
             {
               "node": 2,
-              "type": "Special Thanks",
+              "type": "Special_Thanks",
               "pin": "in"
             }
           ]
@@ -929,7 +929,7 @@
           "links": [
             {
               "node": 2,
-              "type": "Special Thanks",
+              "type": "Special_Thanks",
               "pin": "in"
             }
           ]
@@ -1209,7 +1209,7 @@
           "links": [
             {
               "node": 3,
-              "type": "Sound Design",
+              "type": "Sound_Design",
               "pin": "in"
             }
           ]
@@ -1289,7 +1289,7 @@
           "links": [
             {
               "node": 3,
-              "type": "Technical Support",
+              "type": "Tech_Support",
               "pin": "in"
             }
           ]
@@ -1329,7 +1329,7 @@
           "links": [
             {
               "node": 3,
-              "type": "Voice Acting",
+              "type": "Voice_Acting",
               "pin": "in"
             }
           ]
@@ -1429,7 +1429,7 @@
           "links": [
             {
               "node": 3,
-              "type": "Voice Acting",
+              "type": "Voice_Acting",
               "pin": "in"
             }
           ]
