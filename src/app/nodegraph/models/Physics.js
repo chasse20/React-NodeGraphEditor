@@ -15,6 +15,7 @@ export default class Physics
 		this._nodesHash = null;
 		this._edges = null; // physics objects
 		this._edgesHash = null;
+		this._seedCenterTimeout = null;
 		
 		this._simulation = forceSimulation();
 		this._simulation.velocityDecay( 0.85 );
@@ -32,6 +33,12 @@ export default class Physics
 	destroy()
 	{
 		this.clearBodies();
+		
+		if ( this._seedCenterTimeout !== null )
+		{
+			clearTimeout( this._seedCenterTimeout );
+			this._seedCenterTimeout = null;
+		}
 	}
 	
 	clearBodies()
@@ -73,11 +80,17 @@ export default class Physics
 	seedCenter()
 	{
 		this._simulation.force( "center", this.createCenterForce() );
+	
+		if ( this._seedCenterTimeout !== null )
+		{
+			clearTimeout( this._seedCenterTimeout );
+		}
 		
-		setTimeout(
+		this._seedCenterTimeout = setTimeout(
 			() =>
 			{
 				this._simulation.force( "center", null );
+				this._seedCenterTimeout = null;
 			},
 			2000
 		);

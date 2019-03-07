@@ -1,1 +1,1445 @@
-{"position":{"x":1005.4385557682892,"y":-127.02612729547718},"zoom":0.65,"nodeTypes":[{"name":"Company","radius":100,"fill":"#d14747"},{"name":"Person","fill":"#458cd3"},{"name":"Game","radius":75,"fill":"#21bc8a"},{"name":"Organization","radius":100,"fill":"#b541b8"}],"edgeTypes":[{"name":"Publishes","stroke":"#b42528","text":"Publishes\n"},{"name":"Art","stroke":"#c453c0","text":"Art"},{"name":"Programming","stroke":"#09a264","text":"Programming"},{"name":"Voice Acting","stroke":"#b99b26","text":"Voice Acting"},{"name":"Production","stroke":"#2d8ae8","text":"Production\n"},{"name":"Direction","stroke":"#404bdf","text":"Direction"},{"name":"Sound Design","stroke":"#e0801f","text":"Sound Design"},{"name":"Music","stroke":"#ae8f51","text":"Music"},{"name":"Technical Support","stroke":"#12a8b4","text":"Tech Support\n"},{"name":"Special Thanks","text":"Special Thanks"},{"name":"Editing","stroke":"#dd2272","text":"Editing"},{"name":"Translation","stroke":"#925ca3","text":"Translation"}],"nodes":[{"id":114,"type":"Company","pins":{"out":{"links":[{"node":116,"type":"Publishes","pin":"in"},{"node":115,"type":"Publishes","pin":"in"}]}},"position":{"x":629.2766388842716,"y":650.2303705104425},"text":"Nintendo\n"},{"id":115,"type":"Game","position":{"x":498.7720241947807,"y":876.3930427756833},"text":"Wave Race 64\n"},{"id":116,"type":"Game","position":{"x":1140.388904885069,"y":771.1743758324977},"text":"Super Mario 64"},{"id":117,"type":"Person","pins":{"out":{"links":[{"node":116,"type":"Production","pin":"in"},{"node":115,"type":"Production","pin":"in"}]}},"position":{"x":845.7852120308232,"y":618.9914836141721},"text":"Hiroshi Yamauchi"},{"id":118,"type":"Person","pins":{"out":{"links":[{"node":116,"type":"Programming","pin":"in"},{"node":115,"type":"Sound Design","pin":"in"}]}},"position":{"x":709.1737468684944,"y":856.0554443446418},"text":"Hideaki Shimizu"},{"id":119,"type":"Person","pins":{"out":{"links":[{"node":116,"type":"Programming","pin":"in"},{"node":115,"type":"Programming","pin":"in"}]}},"position":{"x":891.0718376519276,"y":1203.3232663828526},"text":"Hajime Nakamura"},{"id":120,"type":"Person","pins":{"out":{"links":[{"node":115,"type":"Art","pin":"in"}]}},"position":{"x":23.23243108136873,"y":951.6520607466036},"text":"Tsuyoshi Watanabe"},{"id":121,"type":"Person","pins":{"out":{"links":[{"node":115,"type":"Art","pin":"in"}]}},"position":{"x":100.72004908797992,"y":825.8189894452239},"text":"Hiroyuki Kimura"},{"id":122,"type":"Person","pins":{"out":{"links":[{"node":116,"type":"Art","pin":"in"},{"node":115,"type":"Art","pin":"in"}]}},"position":{"x":1008.5455202014859,"y":1111.4832346802314},"text":"Kenta Usui"},{"id":123,"type":"Person","pins":{"out":{"links":[{"node":116,"type":"Art","pin":"in"},{"node":115,"type":"Art","pin":"in"}]}},"position":{"x":597.3864616202925,"y":1031.5427197767692},"text":"Katsuhiko Kanno"},{"id":124,"type":"Person","pins":{"out":{"links":[{"node":116,"type":"Direction","pin":"in"},{"node":115,"type":"Production","pin":"in"}]}},"position":{"x":987.3809557987217,"y":967.2376622292181},"text":"Shigeru Miyamoto"},{"id":125,"type":"Person","pins":{"out":{"links":[{"node":115,"type":"Direction","pin":"in"}]}},"position":{"x":303.22595067093346,"y":488.4678199520563},"text":"Katsuya Eguchi"},{"id":126,"type":"Person","pins":{"out":{"links":[{"node":115,"type":"Music","pin":"in"}]}},"position":{"x":243.4540243208196,"y":781.7930215065127},"text":"Kazumi Totaka"},{"id":127,"type":"Person","pins":{"out":{"links":[{"node":115,"type":"Programming","pin":"in"}]}},"position":{"x":415.38450653616667,"y":586.2003879091303},"text":"Tsutomu Kaneshige"},{"id":128,"type":"Person","pins":{"out":{"links":[{"node":115,"type":"Programming","pin":"in"}]}},"position":{"x":-9.666451007484495,"y":728.7851431609819},"text":"Hiroki Sotoike"},{"id":129,"type":"Person","pins":{"out":{"links":[{"node":115,"type":"Direction","pin":"in"}]}},"position":{"x":279.4737761668095,"y":341.9168040795952},"text":"Mitsuhiro Takano"},{"id":130,"type":"Person","pins":{"out":{"links":[{"node":115,"type":"Voice Acting","pin":"in"}]}},"position":{"x":98.84776723134043,"y":1079.894994225428},"text":"Yamazaki Kiyomi"},{"id":131,"type":"Person","pins":{"out":{"links":[{"node":116,"type":"Direction","pin":"in"},{"node":115,"type":"Direction","pin":"in"}]}},"position":{"x":848.3659215509896,"y":909.4178821168506},"text":"Yoichi Yamada"},{"id":132,"type":"Person","pins":{"out":{"links":[{"node":115,"type":"Direction","pin":"in"}]}},"position":{"x":139.6110839861673,"y":389.6305007134439},"text":"Shinya Takahashi"},{"id":133,"type":"Person","pins":{"out":{"links":[{"node":116,"type":"Programming","pin":"in"},{"node":115,"type":"Programming","pin":"in"}]}},"position":{"x":752.2137253927914,"y":1151.2139333723803},"text":"Takumi Kawagoe"},{"id":134,"type":"Person","pins":{"out":{"links":[{"node":115,"type":"Programming","pin":"in"}]}},"position":{"x":384.8529332158376,"y":731.952488992645},"text":"Daisuke Tsujimura"},{"id":135,"type":"Person","pins":{"out":{"links":[{"node":115,"type":"Programming","pin":"in"}]}},"position":{"x":164.0963125933579,"y":534.0206775131163},"text":"Keizo Ota"},{"id":136,"type":"Person","pins":{"out":{"links":[{"node":115,"type":"Programming","pin":"in"}]}},"position":{"x":22.894687969409535,"y":583.403575967069},"text":"Takashi Endo"},{"id":137,"type":"Person","pins":{"out":{"links":[{"node":115,"type":"Voice Acting","pin":"in"}]}},"position":{"x":175.6506124024011,"y":1207.409265238892},"text":"John Hulaton"},{"id":138,"type":"Person","pins":{"out":{"links":[{"node":116,"type":"Technical Support","pin":"in"},{"node":115,"type":"Technical Support","pin":"in"}]}},"position":{"x":735.8169525498486,"y":1001.4710520438672},"text":"Hirohito Yoshimoto"},{"id":139,"type":"Person","pins":{"out":{"links":[{"node":116,"type":"Technical Support","pin":"in"},{"node":115,"type":"Technical Support","pin":"in"}]}},"position":{"x":823.9211182961067,"y":762.2103515619266},"text":"Takao Sawano"},{"id":140,"type":"Person","pins":{"out":{"links":[{"node":116,"type":"Production","pin":"in"},{"node":115,"type":"Production","pin":"in"}]}},"position":{"x":960.7116064979439,"y":823.4456285174448},"text":"Koichi Fukui"},{"id":141,"type":"Person","pins":{"out":{"links":[{"node":116,"type":"Production","pin":"in"},{"node":115,"type":"Production","pin":"in"}]}},"position":{"x":971.6459285927626,"y":535.3008814359687},"text":"Keizo Kato"},{"id":142,"type":"Person","pins":{"out":{"links":[{"node":115,"type":"Art","pin":"in"}]}},"position":{"x":133.30587470419312,"y":682.6453094199478},"text":"Kazumi Yamaguchi"},{"id":143,"type":"Person","pins":{"out":{"links":[{"node":115,"type":"Special Thanks","pin":"in"}]}},"position":{"x":274.8786749831374,"y":634.4558823515076},"text":"Katsuhito Yamauchi"},{"id":144,"type":"Person","pins":{"out":{"links":[{"node":115,"type":"Special Thanks","pin":"in"}]}},"position":{"x":400.093798278855,"y":1077.128940409658},"text":"Makoto Kanoh"},{"id":145,"type":"Person","pins":{"out":{"links":[{"node":115,"type":"Sound Design","pin":"in"}]}},"position":{"x":250.71636243832907,"y":1078.6498280180324},"text":"Hideki Fujii"},{"id":146,"type":"Person","pins":{"out":{"links":[{"node":115,"type":"Art","pin":"in"}]}},"position":{"x":172.8728298560148,"y":950.8117945125827},"text":"Yusuke Nakano"},{"id":147,"type":"Person","pins":{"out":{"links":[{"node":115,"type":"Editing","pin":"in"}]}},"position":{"x":324.2923277761344,"y":1206.5735308474707},"text":"Yasuhiro Sakai"},{"id":148,"type":"Person","pins":{"out":{"links":[{"node":115,"type":"Special Thanks","pin":"in"}]}},"position":{"x":321.14579896058854,"y":935.9510775725013},"text":"Yoshitaka Nishikawa"},{"id":149,"type":"Person","pins":{"out":{"links":[{"node":116,"type":"Translation","pin":"in"},{"node":115,"type":"Special Thanks","pin":"in"}]}},"position":{"x":873.3428375057536,"y":1057.6204106199748},"text":"Hiroyuki Yamada"},{"id":150,"type":"Person","pins":{"out":{"links":[{"node":116,"type":"Translation","pin":"in"},{"node":115,"type":"Special Thanks","pin":"in"}]}},"position":{"x":981.6238305060433,"y":679.2854862349776},"text":"Mina Akino"},{"id":151,"type":"Organization","pins":{"out":{"links":[{"node":116,"type":"Special Thanks","pin":"in"},{"node":115,"type":"Special Thanks","pin":"in"}]}},"position":{"x":797.4728207438854,"y":404.25529138845286},"text":"Super Mario Club"},{"id":152,"type":"Company","pins":{"out":{"links":[{"node":115,"type":"Special Thanks","pin":"in"}]}},"position":{"x":498.4946005581373,"y":380.9578164621649},"text":"Kawasaki Heavy Industries"},{"id":153,"type":"Company","pins":{"out":{"links":[{"node":115,"type":"Special Thanks","pin":"in"}]}},"position":{"x":545.0438045967858,"y":1248.4894772359949},"text":"Coca-Cola (Japan) Co."},{"id":154,"type":"Person","pins":{"out":{"links":[{"node":116,"type":"Direction","pin":"in"}]}},"position":{"x":1034.5490395288223,"y":1256.5896103502141},"text":"Yoshiaki Koizumi"},{"id":155,"type":"Person","pins":{"out":{"links":[{"node":116,"type":"Direction","pin":"in"}]}},"position":{"x":1135.0710614678865,"y":969.8002906858073},"text":"Takashi Tezuka"},{"id":156,"type":"Person","pins":{"out":{"links":[{"node":116,"type":"Programming","pin":"in"}]}},"position":{"x":1148.858213314831,"y":1161.8782340147222},"text":"Yoshinori Tanimoto"},{"id":157,"type":"Person","pins":{"out":{"links":[{"node":116,"type":"Programming","pin":"in"}]}},"position":{"x":1254.8827829757977,"y":1057.705658922044},"text":"Yasunari Nishida"},{"id":158,"type":"Person","pins":{"out":{"links":[{"node":116,"type":"Programming","pin":"in"}]}},"position":{"x":1355.1794688278226,"y":618.3645067905608},"text":"Hajime Yajima"},{"id":159,"type":"Person","pins":{"out":{"links":[{"node":116,"type":"Programming","pin":"in"}]}},"position":{"x":1364.016059189275,"y":1159.7424545781143},"text":"Daiki Iwamoto"},{"id":160,"type":"Person","pins":{"out":{"links":[{"node":116,"type":"Programming","pin":"in"}]}},"position":{"x":1325.170657899505,"y":765.0688625905852},"text":"Toshio Iwawaki"},{"id":161,"type":"Person","pins":{"out":{"links":[{"node":116,"type":"Programming","pin":"in"}]}},"position":{"x":1398.6116967385503,"y":1015.1730396160206},"text":"Giles Goddard"},{"id":162,"type":"Person","pins":{"out":{"links":[{"node":116,"type":"Direction","pin":"in"}]}},"position":{"x":1498.5798092079938,"y":578.3312690812204},"text":"Yasuhisa Yamamura"},{"id":163,"type":"Person","pins":{"out":{"links":[{"node":116,"type":"Art","pin":"in"}]}},"position":{"x":1290.5292444834492,"y":912.4803540947922},"text":"Naoki Mori"},{"id":164,"type":"Person","pins":{"out":{"links":[{"node":116,"type":"Art","pin":"in"}]}},"position":{"x":1541.6981922506534,"y":971.0863525848582},"text":"Yoshiki Haruhana"},{"id":165,"type":"Person","pins":{"out":{"links":[{"node":116,"type":"Art","pin":"in"}]}},"position":{"x":1432.794644208161,"y":869.0228704217838},"text":"Makoto Miyanaga"},{"id":166,"type":"Person","pins":{"out":{"links":[{"node":116,"type":"Music","pin":"in"}]}},"position":{"x":968.2984920909315,"y":256.7896047078047},"text":"Koji Kondo"},{"id":167,"type":"Person","pins":{"out":{"links":[{"node":116,"type":"Sound Design","pin":"in"}]}},"position":{"x":1117.515315548151,"y":245.772888047763},"text":"Yoji Inagaki"},{"id":168,"type":"Person","pins":{"out":{"links":[{"node":116,"type":"Art","pin":"in"}]}},"position":{"x":1575.9612283916988,"y":825.3850639086303},"text":"Yoshiaki Koizumi"},{"id":169,"type":"Person","pins":{"out":{"links":[{"node":116,"type":"Art","pin":"in"}]}},"position":{"x":1466.7145647966859,"y":722.8339558334086},"text":"Satoru Takizawa"},{"id":170,"type":"Person","pins":{"out":{"links":[{"node":116,"type":"Art","pin":"in"}]}},"position":{"x":1609.0015083639062,"y":678.6409995761475},"text":"Masanao Arimoto"},{"id":171,"type":"Person","pins":{"out":{"links":[{"node":116,"type":"Technical Support","pin":"in"}]}},"position":{"x":1020.5421190389796,"y":395.8773385264817},"text":"Hiroto Yada"},{"id":172,"type":"Person","pins":{"out":{"links":[{"node":116,"type":"Production","pin":"in"}]}},"position":{"x":1264.5924402695396,"y":500.60874844608963},"text":"Kimiyoshi Fukui"},{"id":173,"type":"Person","pins":{"out":{"links":[{"node":116,"type":"Voice Acting","pin":"in"}]}},"position":{"x":1553.5373375688619,"y":440.4316858479452},"text":"Leslie Swan"},{"id":174,"type":"Person","pins":{"out":{"links":[{"node":116,"type":"Editing","pin":"in"}]}},"position":{"x":1117.7418379738344,"y":524.1822256324298},"text":"Julien Bardakoff"},{"id":175,"type":"Person","pins":{"out":{"links":[{"node":116,"type":"Translation","pin":"in"}]}},"position":{"x":1405.8284719946614,"y":463.5638742467722},"text":"Kenji Haraguchi"},{"id":176,"type":"Person","pins":{"out":{"links":[{"node":116,"type":"Editing","pin":"in"}]}},"position":{"x":1168.0679137298196,"y":384.8187195352521},"text":"Thomas Goerg"},{"id":177,"type":"Person","pins":{"out":{"links":[{"node":116,"type":"Translation","pin":"in"}]}},"position":{"x":1311.854855997865,"y":346.968400015272},"text":"Thomas Spindler"},{"id":178,"type":"Person","pins":{"out":{"links":[{"node":116,"type":"Voice Acting","pin":"in"}]}},"position":{"x":1459.4118717398817,"y":323.8404591428485},"text":"Charles Martinet"}]}
+{
+  "zoom": 0.7,
+  "nodeTypes": [
+    {
+      "name": "Company",
+      "radius": 100,
+      "fill": "#d14747"
+    },
+    {
+      "name": "Person",
+      "fill": "#458cd3"
+    },
+    {
+      "name": "Game",
+      "radius": 75,
+      "fill": "#21bc8a"
+    },
+    {
+      "name": "Organization",
+      "radius": 100,
+      "fill": "#b541b8"
+    }
+  ],
+  "edgeTypes": [
+    {
+      "name": "Publishes",
+      "stroke": "#b42528",
+      "text": "Publishes\n"
+    },
+    {
+      "name": "Art",
+      "stroke": "#c453c0",
+      "text": "Art"
+    },
+    {
+      "name": "Programming",
+      "stroke": "#09a264",
+      "text": "Programming"
+    },
+    {
+      "name": "Voice Acting",
+      "stroke": "#b99b26",
+      "text": "Voice Acting"
+    },
+    {
+      "name": "Production",
+      "stroke": "#2d8ae8",
+      "text": "Production\n"
+    },
+    {
+      "name": "Direction",
+      "stroke": "#404bdf",
+      "text": "Direction"
+    },
+    {
+      "name": "Sound Design",
+      "stroke": "#e0801f",
+      "text": "Sound Design"
+    },
+    {
+      "name": "Music",
+      "stroke": "#ae8f51",
+      "text": "Music"
+    },
+    {
+      "name": "Technical Support",
+      "stroke": "#12a8b4",
+      "text": "Tech Support\n"
+    },
+    {
+      "name": "Special Thanks",
+      "text": "Special Thanks"
+    },
+    {
+      "name": "Editing",
+      "stroke": "#dd2272",
+      "text": "Editing"
+    },
+    {
+      "name": "Translation",
+      "stroke": "#925ca3",
+      "text": "Translation"
+    }
+  ],
+  "nodes": [
+    {
+      "id": 1,
+      "type": "Company",
+      "pins": {
+        "out": {
+          "links": [
+            {
+              "node": 3,
+              "type": "Publishes",
+              "pin": "in"
+            },
+            {
+              "node": 2,
+              "type": "Publishes",
+              "pin": "in"
+            }
+          ]
+        }
+      },
+      "position": {
+        "x": 1555.2259489441676,
+        "y": 365.42258083141087
+      },
+      "text": "Nintendo\n"
+    },
+    {
+      "id": 2,
+      "type": "Game",
+      "position": {
+        "x": 1171.5026480167758,
+        "y": 685.3472850017855
+      },
+      "text": "Wave Race 64\n"
+    },
+    {
+      "id": 3,
+      "type": "Game",
+      "position": {
+        "x": 1976.1767020171928,
+        "y": 736.2058449284391
+      },
+      "text": "Super Mario 64"
+    },
+    {
+      "id": 4,
+      "type": "Person",
+      "pins": {
+        "out": {
+          "links": [
+            {
+              "node": 3,
+              "type": "Production",
+              "pin": "in"
+            },
+            {
+              "node": 2,
+              "type": "Production",
+              "pin": "in"
+            }
+          ]
+        }
+      },
+      "position": {
+        "x": 1404.4484706024411,
+        "y": 679.1091755773766
+      },
+      "text": "Hiroshi Yamauchi"
+    },
+    {
+      "id": 5,
+      "type": "Person",
+      "pins": {
+        "out": {
+          "links": [
+            {
+              "node": 3,
+              "type": "Programming",
+              "pin": "in"
+            },
+            {
+              "node": 2,
+              "type": "Sound Design",
+              "pin": "in"
+            }
+          ]
+        }
+      },
+      "position": {
+        "x": 1482.7536608118985,
+        "y": 564.6617602010155
+      },
+      "text": "Hideaki Shimizu"
+    },
+    {
+      "id": 6,
+      "type": "Person",
+      "pins": {
+        "out": {
+          "links": [
+            {
+              "node": 3,
+              "type": "Programming",
+              "pin": "in"
+            },
+            {
+              "node": 2,
+              "type": "Programming",
+              "pin": "in"
+            }
+          ]
+        }
+      },
+      "position": {
+        "x": 1427.4469269039198,
+        "y": 809.0674898487333
+      },
+      "text": "Hajime Nakamura"
+    },
+    {
+      "id": 7,
+      "type": "Person",
+      "pins": {
+        "out": {
+          "links": [
+            {
+              "node": 2,
+              "type": "Art",
+              "pin": "in"
+            }
+          ]
+        }
+      },
+      "position": {
+        "x": 789.087585999465,
+        "y": 535.9399976919561
+      },
+      "text": "Tsuyoshi Watanabe"
+    },
+    {
+      "id": 8,
+      "type": "Person",
+      "pins": {
+        "out": {
+          "links": [
+            {
+              "node": 2,
+              "type": "Art",
+              "pin": "in"
+            }
+          ]
+        }
+      },
+      "position": {
+        "x": 724.4498933491552,
+        "y": 416.6802430667558
+      },
+      "text": "Hiroyuki Kimura"
+    },
+    {
+      "id": 9,
+      "type": "Person",
+      "pins": {
+        "out": {
+          "links": [
+            {
+              "node": 3,
+              "type": "Art",
+              "pin": "in"
+            },
+            {
+              "node": 2,
+              "type": "Art",
+              "pin": "in"
+            }
+          ]
+        }
+      },
+      "position": {
+        "x": 1302.3545994333147,
+        "y": 837.4397031348387
+      },
+      "text": "Kenta Usui"
+    },
+    {
+      "id": 10,
+      "type": "Person",
+      "pins": {
+        "out": {
+          "links": [
+            {
+              "node": 3,
+              "type": "Art",
+              "pin": "in"
+            },
+            {
+              "node": 2,
+              "type": "Art",
+              "pin": "in"
+            }
+          ]
+        }
+      },
+      "position": {
+        "x": 1600.585280756605,
+        "y": 843.3357921260781
+      },
+      "text": "Katsuhiko Kanno"
+    },
+    {
+      "id": 11,
+      "type": "Person",
+      "pins": {
+        "out": {
+          "links": [
+            {
+              "node": 3,
+              "type": "Direction",
+              "pin": "in"
+            },
+            {
+              "node": 2,
+              "type": "Production",
+              "pin": "in"
+            }
+          ]
+        }
+      },
+      "position": {
+        "x": 1442.512937638227,
+        "y": 1069.3640167746591
+      },
+      "text": "Shigeru Miyamoto"
+    },
+    {
+      "id": 12,
+      "type": "Person",
+      "pins": {
+        "out": {
+          "links": [
+            {
+              "node": 2,
+              "type": "Direction",
+              "pin": "in"
+            }
+          ]
+        }
+      },
+      "position": {
+        "x": 1031.5050835846146,
+        "y": 173.7194511827934
+      },
+      "text": "Katsuya Eguchi"
+    },
+    {
+      "id": 13,
+      "type": "Person",
+      "pins": {
+        "out": {
+          "links": [
+            {
+              "node": 2,
+              "type": "Music",
+              "pin": "in"
+            }
+          ]
+        }
+      },
+      "position": {
+        "x": 862.3339158538007,
+        "y": 419.63635469407126
+      },
+      "text": "Kazumi Totaka"
+    },
+    {
+      "id": 14,
+      "type": "Person",
+      "pins": {
+        "out": {
+          "links": [
+            {
+              "node": 2,
+              "type": "Programming",
+              "pin": "in"
+            }
+          ]
+        }
+      },
+      "position": {
+        "x": 1246.6340712500362,
+        "y": 309.49392792345606
+      },
+      "text": "Tsutomu Kaneshige"
+    },
+    {
+      "id": 15,
+      "type": "Person",
+      "pins": {
+        "out": {
+          "links": [
+            {
+              "node": 2,
+              "type": "Programming",
+              "pin": "in"
+            }
+          ]
+        }
+      },
+      "position": {
+        "x": 1007.8085978966382,
+        "y": 415.6822134334853
+      },
+      "text": "Hiroki Sotoike"
+    },
+    {
+      "id": 16,
+      "type": "Person",
+      "pins": {
+        "out": {
+          "links": [
+            {
+              "node": 2,
+              "type": "Direction",
+              "pin": "in"
+            }
+          ]
+        }
+      },
+      "position": {
+        "x": 1176.0359607019311,
+        "y": 181.9124491645351
+      },
+      "text": "Mitsuhiro Takano"
+    },
+    {
+      "id": 17,
+      "type": "Person",
+      "pins": {
+        "out": {
+          "links": [
+            {
+              "node": 2,
+              "type": "Voice Acting",
+              "pin": "in"
+            }
+          ]
+        }
+      },
+      "position": {
+        "x": 858.1799064286839,
+        "y": 645.5753876109409
+      },
+      "text": "Yamazaki Kiyomi"
+    },
+    {
+      "id": 18,
+      "type": "Person",
+      "pins": {
+        "out": {
+          "links": [
+            {
+              "node": 3,
+              "type": "Direction",
+              "pin": "in"
+            },
+            {
+              "node": 2,
+              "type": "Direction",
+              "pin": "in"
+            }
+          ]
+        }
+      },
+      "position": {
+        "x": 1741.878690213591,
+        "y": 858.780000394249
+      },
+      "text": "Yoichi Yamada"
+    },
+    {
+      "id": 19,
+      "type": "Person",
+      "pins": {
+        "out": {
+          "links": [
+            {
+              "node": 2,
+              "type": "Direction",
+              "pin": "in"
+            }
+          ]
+        }
+      },
+      "position": {
+        "x": 958.7122610156875,
+        "y": 298.8019649650132
+      },
+      "text": "Shinya Takahashi"
+    },
+    {
+      "id": 20,
+      "type": "Person",
+      "pins": {
+        "out": {
+          "links": [
+            {
+              "node": 3,
+              "type": "Programming",
+              "pin": "in"
+            },
+            {
+              "node": 2,
+              "type": "Programming",
+              "pin": "in"
+            }
+          ]
+        }
+      },
+      "position": {
+        "x": 1365.2314747468042,
+        "y": 950.2750011832915
+      },
+      "text": "Takumi Kawagoe"
+    },
+    {
+      "id": 21,
+      "type": "Person",
+      "pins": {
+        "out": {
+          "links": [
+            {
+              "node": 2,
+              "type": "Programming",
+              "pin": "in"
+            }
+          ]
+        }
+      },
+      "position": {
+        "x": 927.0234866270201,
+        "y": 532.9269511106398
+      },
+      "text": "Daisuke Tsujimura"
+    },
+    {
+      "id": 22,
+      "type": "Person",
+      "pins": {
+        "out": {
+          "links": [
+            {
+              "node": 2,
+              "type": "Programming",
+              "pin": "in"
+            }
+          ]
+        }
+      },
+      "position": {
+        "x": 809.7193132158244,
+        "y": 296.85889054141205
+      },
+      "text": "Keizo Ota"
+    },
+    {
+      "id": 23,
+      "type": "Person",
+      "pins": {
+        "out": {
+          "links": [
+            {
+              "node": 2,
+              "type": "Programming",
+              "pin": "in"
+            }
+          ]
+        }
+      },
+      "position": {
+        "x": 1072.014825667587,
+        "y": 539.8463485383292
+      },
+      "text": "Takashi Endo"
+    },
+    {
+      "id": 24,
+      "type": "Person",
+      "pins": {
+        "out": {
+          "links": [
+            {
+              "node": 2,
+              "type": "Voice Acting",
+              "pin": "in"
+            }
+          ]
+        }
+      },
+      "position": {
+        "x": 656.3045323545867,
+        "y": 549.9326978074622
+      },
+      "text": "John Hulaton"
+    },
+    {
+      "id": 25,
+      "type": "Person",
+      "pins": {
+        "out": {
+          "links": [
+            {
+              "node": 3,
+              "type": "Technical Support",
+              "pin": "in"
+            },
+            {
+              "node": 2,
+              "type": "Technical Support",
+              "pin": "in"
+            }
+          ]
+        }
+      },
+      "position": {
+        "x": 1488.7599585277992,
+        "y": 913.7370283936618
+      },
+      "text": "Hirohito Yoshimoto"
+    },
+    {
+      "id": 26,
+      "type": "Person",
+      "pins": {
+        "out": {
+          "links": [
+            {
+              "node": 3,
+              "type": "Technical Support",
+              "pin": "in"
+            },
+            {
+              "node": 2,
+              "type": "Technical Support",
+              "pin": "in"
+            }
+          ]
+        }
+      },
+      "position": {
+        "x": 1533.2414516807398,
+        "y": 733.6257618965975
+      },
+      "text": "Takao Sawano"
+    },
+    {
+      "id": 27,
+      "type": "Person",
+      "pins": {
+        "out": {
+          "links": [
+            {
+              "node": 3,
+              "type": "Production",
+              "pin": "in"
+            },
+            {
+              "node": 2,
+              "type": "Production",
+              "pin": "in"
+            }
+          ]
+        }
+      },
+      "position": {
+        "x": 1371.778316103148,
+        "y": 474.00157592955475
+      },
+      "text": "Koichi Fukui"
+    },
+    {
+      "id": 28,
+      "type": "Person",
+      "pins": {
+        "out": {
+          "links": [
+            {
+              "node": 3,
+              "type": "Production",
+              "pin": "in"
+            },
+            {
+              "node": 2,
+              "type": "Production",
+              "pin": "in"
+            }
+          ]
+        }
+      },
+      "position": {
+        "x": 1754.541509074221,
+        "y": 617.3229245455357
+      },
+      "text": "Keizo Kato"
+    },
+    {
+      "id": 29,
+      "type": "Person",
+      "pins": {
+        "out": {
+          "links": [
+            {
+              "node": 2,
+              "type": "Art",
+              "pin": "in"
+            }
+          ]
+        }
+      },
+      "position": {
+        "x": 887.3064716008519,
+        "y": 172.6123548088961
+      },
+      "text": "Kazumi Yamaguchi"
+    },
+    {
+      "id": 30,
+      "type": "Person",
+      "pins": {
+        "out": {
+          "links": [
+            {
+              "node": 2,
+              "type": "Special Thanks",
+              "pin": "in"
+            }
+          ]
+        }
+      },
+      "position": {
+        "x": 1163.6033677302007,
+        "y": 425.1741518785064
+      },
+      "text": "Katsuhito Yamauchi"
+    },
+    {
+      "id": 31,
+      "type": "Person",
+      "pins": {
+        "out": {
+          "links": [
+            {
+              "node": 2,
+              "type": "Special Thanks",
+              "pin": "in"
+            }
+          ]
+        }
+      },
+      "position": {
+        "x": 987.3802966591065,
+        "y": 701.1902627359215
+      },
+      "text": "Makoto Kanoh"
+    },
+    {
+      "id": 32,
+      "type": "Person",
+      "pins": {
+        "out": {
+          "links": [
+            {
+              "node": 2,
+              "type": "Sound Design",
+              "pin": "in"
+            }
+          ]
+        }
+      },
+      "position": {
+        "x": 644.6195058760532,
+        "y": 787.3632362130071
+      },
+      "text": "Hideki Fujii"
+    },
+    {
+      "id": 33,
+      "type": "Person",
+      "pins": {
+        "out": {
+          "links": [
+            {
+              "node": 2,
+              "type": "Art",
+              "pin": "in"
+            }
+          ]
+        }
+      },
+      "position": {
+        "x": 1096.0913047744514,
+        "y": 297.5760171757737
+      },
+      "text": "Yusuke Nakano"
+    },
+    {
+      "id": 34,
+      "type": "Person",
+      "pins": {
+        "out": {
+          "links": [
+            {
+              "node": 2,
+              "type": "Editing",
+              "pin": "in"
+            }
+          ]
+        }
+      },
+      "position": {
+        "x": 734.0881653601234,
+        "y": 670.1972688538875
+      },
+      "text": "Yasuhiro Sakai"
+    },
+    {
+      "id": 35,
+      "type": "Person",
+      "pins": {
+        "out": {
+          "links": [
+            {
+              "node": 2,
+              "type": "Special Thanks",
+              "pin": "in"
+            }
+          ]
+        }
+      },
+      "position": {
+        "x": 1062.7815054345501,
+        "y": 835.2493480124887
+      },
+      "text": "Yoshitaka Nishikawa"
+    },
+    {
+      "id": 36,
+      "type": "Person",
+      "pins": {
+        "out": {
+          "links": [
+            {
+              "node": 3,
+              "type": "Translation",
+              "pin": "in"
+            },
+            {
+              "node": 2,
+              "type": "Special Thanks",
+              "pin": "in"
+            }
+          ]
+        }
+      },
+      "position": {
+        "x": 1677.800726668758,
+        "y": 737.1102612877718
+      },
+      "text": "Hiroyuki Yamada"
+    },
+    {
+      "id": 37,
+      "type": "Person",
+      "pins": {
+        "out": {
+          "links": [
+            {
+              "node": 3,
+              "type": "Translation",
+              "pin": "in"
+            },
+            {
+              "node": 2,
+              "type": "Special Thanks",
+              "pin": "in"
+            }
+          ]
+        }
+      },
+      "position": {
+        "x": 1727.4297259506027,
+        "y": 479.6883540099439
+      },
+      "text": "Mina Akino"
+    },
+    {
+      "id": 38,
+      "type": "Organization",
+      "pins": {
+        "out": {
+          "links": [
+            {
+              "node": 3,
+              "type": "Special Thanks",
+              "pin": "in"
+            },
+            {
+              "node": 2,
+              "type": "Special Thanks",
+              "pin": "in"
+            }
+          ]
+        }
+      },
+      "position": {
+        "x": 1652.5226306409993,
+        "y": 1047.8086825996552
+      },
+      "text": "Super Mario Club"
+    },
+    {
+      "id": 39,
+      "type": "Company",
+      "pins": {
+        "out": {
+          "links": [
+            {
+              "node": 2,
+              "type": "Special Thanks",
+              "pin": "in"
+            }
+          ]
+        }
+      },
+      "position": {
+        "x": 845.0704348731622,
+        "y": 868.1063551233681
+      },
+      "text": "Kawasaki Heavy Industries"
+    },
+    {
+      "id": 40,
+      "type": "Company",
+      "pins": {
+        "out": {
+          "links": [
+            {
+              "node": 2,
+              "type": "Special Thanks",
+              "pin": "in"
+            }
+          ]
+        }
+      },
+      "position": {
+        "x": 1076.611954604236,
+        "y": 1054.5347515099813
+      },
+      "text": "Coca-Cola (Japan) Co."
+    },
+    {
+      "id": 41,
+      "type": "Person",
+      "pins": {
+        "out": {
+          "links": [
+            {
+              "node": 3,
+              "type": "Direction",
+              "pin": "in"
+            }
+          ]
+        }
+      },
+      "position": {
+        "x": 1977.6748739820164,
+        "y": 1143.5231852224908
+      },
+      "text": "Yoshiaki Koizumi"
+    },
+    {
+      "id": 42,
+      "type": "Person",
+      "pins": {
+        "out": {
+          "links": [
+            {
+              "node": 3,
+              "type": "Direction",
+              "pin": "in"
+            }
+          ]
+        }
+      },
+      "position": {
+        "x": 2040.885798341677,
+        "y": 1003.8591780479107
+      },
+      "text": "Takashi Tezuka"
+    },
+    {
+      "id": 43,
+      "type": "Person",
+      "pins": {
+        "out": {
+          "links": [
+            {
+              "node": 3,
+              "type": "Programming",
+              "pin": "in"
+            }
+          ]
+        }
+      },
+      "position": {
+        "x": 2118.902999140923,
+        "y": 1123.2453633148887
+      },
+      "text": "Yoshinori Tanimoto"
+    },
+    {
+      "id": 44,
+      "type": "Person",
+      "pins": {
+        "out": {
+          "links": [
+            {
+              "node": 3,
+              "type": "Programming",
+              "pin": "in"
+            }
+          ]
+        }
+      },
+      "position": {
+        "x": 2188.178195408461,
+        "y": 993.005870771325
+      },
+      "text": "Yasunari Nishida"
+    },
+    {
+      "id": 45,
+      "type": "Person",
+      "pins": {
+        "out": {
+          "links": [
+            {
+              "node": 3,
+              "type": "Programming",
+              "pin": "in"
+            }
+          ]
+        }
+      },
+      "position": {
+        "x": 2000.5979094497638,
+        "y": 374.62825187672064
+      },
+      "text": "Hajime Yajima"
+    },
+    {
+      "id": 46,
+      "type": "Person",
+      "pins": {
+        "out": {
+          "links": [
+            {
+              "node": 3,
+              "type": "Programming",
+              "pin": "in"
+            }
+          ]
+        }
+      },
+      "position": {
+        "x": 2265.609451200372,
+        "y": 1111.7008853061186
+      },
+      "text": "Daiki Iwamoto"
+    },
+    {
+      "id": 47,
+      "type": "Person",
+      "pins": {
+        "out": {
+          "links": [
+            {
+              "node": 3,
+              "type": "Programming",
+              "pin": "in"
+            }
+          ]
+        }
+      },
+      "position": {
+        "x": 2220.2919414602866,
+        "y": 737.6389487639861
+      },
+      "text": "Toshio Iwawaki"
+    },
+    {
+      "id": 48,
+      "type": "Person",
+      "pins": {
+        "out": {
+          "links": [
+            {
+              "node": 3,
+              "type": "Programming",
+              "pin": "in"
+            }
+          ]
+        }
+      },
+      "position": {
+        "x": 2430.4238158195703,
+        "y": 871.7770579124673
+      },
+      "text": "Giles Goddard"
+    },
+    {
+      "id": 49,
+      "type": "Person",
+      "pins": {
+        "out": {
+          "links": [
+            {
+              "node": 3,
+              "type": "Direction",
+              "pin": "in"
+            }
+          ]
+        }
+      },
+      "position": {
+        "x": 2375.20077473368,
+        "y": 492.095360044159
+      },
+      "text": "Yasuhisa Yamamura"
+    },
+    {
+      "id": 50,
+      "type": "Person",
+      "pins": {
+        "out": {
+          "links": [
+            {
+              "node": 3,
+              "type": "Art",
+              "pin": "in"
+            }
+          ]
+        }
+      },
+      "position": {
+        "x": 1895.1005171122772,
+        "y": 1024.7788700958774
+      },
+      "text": "Naoki Mori"
+    },
+    {
+      "id": 51,
+      "type": "Person",
+      "pins": {
+        "out": {
+          "links": [
+            {
+              "node": 3,
+              "type": "Art",
+              "pin": "in"
+            }
+          ]
+        }
+      },
+      "position": {
+        "x": 2296.904143129081,
+        "y": 617.9312131659832
+      },
+      "text": "Yoshiki Haruhana"
+    },
+    {
+      "id": 52,
+      "type": "Person",
+      "pins": {
+        "out": {
+          "links": [
+            {
+              "node": 3,
+              "type": "Art",
+              "pin": "in"
+            }
+          ]
+        }
+      },
+      "position": {
+        "x": 2282.061231488646,
+        "y": 859.8187278459503
+      },
+      "text": "Makoto Miyanaga"
+    },
+    {
+      "id": 53,
+      "type": "Person",
+      "pins": {
+        "out": {
+          "links": [
+            {
+              "node": 3,
+              "type": "Music",
+              "pin": "in"
+            }
+          ]
+        }
+      },
+      "position": {
+        "x": 1925.5971874473341,
+        "y": 258.9994296267321
+      },
+      "text": "Koji Kondo"
+    },
+    {
+      "id": 54,
+      "type": "Person",
+      "pins": {
+        "out": {
+          "links": [
+            {
+              "node": 3,
+              "type": "Sound Design",
+              "pin": "in"
+            }
+          ]
+        }
+      },
+      "position": {
+        "x": 2070.0306513024366,
+        "y": 252.3576971311856
+      },
+      "text": "Yoji Inagaki"
+    },
+    {
+      "id": 55,
+      "type": "Person",
+      "pins": {
+        "out": {
+          "links": [
+            {
+              "node": 3,
+              "type": "Art",
+              "pin": "in"
+            }
+          ]
+        }
+      },
+      "position": {
+        "x": 2230.259108754817,
+        "y": 497.92265754046554
+      },
+      "text": "Yoshiaki Koizumi"
+    },
+    {
+      "id": 56,
+      "type": "Person",
+      "pins": {
+        "out": {
+          "links": [
+            {
+              "node": 3,
+              "type": "Art",
+              "pin": "in"
+            }
+          ]
+        }
+      },
+      "position": {
+        "x": 2156.1417247466998,
+        "y": 617.0159949656143
+      },
+      "text": "Satoru Takizawa"
+    },
+    {
+      "id": 57,
+      "type": "Person",
+      "pins": {
+        "out": {
+          "links": [
+            {
+              "node": 3,
+              "type": "Art",
+              "pin": "in"
+            }
+          ]
+        }
+      },
+      "position": {
+        "x": 2438.792494088588,
+        "y": 622.2135625542124
+      },
+      "text": "Masanao Arimoto"
+    },
+    {
+      "id": 58,
+      "type": "Person",
+      "pins": {
+        "out": {
+          "links": [
+            {
+              "node": 3,
+              "type": "Technical Support",
+              "pin": "in"
+            }
+          ]
+        }
+      },
+      "position": {
+        "x": 2076.3703388100544,
+        "y": 492.74504558631156
+      },
+      "text": "Hiroto Yada"
+    },
+    {
+      "id": 59,
+      "type": "Person",
+      "pins": {
+        "out": {
+          "links": [
+            {
+              "node": 3,
+              "type": "Production",
+              "pin": "in"
+            }
+          ]
+        }
+      },
+      "position": {
+        "x": 2338.339710414563,
+        "y": 991.1563819454675
+      },
+      "text": "Kimiyoshi Fukui"
+    },
+    {
+      "id": 60,
+      "type": "Person",
+      "pins": {
+        "out": {
+          "links": [
+            {
+              "node": 3,
+              "type": "Voice Acting",
+              "pin": "in"
+            }
+          ]
+        }
+      },
+      "position": {
+        "x": 2141.0030053955848,
+        "y": 861.4717546579204
+      },
+      "text": "Leslie Swan"
+    },
+    {
+      "id": 61,
+      "type": "Person",
+      "pins": {
+        "out": {
+          "links": [
+            {
+              "node": 3,
+              "type": "Editing",
+              "pin": "in"
+            }
+          ]
+        }
+      },
+      "position": {
+        "x": 2142.232134196975,
+        "y": 373.7861388538858
+      },
+      "text": "Julien Bardakoff"
+    },
+    {
+      "id": 62,
+      "type": "Person",
+      "pins": {
+        "out": {
+          "links": [
+            {
+              "node": 3,
+              "type": "Translation",
+              "pin": "in"
+            }
+          ]
+        }
+      },
+      "position": {
+        "x": 1928.0239555387152,
+        "y": 492.37953079784563
+      },
+      "text": "Kenji Haraguchi"
+    },
+    {
+      "id": 63,
+      "type": "Person",
+      "pins": {
+        "out": {
+          "links": [
+            {
+              "node": 3,
+              "type": "Editing",
+              "pin": "in"
+            }
+          ]
+        }
+      },
+      "position": {
+        "x": 2362.705421455473,
+        "y": 747.1668703036916
+      },
+      "text": "Thomas Goerg"
+    },
+    {
+      "id": 64,
+      "type": "Person",
+      "pins": {
+        "out": {
+          "links": [
+            {
+              "node": 3,
+              "type": "Translation",
+              "pin": "in"
+            }
+          ]
+        }
+      },
+      "position": {
+        "x": 2218.763305876786,
+        "y": 248.39277455586722
+      },
+      "text": "Thomas Spindler"
+    },
+    {
+      "id": 65,
+      "type": "Person",
+      "pins": {
+        "out": {
+          "links": [
+            {
+              "node": 3,
+              "type": "Voice Acting",
+              "pin": "in"
+            }
+          ]
+        }
+      },
+      "position": {
+        "x": 2293.4948023535953,
+        "y": 374.4649731705029
+      },
+      "text": "Charles Martinet"
+    }
+  ]
+}

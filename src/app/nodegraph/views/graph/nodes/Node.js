@@ -25,7 +25,7 @@ class Node extends NodeBase
 			tempClass += ` ${ tStyle.selected }`;
 		}
 		
-		if ( tempType.isVisible )
+		if ( tempModel.isVisible )
 		{
 			tempClass += ` ${ tStyle.visible }`;
 		}
