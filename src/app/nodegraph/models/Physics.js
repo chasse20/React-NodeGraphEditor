@@ -49,7 +49,7 @@ export default class Physics
 			
 			this._nodes = null;
 			this._nodesHash = null;
-			this._simulation.nodes( [] );
+			this.setNodeBodies( this._nodes );
 		}
 		
 		// Edges
@@ -202,22 +202,7 @@ export default class Physics
 				
 				tempBody.isFrozen = tNodeModel._isSelected;
 				
-				// Preserve positions (d3 is hacky)
-				const tempPositions = [];
-				const tempListLength = this._nodes.length;
-				for ( let i = 0; i < tempListLength; ++i )
-				{
-					tempPositions.push( this._nodes[i]._model.position );
-				}
-				
-				this._simulation.nodes( this._nodes ); // has to reindex every time
-				
-				// Restore positions
-				for ( let i = 0; i < tempListLength; ++i )
-				{
-					this._nodes[i].x = tempPositions[i].x;
-					this._nodes[i].y = tempPositions[i].y;
-				}
+				this.setNodeBodies( this._nodes );
 			}
 		}
 	}
@@ -235,16 +220,41 @@ export default class Physics
 				{
 					this._nodes = null;
 					this._nodesHash = null;
-					
-					this._simulation.stop();
-					this._simulation.nodes( [] );
 				}
 				else
 				{
 					delete this._nodesHash[ tNodeModel._id ];
-					
-					this._simulation.nodes( this._nodes );
 				}
+				
+				this.setNodeBodies( this._nodes );
+			}
+		}
+	}
+	
+	setNodeBodies( tNodeBodies )
+	{
+		if ( tNodeBodies == null )
+		{
+			this._simulation.stop();
+			this._simulation.nodes( [] );
+		}
+		else
+		{
+			// Preserve positions (d3 is hacky)
+			const tempPositions = [];
+			tempPositions.length = tNodeBodies.length;
+			for ( let i = ( tempPositions.length - 1 ); i >= 0; --i )
+			{
+				tempPositions[i] = tNodeBodies[i]._model.position;
+			}
+			
+			this._simulation.nodes( tNodeBodies ); // has to reindex every time
+			
+			// Restore positions
+			for ( let i = ( tempPositions.length - 1 ); i >= 0; --i )
+			{
+				tNodeBodies[i].x = tempPositions[i].x;
+				tNodeBodies[i].y = tempPositions[i].y;
 			}
 		}
 	}
