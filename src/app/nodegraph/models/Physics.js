@@ -17,7 +17,7 @@ export default class Physics
 		this._edgesHash = null;
 		
 		this._simulation = forceSimulation();
-		this._simulation.velocityDecay( 0.7 );
+		this._simulation.velocityDecay( 0.85 );
 		this._simulation.alphaDecay( 0.01 );
 		this._simulation.force( "charge", this.createChargeForce() );
 		this._simulation.force( "collide", this.createCollideForce() );
