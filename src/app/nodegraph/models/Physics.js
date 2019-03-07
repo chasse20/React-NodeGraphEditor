@@ -93,7 +93,7 @@ export default class Physics
 	
 	createChargeForce()
 	{
-		return forceManyBody().strength( -500 ).distanceMax( 750 );
+		return forceManyBody().strength( -500 ).distanceMax( 750 ).theta( 100 );
 	}
 	
 	createCollideForce()
