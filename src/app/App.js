@@ -6,7 +6,7 @@ import Graph from "./nodegraph/views/graph/Graph";
 import GraphVizReader from "./nodegraph/formats/GraphVizReader";
 //import GraphJSONReader from "./nodegraph/formats/GraphJSONReader";
 import GraphModel from "./nodegraph/models/Graph";
-import Data from "../data.json";
+import Data from "../graphviz_nintendo.json";
 //import DataGraphJSON from "../graphjson.json";
 import Style from './App.module.css';
 

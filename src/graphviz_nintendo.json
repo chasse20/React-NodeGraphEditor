@@ -1,0 +1,420 @@
+{
+ "nodeTypes":
+ [
+  {
+   "name": "Person",
+   "fill": "#c567bf",
+   "stroke": "#9f4a9a"
+  },
+  {
+   "name": "Organization",
+   "fill": "#2891ca",
+   "stroke": "#1f729f"
+  },
+  {
+   "name": "Publication",
+   "fill": "#d2a565",
+   "stroke": "#ac8247"
+  },
+  {
+   "name": "Tech",
+   "fill": "#38d47a",
+   "stroke": "#1cac59",
+   "radius": 75
+  }
+ ],
+ "edgeTypes":
+ [
+  {
+   "name": "PersonOrg",
+   "stroke": "#9f4a9a",
+   "text": "Belongs to"
+  },
+  {
+   "name": "PersonPub",
+   "stroke": "#9f4a9a",
+   "text": "Writes"
+  },
+  {
+   "name": "OrgPub",
+   "stroke": "#2891ca",
+   "text": "Writes"
+  },
+  {
+   "name": "OrgTech",
+   "stroke": "#2891ca",
+   "text": "Writes"
+  },
+  {
+   "name": "PubPub",
+   "stroke": "#ac8247",
+   "text": "References"
+  },
+  {
+   "name": "PubTech",
+   "stroke": "#ac8247",
+   "text": "Inspires"
+  },
+  {
+   "name": "TechTech",
+   "stroke": "#1cac59",
+   "text": "Required by"
+  }
+ ],
+ "nodes":
+ [
+  {
+   "id": 1,
+   "type": "Person",
+   "position":
+   {
+    "x": 0,
+    "y": 575
+   },
+   "pins":
+   {
+    "out":
+    {
+     "links":
+     [
+      {
+       "node": 7,
+       "pin": "in",
+       "type": "PersonOrg"
+      },
+      {
+       "node": 9,
+       "pin": "in",
+       "type": "PersonPub"
+      }
+     ]
+    }
+   },
+   "text": "R.A. Meger"
+  },
+  {
+   "id": 2,
+   "type": "Person",
+   "position":
+   {
+    "x": 3080,
+    "y": 240
+   },
+   "pins":
+   {
+    "out":
+    {
+     "links":
+     [
+      {
+       "node": 11,
+       "pin": "in",
+       "type": "PersonPub"
+      }
+     ]
+    }
+   },
+   "text": "George E. Blomgren"
+  },
+  {
+   "id": 3,
+   "type": "Person",
+   "position":
+   {
+    "x": 1585,
+    "y": 420
+   },
+   "pins":
+   {
+    "out":
+    {
+     "links":
+     [
+      {
+       "node": 6,
+       "pin": "in",
+       "type": "PersonOrg"
+      },
+      {
+       "node": 10,
+       "pin": "in",
+       "type": "PersonPub"
+      }
+     ]
+    }
+   },
+   "text": "Abhishek Sarkar"
+  },
+  {
+   "id": 4,
+   "type": "Person",
+   "position":
+   {
+    "x": 1710,
+    "y": 290
+   },
+   "pins":
+   {
+    "out":
+    {
+     "links":
+     [
+      {
+       "node": 6,
+       "pin": "in",
+       "type": "PersonOrg"
+      },
+      {
+       "node": 10,
+       "pin": "in",
+       "type": "PersonPub"
+      }
+     ]
+    }
+   },
+   "text": "Pranav Shrotriya"
+  },
+  {
+   "id": 5,
+   "type": "Person",
+   "position":
+   {
+    "x": 1570,
+    "y": 600
+   },
+   "pins":
+   {
+    "out":
+    {
+     "links":
+     [
+      {
+       "node": 6,
+       "pin": "in",
+       "type": "PersonOrg"
+      },
+      {
+       "node": 10,
+       "pin": "in",
+       "type": "PersonPub"
+      }
+     ]
+    }
+   },
+   "text": "Abhijit Chandra"
+  },
+  {
+   "id": 6,
+   "type": "Organization",
+   "position":
+   {
+    "x": 1950,
+    "y": 400
+   },
+   "pins":
+   {
+    "out":
+    {
+     "links":
+     [
+      {
+       "node": 10,
+       "pin": "in",
+       "type": "OrgPub"
+      }
+     ]
+    }
+   },
+   "text": "Iowa State University"
+  },
+  {
+   "id": 7,
+   "type": "Organization",
+   "position":
+   {
+    "x": 480,
+    "y": 420
+   },
+   "pins":
+   {
+    "out":
+    {
+     "links":
+     [
+      {
+       "node": 9,
+       "pin": "in",
+       "type": "OrgPub"
+      }
+     ]
+    }
+   },
+   "text": "U.S. Naval Research Laboratory"
+  },
+  {
+   "id": 8,
+   "type": "Organization",
+   "position":
+   {
+    "x": 4620,
+    "y": 480
+   },
+   "pins":
+   {
+    "out":
+    {
+     "links":
+     [
+      {
+       "node": 14,
+       "pin": "in",
+       "type": "OrgTech"
+      }
+     ]
+    }
+   },
+   "text": "BAE Systems"
+  },
+  {
+   "id": 9,
+   "type": "Publication",
+   "position":
+   {
+    "x": 500,
+    "y": 680
+   },
+   "pins":
+   {
+    "out":
+    {
+     "links":
+     [
+      {
+       "node": 10,
+       "pin": "in",
+       "type": "PubPub"
+      },
+      {
+       "node": 12,
+       "pin": "in",
+       "type": "PubTech"
+      }
+     ]
+    }
+   },
+   "text": "Analysis of rail surfaces from a multishot railgun",
+   "date": 1337955680000
+  },
+  {
+   "id": 10,
+   "type": "Publication",
+   "position":
+   {
+    "x": 1925,
+    "y": 675
+   },
+   "pins":
+   {
+    "out":
+    {
+     "links":
+     [
+      {
+       "node": 12,
+       "pin": "in",
+       "type": "PubTech"
+      }
+     ]
+    }
+   },
+   "text": "Parametric Analysis of Electrode Materials",
+   "date": 1394029280000
+  },
+  {
+   "id": 11,
+   "type": "Publication",
+   "position":
+   {
+    "x": 3220,
+    "y": 300
+   },
+   "pins":
+   {
+    "out":
+    {
+     "links":
+     [
+      {
+       "node": 13,
+       "pin": "in",
+       "type": "PubTech"
+      }
+     ]
+    }
+   },
+   "text": "The Development and Future of Lithium Ion Batteries",
+   "date": 1480568400000
+  },
+  {
+   "id": 12,
+   "type": "Tech",
+   "position":
+   {
+    "x": 2450,
+    "y": 860
+   },
+   "pins":
+   {
+    "out":
+    {
+     "links":
+     [
+      {
+       "node": 14,
+       "pin": "in",
+       "type": "TechTech"
+      }
+     ]
+    }
+   },
+   "text": "Projectile Loader",
+   "date": 1433514080000
+  },
+  {
+   "id": 13,
+   "type": "Tech",
+   "position":
+   {
+    "x": 3870,
+    "y": 470
+   },
+   "pins":
+   {
+    "out":
+    {
+     "links":
+     [
+      {
+       "node": 14,
+       "pin": "in",
+       "type": "TechTech"
+      }
+     ]
+    }
+   },
+   "text": "High-Capacity Lithium-Iron Battery",
+   "date": 1496672480000
+  },
+  {
+   "id": 14,
+   "type": "Tech",
+   "position":
+   {
+    "x": 4485,
+    "y": 690
+   },
+   "text": "Electromagnetic Railgun",
+   "date": 1527220800000
+  }
+ ]
+}
