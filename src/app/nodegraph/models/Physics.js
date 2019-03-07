@@ -87,13 +87,13 @@ export default class Physics
 	{
 		if ( this._isEnabled )
 		{
-			this._simulation.alpha( 0 ).alphaTarget( 0.3 ).restart();
+			this._simulation.alpha( 1 ).restart();
 		}
 	}
 	
 	createChargeForce()
 	{
-		return forceManyBody().strength( -1 /*1000*/ ).distanceMax( 750 );
+		return forceManyBody().strength( -500 ).distanceMax( 750 );
 	}
 	
 	createCollideForce()
@@ -123,7 +123,7 @@ export default class Physics
 				
 				return 300; // min
 			}
-		).strength( 0.1 /*0.7*/ );
+		).strength( 0.7 );
 	}
 	
 	createCenterForce()
@@ -175,7 +175,7 @@ export default class Physics
 					}
 				}
 				
-				this.restart();
+				this._simulation.restart();
 			}
 		}
 		else
@@ -335,7 +335,7 @@ export default class Physics
 	{
 		if ( this._isEnabled )
 		{
-			//this._simulation.alphaTarget( 0.3 ).restart();
+			this._simulation.alphaTarget( 0.3 ).restart();
 		}
 	}
 	
@@ -343,7 +343,7 @@ export default class Physics
 	{
 		if ( this._isEnabled )
 		{
-			//this._simulation.alphaTarget( 0 );
+			this._simulation.alphaTarget( 0 );
 		}
 	}
 }
