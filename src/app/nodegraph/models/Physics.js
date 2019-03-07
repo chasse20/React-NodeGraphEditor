@@ -17,7 +17,8 @@ export default class Physics
 		this._edgesHash = null;
 		
 		this._simulation = forceSimulation();
-		this._simulation.velocityDecay( 0.5 );
+		this._simulation.velocityDecay( 0.7 );
+		this._simulation.alphaDecay( 0.01 );
 		this._simulation.force( "charge", this.createChargeForce() );
 		this._simulation.force( "collide", this.createCollideForce() );
 		this._simulation.force( "center", this.createCenterForce() );
@@ -79,7 +80,7 @@ export default class Physics
 	
 	createChargeForce()
 	{
-		return forceManyBody().strength( -35 ).distanceMax( 500 );
+		return forceManyBody().strength( -60 ).distanceMax( 750 );
 	}
 	
 	createCollideForce()
@@ -104,12 +105,12 @@ export default class Physics
 			{
 				if ( tLink._model.weight < 5 )
 				{
-					return ( ( 250 - 750 ) * 0.2 * tLink._model.weight ) + 400; // 5 is max length is min 250... length of 0 is max 750
+					return ( ( 300 - 700 ) * 0.2 * tLink._model.weight ) + 380; // 5 is max length is min 300... length of 0 is max 700
 				}
 				
-				return 250; // min
+				return 300; // min
 			}
-		).strength( 0.4 );
+		).strength( 0.7 );
 	}
 	
 	createCenterForce()
