@@ -92,7 +92,14 @@ class EdgeTypeMenu extends React.Component
 		else
 		{
 			this._onSourceMove = observe( tPinModel, "position", ( tChange ) => { this.sourcePosition = tChange.newValue; } );
-			this.sourcePosition = tPinModel.position;
+			
+			const tempPosition = tPinModel.position;
+			this.sourcePosition = tempPosition;
+			
+			this._lineElement.setAttribute( "x1", tempPosition.x );
+			this._lineElement.setAttribute( "y1", tempPosition.y );
+			this._lineElement.setAttribute( "x2", tempPosition.x );
+			this._lineElement.setAttribute( "y2", tempPosition.y );
 			
 			document.addEventListener( "mousemove", this._onMouseMove );
 		}

@@ -20,6 +20,7 @@ export default class Physics
 		this._simulation.velocityDecay( 0.5 );
 		this._simulation.force( "charge", this.createChargeForce() );
 		this._simulation.force( "collide", this.createCollideForce() );
+		this._simulation.force( "center", this.createCenterForce() );
 		this._simulation.force( "link", this.createLinkForce() );
 		this._simulation.on( "tick", () => { this.onTick(); } );
 		
@@ -78,7 +79,7 @@ export default class Physics
 	
 	createChargeForce()
 	{
-		return forceManyBody().strength( -70 ).distanceMax( 500 );
+		return forceManyBody().strength( -35 ).distanceMax( 500 );
 	}
 	
 	createCollideForce()
@@ -108,7 +109,7 @@ export default class Physics
 				
 				return 250; // min
 			}
-		).strength( 0.5 );
+		).strength( 0.4 );
 	}
 	
 	createCenterForce()
