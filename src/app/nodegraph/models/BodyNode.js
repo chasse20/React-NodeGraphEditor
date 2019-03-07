@@ -1,4 +1,5 @@
 import { observe } from "mobx";
+import Vector2D from "../../core/Vector2D";
 
 export default class BodyNode
 {

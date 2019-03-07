@@ -55,9 +55,9 @@ export default class Graph
 	
 	setSelectedNode( tNode )
 	{
-		if ( tNode != null && !has( this._selectedNodes, tNode._id ) )
+		if ( this._selectedNodes[ tNode._id ] === undefined )
 		{
-			set( this._selectedNodes, tNode._id, tNode );
+			this._selectedNodes[ tNode._id ] = tNode;
 			++this._selectedNodesCount;
 			
 			tNode._isSelected = true;
@@ -70,9 +70,9 @@ export default class Graph
 	
 	removeSelectedNode( tNode )
 	{
-		if ( tNode != null && tNode === get( this._selectedNodes, tNode._id ) )
+		if ( this._selectedNodes[ tNode._id ] !== undefined )
 		{
-			remove( this._selectedNodes, tNode._id );
+			delete this._selectedNodes[ tNode._id ];
 			--this._selectedNodesCount;
 			
 			tNode._isSelected = false;
@@ -85,7 +85,7 @@ export default class Graph
 	
 	clearSelectedNodes()
 	{
-		const tempNodes = values( this._selectedNodes );
+		const tempNodes = Object.values( this._selectedNodes );
 		for ( let i = ( tempNodes.length - 1 ); i >= 0; --i )
 		{
 			this.removeSelectedNode( tempNodes[i] );
@@ -208,7 +208,6 @@ export default class Graph
 decorate( Graph,
 	{
 		_nodes: observable.shallow,
-		_selectedNodes: observable.shallow,
 		_selectedNodesCount: observable,
 		_selectedEdges: observable.shallow,
 		_selectedEdgesCount: observable,
@@ -224,9 +223,6 @@ decorate( Graph,
 		isGridSnap: observable,
 		setNode: action,
 		removeNode: action,
-		setSelectedNode: action,
-		removeSelectedNode: action,
-		clearSelectedNodes: action,
 		setSelectedEdge: action,
 		removeSelectedEdge: action,
 		clearSelectedEdges: action,

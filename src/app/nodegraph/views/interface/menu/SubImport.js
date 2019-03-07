@@ -43,6 +43,7 @@ export default class SubImport extends Sub
 			tempReader.onload = ( tEvent ) =>
 			{
 				this.selectedFormat.read( this.props.graph, JSON.parse( tEvent.target.result ) );
+				this.props.graph._physics.seedCenter();
 				this.props.graph._physics.restart();
 			};
 			

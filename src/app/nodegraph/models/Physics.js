@@ -21,11 +21,11 @@ export default class Physics
 		this._simulation.alphaDecay( 0.01 );
 		this._simulation.force( "charge", this.createChargeForce() );
 		this._simulation.force( "collide", this.createCollideForce() );
-		this._simulation.force( "center", this.createCenterForce() );
 		this._simulation.force( "link", this.createLinkForce() );
 		this._simulation.on( "tick", () => { this.onTick(); } );
 		
 		// Initialize
+		this.seedCenter();
 		this.handleEnabled();
 	}
 	
@@ -70,17 +70,30 @@ export default class Physics
 		}
 	}
 	
+	seedCenter()
+	{
+		this._simulation.force( "center", this.createCenterForce() );
+		
+		setTimeout(
+			() =>
+			{
+				this._simulation.force( "center", null );
+			},
+			2000
+		);
+	}
+	
 	restart()
 	{
 		if ( this._isEnabled )
 		{
-			this._simulation.alpha( 1 ).restart();
+			this._simulation.alpha( 0 ).alphaTarget( 0.3 ).restart();
 		}
 	}
 	
 	createChargeForce()
 	{
-		return forceManyBody().strength( -1000 ).distanceMax( 750 );
+		return forceManyBody().strength( -1 /*1000*/ ).distanceMax( 750 );
 	}
 	
 	createCollideForce()
@@ -110,7 +123,7 @@ export default class Physics
 				
 				return 300; // min
 			}
-		).strength( 0.7 );
+		).strength( 0.1 /*0.7*/ );
 	}
 	
 	createCenterForce()
@@ -135,7 +148,8 @@ export default class Physics
 			
 			// Nodes
 			const tempNodes = values( this._graph._nodes );
-			for ( let i = ( tempNodes.length - 1 ); i >= 0; --i )
+			var tempListLength = tempNodes.length;
+			for ( let i = 0; i < tempListLength; ++i )
 			{
 				this.onSetNode( tempNodes[i] );
 			}
@@ -143,7 +157,8 @@ export default class Physics
 			// Edges (oof expensive because d3 doesn't like dynamic data! might consider refactoring links hash in graph model and straight array of links in pin)
 			if ( this._nodes !== null )
 			{
-				for ( let i = ( this._nodes.length - 1 ); i >= 0; --i )
+				tempListLength = this._nodes.length;
+				for ( let i = ( tempListLength - 1 ); i >= 0; --i )
 				{
 					let tempPins = values( this._nodes[i]._model._pins );
 					for ( let j = ( tempPins.length - 1 ); j >= 0; --j )
@@ -187,7 +202,22 @@ export default class Physics
 				
 				tempBody.isFrozen = tNodeModel._isSelected;
 				
+				// Preserve positions (d3 is hacky)
+				const tempPositions = [];
+				const tempListLength = this._nodes.length;
+				for ( let i = 0; i < tempListLength; ++i )
+				{
+					tempPositions.push( this._nodes[i]._model.position );
+				}
+				
 				this._simulation.nodes( this._nodes ); // has to reindex every time
+				
+				// Restore positions
+				for ( let i = 0; i < tempListLength; ++i )
+				{
+					this._nodes[i].x = tempPositions[i].x;
+					this._nodes[i].y = tempPositions[i].y;
+				}
 			}
 		}
 	}
@@ -295,7 +325,7 @@ export default class Physics
 	{
 		if ( this._isEnabled )
 		{
-			this._simulation.alphaTarget( 0.3 ).restart();
+			//this._simulation.alphaTarget( 0.3 ).restart();
 		}
 	}
 	
@@ -303,7 +333,7 @@ export default class Physics
 	{
 		if ( this._isEnabled )
 		{
-			this._simulation.alphaTarget( 0 );
+			//this._simulation.alphaTarget( 0 );
 		}
 	}
 }

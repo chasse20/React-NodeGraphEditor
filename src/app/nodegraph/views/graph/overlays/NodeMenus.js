@@ -7,7 +7,7 @@ import Style from "./NodeMenus.module.css";
 
 class NodeMenus extends React.Component
 {
-	render( tStyle = Style )
+	render( tStyle = Style ) // TODO: Instantiation is expensive and should either be pooled or happen alongside nodes!
 	{
 		const tempGraph = this.props.graph;
 		if ( tempGraph._selectedNodesCount > 0 )

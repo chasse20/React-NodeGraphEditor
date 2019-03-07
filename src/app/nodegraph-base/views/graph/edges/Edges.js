@@ -1,7 +1,7 @@
 import React from "react";
 import Style from "./Edges.module.css";
 
-export default class Edges extends React.Component
+export default class Edges extends React.PureComponent
 {
 	constructor( tProps )
 	{
