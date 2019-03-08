@@ -5,6 +5,8 @@ import Pan from "./Pan";
 import Marquee from "./Marquee";
 import Grid from "./Grid";
 import GridSnap from "./GridSnap";
+import ZoomIn from "./ZoomIn";
+import ZoomOut from "./ZoomOut";
 import Style from "./Controls.module.css";
 
 export default class Controls extends React.PureComponent
@@ -16,6 +18,10 @@ export default class Controls extends React.PureComponent
 				<div className={ tStyle.group }>
 					<Pan graph={ this.props.graph }/>
 					<Marquee graph={ this.props.graph }/>
+				</div>
+				<div className={ tStyle.group }>
+					<ZoomIn graph={ this.props.graph }/>
+					<ZoomOut graph={ this.props.graph }/>
 				</div>
 				<div className={ tStyle.group }>
 					<Grid graph={ this.props.graph }/>

@@ -1,0 +1,8 @@
+@value controls: "./Controls.module.css";
+
+.button
+{
+	composes: button from controls;
+	border-bottom-left-radius: 0;
+	border-bottom-right-radius: 0;
+}
