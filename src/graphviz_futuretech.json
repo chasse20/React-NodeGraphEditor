@@ -3,15 +3,15 @@
  [
   {
    "name": "Person",
-   "fill": "#c567bf",
+   "fill": "#c567bf"
   },
   {
    "name": "Organization",
-   "fill": "#2891ca",
+   "fill": "#2891ca"
   },
   {
    "name": "Publication",
-   "fill": "#d2a565",
+   "fill": "#d2a565"
   },
   {
    "name": "Tech",
