@@ -16,6 +16,8 @@ class App extends Component
 
 		// Variables
 		this._graph = new GraphModel();
+		
+		// Initialize
 		( new GraphVizReader() ).read( this._graph, Data );
 		this._graph._physics.seedCenter();
 		this._graph._physics.restart();
