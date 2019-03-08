@@ -4,21 +4,21 @@
     {
       "name": "Company",
       "radius": 100,
-      "fill": "#d14747"
+      "fill": "#c567bf"
     },
     {
       "name": "Person",
-      "fill": "#458cd3"
+      "fill": "#2891ca"
     },
     {
       "name": "Game",
       "radius": 75,
-      "fill": "#21bc8a"
+      "fill": "#38d47a"
     },
     {
       "name": "Organization",
       "radius": 100,
-      "fill": "#b541b8"
+      "fill": "#d2a565"
     }
   ],
   "edgeTypes": [
