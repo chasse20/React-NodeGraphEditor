@@ -4,22 +4,18 @@
   {
    "name": "Person",
    "fill": "#c567bf",
-   "stroke": "#9f4a9a"
   },
   {
    "name": "Organization",
    "fill": "#2891ca",
-   "stroke": "#1f729f"
   },
   {
    "name": "Publication",
    "fill": "#d2a565",
-   "stroke": "#ac8247"
   },
   {
    "name": "Tech",
    "fill": "#38d47a",
-   "stroke": "#1cac59",
    "radius": 75
   }
  ],
