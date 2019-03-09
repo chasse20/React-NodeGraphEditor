@@ -2,16 +2,17 @@ import TypeNode from "../models/TypeNode";
 import TypeEdge from "../models/TypeEdge";
 
 /**
-*	Format reader factory for GraphJSON
+*	Reader factory for the GraphJSON format
 *	@memberof nodegraph-base
 */
 export default class GraphJSONReader // TODO: Clustering
 {
 	/**
-	*	Reads JSON into a graph model
+	*	Populates a graph model from GraphJSON data
 	*	@param {Graph} tGraphModel Graph model to append data to
-	*	@param {Vector2D} tB Corner opposite to tA
-	*	@return {Bounds} Bounds object
+	*	@param {Object} tJSON Raw JSON representing a graph
+	*	@param {string} tNodeTextField Which field name should be considered as the visible text label of a node
+	*	@param {string} tEdgeTextField Which field name should be considered as the visible text label of an edge
 	*/
 	read( tGraphModel, tJSON, tNodeTextField = "caption", tEdgeTextField = "caption" )
 	{
@@ -42,6 +43,13 @@ export default class GraphJSONReader // TODO: Clustering
 		}
 	}
 	
+	/**
+	*	Reads JSON node data and adds it and its type into the graph model
+	*	@param {Graph} tGraphModel Graph model to append data to
+	*	@param {Object} tJSON Raw JSON representing a node
+	*	@param {string} tTextField Which field name should be considered as the visible text label of a node
+	*	@return {Node} Node if successfully generated from the JSON
+	*/
 	readNode( tGraphModel, tJSON, tTextField = "caption" )
 	{
 		if ( tJSON != null )
@@ -63,21 +71,48 @@ export default class GraphJSONReader // TODO: Clustering
 		return null;
 	}
 	
+	/**
+	*	Reads JSON node type data
+	*	@param {Object} tJSON Raw JSON representing a node
+	*	@param {string} tTextField Which field name should be considered as the visible text label of a node
+	*	@return {TypeNode} Node type if successfully generated from the JSON
+	*/
 	readNodeType( tJSON )
 	{
 		return this.createNodeType( tJSON.type );
 	}
 	
+	/**
+	*	Factory method for creating a new node type
+	*	@param {string} tName Name of the type
+	*	@param {Object} tModelClass Model class of the type
+	*	@param {Object} tViewClass View class of the type
+	*	@return {TypeNode} Created node type
+	*/
 	createNodeType( tName, tModelClass, tViewClass )
 	{
 		return new TypeNode( tName, tModelClass, tViewClass );
 	}
 	
+	/**
+	*	Factory method for creating a new node
+	*	@param {Graph} tGraphModel Model of the graph that the node is added to
+	*	@param {TypeNode} tType Node type that the node belongs to
+	*	@return {Node} Created node
+	*/
 	createNode( tGraphModel, tType )
 	{
 		return new tType._modelClass( tGraphModel, tType );
 	}
 	
+	/**
+	*	Reads JSON edge data and adds it and its type into the graph model
+	*	@param {Graph} tGraphModel Graph model to append data to
+	*	@param {Object} tJSON Raw JSON representing an edge
+	*	@param {Object} tNodeRefs Associative array used to bind edges to nodes
+	*	@param {string} tTextField Which field name should be considered as the visible text label of an edge
+	*	@return {Edge} Edge if successfully generated from the JSON
+	*/
 	readEdge( tGraphModel, tJSON, tNodeRefs, tTextField = "caption" )
 	{
 		if ( tJSON != null && tJSON.source != null && tJSON.target != null )
@@ -114,16 +149,36 @@ export default class GraphJSONReader // TODO: Clustering
 		return null;
 	}
 	
+	/**
+	*	Reads JSON edge type data
+	*	@param {Object} tJSON Raw JSON representing an edge
+	*	@param {string} tTextField Which field name should be considered as the visible text label of an edge
+	*	@return {TypeEdge} Edge type if successfully generated from the JSON
+	*/
 	readEdgeType( tJSON, tTextField = "caption" )
 	{
 		return this.createEdgeType( tJSON[ tTextField ] );
 	}
 	
+	/**
+	*	Factory method for creating a new edge type
+	*	@param {string} tName Name of the type
+	*	@param {Object} tModelClass Model class of the type
+	*	@param {Object} tViewClass View class of the type
+	*	@return {TypeEdge} Created edge type
+	*/
 	createEdgeType( tName, tModelClass, tViewClass )
 	{
 		return new TypeEdge( tName, tModelClass, tViewClass );
 	}
 	
+	/**
+	*	Factory method for creating a new edge
+	*	@param {TypeEdge} tType Edge type that the edge belongs to
+	*	@param {Pin} tSourcePin Source pin of the edge
+	*	@param {Pin} tTargetPin Target pin of the edge
+	*	@return {Edge} Created edge
+	*/
 	createEdge( tType, tSourcePin, tTargetPin )
 	{
 		return new tType._modelClass( tType, tSourcePin, tTargetPin );

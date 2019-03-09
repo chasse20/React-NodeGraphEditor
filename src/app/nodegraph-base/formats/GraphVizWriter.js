@@ -1,12 +1,19 @@
-/**
-*	@namespace nodegraphBase
-*/
-
-import EdgeView from "../views/graph/edges/Edge";
+import Node from "../models/Node";
+import Edge from "../models/Edge";
 import NodeView from "../views/graph/nodes/Node";
+import EdgeView from "../views/graph/edges/Edge";
 
+/**
+*	Writer factory for the GraphViz format
+*	@memberof nodegraph-base
+*/
 export default class GraphVizWriter
 {
+	/**
+	*	Writes GraphViz JSON from a graph model
+	*	@param {Graph} tGraphModel Graph model to write data from
+	*	@return {Object} GraphViz JSON output
+	*/
 	write( tGraphModel )
 	{
 		if ( tGraphModel != null )
@@ -78,6 +85,11 @@ export default class GraphVizWriter
 		return null;
 	}
 	
+	/**
+	*	Writes JSON from a vector model
+	*	@param {core.Vector2D} tVectorModel Vector model to write data from
+	*	@return {Object} JSON output
+	*/
 	writeVector( tVectorModel )
 	{
 		if ( tVectorModel != null )
@@ -106,6 +118,11 @@ export default class GraphVizWriter
 		return null;
 	}
 	
+	/**
+	*	Writes JSON array of node types from an associative array of models
+	*	@param {Object} tTypes Associative array of node types with key as name and value as type model
+	*	@return {Object[]} JSON output
+	*/
 	writeNodeTypes( tTypes )
 	{
 		if ( tTypes != null )
@@ -130,7 +147,14 @@ export default class GraphVizWriter
 		return null;
 	}
 	
-	writeNodeType( tTypeModel, tDefaultViewClass = NodeView )
+	/**
+	*	Writes JSON of a node type
+	*	@param {TypeNode} tTypeModel Type model
+	*	@param {Object} tDefaultModelClass Default model class used to determine if the output should bother including it
+	*	@param {Object} tDefaultViewClass Default view class used to determine if the output should bother including it
+	*	@return {Object} JSON output
+	*/
+	writeNodeType( tTypeModel, tDefaultModelClass = Node, tDefaultViewClass = NodeView )
 	{
 		if ( tTypeModel != null && tTypeModel._name !== "default" )
 		{
@@ -138,6 +162,12 @@ export default class GraphVizWriter
 			{
 				name: tTypeModel._name
 			};
+			
+			// Model class
+			if ( tTypeModel._modelClass != null && tTypeModel._modelClass !== tDefaultModelClass )
+			{
+				tempJSON.modelClass = tTypeModel._modelClass.name;
+			}
 			
 			// View class
 			if ( tTypeModel._viewClass != null && tTypeModel._viewClass !== tDefaultViewClass )
@@ -151,6 +181,11 @@ export default class GraphVizWriter
 		return null;
 	}
 	
+	/**
+	*	Writes JSON array of edge types from an associative array of models
+	*	@param {Object} tTypes Associative array of node types with key as name and value as type model
+	*	@return {Object[]} JSON output
+	*/
 	writeEdgeTypes( tTypes )
 	{
 		if ( tTypes != null )
@@ -175,11 +210,23 @@ export default class GraphVizWriter
 		return null;
 	}
 	
-	writeEdgeType( tTypeModel, tDefaultViewClass = EdgeView )
+	/**
+	*	Writes JSON of an edge type
+	*	@param {TypeEdge} tTypeModel Type model
+	*	@param {Object} tDefaultModelClass Default model class used to determine if the output should bother including it
+	*	@param {Object} tDefaultViewClass Default view class used to determine if the output should bother including it
+	*	@return {Object} JSON output
+	*/
+	writeEdgeType( tTypeModel, tDefaultModelClass = Edge, tDefaultViewClass = EdgeView )
 	{
 		return this.writeNodeType( tTypeModel, tDefaultViewClass );
 	}
 	
+	/**
+	*	Writes JSON from a node model
+	*	@param {Node} tNodeModel Node model to write data from
+	*	@return {Object} JSON output
+	*/
 	writeNode( tNodeModel )
 	{
 		if ( tNodeModel != null )
@@ -221,6 +268,11 @@ export default class GraphVizWriter
 		return null;
 	}
 	
+	/**
+	*	Writes JSON from a pin model
+	*	@param {Pin} tPinModel Pin model to write data from
+	*	@return {Object} JSON output
+	*/
 	writePin( tPinModel )
 	{
 		if ( tPinModel != null )
@@ -250,6 +302,11 @@ export default class GraphVizWriter
 		return null;
 	}
 	
+	/**
+	*	Writes JSON from an edge model
+	*	@param {Edge} tEdgeModel Edge model to write data from
+	*	@return {Object} JSON output
+	*/
 	writeEdge( tEdgeModel )
 	{
 		if ( tEdgeModel != null )

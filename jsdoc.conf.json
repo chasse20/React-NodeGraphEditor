@@ -9,18 +9,11 @@
     "plugins": [
       "node_modules/jsdoc-export-default-interop/dist/index"
     ],
-    "opts": {
-      "template": "node_modules/docdash"
-    },
     "templates": {
         "cleverLinks": false,
         "monospaceLinks": false,
         "default": {
             "outputSourceFiles": true
         }
-    },
-    "docdash": {
-	 "collapse": true,
-	 "private": true
     }
 }
