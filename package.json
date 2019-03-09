@@ -26,7 +26,8 @@
     "build": "react-scripts build",
     "build:node": "babel src --out-dir lib --copy-files",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "doc": "jsdoc src -r -d docs -c jsdoc.conf.json"
   },
   "browserslist": [
     ">0.2%",
@@ -43,7 +44,9 @@
     "babel-cli": "6.26.0",
     "babel-core": "6.26.3",
     "babel-preset-env": "1.7.0",
-    "babel-preset-react": "6.24.1"
+    "babel-preset-react": "6.24.1",
+    "jsdoc": "^3.5.5",
+    "jsdoc-export-default-interop": "^0.3.1"
   },
   "babel": {
     "presets": [

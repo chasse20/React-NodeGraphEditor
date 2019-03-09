@@ -1,5 +1,6 @@
 /**
-*	Singleton for generating an auto-incremented index
+*	Static class for generating an auto-incremented index
+*	@memberof core
 */
 export default class ID
 {

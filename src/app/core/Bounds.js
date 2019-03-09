@@ -1,15 +1,13 @@
 /**
 *	Utility class for simple point-to-bounds collision checking
+*	@memberof core
+*	@param {number} tCenterX Center x-coordinate of the bounding box
+*	@param {number} tCenterY Center y-coordinate of the bounding box
+*	@param {number} tWidth Width of bounding box
+*	@param {number} tHeight Height of bounding box
 */
 export default class Bounds
 {
-	/**
-	*	Constructor
-	*	@param {number} tCenterX Center x-coordinate of the bounding box
-	*	@param {number} tCenterY Center y-coordinate of the bounding box
-	*	@param {number} tWidth Width of bounding box
-	*	@param {number} tHeight Height of bounding box
-	*/
 	constructor( tCenterX, tCenterY, tWidth, tHeight )
 	{
 		const tempHalfWidth = tWidth * 0.5;

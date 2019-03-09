@@ -1,8 +1,17 @@
 import TypeNode from "../models/TypeNode";
 import TypeEdge from "../models/TypeEdge";
 
+/**
+*	Format reader factory for GraphJSON
+*/
 export default class GraphJSONReader // TODO: Clustering
 {
+	/**
+	*	Reads JSON into a graph model
+	*	@param {Graph} tGraphModel Graph model to append data to
+	*	@param {Vector2D} tB Corner opposite to tA
+	*	@return {Bounds} Bounds object
+	*/
 	read( tGraphModel, tJSON, tNodeTextField = "caption", tEdgeTextField = "caption" )
 	{
 		if ( tGraphModel != null && tJSON != null && tJSON.nodes != null )

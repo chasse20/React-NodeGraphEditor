@@ -1,3 +1,7 @@
+/**
+*	@namespace nodegraphBase
+*/
+
 import TypeNode from "../models/TypeNode";
 import TypeEdge from "../models/TypeEdge";
 import Edge from "../models/Edge";

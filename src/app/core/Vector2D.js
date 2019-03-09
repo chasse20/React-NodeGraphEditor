@@ -1,13 +1,11 @@
 /**
 *	2D Vector
+*	@memberof core
+*	@param {number} [tX=0] x
+*	@param {number} [tY=0] y
 */
 export default class Vector2D
 {
-	/**
-	*	Constructor
-	*	@param {number} [tX=0] x
-	*	@param {number} [tY=0] y
-	*/
 	constructor( tX = 0, tY = 0 )
 	{
 		/**

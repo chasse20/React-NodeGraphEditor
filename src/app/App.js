@@ -1,3 +1,15 @@
+/**
+*	@namespace core
+*/
+
+/**
+*	@namespace nodegraphBase
+*/
+
+/**
+*	@namespace nodegraph
+*/
+
 import React, { Component } from "react";
 import { observer } from "mobx-react";
 import Interface from "./nodegraph/views/interface/Interface";

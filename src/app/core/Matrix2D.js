@@ -2,18 +2,16 @@ import Vector2D from "./Vector2D";
 
 /**
 *	2D Matrix
+*	@memberof core
+*	@param {number} [tM11=0] M11
+*	@param {number} [tM12=0] M12
+*	@param {number} [tM13=0] M13
+*	@param {number} [tM21=0] M21
+*	@param {number} [tM22=0] M22
+*	@param {number} [tM23=0] M23
 */
 export default class Matrix2D
 {
-	/**
-	*	Constructor
-	*	@param {number} [tM11=0] M11
-	*	@param {number} [tM12=0] M12
-	*	@param {number} [tM13=0] M13
-	*	@param {number} [tM21=0] M21
-	*	@param {number} [tM22=0] M22
-	*	@param {number} [tM23=0] M23
-	*/
 	constructor( tM11 = 0, tM12 = 0, tM13 = 0, tM21 = 0, tM22 = 0, tM23 = 0 )
 	{
 		/**

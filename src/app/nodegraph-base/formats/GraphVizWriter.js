@@ -1,3 +1,7 @@
+/**
+*	@namespace nodegraphBase
+*/
+
 import EdgeView from "../views/graph/edges/Edge";
 import NodeView from "../views/graph/nodes/Node";
 

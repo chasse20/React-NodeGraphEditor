@@ -5,15 +5,13 @@ import { DEGREES_TO_RADIANS, RADIANS_TO_DEGREES } from "./Utility";
 
 /**
 *	Represents a 2D. hierarchical, decomposed matrix with position, rotation and scale properties
+*	@memberof core
+*	@param {Vector2D} [tPosition] Local position of the transform
+*	@param {Vector2D} [tRotation=0] Local rotation euler angle
+*	@param {Vector2D} [tScale] Local scale of the transform
 */
 export default class Transform2D
 {
-	/**
-	*	Constructor
-	*	@param {Vector2D} [tPosition] Local position of the transform
-	*	@param {Vector2D} [tRotation=0] Local rotation euler angle
-	*	@param {Vector2D} [tScale] Local scale of the transform
-	*/
 	constructor( tPosition = new Vector2D( 0, 0, 0 ), tRotation = 0, tScale = new Vector2D( 1, 1 ) )
 	{
 		/**

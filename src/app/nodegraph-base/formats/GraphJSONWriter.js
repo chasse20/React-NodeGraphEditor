@@ -1,3 +1,7 @@
+/**
+*	@namespace nodegraphBase
+*/
+
 export default class GraphJSONWriter // TODO: Clustering
 {
 	write( tGraphModel, tNodeTextField = "caption", tEdgeTextField = "caption" )
