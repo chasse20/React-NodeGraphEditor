@@ -3,7 +3,7 @@
 */
 
 /**
-*	@namespace nodegraphBase
+*	@namespace nodegraph-base
 */
 
 /**

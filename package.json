@@ -45,6 +45,7 @@
     "babel-core": "6.26.3",
     "babel-preset-env": "1.7.0",
     "babel-preset-react": "6.24.1",
+    "docdash": "^1.0.3",
     "jsdoc": "^3.5.5",
     "jsdoc-export-default-interop": "^0.3.1"
   },

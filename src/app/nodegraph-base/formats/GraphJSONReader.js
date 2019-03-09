@@ -3,6 +3,7 @@ import TypeEdge from "../models/TypeEdge";
 
 /**
 *	Format reader factory for GraphJSON
+*	@memberof nodegraph-base
 */
 export default class GraphJSONReader // TODO: Clustering
 {
