@@ -2,8 +2,20 @@ import GraphVizWriterBase from "../../nodegraph-base/formats/GraphVizWriter";
 import EdgeView from "../views/graph/edges/Edge";
 import NodeView from "../views/graph/nodes/Node";
 
+/**
+*	Writer factory for the GraphViz format
+*	@memberof nodegraph
+*	@augments nodegraph-base.GraphVizWriter
+*/
 export default class GraphVizWriter extends GraphVizWriterBase
-{	
+{
+	/**
+	*	Writes JSON of a node type (radius and fill)
+	*	@param {TypeNode} tTypeModel Type model
+	*	@param {Object} tDefaultModelClass Default model class used to determine if the output should bother including it
+	*	@param {Object} tDefaultViewClass Default view class used to determine if the output should bother including it
+	*	@return {Object} JSON output
+	*/
 	writeNodeType( tTypeModel, tDefaultViewClass = NodeView )
 	{
 		const tempJSON = super.writeNodeType( tTypeModel, tDefaultViewClass );
@@ -28,6 +40,13 @@ export default class GraphVizWriter extends GraphVizWriterBase
 		return null;
 	}
 	
+	/**
+	*	Writes JSON of an edge type (stroke and text)
+	*	@param {TypeEdge} tTypeModel Type model
+	*	@param {Object} tDefaultModelClass Default model class used to determine if the output should bother including it
+	*	@param {Object} tDefaultViewClass Default view class used to determine if the output should bother including it
+	*	@return {Object} JSON output
+	*/
 	writeEdgeType( tTypeModel, tDefaultViewClass = EdgeView )
 	{
 		const tempJSON = super.writeEdgeType( tTypeModel, tDefaultViewClass );
@@ -52,6 +71,11 @@ export default class GraphVizWriter extends GraphVizWriterBase
 		return null;
 	}
 	
+	/**
+	*	Writes JSON from a node model (text and data associative array)
+	*	@param {Node} tNodeModel Node model to write data from
+	*	@return {Object} JSON output
+	*/
 	writeNode( tNodeModel )
 	{
 		const tempJSON = super.writeNode( tNodeModel );
