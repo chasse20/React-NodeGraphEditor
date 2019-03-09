@@ -1,13 +1,13 @@
 import { observable, decorate, values } from "mobx";
 import Vector2D from "../../core/Vector2D";
-import GUID from "../../core/GUID";
+import ID from "../../core/ID";
 import Pin from "./Pin";
 
 export default class Node
 {
 	constructor( tGraph, tType )
 	{
-		this._id = GUID.ID;
+		this._id = ID.ID;
 		this._graph = tGraph;
 		this._type = tType;
 		this._pins =

@@ -1,27 +1,75 @@
 import Vector2D from "./Vector2D";
 
+/**
+*	2D Matrix
+*/
 export default class Matrix2D
-{	
+{
+	/**
+	*	Constructor
+	*	@param {number} [tM11=0] M11
+	*	@param {number} [tM12=0] M12
+	*	@param {number} [tM13=0] M13
+	*	@param {number} [tM21=0] M21
+	*	@param {number} [tM22=0] M22
+	*	@param {number} [tM23=0] M23
+	*/
 	constructor( tM11 = 0, tM12 = 0, tM13 = 0, tM21 = 0, tM22 = 0, tM23 = 0 )
 	{
+		/**
+		*	M11
+		*	@type {number}
+		*/
 		this.m11 = tM11;
+		/**
+		*	M12
+		*	@type {number}
+		*/
 		this.m12 = tM12;
+		/**
+		*	M13
+		*	@type {number}
+		*/
 		this.m13 = tM13;
+		/**
+		*	M21
+		*	@type {number}
+		*/
 		this.m21 = tM21;
+		/**
+		*	M22
+		*	@type {number}
+		*/
 		this.m22 = tM22;
+		/**
+		*	M23
+		*	@type {number}
+		*/
 		this.m23 = tM23;
 	}
 	
+	/**
+	*	Returns the CSS string representation
+	*	@return {string} CSS transform string of this matrix
+	*/
 	toString()
 	{
 		return "matrix(" + this.m11 + "," + this.m21 + "," + this.m12 + "," + this.m22 + "," + this.m13 + "," + this.m23 + ")";
 	}
 	
+	/**
+	*	Creates a hard copy of this matrix
+	*	@return {Matrix2D} Copy of this matrix
+	*/
 	copy()
 	{
 		return new Matrix2D( this.m11, this.m12, this.m13, this.m21, this.m22, this.m23 );
 	}
 	
+	/**
+	*	Creates an identity matrix
+	*	@return {Matrix2D} Identity matrix
+	*/
 	static get Identity()
 	{
 		return new Matrix2D(
@@ -30,6 +78,11 @@ export default class Matrix2D
 		);
 	}
 	
+	/**
+	*	Creates a translation matrix from a point
+	*	@param {Vector2D} tVector Point
+	*	@return {Matrix2D} Translation matrix
+	*/
 	static Translate( tVector )
 	{
 		return new Matrix2D(
@@ -38,6 +91,11 @@ export default class Matrix2D
 		);
 	}
 	
+	/**
+	*	Creates a scale matrix from a scale vector
+	*	@param {Vector2D} tVector Scale
+	*	@return {Matrix2D} Scale matrix
+	*/
 	static Scale( tVector )
 	{
 		return new Matrix2D(
@@ -46,6 +104,11 @@ export default class Matrix2D
 		);
 	}
 	
+	/**
+	*	Creates a rotation matrix from a radian angle
+	*	@param {number} tAngleRadians Angle in radians
+	*	@return {Matrix2D} Rotation matrix
+	*/
 	static Rotate( tAngleRadians )
 	{
 		const tempCos = Math.cos( 0 );
@@ -57,6 +120,13 @@ export default class Matrix2D
 		);
 	}
 
+	/**
+	*	Composes a TRS matrix from a point, angle and scale vector
+	*	@param {Vector2D} tTranslateVector Point
+	*	@param {number} tRotationRadians Angle in radians
+	*	@param {Vector2D} tScaleVector Scale
+	*	@return {Matrix2D} TRS matrix
+	*/
 	static TRS( tTranslateVector, tRotationRadians, tScaleVector )
 	{
 		var tempMatrix = Matrix2D.Multiply( Matrix2D.Identity, Matrix2D.Translate( tTranslateVector ) );
@@ -64,21 +134,42 @@ export default class Matrix2D
 		return Matrix2D.Multiply( tempMatrix, Matrix2D.Scale( tScaleVector ) );
 	}
 	
+	/**
+	*	Decomposes a translation vector from a TRS matrix
+	*	@param {Matrix2D} tTRS Matrix to decompose
+	*	@return {Vector2D} Translation vector
+	*/
 	static DecomposeTranslation( tTRS )
 	{
 		return new Vector2D( tTRS.m13, tTRS.m23 );
 	}
 	
+	/**
+	*	Decomposes a lossy scale vector from a TRS matrix
+	*	@param {Matrix2D} tTRS Matrix to decompose
+	*	@return {Vector2D} Scale vector
+	*/
 	static DecomposeScale( tTRS )
 	{
 		return new Vector2D( Math.sqrt( tTRS.m11 * tTRS.m11 + tTRS.m21 * tTRS.m21 ), Math.sqrt( tTRS.m12 * tTRS.m12 + tTRS.m22 * tTRS.m22 ) );
 	}
 	
+	/**
+	*	Decomposes the rotation angle from a matrix
+	*	@param {Matrix2D} tTRS Matrix to decompose
+	*	@return {number} Rotation angle in radians
+	*/
 	static DecomposeRotation( tTRS )
 	{
 		return Math.acos( tTRS.m11 / Math.sqrt( tTRS.m11 * tTRS.m11 + tTRS.m21 * tTRS.m21 ) );
 	}
 
+	/**
+	*	Multiplies two matrices together
+	*	@param {Matrix2D} tA
+	*	@param {Matrix2D} tB
+	*	@return {Matrix2D} Multiplied result
+	*/
 	static Multiply( tA, tB )
 	{
 		// Row 1
@@ -94,6 +185,12 @@ export default class Matrix2D
 		return new Matrix2D( tempM11, tempM12, tempM13, tempM21, tempM22, tempM23 );
 	}
 
+	/**
+	*	Transforms a vector by a matrix
+	*	@param {tMatrix} tMatrix Matrix to transform tPoint by
+	*	@param {Vector2D} tPoint Vector to apply the transformation to
+	*	@return {Vector2D} Transformed vector
+	*/
 	static MultiplyPoint( tMatrix, tPoint )
 	{
 		return new Vector2D(
@@ -102,6 +199,11 @@ export default class Matrix2D
 		);
 	}
 
+	/**
+	*	Inverses a matrix
+	*	@param {Matrix2D} tMatrix Matrix to inverse
+	*	@return {Matrix2D} Inversed matrix
+	*/
 	static Inverse( tMatrix )
 	{
 		// Determinant
