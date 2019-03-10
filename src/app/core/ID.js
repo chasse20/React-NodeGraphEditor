@@ -4,9 +4,9 @@
 */
 export default class ID
 {
-	/*
-		Auto-increments and returns a unique index
-		@return {number} Index
+	/**
+	*	Auto-increments and returns a unique index
+	*	@return {number} Index
 	*/
 	static get ID()
 	{

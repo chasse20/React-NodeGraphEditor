@@ -13,7 +13,7 @@ export default class GraphJSONReader extends GraphJSONReaderBase
 	*	Reads JSON node data (text and data associative array) and adds it and its type into the graph model
 	*	@param {Graph} tGraphModel Graph model to append data to
 	*	@param {Object} tJSON Raw JSON representing a node
-	*	@param {string} tTextField Which field name should be considered as the visible text label of a node
+	*	@param {string} [tTextField=caption] Which field name should be considered as the visible text label of a node
 	*	@return {Node} Node if successfully generated from the JSON
 	*/
 	readNode( tGraphModel, tJSON, tTextField = "caption" )
@@ -69,7 +69,7 @@ export default class GraphJSONReader extends GraphJSONReaderBase
 	/**
 	*	Reads JSON edge type data (text)
 	*	@param {Object} tJSON Raw JSON representing an edge
-	*	@param {string} tTextField Which field name should be considered as the visible text label of an edge
+	*	@param {string} [tTextField=caption] Which field name should be considered as the visible text label of an edge
 	*	@return {TypeEdge} Edge type if successfully generated from the JSON
 	*/
 	readEdgeType( tJSON, tTextField = "caption" )

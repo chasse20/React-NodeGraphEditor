@@ -15,7 +15,7 @@ export default class BodyNode
 		this._onNodePositionDispose = null;
 	}
 	
-	destroy()
+	clear()
 	{
 		if ( this._onNodePositionDispose !== null )
 		{

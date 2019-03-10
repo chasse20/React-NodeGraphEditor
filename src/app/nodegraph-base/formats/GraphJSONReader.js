@@ -11,8 +11,8 @@ export default class GraphJSONReader // TODO: Clustering
 	*	Populates a graph model from GraphJSON data
 	*	@param {Graph} tGraphModel Graph model to append data to
 	*	@param {Object} tJSON Raw JSON representing a graph
-	*	@param {string} tNodeTextField Which field name should be considered as the visible text label of a node
-	*	@param {string} tEdgeTextField Which field name should be considered as the visible text label of an edge
+	*	@param {string} [tNodeTextField=caption] Which field name should be considered as the visible text label of a node
+	*	@param {string} [tEdgeTextField=caption] Which field name should be considered as the visible text label of an edge
 	*/
 	read( tGraphModel, tJSON, tNodeTextField = "caption", tEdgeTextField = "caption" )
 	{
@@ -47,7 +47,7 @@ export default class GraphJSONReader // TODO: Clustering
 	*	Reads JSON node data and adds it and its type into the graph model
 	*	@param {Graph} tGraphModel Graph model to append data to
 	*	@param {Object} tJSON Raw JSON representing a node
-	*	@param {string} tTextField Which field name should be considered as the visible text label of a node
+	*	@param {string} [tTextField=caption] Which field name should be considered as the visible text label of a node
 	*	@return {Node} Node if successfully generated from the JSON
 	*/
 	readNode( tGraphModel, tJSON, tTextField = "caption" )
@@ -110,7 +110,7 @@ export default class GraphJSONReader // TODO: Clustering
 	*	@param {Graph} tGraphModel Graph model to append data to
 	*	@param {Object} tJSON Raw JSON representing an edge
 	*	@param {Object} tNodeRefs Associative array used to bind edges to nodes
-	*	@param {string} tTextField Which field name should be considered as the visible text label of an edge
+	*	@param {string} [tTextField=caption] Which field name should be considered as the visible text label of an edge
 	*	@return {Edge} Edge if successfully generated from the JSON
 	*/
 	readEdge( tGraphModel, tJSON, tNodeRefs, tTextField = "caption" )
@@ -152,7 +152,7 @@ export default class GraphJSONReader // TODO: Clustering
 	/**
 	*	Reads JSON edge type data
 	*	@param {Object} tJSON Raw JSON representing an edge
-	*	@param {string} tTextField Which field name should be considered as the visible text label of an edge
+	*	@param {string} [tTextField=caption] Which field name should be considered as the visible text label of an edge
 	*	@return {TypeEdge} Edge type if successfully generated from the JSON
 	*/
 	readEdgeType( tJSON, tTextField = "caption" )

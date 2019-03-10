@@ -32,7 +32,7 @@ class Graph extends GraphBase
 		super.componentWillUnmount();
 		
 		// Clear physics
-		this.props.model._physics.destroy();
+		this.props.model._physics.clear();
 	}
 	
 	onMouseDown( tEvent )

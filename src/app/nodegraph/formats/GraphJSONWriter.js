@@ -10,8 +10,8 @@ export default class GraphJSONWriter extends GraphJSONWriterBase
 	/**
 	*	Writes JSON from a node model (text and data associative array)
 	*	@param {Node} tNodeModel Node model to write data from
-	*	@param {string} tNodeTextField Which field name should be considered as the visible text label of a node
-	*	@param {string} tEdgeTextField Which field name should be considered as the visible text label of an edge
+	*	@param {string} [tNodeTextField=caption] Which field name should be considered as the visible text label of a node
+	*	@param {string} [tEdgeTextField=caption] Which field name should be considered as the visible text label of an edge
 	*	@return {Object} JSON output
 	*/
 	writeNode( tNodeModel, tEdges, tNodeTextField = "caption", tEdgeTextField = "caption" )

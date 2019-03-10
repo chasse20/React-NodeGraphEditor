@@ -1,4 +1,6 @@
 import GraphVizWriterBase from "../../nodegraph-base/formats/GraphVizWriter";
+import Node from "../models/Node";
+import Edge from "../models/Edge";
 import EdgeView from "../views/graph/edges/Edge";
 import NodeView from "../views/graph/nodes/Node";
 
@@ -12,11 +14,11 @@ export default class GraphVizWriter extends GraphVizWriterBase
 	/**
 	*	Writes JSON of a node type (radius and fill)
 	*	@param {TypeNode} tTypeModel Type model
-	*	@param {Object} tDefaultModelClass Default model class used to determine if the output should bother including it
-	*	@param {Object} tDefaultViewClass Default view class used to determine if the output should bother including it
+	*	@param {Object} [tDefaultModelClass] Default model class used to determine if the output should bother including it
+	*	@param {Object} [tDefaultViewClass] Default view class used to determine if the output should bother including it
 	*	@return {Object} JSON output
 	*/
-	writeNodeType( tTypeModel, tDefaultViewClass = NodeView )
+	writeNodeType( tTypeModel, tDefaultModelClass = Node, tDefaultViewClass = NodeView )
 	{
 		const tempJSON = super.writeNodeType( tTypeModel, tDefaultViewClass );
 		
@@ -43,11 +45,11 @@ export default class GraphVizWriter extends GraphVizWriterBase
 	/**
 	*	Writes JSON of an edge type (stroke and text)
 	*	@param {TypeEdge} tTypeModel Type model
-	*	@param {Object} tDefaultModelClass Default model class used to determine if the output should bother including it
-	*	@param {Object} tDefaultViewClass Default view class used to determine if the output should bother including it
+	*	@param {Object} [tDefaultModelClass] Default model class used to determine if the output should bother including it
+	*	@param {Object} [tDefaultViewClass] Default view class used to determine if the output should bother including it
 	*	@return {Object} JSON output
 	*/
-	writeEdgeType( tTypeModel, tDefaultViewClass = EdgeView )
+	writeEdgeType( tTypeModel, tDefaultModelClass = Edge, tDefaultViewClass = EdgeView )
 	{
 		const tempJSON = super.writeEdgeType( tTypeModel, tDefaultViewClass );
 		

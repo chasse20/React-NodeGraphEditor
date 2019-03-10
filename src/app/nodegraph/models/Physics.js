@@ -30,7 +30,7 @@ export default class Physics
 		this.handleEnabled();
 	}
 	
-	destroy()
+	clear()
 	{
 		this.clearBodies();
 		
@@ -51,7 +51,7 @@ export default class Physics
 		{
 			for ( let i = ( this._nodes.length - 1 ); i >= 0; --i )
 			{
-				this._nodes[i].destroy();
+				this._nodes[i].clear();
 			}
 			
 			this._nodes = null;

@@ -150,8 +150,8 @@ export default class GraphVizWriter
 	/**
 	*	Writes JSON of a node type
 	*	@param {TypeNode} tTypeModel Type model
-	*	@param {Object} tDefaultModelClass Default model class used to determine if the output should bother including it
-	*	@param {Object} tDefaultViewClass Default view class used to determine if the output should bother including it
+	*	@param {Object} [tDefaultModelClass] Default model class used to determine if the output should bother including it
+	*	@param {Object} [tDefaultViewClass] Default view class used to determine if the output should bother including it
 	*	@return {Object} JSON output
 	*/
 	writeNodeType( tTypeModel, tDefaultModelClass = Node, tDefaultViewClass = NodeView )
@@ -213,8 +213,8 @@ export default class GraphVizWriter
 	/**
 	*	Writes JSON of an edge type
 	*	@param {TypeEdge} tTypeModel Type model
-	*	@param {Object} tDefaultModelClass Default model class used to determine if the output should bother including it
-	*	@param {Object} tDefaultViewClass Default view class used to determine if the output should bother including it
+	*	@param {Object} [tDefaultModelClass] Default model class used to determine if the output should bother including it
+	*	@param {Object} [tDefaultViewClass] Default view class used to determine if the output should bother including it
 	*	@return {Object} JSON output
 	*/
 	writeEdgeType( tTypeModel, tDefaultModelClass = Edge, tDefaultViewClass = EdgeView )

@@ -7,8 +7,8 @@ export default class GraphJSONWriter // TODO: Clustering
 	/**
 	*	Writes GraphJSON from a graph model
 	*	@param {Graph} tGraphModel Graph model to write data from
-	*	@param {string} tNodeTextField Which field name should be considered as the visible text label of a node
-	*	@param {string} tEdgeTextField Which field name should be considered as the visible text label of an edge
+	*	@param {string} [tNodeTextField=caption] Which field name should be considered as the visible text label of a node
+	*	@param {string} [tEdgeTextField=caption] Which field name should be considered as the visible text label of an edge
 	*	@return {Object} GraphJSON output
 	*/
 	write( tGraphModel, tNodeTextField = "caption", tEdgeTextField = "caption" )
@@ -51,8 +51,9 @@ export default class GraphJSONWriter // TODO: Clustering
 	/**
 	*	Writes JSON from a node model
 	*	@param {Node} tNodeModel Node model to write data from
-	*	@param {string} tNodeTextField Which field name should be considered as the visible text label of a node
-	*	@param {string} tEdgeTextField Which field name should be considered as the visible text label of an edge
+	*	@param {Object[]} tEdges Array of edges to write individual JSON to
+	*	@param {string} [tNodeTextField=caption] Which field name should be considered as the visible text label of a node
+	*	@param {string} [tEdgeTextField=caption] Which field name should be considered as the visible text label of an edge
 	*	@return {Object} JSON output
 	*/
 	writeNode( tNodeModel, tEdges, tNodeTextField = "caption", tEdgeTextField = "caption" )
@@ -84,7 +85,7 @@ export default class GraphJSONWriter // TODO: Clustering
 	*	Writes JSON edges from a pin model
 	*	@param {Pin} tPinModel Pin model to write data from
 	*	@param {Object[]} tEdges Array of edges to write individual JSON to
-	*	@param {string} tEdgeTextField Which field name should be considered as the visible text label of an edge
+	*	@param {string} [tEdgeTextField=caption] Which field name should be considered as the visible text label of an edge
 	*/
 	writePinEdges( tPinModel, tEdges, tEdgeTextField = "caption" )
 	{
@@ -104,7 +105,7 @@ export default class GraphJSONWriter // TODO: Clustering
 	/**
 	*	Writes JSON from an edge model
 	*	@param {Edge} tEdgeModel Edge model to write data from
-	*	@param {string} tEdgeTextField Which field name should be considered as the visible text label of an edge
+	*	@param {string} [tEdgeTextField=caption] Which field name should be considered as the visible text label of an edge
 	*	@return {Object} JSON output
 	*/
 	writeEdge( tEdgeModel, tEdgeTextField = "caption" )

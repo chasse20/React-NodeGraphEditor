@@ -102,8 +102,8 @@ export default class GraphVizReader
 	/**
 	*	Reads JSON node type data
 	*	@param {Object} tJSON Raw JSON representing a node
-	*	@param {Object} tSerializableModels Associative array of serializable models with key as model name and value as class
-	*	@param {Object} tSerializableViews Associative array of serializable views with key as model name and value as class
+	*	@param {Object} [tSerializableModels] Associative array of serializable models with key as model name and value as class
+	*	@param {Object} [tSerializableViews] Associative array of serializable views with key as model name and value as class
 	*	@return {TypeNode} Node type if successfully generated from the JSON
 	*/
 	readNodeType( tJSON, tSerializableModels = { "Node": Node }, tSerializableViews = { "Node": NodeView } )
@@ -135,8 +135,8 @@ export default class GraphVizReader
 	/**
 	*	Reads JSON edge type data
 	*	@param {Object} tJSON Raw JSON representing an edge
-	*	@param {Object} tSerializableModels Associative array of serializable models with key as model name and value as class
-	*	@param {Object} tSerializableViews Associative array of serializable views with key as model name and value as class
+	*	@param {Object} [tSerializableModels] Associative array of serializable models with key as model name and value as class
+	*	@param {Object} [tSerializableViews] Associative array of serializable views with key as model name and value as class
 	*	@return {TypeEdge} Edge type if successfully generated from the JSON
 	*/
 	readEdgeType( tJSON, tSerializableModels = { "Edge": Edge }, tSerializableViews = { "Edge": EdgeView } )

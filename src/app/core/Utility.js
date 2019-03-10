@@ -1,4 +1,5 @@
 /**
+*	Multiplier to convert degrees to radians
 *	@memberof core
 *	@constant
 *	@type {number}
@@ -7,6 +8,7 @@
 export const DEGREES_TO_RADIANS = Math.PI / 180;
 
 /**
+*	Multiplier to convert radians to degrees
 *	@memberof core
 *	@constant
 *	@type {number}
