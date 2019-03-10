@@ -2,7 +2,7 @@
 Basic node graph editor created in React.
 
 # SCREENSHOTS
-[<img alt="1" src="screenshots/1.jpg" height="200">](/screenshots/1.jpg)
+[<img alt="1" src="screenshots/1.jpg" height="200">](/screenshots/1.jpg?raw=true)
 
 ## DESCRIPTION
 With this tool you can import, edit and export a simple node graph.
