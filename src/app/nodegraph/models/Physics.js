@@ -4,20 +4,57 @@ import Vector2D from "../../core/Vector2D";
 import BodyNode from "./BodyNode";
 import BodyEdge from "./BodyEdge";
 
+/**
+*	Physics system for auto-placement using D3 force layout
+*	@memberof nodegraph
+*	@param {Node} tGraph Graph model that this system belongs to
+*/
 export default class Physics
 {
 	constructor( tGraph )
 	{
-		// Variables
+		/**
+		*	Graph model that this system belongs to
+		*	@type {Graph}
+		*/
 		this._graph = tGraph;
+		/**
+		*	True if physics is running
+		*	@type {bool}
+		*/
 		this._isEnabled = true;
-		this._nodes = null; // physics objects
+		/**
+		*	Array of node physics bodies
+		*	@type {BodyNode[]}
+		*/
+		this._nodes = null;
+		/**
+		*	Associative array of node physics bodies used for optimization
+		*	@type {Object}
+		*/
 		this._nodesHash = null;
-		this._edges = null; // physics objects
+		/**
+		*	Array of edge physics bodies
+		*	@type {BodyEdge[]}
+		*/
+		this._edges = null;
+		/**
+		*	Associative array of edge physics bodies used for optimization
+		*	@type {Object}
+		*/
 		this._edgesHash = null;
+		/**
+		*	Timeout ID used for seeding a center force
+		*	@type {number}
+		*/
 		this._seedCenterTimeout = null;
-		
+		/**
+		*	D3 physics simulation
+		*	@type {Graph}
+		*/
 		this._simulation = forceSimulation();
+		
+		// Initialize
 		this._simulation.velocityDecay( 0.85 );
 		this._simulation.alphaDecay( 0.01 );
 		this._simulation.force( "charge", this.createChargeForce() );
@@ -25,11 +62,13 @@ export default class Physics
 		this._simulation.force( "link", this.createLinkForce() );
 		this._simulation.on( "tick", () => { this.onTick(); } );
 		
-		// Initialize
 		this.seedCenter();
 		this.handleEnabled();
 	}
 	
+	/**
+	*	Clears all physics bodies and the center force timeout if active
+	*/
 	clear()
 	{
 		this.clearBodies();
@@ -41,6 +80,9 @@ export default class Physics
 		}
 	}
 	
+	/**
+	*	Clears all physics bodies
+	*/
 	clearBodies()
 	{
 		// Stop
@@ -68,6 +110,9 @@ export default class Physics
 		}
 	}
 	
+	/**
+	*	Step tick method of the physics simulation, updates node positions
+	*/
 	onTick()
 	{
 		for ( let i = ( this._nodes.length - 1 ); i >= 0; --i )
@@ -77,6 +122,9 @@ export default class Physics
 		}
 	}
 	
+	/**
+	*	Seeds a temporary center force placed in the current middle of the screen
+	*/
 	seedCenter()
 	{
 		this._simulation.force( "center", this.createCenterForce() );
@@ -96,6 +144,9 @@ export default class Physics
 		);
 	}
 	
+	/**
+	*	Restarts the simulation if enabled
+	*/
 	restart()
 	{
 		if ( this._isEnabled )
@@ -104,11 +155,19 @@ export default class Physics
 		}
 	}
 	
+	/**
+	*	Factory method for creating the charge/repel force
+	*	@return {forceManyBody} Many body force
+	*/
 	createChargeForce()
 	{
 		return forceManyBody().strength( -500 ).distanceMax( 750 ).theta( 100 );
 	}
 	
+	/**
+	*	Factory method for creating the collision force
+	*	@return {forceCollide} Collider force
+	*/
 	createCollideForce()
 	{
 		return forceCollide(
@@ -119,6 +178,10 @@ export default class Physics
 		);
 	}
 	
+	/**
+	*	Factory method for creating the link force which is less effective if an edge has a low weight
+	*	@return {forceLink} Link force
+	*/
 	createLinkForce()
 	{
 		return forceLink().id(
@@ -139,11 +202,19 @@ export default class Physics
 		).strength( 0.7 );
 	}
 	
+	/**
+	*	Factory method for creating the center force to be in the middle of the screen
+	*	@return {forceCenter} Center force
+	*/
 	createCenterForce()
 	{
 		return forceCenter( ( ( window.screen.width * 0.5 ) / this._graph.zoom ) - this._graph.position.x, ( ( window.screen.height * 0.5 ) / this._graph.zoom ) - this._graph.position.y );
 	}
 	
+	/**
+	*	Toggles physics system
+	*	@param {bool} tIsEnabled Set to true if enabled
+	*/
 	set isEnabled( tIsEnabled )
 	{
 		if ( tIsEnabled !== this._isEnabled )
@@ -153,6 +224,9 @@ export default class Physics
 		}
 	}
 	
+	/**
+	*	Handler called whenever toggled, adds physics bodies if enabled and removes if disabled
+	*/
 	handleEnabled()
 	{
 		if ( this._isEnabled )
@@ -197,6 +271,11 @@ export default class Physics
 		}
 	}
 	
+	/**
+	*	Handler that gets called when a node model is added to the graph. Will create a new physics body and add it to the physics system.
+	*	@param {Node} tNodeModel Node model
+	*	@return {bool} True if set
+	*/
 	onSetNode( tNodeModel )
 	{
 		if ( this._isEnabled )
@@ -216,10 +295,19 @@ export default class Physics
 				tempBody.isFrozen = tNodeModel._isSelected;
 				
 				this.setNodeBodies( this._nodes );
+				
+				return true;
 			}
 		}
+		
+		return false;
 	}
 	
+	/**
+	*	Handler that gets called when a node model is removed from the graph. Will remove the physics body from the system.
+	*	@param {Node} tNodeModel Node model
+	*	@return {bool} True if removed
+	*/
 	onRemoveNode( tNodeModel )
 	{
 		if ( this._nodesHash !== null )
@@ -240,10 +328,18 @@ export default class Physics
 				}
 				
 				this.setNodeBodies( this._nodes );
+				
+				return true;
 			}
 		}
+		
+		return false;
 	}
 	
+	/**
+	*	Pauses physics processing and Ingests node physics bodies into the system
+	*	@param {BodyNode[]} tNodeBodies Array of node physics bodies
+	*/
 	setNodeBodies( tNodeBodies )
 	{
 		if ( tNodeBodies == null )
@@ -272,6 +368,11 @@ export default class Physics
 		}
 	}
 	
+	/**
+	*	Handler that gets called when a node model is selected. Will attempt to freeze its physics body.
+	*	@param {Node} tNodeModel Node model
+	*	@return {bool} True if frozen
+	*/
 	onSelectNode( tNodeModel )
 	{
 		if ( this._nodesHash !== null )
@@ -280,10 +381,19 @@ export default class Physics
 			if ( tempBody !== undefined )
 			{
 				tempBody.isFrozen = true;
+				
+				return true;
 			}
 		}
+		
+		return false;
 	}
 	
+	/**
+	*	Handler that gets called when a node model is deselected. Will attempt to unfreeze its physics body.
+	*	@param {Node} tNodeModel Node model
+	*	@return {bool} True if unfrozen
+	*/
 	onDeselectNode( tNodeModel )
 	{
 		if ( this._nodesHash !== null )
@@ -296,6 +406,11 @@ export default class Physics
 		}
 	}
 	
+	/**
+	*	Handler that gets called when an edge model is added to a pin. Will create a new physics body and add it to the physics system.
+	*	@param {Edge} tEdgeModel Edge model
+	*	@return {bool} True if set
+	*/
 	onSetEdge( tEdgeModel )
 	{
 		if ( this._isEnabled )
@@ -318,6 +433,11 @@ export default class Physics
 		}
 	}
 	
+	/**
+	*	Handler that gets called when a node model is removed from a pin. Will remove the physics body from the system.
+	*	@param {Edge} tEdgeModel Edge model
+	*	@return {bool} True if removed
+	*/
 	onRemoveEdge( tEdgeModel )
 	{
 		if ( this._edgesHash !== null )
@@ -344,6 +464,9 @@ export default class Physics
 		}
 	}
 	
+	/**
+	*	Handler that gets called at the start of dragging a node selection. Will heat up the physics simulation.
+	*/
 	onDragStart()
 	{
 		if ( this._isEnabled )
@@ -352,6 +475,9 @@ export default class Physics
 		}
 	}
 	
+	/**
+	*	Handler that gets called at the end of dragging a node selection. Will cool off the physics simulation.
+	*/
 	onDragEnd()
 	{
 		if ( this._isEnabled )

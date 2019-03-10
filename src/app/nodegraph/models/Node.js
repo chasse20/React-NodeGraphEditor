@@ -2,21 +2,46 @@ import { observable, decorate, computed } from "mobx";
 import NodeBase from "../../nodegraph-base/models/Node";
 import Pin from "./Pin";
 
+/**
+*	Node model that manages pins
+*	@memberof nodegraph
+*	@augments nodegraph-base.Node
+*	@param {Graph} tGraph Graph model this belongs to
+*	@param {TypeNode} tType Node type
+*	@param {string} [tText] Display text
+*	@param {Object} [tData] Associative array of node data
+*/
 export default class Node extends NodeBase
 {
 	constructor( tGraph, tType, tText = "", tData = {} )
 	{
 		super( tGraph, tType );
 		
+		/**
+		*	Associative array of pin models, responsible for edge links
+		*	@type {Object}
+		*/
 		this._pins =
 		{
 			in: new Pin( "in", this, false ),
 			out: new Pin( "out", this )
 		};
+		/**
+		*	Display text
+		*	@type {string}
+		*/
 		this.text = tText;
+		/**
+		*	Associative array of edge data
+		*	@type {Object}
+		*/
 		this.data = tData;
 	}
 	
+	/**
+	*	Calculates the visibility of this node which is determined only if its type is visible and at least one of its edge links is visible
+	*	@return {bool} True if visible
+	*/
 	get isVisible()
 	{
 		if ( this._type.isVisible )

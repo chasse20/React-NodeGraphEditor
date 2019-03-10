@@ -7,7 +7,7 @@ import Vector2D from "../../core/Vector2D";
 *	@param {string} tName Key name of the pin used for lookups in its owning node
 *	@param {Node} tNode Node instance that this pin is coupled to
 *	@param {bool} [tIsOut=true] Direction of this pin
-*	@param {Object,TypeEdge} [tEdgeTypes=null] Allowed edge types that get checked for compatability when creating links with other pins. Null can connect to null. If target pin types set to null, anything can connect.
+*	@param {Object|TypeEdge} [tEdgeTypes=null] Allowed edge types that get checked for compatability when creating links with other pins. Null can connect to null. If target pin types set to null, anything can connect.
 *	@param {core.Vector2D} [tOffset] Relative offset position from the pin's node
 */
 export default class Pin
@@ -31,7 +31,7 @@ export default class Pin
 		this._isOut = tIsOut;
 		/**
 		*	 Allowed edge types that get checked for compatability when creating links with other pins. Null can connect to null. If target pin types set to null, anything can connect.
-		*	@type {Object,TypeEdge}
+		*	@type {Object|TypeEdge}
 		*/
 		this._edgeTypes = tEdgeTypes;
 		/**
