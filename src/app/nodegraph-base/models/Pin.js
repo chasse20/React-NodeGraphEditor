@@ -6,9 +6,9 @@ import Vector2D from "../../core/Vector2D";
 *	@memberof nodegraph-base
 *	@param {string} tName Key name of the pin used for lookups in its owning node
 *	@param {Node} tNode Node instance that this pin is coupled to
-*	@param {bool} tIsOut Direction of this pin
-*	@param {Object,TypeEdge} tEdgeTypes Allowed edge types that get checked for compatability when creating links with other pins
-*	@param {core.Vector2D} tOffset Relative offset position from the pin's node
+*	@param {bool} [tIsOut=true] Direction of this pin
+*	@param {Object,TypeEdge} [tEdgeTypes=null] Allowed edge types that get checked for compatability when creating links with other pins. Null can connect to null. If target pin types set to null, anything can connect.
+*	@param {core.Vector2D} [tOffset] Relative offset position from the pin's node
 */
 export default class Pin
 {
@@ -30,7 +30,7 @@ export default class Pin
 		*/
 		this._isOut = tIsOut;
 		/**
-		*	 Allowed edge types that get checked for compatability when creating links with other pins
+		*	 Allowed edge types that get checked for compatability when creating links with other pins. Null can connect to null. If target pin types set to null, anything can connect.
 		*	@type {Object,TypeEdge}
 		*/
 		this._edgeTypes = tEdgeTypes;
@@ -49,7 +49,7 @@ export default class Pin
 	/**
 	*	Adds an edge link to the pin
 	*	@param {Edge} tEdge Edge link to add
-	*	@param {bool} tIsFromOther Optimization flag that gets set when coming from another pin's linking method
+	*	@param {bool} [tIsFromOther=false] Optimization flag that gets set when coming from another pin's linking method
 	*	@return {bool} True if added
 	*/
 	setLink( tEdge, tIsFromOther = false )

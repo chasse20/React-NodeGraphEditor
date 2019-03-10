@@ -3,10 +3,11 @@ import Edge from "./Edge";
 import EdgeView from "../views/graph/edges/Edge";
 
 /**
-*	Type model definition
+*	Edge type definition
 *	@memberof nodegraph-base
-*	@param {string} [tName] Key name of this type used for lookups in the graph
-*	@param {Object} [tModelClass=default] Model class of this type
+*	@augments nodegraph-base.Type
+*	@param {string} [tName=default] Key name of this type used for lookups in the graph
+*	@param {Object} [tModelClass] Model class of this type
 *	@param {Object} [tViewClass] View class of this type
 */
 export default class TypeEdge extends Type
