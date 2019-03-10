@@ -1,9 +1,6 @@
 # React-NodeGraphEditor
 Basic node graph editor created in React.
 
-# SCREENSHOTS
-[<img alt="1" src="screenshots/1.jpg" height="200">](/screenshots/1.jpg?raw=true)[<img alt="2" src="screenshots/2.jpg" height="200">](/screenshots/2.jpg?raw=true)[<img alt="3" src="screenshots/3.jpg" height="200">](/screenshots/3.jpg?raw=true)
-
 ## DESCRIPTION
 With this tool you can import, edit and export a simple node graph.
 
@@ -19,6 +16,9 @@ This was originally designed to act as a foundation for a visual scripting tool 
 - Basic customization and toggling of node and edge types
 - All models are documented in JSDOC format. Use *npm run doc* to generate.
 - Setup to be exported by external packages using *npm run build:node* which allows for imports with *import X from "graphviz/lib/Y"*
+
+## SCREENSHOTS
+[<img alt="1" src="screenshots/1.jpg" height="300">](/screenshots/1.jpg?raw=true)[<img alt="2" src="screenshots/2.jpg" height="300">](/screenshots/2.jpg?raw=true)[<img alt="3" src="screenshots/3.jpg" height="300">](/screenshots/3.jpg?raw=true)
 
 ## MODULES USED
 - [CSS Modules](https://facebook.github.io/create-react-app/docs/adding-a-css-modules-stylesheet)
