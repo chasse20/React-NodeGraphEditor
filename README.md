@@ -19,5 +19,5 @@ This was originally designed to act as a foundation for a visual scripting tool 
 - Creating, removing, dragging, individual and marquee selection of nodes
 - Node popup menu for deleting and linking of other nodes
 - Basic customization and toggling of node and edge types
-- All models are documented in JSDOC format. Use *npm run doc* to generate.
-- Setup to be exported by external packages using *npm run build:node* which allows for imports with *import X from "graphviz/lib/Y"*
+- All models are documented in JSDOC format. Use **npm run doc** to generate.
+- Setup to be exported by external packages using **npm run build:node** which allows for imports with **import X from "graphviz/lib/Y"**
