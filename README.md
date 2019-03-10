@@ -1,6 +1,8 @@
 # React-NodeGraphEditor
 Basic node graph editor created in React. Uses CSS Modules, MobX, JSDoc, and d3-force.
 
+[Live Demo](http://www.chassebrook.com/graphviz/)
+
 ## DESCRIPTION
 With this tool you can import, edit and export a simple node graph.
 
