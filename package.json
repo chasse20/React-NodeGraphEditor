@@ -27,7 +27,7 @@
     "build:node": "babel src --out-dir lib --copy-files",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "doc": "jsdoc src -r -d docs -c jsdoc.conf.json"
+    "doc": "jsdoc src -r -d docs -c jsdoc.json"
   },
   "browserslist": [
     ">0.2%",
