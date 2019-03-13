@@ -61,6 +61,7 @@ export default class Physics
 		this._simulation.force( "collide", this.createCollideForce() );
 		this._simulation.force( "link", this.createLinkForce() );
 		this._simulation.on( "tick", () => { this.onTick(); } );
+		this._simulation.stop();
 		
 		this.seedCenter();
 		this.handleEnabled();
@@ -149,7 +150,7 @@ export default class Physics
 	*/
 	restart()
 	{
-		if ( this._isEnabled )
+		if ( this._isEnabled && this._nodes !== null )
 		{
 			this._simulation.alpha( 1 ).restart();
 		}
