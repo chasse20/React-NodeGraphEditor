@@ -43,17 +43,19 @@ class ItemEdge extends Item
 			<React.Fragment>
 				<div className={ tStyle.kvp }>
 					<span>Weight</span>
-					<input type="number" value={ tempModel.weight } onChange={ this._onWeight }/>
+					<input type="number" value={ tempModel.weight } onChange={ this._onWeight } disabled={ !this.props.isEditable }/>
 				</div>
-				<Data data={ tempModel.data }/>
+				<Data data={ tempModel.data } isEditable={ this.props.isEditable }/>
 			</React.Fragment>
 		);
 	}
 }
 
-ItemEdge.propTypes =
-{
-	model: PropTypes.instanceOf( EdgeModel ).isRequired
-};
+ItemEdge.propTypes = Object.assign(
+	{
+		model: PropTypes.instanceOf( EdgeModel ).isRequired
+	},
+	Item.propTypes
+);
 
 export default observer( ItemEdge );

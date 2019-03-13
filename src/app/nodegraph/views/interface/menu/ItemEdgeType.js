@@ -50,9 +50,12 @@ class ItemEdgeType extends Item
 					<button className={ tempVisibleClass } onClick={ this._onVisible }>
 						{ Icons.visible }
 					</button>
-					<button className={ tStyle.button } onClick={ this._onDelete }>
-						{ Icons.delete }
-					</button>
+					{
+						this.props.isEditable &&
+							<button className={ tStyle.button } onClick={ this._onDelete }>
+								{ Icons.delete }
+							</button>
+					}
 				</div>
 			</React.Fragment>
 		);
@@ -65,18 +68,20 @@ class ItemEdgeType extends Item
 		return (
 			<div className={ tStyle.kvp }>
 				<span>Stroke</span>
-				<input type="color" value={ tempModel.stroke } onChange={ this._onStroke }/>
+				<input type="color" value={ tempModel.stroke } onChange={ this._onStroke } disabled={ !this.props.isEditable }/>
 				<span>Text</span>
-				<textarea value={ tempModel.text } onChange={ this._onText }/>
+				<textarea value={ tempModel.text } onChange={ this._onText } disabled={ !this.props.isEditable }/>
 			</div>
 		);
 	}
 }
 
-ItemEdgeType.propTypes =
-{
-	graph: PropTypes.instanceOf( GraphModel ).isRequired,
-	model: PropTypes.instanceOf( TypeModel ).isRequired
-};
+ItemEdgeType.propTypes = Object.assign(
+	{
+		model: PropTypes.instanceOf( TypeModel ).isRequired,
+		graph: PropTypes.instanceOf( GraphModel ).isRequired
+	},
+	Item.propTypes
+);
 
 export default observer( ItemEdgeType );

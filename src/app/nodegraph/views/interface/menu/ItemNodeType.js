@@ -80,12 +80,17 @@ class ItemNodeType extends Item
 					<button className={ tStyle.button } onClick={ this._onSelect }>
 						{ Icons.select }
 					</button>
-					<button className={ tStyle.button } onClick={ this._onAdd }>
-						{ Icons.addNode }
-					</button>
-					<button className={ tStyle.button } onClick={ this._onDelete }>
-						{ Icons.delete }
-					</button>
+					{
+						this.props.isEditable &&
+							<React.Fragment>
+								<button className={ tStyle.button } onClick={ this._onAdd }>
+									{ Icons.addNode }
+								</button>
+								<button className={ tStyle.button } onClick={ this._onDelete }>
+									{ Icons.delete }
+								</button>
+							</React.Fragment>
+					}
 				</div>
 			</React.Fragment>
 		);
@@ -98,18 +103,20 @@ class ItemNodeType extends Item
 		return (
 			<div className={ tStyle.kvp }>
 				<span>Radius</span>
-				<input type="number" value={ tempModel.radius } onChange={ this._onRadius }/>
+				<input type="number" value={ tempModel.radius } onChange={ this._onRadius } disabled={ !this.props.isEditable }/>
 				<span>Fill</span>
-				<input type="color" value={ tempModel.fill } onChange={ this._onFill }/>
+				<input type="color" value={ tempModel.fill } onChange={ this._onFill } disabled={ !this.props.isEditable }/>
 			</div>
 		);
 	}
 }
 
-ItemNodeType.propTypes =
-{
-	model: PropTypes.instanceOf( TypeModel ).isRequired,
-	graph: PropTypes.instanceOf( GraphModel ).isRequired
-};
+ItemNodeType.propTypes = Object.assign(
+	{
+		model: PropTypes.instanceOf( TypeModel ).isRequired,
+		graph: PropTypes.instanceOf( GraphModel ).isRequired
+	},
+	Item.propTypes
+);
 
 export default observer( ItemNodeType );

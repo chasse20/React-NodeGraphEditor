@@ -44,10 +44,13 @@ class Data extends React.Component
 				<div className={ tStyle.fields }>
 					{ this.renderData() }
 				</div>
-				<div className={ tStyle.new }>
-					<input type="text" value={ this.state.newKey } placeholder="Enter Field Name..." onChange={ this._onNewText }/>
-					<button className={ tStyle.create } onClick={ this._onNew }>new field</button>
-				</div>
+				{
+					this.props.isEditable &&
+						<div className={ tStyle.new }>
+							<input type="text" value={ this.state.newKey } placeholder="Enter Field Name..." onChange={ this._onNewText }/>
+							<button className={ tStyle.create } onClick={ this._onNew }>new field</button>
+						</div>
+				}
 			</div>
 		);
 	}
@@ -64,10 +67,13 @@ class Data extends React.Component
 						(
 							<React.Fragment key={ tKey }>
 								<span>{ tKey }</span>
-								<textarea value={ get( tempData, tKey ) } onChange={ ( tEvent ) => { set( tempData, tKey, tEvent.target.value); } }/>
-								<button className={ tStyle.button } onClick={ () => { remove( tempData, tKey ); } }>
-									{ Icons.delete }
-								</button>
+								<textarea value={ get( tempData, tKey ) } onChange={ ( tEvent ) => { set( tempData, tKey, tEvent.target.value); } } disabled={ !this.props.isEditable }/>
+								{
+									this.props.isEditable &&
+										<button className={ tStyle.button } onClick={ () => { remove( tempData, tKey ); } }>
+											{ Icons.delete }
+										</button>
+								}
 							</React.Fragment>
 						)
 					)
@@ -79,7 +85,13 @@ class Data extends React.Component
 
 Data.propTypes =
 {
-	data: PropTypes.object.isRequired
+	data: PropTypes.object.isRequired,
+	isEditable: PropTypes.bool.isRequired
+};
+
+Data.defaultProps =
+{
+	isEditable: true
 };
 
 export default observer( Data );

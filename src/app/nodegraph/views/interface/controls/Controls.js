@@ -19,7 +19,7 @@ export default class Controls extends ControlsBase
 		return (
 			<nav className={ tStyle.controls }>
 				{
-					this.props.onMenuToggle != null &&
+					this.props.isMenu && this.props.onMenuToggle != null &&
 						<Menu onToggle={ this.props.onMenuToggle } isMenuOpen={ this.props.isMenuOpen }/>
 				}
 				<div className={ tStyle.group }>
@@ -35,7 +35,10 @@ export default class Controls extends ControlsBase
 					<GridSnap graph={ this.props.graph }/>
 				</div>
 				<Physics graph={ this.props.graph }/>
-				<Delete graph={ this.props.graph }/>
+				{
+					this.props.isEditable &&
+						<Delete graph={ this.props.graph }/>
+				}
 			</nav>
 		);
 	}
@@ -43,12 +46,16 @@ export default class Controls extends ControlsBase
 
 Controls.propTypes = Object.assign(
 	{
-		isMenuOpen: PropTypes.bool
+		isMenuOpen: PropTypes.bool,
+		isMenu: PropTypes.bool.isRequired,
+		isEditable: PropTypes.bool.isRequired
 	},
 	ControlsBase.propTypes
 );
 
 Controls.defaultProps =
 {
-	isMenuOpen: false
+	isMenuOpen: false,
+	isMenu: true,
+	isEditable: true
 };

@@ -18,7 +18,7 @@ class SubDataEdges extends SubData
 						Object.values( tempGraph._selectedEdges ).map(
 							( tEdge ) =>
 							(
-								<ItemEdge key={ tEdge.id } model={ tEdge }/>
+								<ItemEdge key={ tEdge.id } model={ tEdge } isEditable={ this.props.isEditable }/>
 							)
 						)
 					}
@@ -37,9 +37,11 @@ SubDataEdges.propTypes = Object.assign(
 	SubData.propTypes
 );
 
-SubDataEdges.defaultProps =
-{
-	title: "selected edges"
-};
+SubDataEdges.defaultProps = Object.assign(
+	{
+		title: "selected edges"
+	},
+	SubData.defaultProps
+);
 
 export default observer( SubDataEdges );

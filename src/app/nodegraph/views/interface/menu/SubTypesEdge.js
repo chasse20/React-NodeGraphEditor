@@ -30,7 +30,7 @@ class SubTypesEdge extends SubTypes
 					Object.keys( this.props.graph._edgeTypes ).map(
 						( tKey ) =>
 						(
-							<ItemEdgeType key={ tKey } graph={ this.props.graph } model={ this.props.graph._edgeTypes[ tKey ] }/>
+							<ItemEdgeType key={ tKey } graph={ this.props.graph } model={ this.props.graph._edgeTypes[ tKey ] } isEditable={ this.props.isEditable }/>
 						)
 					)
 				}
@@ -46,9 +46,11 @@ SubTypesEdge.propTypes = Object.assign(
 	SubTypes.propTypes
 );
 
-SubTypesEdge.defaultProps =
-{
-	title: "edge types"
-};
+SubTypesEdge.defaultProps = Object.assign(
+	{
+		title: "edge types"
+	},
+	SubTypes.defaultProps
+);
 
 export default observer( SubTypesEdge );

@@ -18,7 +18,7 @@ class SubDataNodes extends SubData
 						Object.values( tempGraph._selectedNodes ).map(
 							( tNode ) =>
 							(
-								<ItemNode key={ tNode._id } model={ tNode }/>
+								<ItemNode key={ tNode._id } model={ tNode } isEditable={ this.props.isEditable }/>
 							)
 						)
 					}
@@ -37,9 +37,11 @@ SubDataNodes.propTypes = Object.assign(
 	SubData.propTypes
 );
 
-SubDataNodes.defaultProps =
-{
-	title: "selected nodes"
-};
+SubDataNodes.defaultProps = Object.assign(
+	{
+		title: "selected nodes"
+	},
+	SubData.defaultProps
+);
 
 export default observer( SubDataNodes );

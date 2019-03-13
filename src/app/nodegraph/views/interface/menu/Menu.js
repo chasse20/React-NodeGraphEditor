@@ -29,7 +29,7 @@ export default class Menu extends React.PureComponent
 			"graph",
 			"data"
 		];
-	}
+	}	
 	
 	render( tStyle = Style )
 	{
@@ -68,15 +68,15 @@ export default class Menu extends React.PureComponent
 			case 1: // Graph
 				return (
 					<React.Fragment>
-						<SubTypesNode graph={ this.props.graph }/>
-						<SubTypesEdge graph={ this.props.graph }/>
+						<SubTypesNode graph={ this.props.graph } isEditable={ this.props.isEditable }/>
+						<SubTypesEdge graph={ this.props.graph } isEditable={ this.props.isEditable }/>
 					</React.Fragment>
 				);
 			case 2: // Data
 				return (
 					<React.Fragment>
-						<SubDataNodes graph={ this.props.graph }/>
-						<SubDataEdges graph={ this.props.graph }/>
+						<SubDataNodes graph={ this.props.graph } isEditable={ this.props.isEditable }/>
+						<SubDataEdges graph={ this.props.graph } isEditable={ this.props.isEditable }/>
 					</React.Fragment>
 				);
 			default:
@@ -89,5 +89,11 @@ export default class Menu extends React.PureComponent
 
 Menu.propTypes =
 {
-	graph: PropTypes.instanceOf( GraphModel ).isRequired
+	graph: PropTypes.instanceOf( GraphModel ).isRequired,
+	isEditable: PropTypes.bool.isRequired
+};
+
+Menu.defaultProps =
+{
+	isEditable: true
 };

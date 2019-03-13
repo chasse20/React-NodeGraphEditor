@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import Sub from "./Sub";
 import Style from "./SubData.module.css";
 
@@ -31,6 +32,13 @@ export default class SubData extends Sub
 }
 
 SubData.propTypes = Object.assign(
-	{},
+	{
+		isEditable: PropTypes.bool.isRequired
+	},
 	Sub.propTypes
 );
+
+SubData.defaultProps =
+{
+	isEditable: true
+};

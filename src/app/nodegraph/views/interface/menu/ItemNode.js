@@ -41,17 +41,19 @@ class ItemNode extends Item
 			<React.Fragment>
 				<div className={ tStyle.kvp }>
 					<span>Text</span>
-					<textarea value={ tempModel.text } onChange={ this._onText }/>
+					<textarea value={ tempModel.text } onChange={ this._onText } disabled={ !this.props.isEditable }/>
 				</div>
-				<Data data={ tempModel.data }/>
+				<Data data={ tempModel.data } isEditable={ this.props.isEditable }/>
 			</React.Fragment>
 		);
 	}
 }
 
-ItemNode.propTypes =
-{
-	model: PropTypes.instanceOf( NodeModel ).isRequired
-};
+ItemNode.propTypes = Object.assign(
+	{
+		model: PropTypes.instanceOf( NodeModel ).isRequired
+	},
+	Item.propTypes
+);
 
 export default observer( ItemNode );

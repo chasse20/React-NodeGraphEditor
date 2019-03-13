@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import Style from "./Item.module.css";
 
 export default class Item extends React.Component // TODO: Why have open?
@@ -56,3 +57,13 @@ export default class Item extends React.Component // TODO: Why have open?
 		return null;
 	}
 }
+
+Item.propTypes =
+{
+	isEditable: PropTypes.bool.isRequired
+};
+
+Item.defaultProps =
+{
+	isEditable: true
+};

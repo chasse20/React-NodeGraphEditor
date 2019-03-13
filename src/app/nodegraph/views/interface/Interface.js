@@ -34,8 +34,11 @@ export default class Interface extends React.PureComponent
 		// Render
 		return (
 			<div className={ tempClass }>
-				<Menu graph={ this.props.graph }/>
-				<Controls graph={ this.props.graph } onMenuToggle={ this._onMenuToggle } isMenuOpen={ this.state.isOpen }/>
+				{
+					this.props.isMenu &&
+						<Menu graph={ this.props.graph } isEditable={ this.props.isEditable }/>
+				}
+				<Controls graph={ this.props.graph } onMenuToggle={ this._onMenuToggle } isMenuOpen={ this.state.isOpen } isMenu={ this.props.isMenu } isEditable={ this.props.isEditable }/>
 			</div>
 		);
 	}
@@ -43,5 +46,13 @@ export default class Interface extends React.PureComponent
 
 Interface.propTypes =
 {
-	graph: PropTypes.instanceOf( GraphModel ).isRequired
+	graph: PropTypes.instanceOf( GraphModel ).isRequired,
+	isMenu: PropTypes.bool.isRequired,
+	isEditable: PropTypes.bool.isRequired
+};
+
+Interface.defaultProps =
+{
+	isMenu: true,
+	isEditable: true
 };

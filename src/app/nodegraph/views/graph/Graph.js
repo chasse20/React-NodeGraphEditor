@@ -78,8 +78,13 @@ class Graph extends GraphBase
 					<g ref={ this._onContainerElement }>
 						<Edges ref={ this._onEdges } graph={ tempModel }/>
 						<Nodes graph={ tempModel } onLink={ this._onLink } onTargetPin={ this._onTargetPin }/>
-						<EdgeTypeMenu ref={ this._onEdgeTypeMenu } graph={ tempModel }/>
-						<NodeMenus graph={ tempModel }/>
+						{
+							this.props.isEditable &&
+								<React.Fragment>
+									<EdgeTypeMenu ref={ this._onEdgeTypeMenu } graph={ tempModel }/>
+									<NodeMenus graph={ tempModel }/>
+								</React.Fragment>
+						}
 					</g>
 				</g>
 				<rect ref={ this._onMarqueeElement } className={ tStyle.marquee }/>
@@ -89,11 +94,18 @@ class Graph extends GraphBase
 }
 
 Graph.propTypes = Object.assign(
-	{},
+	{
+		isEditable: PropTypes.bool.isRequired
+	},
 	GraphBase.propTypes,
 	{
 		model: PropTypes.instanceOf( GraphModel ).isRequired
 	}
 );
+
+Graph.defaultProps = 
+{
+	isEditable: true
+};
 
 export default observer( Graph );

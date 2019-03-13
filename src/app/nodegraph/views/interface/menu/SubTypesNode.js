@@ -30,7 +30,7 @@ class SubTypesNode extends SubTypes
 					Object.keys( this.props.graph._nodeTypes ).map(
 						( tKey ) =>
 						(
-							<ItemNodeType key={ tKey } graph={ this.props.graph } model={ this.props.graph._nodeTypes[ tKey ] }/>
+							<ItemNodeType key={ tKey } graph={ this.props.graph } model={ this.props.graph._nodeTypes[ tKey ] } isEditable={ this.props.isEditable }/>
 						)
 					)
 				}
@@ -46,9 +46,11 @@ SubTypesNode.propTypes = Object.assign(
 	SubTypes.propTypes
 );
 
-SubTypesNode.defaultProps =
-{
-	title: "node types"
-};
+SubTypesNode.defaultProps = Object.assign(
+	{
+		title: "node types"
+	},
+	SubTypes.defaultProps
+);
 
 export default observer( SubTypesNode );
