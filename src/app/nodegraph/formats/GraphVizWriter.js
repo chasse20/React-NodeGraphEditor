@@ -106,4 +106,38 @@ export default class GraphVizWriter extends GraphVizWriterBase
 		
 		return null;
 	}
+	
+	/**
+	*	Writes JSON from an edge model (weight and data associative array)
+	*	@param {Edge} tEdgeModel Edge model to write data from
+	*	@return {Object} JSON output
+	*/
+	writeEdge( tEdgeModel )
+	{
+		const tempJSON = super.writeEdge( tEdgeModel );
+		
+		if ( tempJSON != null )
+		{
+			// Weight
+			if ( tEdgeModel.weight !== 1.0 )
+			{
+				tempJSON.weight = tEdgeModel.weight;
+			}
+			
+			// Data
+			for ( let tempKey in tEdgeModel.data )
+			{
+				if ( tempJSON.data == null )
+				{
+					tempJSON.data = {};
+				}
+				
+				tempJSON.data[ tempKey ] = tEdgeModel.data[ tempKey ];
+			}
+			
+			return tempJSON;
+		}
+		
+		return null;
+	}
 }

@@ -49,9 +49,11 @@ export default class GraphJSONReader extends GraphJSONReaderBase
 			{
 				tempNode.data = Object.assign( tempNode.data, tempData ); // merge/overwrite!
 			}
+			
+			return tempNode;
 		}
 		
-		return tempNode;
+		return null;
 	}
 	
 	/**
@@ -99,5 +101,52 @@ export default class GraphJSONReader extends GraphJSONReaderBase
 	createEdgeType( tName, tModelClass, tViewClass )
 	{
 		return new TypeEdge( tName, tModelClass, tViewClass );
+	}
+	
+	/**
+	*	Reads JSON edge data (weight and data associative array) and adds it and its type into the graph model
+	*	@param {Graph} tGraphModel Graph model to append data to
+	*	@param {Object} tJSON Raw JSON representing an edge
+	*	@param {Object} tNodeRefs Associative array used to bind edges to nodes
+	*	@param {string} [tTextField=caption] Which field name should be considered as the visible text label of an edge
+	*	@return {Edge} Edge if successfully generated from the JSON
+	*/
+	readEdge( tGraphModel, tJSON, tNodeRefs, tTextField = "caption" )
+	{
+		const tempEdge = super.readEdge( tGraphModel, tJSON, tNodeRefs, tTextField );
+		
+		if ( tempEdge != null )
+		{
+			// Weight
+			if ( tJSON.weight != null )
+			{
+				tempEdge.weight = tJSON.weight;
+				delete tJSON.weight;
+			}
+			
+			// Data
+			delete tJSON[ tTextField ];
+			delete tJSON.source;
+			delete tJSON.target;
+			
+			var tempData = null;
+			for ( let tempField in tJSON )
+			{
+				if ( tempData === null )
+				{
+					tempData = {};
+				}
+				tempData[ tempField ] = tJSON[ tempField ];
+			}
+			
+			if ( tempData !== null )
+			{
+				tempEdge.data = Object.assign( tempEdge.data, tempData ); // merge/overwrite!
+			}
+			
+			return tempEdge;
+		}
+		
+		return null;
 	}
 }

@@ -37,9 +37,11 @@ export default class GraphVizReader extends GraphVizReaderBase
 			{
 				tempType.fill = tJSON.fill;
 			}
+			
+			return tempType;
 		}
 		
-		return tempType;
+		return null;
 	}
 	
 	/**
@@ -78,9 +80,11 @@ export default class GraphVizReader extends GraphVizReaderBase
 			{
 				tempType.text = tJSON.text;
 			}
+			
+			return tempType;
 		}
 		
-		return tempType;
+		return null;
 	}
 	
 	/**
@@ -118,8 +122,42 @@ export default class GraphVizReader extends GraphVizReaderBase
 			{
 				tempNode.data = Object.assign( tempNode.data, tJSON.data ); // merge/overwrite!
 			}
+			
+			return tempNode;
 		}
 		
-		return tempNode;
+		return null;
+	}
+	
+	/**
+	*	Reads JSON edge data (weight and data associative array) and adds it and its type into the graph model
+	*	@param {Graph} tGraphModel Graph model used as reference for edge types
+	*	@param {Object} tJSON Raw JSON representing an edge
+	*	@param {Pin} tSourcePin Source pin of the edge
+	*	@param {Object} tNodeRefs Associative array used to bind edges to nodes
+	*	@return {Edge} Edge if successfully generated from the JSON
+	*/
+	readEdge( tGraphModel, tJSON, tSourcePin, tNodeRefs )
+	{
+		const tempEdge = super.readEdge( tGraphModel, tJSON, tSourcePin, tNodeRefs );
+		
+		if ( tempEdge != null )
+		{
+			// Weight
+			if ( tJSON.weight != null )
+			{
+				tempEdge.weight = tJSON.weight;
+			}
+			
+			// Data
+			if ( tJSON.data != null )
+			{
+				tempEdge.data = Object.assign( tempEdge.data, tJSON.data ); // merge/overwrite!
+			}
+			
+			return tempEdge;
+		}
+		
+		return null;
 	}
 }

@@ -27,7 +27,38 @@ export default class GraphJSONWriter extends GraphJSONWriterBase
 		// Data
 		for ( let tempKey in tNodeModel.data )
 		{
-			tempJSON[ tempKey ] = tNodeModel.data[ tempKey ];
+			if ( tempKey !== tNodeTextField )
+			{
+				tempJSON[ tempKey ] = tNodeModel.data[ tempKey ];
+			}
+		}
+		
+		return tempJSON;
+	}
+	
+	/**
+	*	Writes JSON from an edge model (weight and data associative array)
+	*	@param {Edge} tEdgeModel Edge model to write data from
+	*	@param {string} [tEdgeTextField=caption] Which field name should be considered as the visible text label of an edge
+	*	@return {Object} JSON output
+	*/
+	writeEdge( tEdgeModel, tEdgeTextField = "caption" )
+	{
+		const tempJSON = super.writeEdge( tEdgeModel, tEdgeTextField );
+		
+		// Weight
+		if ( tEdgeModel.weight !== 1.0 )
+		{
+			tempJSON.weight = tEdgeModel.weight;
+		}
+		
+		// Data
+		for ( let tempKey in tEdgeModel.data )
+		{
+			if ( tempKey !== tEdgeTextField )
+			{
+				tempJSON[ tempKey ] = tEdgeModel.data[ tempKey ];
+			}
 		}
 		
 		return tempJSON;
