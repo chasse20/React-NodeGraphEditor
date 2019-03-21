@@ -1,0 +1,241 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "GraphViz Graph",
+  "description": "Representation of a graph in graphviz format",
+  "type": "object",
+  "properties":
+  {
+    "position":
+    {
+      "description": "Position of the graph",
+      "$ref": "#/definitions/Vector2D"
+    },
+    "zoom":
+    {
+      "description": "Zoom level of the graph",
+      "type": "number"
+    },
+    "nodeTypes":
+    {
+      "description": "Flyweight data that each node shares",
+      "type": "array",
+      "items":
+      {
+        "$ref": "#/definitions/NodeType"
+      }
+    },
+    "edgeTypes":
+    {
+      "description": "Flyweight data that each edge type shares",
+      "type": "array",
+      "items":
+      {
+        "$ref": "#/definitions/EdgeType"
+      }
+    },
+    "nodes":
+    {
+      "description": "Node instances for the graph",
+      "type": "array",
+      "items":
+      {
+        "$ref": "#/definitions/Node"
+      }
+    }
+  },
+  "definitions":
+  {
+    "Vector2D":
+    {
+      "description": "Representation of a 2D vector",
+      "type": "object",
+      "properties":
+      {
+        "x":
+        {
+          "type": "number"
+        },
+        "y":
+        {
+          "type": "number"
+        }
+      }
+    },
+    "NodeType":
+    {
+      "description": "Type data that gets shared between nodes",
+      "type": "object",
+      "properties":
+      {
+        "name":
+        {
+          "type": "string"
+        },
+        "modelClass":
+        {
+          "description": "Model class to use for this type",
+          "type": "string"
+        },
+        "viewClass":
+        {
+          "description": "View class to use for this type",
+          "type": "string"
+        },
+        "radius":
+        {
+          "description": "Radius of all nodes with this type",
+          "type": "number"
+        },
+        "fill":
+        {
+          "description": "Hex fill color of nodes with this type",
+          "type": "string",
+          "examples":
+          [
+            "#c567bf"
+          ]
+        }
+      },
+      "required":
+      [
+        "name"
+      ]
+    },
+    "EdgeType":
+    {
+      "description": "Type data that gets shared between edges",
+      "type": "object",
+      "properties":
+      {
+        "name":
+        {
+          "type": "string"
+        },
+        "modelClass":
+        {
+          "description": "Model class to use for this type",
+          "type": "string"
+        },
+        "viewClass":
+        {
+          "description": "View class to use for this type",
+          "type": "string"
+        },
+        "text":
+        {
+          "description": "Label text of all edges with this type",
+          "type": "string"
+        },
+        "stroke":
+        {
+          "description": "Hex stroke color of edges with this type",
+          "type": "string",
+          "examples":
+          [
+            "#9f4a9a"
+          ]
+        }
+      },
+      "required":
+      [
+        "name"
+      ]
+    },
+    "Node":
+    {
+      "description": "Node instance data",
+      "type": "object",
+      "properties":
+      {
+        "id":
+        {
+          "description": "Unique ID for linking nodes together",
+          "type": "string"
+        },
+        "type":
+        {
+          "description": "Name of the NodeType this node belongs to",
+          "type": "string"
+        },
+        "position":
+        {
+          "description": "Position of the node in graph space",
+          "$ref": "#/definitions/Vector2D"
+        },
+        "text":
+        {
+          "description": "Label text of the node",
+          "type": "string"
+        },
+        "data":
+        {
+          "description": "Container for any other data",
+          "type": "object"
+        },
+        "pins":
+        {
+          "description": "Pin data associative array to link outbound node pins to one-another",
+          "type": "object",
+          "additionalProperties":
+          {
+            "$ref": "#/definitions/Pin"
+          }
+        }
+      },
+      "required":
+      [
+        "id"
+      ]
+    },
+    "Pin":
+    {
+      "description": "Pin instance data",
+      "type": "object",
+      "properties":
+      {
+        "links":
+        {
+          "description": "Data for creating edges and linking nodes together",
+          "type": "array",
+          "items":
+          {
+            "$ref": "#/definitions/Link"
+          }
+        }
+      }
+    },
+    "Link":
+    {
+      "description": "Link and edge instance data",
+      "type": "object",
+      "properties":
+      {
+        "node":
+        {
+          "description": "Node ID this link connects to",
+          "type": "string"
+        },
+        "pin":
+        {
+          "description": "Inbound pin name of the node this link connects to",
+          "type": "string"
+        },
+        "type":
+        {
+          "description": "Name of the EdgeType this link's edge belongs to",
+          "type": "string"
+        },
+        "data":
+        {
+          "description": "Container for any other edge data",
+          "type": "object"
+        }
+      },
+      "required":
+      [
+        "node",
+        "pin"
+      ]
+    }
+  }
+}
