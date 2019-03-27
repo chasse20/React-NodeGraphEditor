@@ -33,7 +33,7 @@ class ItemNodeType extends Item
 			let tempNode = tempGraph._nodes[ tempID ];
 			if ( tempNode._type === this.props.model )
 			{
-				tempGraph.addSelectedNode( tempGraph._nodes[ tempID ] );
+				tempGraph.setSelectedNode( tempNode );
 			}
 		}
 	}
