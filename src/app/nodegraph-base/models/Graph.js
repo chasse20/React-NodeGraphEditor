@@ -121,6 +121,7 @@ export default class Graph
 		if ( tNode != null && !has( this._nodes, tNode._id ) )
 		{
 			set( this._nodes, tNode._id, tNode );
+			++this._nodesCount;
 			
 			return true;
 		}
@@ -140,6 +141,7 @@ export default class Graph
 			tNode.clearLinks();
 			this.removeSelectedNode( tNode );
 			remove( this._nodes, tNode._id );
+			--this._nodesCount;
 
 			return true;
 		}

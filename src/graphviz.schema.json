@@ -225,11 +225,11 @@
           "description": "Name of the EdgeType this link's edge belongs to",
           "type": "string"
         },
-	  "weight":
-	  {
-		"description": "Edge weight",
-		"type": "number"
-	  },
+        "weight":
+        {
+          "description": "Edge weight",
+          "type": "number"
+        },
         "data":
         {
           "description": "Container for any other edge data",

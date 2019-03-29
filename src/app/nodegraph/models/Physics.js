@@ -55,8 +55,9 @@ export default class Physics
 		this._simulation = forceSimulation();
 		
 		// Initialize
-		this._simulation.velocityDecay( 0.85 );
-		this._simulation.alphaDecay( 0.01 );
+		this._alphaDecay = this._simulation.alphaDecay();
+		this._velocityDecay = 0.7;
+		this._simulation.velocityDecay( this._velocityDecay );
 		this._simulation.force( "charge", this.createChargeForce() );
 		this._simulation.force( "collide", this.createCollideForce() );
 		this._simulation.force( "link", this.createLinkForce() );
@@ -128,6 +129,11 @@ export default class Physics
 	*/
 	seedCenter()
 	{
+		this._simulation.velocityDecay( 0.15 );
+		this._simulation.alphaDecay( 0.01 );
+		
+		const tempChargeTheta = this._simulation.force( "charge" ).theta();
+		this._simulation.force( "charge" ).theta( 100 );
 		this._simulation.force( "center", this.createCenterForce() );
 	
 		if ( this._seedCenterTimeout !== null )
@@ -138,10 +144,13 @@ export default class Physics
 		this._seedCenterTimeout = setTimeout(
 			() =>
 			{
+				this._simulation.velocityDecay( this._velocityDecay );
+				this._simulation.alphaDecay( this._alphaDecay );
+				this._simulation.force( "charge" ).theta( tempChargeTheta );
 				this._simulation.force( "center", null );
 				this._seedCenterTimeout = null;
 			},
-			2000
+			3000
 		);
 	}
 	
@@ -162,7 +171,7 @@ export default class Physics
 	*/
 	createChargeForce()
 	{
-		return forceManyBody().strength( -500 ).distanceMax( 750 ).theta( 100 );
+		return forceManyBody().strength( -500 ).distanceMax( 2000 );
 	}
 	
 	/**
